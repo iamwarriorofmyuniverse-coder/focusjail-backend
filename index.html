@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
+        posthog.init('phc_naJRdCPhvpCKvuasu7zkEZ7z9WAw7iZUgNt5dGBqG5nB', {
+            api_host: 'https://us.i.posthog.com',
+            defaults: '2026-05-30',
+            person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+        })
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocusJail</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f0f0;
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: #667eea;
+            top: -80px;
+            left: -80px;
+            animation: floatOrb 12s ease-in-out infinite;
+        }
+
+        .orb2 {
+            width: 250px;
+            height: 250px;
+            background: #f093fb;
+            bottom: -60px;
+            right: -60px;
+            animation: floatOrb 14s ease-in-out infinite reverse;
+            animation-delay: -3s;
+        }
+
+        .orb3 {
+            width: 180px;
+            height: 180px;
+            background: #43e97b;
+            top: 40%;
+            left: 60%;
+            animation: floatOrb 16s ease-in-out infinite;
+            animation-delay: -5s;
+        }
+
+        @keyframes floatOrb {
+
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1.05);
+            }
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: screenFadeIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes screenFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 36px 28px;
+            width: 100%;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0px) scale(1);
+            }
+        }
+
+        .label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--grad);
+            display: inline-block;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.7;
+            }
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: #111;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 15px;
+            color: #777;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            border: 1.5px solid #eee;
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            color: #111;
+            margin-bottom: 12px;
+            outline: none;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        input::placeholder {
+            color: #bbb;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: var(--grad);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 14px;
+            border: 1.5px solid #eee;
+            border-radius: 14px;
+            background: transparent;
+            color: #555;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .tone-btn {
+            width: 100%;
+            padding: 18px 16px;
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tone-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .tone-btn:active {
+            transform: scale(0.97);
+        }
+
+        .tone-brutal {
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .tone-firm {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .tone-gentle {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            box-shadow: 0 4px 20px rgba(67, 233, 123, 0.4);
+        }
+
+        .tone-emoji {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .tone-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tone-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .tone-desc {
+            font-size: 13px;
+            opacity: 0.85;
+            margin-top: 2px;
+            font-weight: 400;
+        }
+
+        .toggle-wrap {
+            background: #f0f0f0;
+            border-radius: 50px;
+            padding: 6px;
+            display: flex;
+            width: 100%;
+            margin-bottom: 28px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #999;
+            border-radius: 44px;
+            transition: all 0.3s;
+            z-index: 1;
+            position: relative;
+        }
+
+        .toggle-option.active {
+            color: white;
+        }
+
+        .toggle-ball {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: calc(50% - 6px);
+            height: calc(100% - 12px);
+            background: var(--grad);
+            border-radius: 44px;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .toggle-ball.right {
+            transform: translateX(100%);
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #fafafa;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #333;
+            transition: all 0.3s;
+            animation: goalSlide 0.4s ease forwards;
+            opacity: 0;
+            border: 1px solid transparent;
+        }
+
+        .goal-item:hover {
+            transform: translateX(4px);
+            background: white;
+            border-color: #eee;
+        }
+
+        @keyframes goalSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .goal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--grad);
+            flex-shrink: 0;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        .streak-card {
+            background: var(--grad);
+            border-radius: 24px;
+            padding: 28px 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        .streak-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            animation: rotateShard 6s linear infinite;
+        }
+
+        @keyframes rotateShard {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes floatCard {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .streak-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 64px;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .streak-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mode-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .verdict-card {
+            background: #111;
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            margin-bottom: 16px;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verdict-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--grad);
+        }
+
+        .verdict-card p {
+            color: #eee;
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .verdict-label {
+            color: #667eea;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .logo-3d {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            animation: spin3d 8s ease-in-out infinite;
+        }
+
+        .logo-3d-inner {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: var(--grad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        @keyframes spin3d {
+            0% {
+                transform: rotateY(0deg) rotateX(0deg);
+            }
+
+            25% {
+                transform: rotateY(15deg) rotateX(5deg);
+            }
+
+            50% {
+                transform: rotateY(0deg) rotateX(0deg);
+            }
+
+            75% {
+                transform: rotateY(-15deg) rotateX(-5deg);
+            }
+
+            100% {
+                transform: rotateY(0deg) rotateX(0deg);
+            }
+        }
+
+        .particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+
+            20% {
+                opacity: 0.6;
+                transform: translateY(-20px) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0.5);
+            }
+        }
+
+        /* HISTORY SCREEN */
+        .history-item {
+            background: #fafafa;
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .history-status {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .history-status.completed {
+            color: #43e97b;
+        }
+
+        .history-status.failed {
+            color: #f5576c;
+        }
+
+        .history-verdict {
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .empty-history {
+            text-align: center;
+            color: #bbb;
+            font-size: 14px;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <!-- SCREEN 1: HOOK -->
+    <div id="screen1" class="screen active">
+        <div class="card">
+            <div class="logo-3d">
+                <div class="logo-3d-inner">🔒</div>
+            </div>
+            <div class="label"><span class="label-dot"></span> FocusJail</div>
+            <h1>You waste 7+ hours daily scrolling.</h1>
+            <p>Every night this app confronts you with the gap between what you promised and what you actually did.</p>
+            <button class="btn-primary" onclick="goTo('screen2')">I'm Ready</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: GOALS SETUP -->
+    <div id="screen2" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Setup</div>
+            <h1>Set your goals.</h1>
+            <p>No vague intentions. Specific commitments only.</p>
+            <input id="name" type="text" placeholder="Your name" />
+            <input id="goal1" type="text" placeholder="Goal 1 - be specific" />
+            <input id="goal2" type="text" placeholder="Goal 2 - be specific" />
+            <input id="goal3" type="text" placeholder="Goal 3 - be specific" />
+            <button class="btn-primary" onclick="saveGoals()">Commit</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2B: TONE SELECTION -->
+    <div id="screen2b" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Accountability Style</div>
+            <h1>How should I hold you accountable?</h1>
+            <p>Be honest. Pick what actually works for you.</p>
+            <button class="tone-btn tone-brutal" onclick="setTone('brutal')">
+                <span class="tone-emoji">🔥</span>
+                <span class="tone-text">
+                    <span class="tone-title">Brutal</span>
+                    <span class="tone-desc">No mercy. Raw truth. Zero excuses.</span>
+                </span>
+            </button>
+            <button class="tone-btn tone-firm" onclick="setTone('firm')">
+                <span class="tone-emoji">💪</span>
+                <span class="tone-text">
+                    <span class="tone-title">Firm</span>
+                    <span class="tone-desc">Direct and fair. No insults, no softening.</span>
+                </span>
+            </button>
+            <button class="tone-btn tone-gentle" onclick="setTone('gentle')">
+                <span class="tone-emoji">🌱</span>
+                <span class="tone-text">
+                    <span class="tone-title">Gentle</span>
+                    <span class="tone-desc">Encouraging but honest. Good for beginners.</span>
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: HOW IT WORKS -->
+    <div id="screen3" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> How It Works</div>
+            <h1>Two moments. Every day.</h1>
+            <p>Morning - Open the app. See your commitments. Go execute.</p>
+            <p>Night - Report back. Answer for your day.</p>
+            <p>The AI reads your report and confronts you with the truth. No sugarcoating.</p>
+            <button class="btn-primary" onclick="loadHome(); goTo('screen4')">Let's Go</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: HOME -->
+    <div id="screen4" class="screen">
+        <div class="mode-badge" id="modeBadge">Morning Mode</div>
+        <div class="streak-card">
+            <div class="streak-number" id="streakCount">0</div>
+            <div class="streak-label">Day Streak</div>
+        </div>
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Today's Commitments</div>
+            <h1 id="welcomeName">Good morning.</h1>
+            <div id="goalsList"></div>
+            <button class="btn-primary" onclick="goTo('screen5')">Report To AI</button>
+            <button class="btn-secondary" onclick="goTo('screen7')">View History</button>
+            <button class="btn-secondary" onclick="resetGoals()">Change Goals</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 5: NIGHT REPORT -->
+    <div id="screen5" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Night Report</div>
+            <h1>Answer for your day.</h1>
+            <div class="toggle-wrap" onclick="toggleGoals()">
+                <div class="toggle-ball" id="toggleBall"></div>
+                <div class="toggle-option active" id="opt-yes">Completed</div>
+                <div class="toggle-option" id="opt-no">Failed</div>
+            </div>
+            <input id="excuseInput" type="text" placeholder="What happened today?" />
+            <button class="btn-primary" onclick="submitReport()">Submit</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 6: AI VERDICT -->
+    <div id="screen6" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> AI Verdict</div>
+            <h1>The verdict.</h1>
+            <div class="verdict-card">
+                <div class="verdict-label">FocusJail says</div>
+                <p id="aiResponse">Analyzing your day...</p>
+            </div>
+            <button class="btn-primary" onclick="goTo('screen4')">Face Tomorrow</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 7: HISTORY -->
+    <div id="screen7" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Your Week</div>
+            <h1>Last 7 days.</h1>
+            <div id="historyList"></div>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
+        </div>
+    </div>
+
+    <script>
+        var goalsCompleted = true;
+
+        function goTo(id) {
+            var screens = document.querySelectorAll('.screen');
+            for (var i = 0; i < screens.length; i++) {
+                screens[i].classList.remove('active');
+            }
+            document.getElementById(id).classList.add('active');
+            if (id === 'screen7') loadHistory();
+            spawnParticles();
+        }
+
+        function spawnParticles() {
+            var colors = ['#667eea', '#f093fb', '#43e97b', '#f5576c'];
+            for (var i = 0; i < 8; i++) {
+                (function () {
+                    var p = document.createElement('div');
+                    p.className = 'particle';
+                    p.style.left = (20 + Math.random() * 60) + '%';
+                    p.style.bottom = (10 + Math.random() * 30) + '%';
+                    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    p.style.animation = 'particleFloat ' + (1 + Math.random() * 1.5) + 's ease forwards';
+                    p.style.animationDelay = (Math.random() * 0.4) + 's';
+                    document.body.appendChild(p);
+                    setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 2500);
+                })();
+            }
+        }
+
+        function checkStreakReset() {
+            var lastReport = localStorage.getItem('lastReportDate');
+            var today = new Date().toDateString();
+            var yesterday = new Date(Date.now() - 86400000).toDateString();
+            if (lastReport && lastReport !== today && lastReport !== yesterday) {
+                localStorage.setItem('streak', 0);
+            }
+        }
+
+        function saveGoals() {
+            var name = document.getElementById('name').value;
+            var g1 = document.getElementById('goal1').value;
+            var g2 = document.getElementById('goal2').value;
+            var g3 = document.getElementById('goal3').value;
+            if (!name || !g1 || !g2 || !g3) { alert('Fill everything. No shortcuts.'); return; }
+            localStorage.setItem('name', name);
+            localStorage.setItem('goals', JSON.stringify([g1, g2, g3]));
+            goTo('screen2b');
+        }
+
+        function setTone(tone) {
+            localStorage.setItem('tone', tone);
+            goTo('screen3');
+        }
+
+        function loadHome() {
+            var name = localStorage.getItem('name') || 'You';
+            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
+            var streak = localStorage.getItem('streak') || 0;
+            var hour = new Date().getHours();
+            var isMorning = hour < 17;
+            document.getElementById('welcomeName').textContent = isMorning ? 'Good morning, ' + name + '.' : 'Good evening, ' + name + '.';
+            document.getElementById('modeBadge').textContent = isMorning ? 'Morning Mode' : 'Night Mode';
+            document.getElementById('streakCount').textContent = streak;
+            var list = document.getElementById('goalsList');
+            list.innerHTML = '';
+            for (var i = 0; i < goals.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'goal-item';
+                div.style.animationDelay = (i * 0.1) + 's';
+                div.innerHTML = '<span class="goal-dot"></span>' + goals[i];
+                list.appendChild(div);
+            }
+        }
+
+        function loadHistory() {
+            var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
+            var container = document.getElementById('historyList');
+            container.innerHTML = '';
+            if (history.length === 0) {
+                container.innerHTML = '<div class="empty-history">No reports yet. Submit your first night report to start tracking.</div>';
+                return;
+            }
+            var reversed = history.slice().reverse();
+            for (var i = 0; i < reversed.length; i++) {
+                var item = reversed[i];
+                var div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML =
+                    '<div class="history-date">' + item.date + '</div>' +
+                    '<div class="history-status ' + (item.completed ? 'completed' : 'failed') + '">' +
+                    (item.completed ? '✓ Goals Completed' : '✗ Goals Failed') +
+                    '</div>' +
+                    '<div class="history-verdict">' + item.verdict + '</div>';
+                container.appendChild(div);
+            }
+        }
+
+        function toggleGoals() {
+            goalsCompleted = !goalsCompleted;
+            var ball = document.getElementById('toggleBall');
+            var yes = document.getElementById('opt-yes');
+            var no = document.getElementById('opt-no');
+            if (goalsCompleted) {
+                ball.classList.remove('right');
+                yes.classList.add('active');
+                no.classList.remove('active');
+            } else {
+                ball.classList.add('right');
+                no.classList.add('active');
+                yes.classList.remove('active');
+            }
+        }
+
+        function submitReport() {
+            var excuse = document.getElementById('excuseInput').value;
+            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
+            var name = localStorage.getItem('name') || 'User';
+            var tone = localStorage.getItem('tone') || 'brutal';
+
+            var toneInstruction = tone === 'brutal'
+                ? 'Be direct and unfiltered. No sugarcoating. Call out the gap between their promise and reality. Use their name.'
+                : tone === 'firm'
+                    ? 'Be direct and firm. No insults but no softening either. State facts clearly.'
+                    : 'Be encouraging but honest. Acknowledge their effort, gently point out the gap.';
+
+            document.getElementById('aiResponse').textContent = 'Analyzing your day...';
+            goTo('screen6');
+
+            var prompt = 'You are an accountability coach. User: ' + name + '. Goals: ' + goals.join(', ') + '. Completed: ' + (goalsCompleted ? 'Yes' : 'No') + '. What happened: ' + (excuse || 'Nothing given') + '. Tone instruction: ' + toneInstruction + ' Give exactly 2 sentences. No fluff.';
+
+            fetch('https://focusjail-backend-production.up.railway.app/verdict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: prompt })
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    var streak = goalsCompleted ? parseInt(localStorage.getItem('streak') || 0) + 1 : 0;
+                    localStorage.setItem('streak', streak);
+                    localStorage.setItem('lastReportDate', new Date().toDateString());
+
+                    var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
+                    history.push({
+                        date: new Date().toDateString(),
+                        completed: goalsCompleted,
+                        verdict: data.verdict
+                    });
+                    if (history.length > 7) history.shift();
+                    localStorage.setItem('verdictHistory', JSON.stringify(history));
+
+                    document.getElementById('aiResponse').textContent = data.verdict;
+                })
+                .catch(function () {
+                    document.getElementById('aiResponse').textContent = 'Could not reach AI. Check your connection.';
+                });
+        }
+
+        function resetGoals() {
+            localStorage.clear();
+            goTo('screen2');
+        }
+
+        document.addEventListener('mousemove', function (e) {
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(function (card) {
+                var rect = card.getBoundingClientRect();
+                var dx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
+                var dy = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
+                card.style.transform = 'rotateY(' + (dx * 6) + 'deg) rotateX(' + (-dy * 6) + 'deg) translateY(-4px)';
+            });
+        });
+
+        document.addEventListener('mouseleave', function () {
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(function (card) { card.style.transform = ''; });
+        });
+
+        window.onload = function () {
+            checkStreakReset();
+            if (localStorage.getItem('name')) { loadHome(); goTo('screen4'); }
+        };
+    </script>
+</body>
+
+</html>
