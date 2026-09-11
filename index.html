@@ -2,96 +2,108 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>FocusJail - Radical AI Accountability</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    
     <script>
         !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
         posthog.init('phc_naJRdCPhvpCKvuasu7zkEZ7z9WAw7iZUgNt5dGBqG5nB', {
             api_host: 'https://us.i.posthog.com',
             defaults: '2026-05-30',
-            person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+            person_profiles: 'identified_only',
         })
     </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FocusJail</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
-        rel="stylesheet" />
+
     <style>
         :root {
-            --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            --bg: #090a0f;
+            --card-bg: rgba(18, 20, 29, 0.88);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --grad: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --grad-accent: linear-gradient(135deg, #ff0055 0%, #ff5500 100%);
+            --grad-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --danger: #f43f5e;
+            --success: #10b981;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: #f0f0f0;
+            background: var(--bg);
             font-family: 'DM Sans', sans-serif;
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
             overflow-x: hidden;
+            position: relative;
         }
 
+        /* Ambient Glow Orbs */
         .orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.35;
+            filter: blur(80px);
+            opacity: 0.22;
             pointer-events: none;
             z-index: 0;
         }
-
-        .orb1 {
-            width: 300px;
-            height: 300px;
-            background: #667eea;
-            top: -80px;
-            left: -80px;
-            animation: floatOrb 12s ease-in-out infinite;
-        }
-
-        .orb2 {
-            width: 250px;
-            height: 250px;
-            background: #f093fb;
-            bottom: -60px;
-            right: -60px;
-            animation: floatOrb 14s ease-in-out infinite reverse;
-            animation-delay: -3s;
-        }
-
-        .orb3 {
-            width: 180px;
-            height: 180px;
-            background: #43e97b;
-            top: 40%;
-            left: 60%;
-            animation: floatOrb 16s ease-in-out infinite;
-            animation-delay: -5s;
-        }
+        .orb1 { width: 350px; height: 350px; background: #6366f1; top: -100px; left: -100px; animation: floatOrb 12s ease-in-out infinite; }
+        .orb2 { width: 300px; height: 300px; background: #ec4899; bottom: -80px; right: -80px; animation: floatOrb 14s ease-in-out infinite reverse; }
+        .orb3 { width: 220px; height: 220px; background: #06b6d4; top: 45%; left: 50%; animation: floatOrb 18s ease-in-out infinite; }
 
         @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
 
-            0%,
-            100% {
-                transform: translateY(0px) scale(1);
-            }
-
-            50% {
-                transform: translateY(-30px) scale(1.05);
-            }
+        /* Top Action Bar */
+        .top-nav {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+            display: flex;
+            gap: 8px;
+        }
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+        .icon-btn:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,0.2);
+            transform: scale(1.05);
         }
 
         .screen {
             display: none;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             position: relative;
             z-index: 1;
         }
@@ -100,53 +112,33 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: screenFadeIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: screenFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes screenFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.98);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: 28px;
-            padding: 36px 28px;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 26px;
+            padding: 30px 24px;
             width: 100%;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
             position: relative;
             overflow: hidden;
-            animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes cardEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(40px) scale(0.95);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0px) scale(1);
-            }
         }
 
         .label {
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            color: #999;
+            color: #818cf8;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -154,185 +146,326 @@
         }
 
         .label-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: var(--grad);
-            display: inline-block;
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseDot {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.4);
-                opacity: 0.7;
-            }
+            background: #818cf8;
+            box-shadow: 0 0 10px #818cf8;
         }
 
         h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 28px;
+            font-size: 27px;
             font-weight: 800;
-            color: #111;
+            color: #fff;
             line-height: 1.2;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
         p {
-            font-size: 15px;
-            color: #777;
+            font-size: 14px;
+            color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        input {
+        input, textarea {
             width: 100%;
-            border: 1.5px solid #eee;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
             padding: 14px 16px;
-            font-size: 15px;
+            font-size: 14px;
             font-family: 'DM Sans', sans-serif;
-            color: #111;
+            color: #fff;
             margin-bottom: 12px;
             outline: none;
-            transition: all 0.3s;
-            background: #fafafa;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.04);
         }
 
-        input:focus {
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
-            transform: translateY(-2px);
+        input:focus, textarea:focus {
+            border-color: #818cf8;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
         }
 
-        input::placeholder {
-            color: #bbb;
+        input::placeholder, textarea::placeholder {
+            color: #64748b;
         }
 
         .btn-primary {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             border: none;
             border-radius: 14px;
             background: var(--grad);
             color: white;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
             font-family: 'DM Sans', sans-serif;
             cursor: pointer;
-            margin-top: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-            position: relative;
-            overflow: hidden;
+            margin-top: 10px;
+            transition: all 0.2s;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
         }
 
-        .btn-primary:active {
-            transform: scale(0.97);
-        }
+        .btn-primary:active { transform: scale(0.98); }
 
         .btn-secondary {
             width: 100%;
-            padding: 14px;
-            border: 1.5px solid #eee;
+            padding: 13px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
-            background: transparent;
-            color: #555;
-            font-size: 15px;
-            font-family: 'DM Sans', sans-serif;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.2s;
         }
 
         .btn-secondary:hover {
-            border-color: #667eea;
-            color: #667eea;
-            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
         }
 
-        .tone-btn {
+        /* Streak & Inmate Rank Banner */
+        .streak-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 22px;
+            padding: 22px 20px;
+            text-align: center;
+            margin-bottom: 16px;
             width: 100%;
-            padding: 18px 16px;
-            border: none;
-            border-radius: 16px;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            position: relative;
+            backdrop-filter: blur(12px);
         }
 
-        .tone-btn:hover {
-            transform: translateY(-3px);
+        .streak-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 56px;
+            font-weight: 800;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
         }
 
-        .tone-btn:active {
-            transform: scale(0.97);
-        }
-
-        .tone-brutal {
-            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .tone-firm {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.4);
-        }
-
-        .tone-gentle {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            box-shadow: 0 4px 20px rgba(67, 233, 123, 0.4);
-        }
-
-        .tone-emoji {
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .tone-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tone-title {
-            font-size: 16px;
+        .streak-label {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
             font-weight: 700;
         }
 
-        .tone-desc {
-            font-size: 13px;
-            opacity: 0.85;
-            margin-top: 2px;
-            font-weight: 400;
+        .inmate-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #cbd5e1;
+            margin-top: 10px;
+            font-weight: 600;
         }
 
+        /* Interactive Goal Checklist */
+        .goal-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .goal-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .goal-item.done {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+
+        .goal-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 1.5px solid #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all 0.2s;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .goal-item.done .goal-checkbox {
+            background: var(--success);
+            border-color: var(--success);
+            color: #fff;
+        }
+
+        .goal-left {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 7-Day Heat Strip */
+        .week-strip {
+            display: flex;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .day-box {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+            font-size: 10px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .day-box.completed {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .day-box.failed {
+            background: rgba(244, 63, 94, 0.18);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* Tone Selection Cards */
+        .tone-btn {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.2s;
+        }
+
+        .tone-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .tone-emoji { font-size: 26px; }
+        .tone-title { font-size: 15px; font-weight: 700; }
+        .tone-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+        /* Focus Jail Timer Screen */
+        .timer-display {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 58px;
+            font-weight: 700;
+            text-align: center;
+            margin: 24px 0 10px;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .cell-bars {
+            display: flex;
+            justify-content: space-around;
+            height: 70px;
+            width: 100%;
+            margin-bottom: 20px;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+        }
+        .cell-bar {
+            width: 4px;
+            height: 100%;
+            background: #fff;
+            border-radius: 2px;
+        }
+        .locked .cell-bars {
+            opacity: 0.9;
+        }
+
+        /* Verdict Card */
+        .verdict-card {
+            background: #030407;
+            border-radius: 18px;
+            padding: 22px;
+            width: 100%;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
+        }
+        .verdict-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--grad);
+            border-radius: 18px 18px 0 0;
+        }
+        .verdict-card p {
+            color: #e2e8f0;
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 0;
+            font-style: italic;
+        }
+
+        /* Toggle Button */
         .toggle-wrap {
-            background: #f0f0f0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
-            padding: 6px;
+            padding: 4px;
             display: flex;
             width: 100%;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
             position: relative;
             cursor: pointer;
         }
@@ -341,307 +474,45 @@
             flex: 1;
             text-align: center;
             padding: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #999;
-            border-radius: 44px;
-            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+            border-radius: 40px;
+            transition: color 0.3s;
             z-index: 1;
-            position: relative;
         }
 
-        .toggle-option.active {
-            color: white;
-        }
+        .toggle-option.active { color: #fff; }
 
         .toggle-ball {
             position: absolute;
-            top: 6px;
-            left: 6px;
-            width: calc(50% - 6px);
-            height: calc(100% - 12px);
+            top: 4px;
+            left: 4px;
+            width: calc(50% - 4px);
+            height: calc(100% - 8px);
             background: var(--grad);
-            border-radius: 44px;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            border-radius: 40px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .toggle-ball.right {
+        .toggle-ball.failed {
             transform: translateX(100%);
+            background: var(--grad-accent);
         }
 
-        .goal-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            background: #fafafa;
-            border-radius: 14px;
-            margin-bottom: 10px;
-            font-size: 15px;
-            color: #333;
-            transition: all 0.3s;
-            animation: goalSlide 0.4s ease forwards;
-            opacity: 0;
-            border: 1px solid transparent;
-        }
-
-        .goal-item:hover {
-            transform: translateX(4px);
-            background: white;
-            border-color: #eee;
-        }
-
-        @keyframes goalSlide {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .goal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--grad);
-            flex-shrink: 0;
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-
-        .streak-card {
-            background: var(--grad);
-            border-radius: 24px;
-            padding: 28px 24px;
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-            position: relative;
-            overflow: hidden;
-            animation: floatCard 4s ease-in-out infinite;
-        }
-
-        .streak-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-            animation: rotateShard 6s linear infinite;
-        }
-
-        @keyframes rotateShard {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes floatCard {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-
-        .streak-number {
-            font-family: 'Syne', sans-serif;
-            font-size: 64px;
-            font-weight: 800;
-            color: white;
-            line-height: 1;
-            position: relative;
-            z-index: 1;
-        }
-
-        .streak-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 13px;
-            margin-top: 6px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .mode-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
-            border-radius: 50px;
-            padding: 8px 16px;
-            font-size: 13px;
-            color: #555;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-
-        .verdict-card {
-            background: #111;
-            border-radius: 20px;
-            padding: 24px;
-            width: 100%;
-            margin-bottom: 16px;
-            border: 1px solid #333;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .verdict-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--grad);
-        }
-
-        .verdict-card p {
-            color: #eee;
-            font-size: 16px;
-            line-height: 1.7;
-            margin: 0;
-        }
-
-        .verdict-label {
-            color: #667eea;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .logo-3d {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            animation: spin3d 8s ease-in-out infinite;
-        }
-
-        .logo-3d-inner {
-            width: 70px;
-            height: 70px;
-            border-radius: 20px;
-            background: var(--grad);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
-        }
-
-        @keyframes spin3d {
-            0% {
-                transform: rotateY(0deg) rotateX(0deg);
-            }
-
-            25% {
-                transform: rotateY(15deg) rotateX(5deg);
-            }
-
-            50% {
-                transform: rotateY(0deg) rotateX(0deg);
-            }
-
-            75% {
-                transform: rotateY(-15deg) rotateX(-5deg);
-            }
-
-            100% {
-                transform: rotateY(0deg) rotateX(0deg);
-            }
-        }
-
-        .particle {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                opacity: 0;
-                transform: translateY(0) scale(0);
-            }
-
-            20% {
-                opacity: 0.6;
-                transform: translateY(-20px) scale(1);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-120px) scale(0.5);
-            }
-        }
-
-        /* HISTORY SCREEN */
+        /* History items */
         .history-item {
-            background: #fafafa;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 14px;
             padding: 14px 16px;
             margin-bottom: 10px;
-            border: 1px solid #eee;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
-
-        .history-date {
-            font-size: 11px;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .history-status {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .history-status.completed {
-            color: #43e97b;
-        }
-
-        .history-status.failed {
-            color: #f5576c;
-        }
-
-        .history-verdict {
-            font-size: 12px;
-            color: #777;
-            line-height: 1.5;
-        }
-
-        .empty-history {
-            text-align: center;
-            color: #bbb;
-            font-size: 14px;
-            padding: 20px 0;
-        }
+        .history-date { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; }
+        .history-status { font-size: 13px; font-weight: 700; margin: 4px 0 6px; }
+        .history-status.completed { color: var(--success); }
+        .history-status.failed { color: var(--danger); }
+        .history-verdict { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
     </style>
 </head>
 
@@ -651,311 +522,477 @@
     <div class="orb orb2"></div>
     <div class="orb orb3"></div>
 
-    <!-- SCREEN 1: HOOK -->
+    <div class="top-nav">
+        <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
+        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Cell">⏱️</button>
+    </div>
+
+    <!-- SCREEN 1: ONBOARDING -->
     <div id="screen1" class="screen active">
         <div class="card">
-            <div class="logo-3d">
-                <div class="logo-3d-inner">🔒</div>
-            </div>
-            <div class="label"><span class="label-dot"></span> FocusJail</div>
-            <h1>You waste 7+ hours daily scrolling.</h1>
-            <p>Every night this app confronts you with the gap between what you promised and what you actually did.</p>
-            <button class="btn-primary" onclick="goTo('screen2')">I'm Ready</button>
+            <div class="label"><span class="label-dot"></span> FocusJail Protocol</div>
+            <h1>Stop Negotiating With Yourself.</h1>
+            <p>You lose 7+ hours every day to cheap dopamine. FocusJail holds you hostage to your own promises every night with zero sugarcoating.</p>
+            <button class="btn-primary" onclick="playClick(); goTo('screen2')">Lock In 🔒</button>
         </div>
     </div>
 
-    <!-- SCREEN 2: GOALS SETUP -->
+    <!-- SCREEN 2: SETUP GOALS -->
     <div id="screen2" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Setup</div>
-            <h1>Set your goals.</h1>
-            <p>No vague intentions. Specific commitments only.</p>
-            <input id="name" type="text" placeholder="Your name" />
-            <input id="goal1" type="text" placeholder="Goal 1 - be specific" />
-            <input id="goal2" type="text" placeholder="Goal 2 - be specific" />
-            <input id="goal3" type="text" placeholder="Goal 3 - be specific" />
-            <button class="btn-primary" onclick="saveGoals()">Commit</button>
+            <div class="label"><span class="label-dot"></span> Inmate Dossier</div>
+            <h1>Define Commitments.</h1>
+            <p>Vague goals lead to failed lives. Enter 3 non-negotiable targets.</p>
+            <input id="name" type="text" placeholder="Your Name or Alias" />
+            <input id="goal1" type="text" placeholder="1. Deep Work: e.g., Ship feature X" />
+            <input id="goal2" type="text" placeholder="2. Physical: e.g., 45m workout" />
+            <input id="goal3" type="text" placeholder="3. Habit: e.g., Read 20 pages" />
+            <button class="btn-primary" onclick="saveGoals()">Set Commitments</button>
         </div>
     </div>
 
-    <!-- SCREEN 2B: TONE SELECTION -->
+    <!-- SCREEN 2B: TONE -->
     <div id="screen2b" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Accountability Style</div>
-            <h1>How should I hold you accountable?</h1>
-            <p>Be honest. Pick what actually works for you.</p>
-            <button class="tone-btn tone-brutal" onclick="setTone('brutal')">
+            <div class="label"><span class="label-dot"></span> Warden Style</div>
+            <h1>Select Accountability Tone.</h1>
+            <p>Choose the level of pressure you need to execute.</p>
+            <div class="tone-btn" onclick="setTone('brutal')">
                 <span class="tone-emoji">🔥</span>
-                <span class="tone-text">
-                    <span class="tone-title">Brutal</span>
-                    <span class="tone-desc">No mercy. Raw truth. Zero excuses.</span>
-                </span>
-            </button>
-            <button class="tone-btn tone-firm" onclick="setTone('firm')">
-                <span class="tone-emoji">💪</span>
-                <span class="tone-text">
-                    <span class="tone-title">Firm</span>
-                    <span class="tone-desc">Direct and fair. No insults, no softening.</span>
-                </span>
-            </button>
-            <button class="tone-btn tone-gentle" onclick="setTone('gentle')">
+                <div>
+                    <div class="tone-title">Brutal Warden</div>
+                    <div class="tone-desc">Raw truth, zero mercy, merciless reality check.</div>
+                </div>
+            </div>
+            <div class="tone-btn" onclick="setTone('firm')">
+                <span class="tone-emoji">⚔️</span>
+                <div>
+                    <div class="tone-title">Firm Commander</div>
+                    <div class="tone-desc">Direct, pragmatic, and strictly factual.</div>
+                </div>
+            </div>
+            <div class="tone-btn" onclick="setTone('gentle')">
                 <span class="tone-emoji">🌱</span>
-                <span class="tone-text">
-                    <span class="tone-title">Gentle</span>
-                    <span class="tone-desc">Encouraging but honest. Good for beginners.</span>
-                </span>
-            </button>
+                <div>
+                    <div class="tone-title">Empathetic Mentor</div>
+                    <div class="tone-desc">Encouraging yet honest course-correction.</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- SCREEN 3: HOW IT WORKS -->
-    <div id="screen3" class="screen">
-        <div class="card">
-            <div class="label"><span class="label-dot"></span> How It Works</div>
-            <h1>Two moments. Every day.</h1>
-            <p>Morning - Open the app. See your commitments. Go execute.</p>
-            <p>Night - Report back. Answer for your day.</p>
-            <p>The AI reads your report and confronts you with the truth. No sugarcoating.</p>
-            <button class="btn-primary" onclick="loadHome(); goTo('screen4')">Let's Go</button>
-        </div>
-    </div>
-
-    <!-- SCREEN 4: HOME -->
+    <!-- SCREEN 4: DASHBOARD / HOME -->
     <div id="screen4" class="screen">
-        <div class="mode-badge" id="modeBadge">Morning Mode</div>
         <div class="streak-card">
             <div class="streak-number" id="streakCount">0</div>
-            <div class="streak-label">Day Streak</div>
+            <div class="streak-label">Day Unbroken Streak</div>
+            <div class="inmate-badge" id="rankBadge">Inmate #0042</div>
         </div>
+
+        <div class="week-strip" id="weekStrip"></div>
+
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Today's Commitments</div>
+            <div class="label"><span class="label-dot"></span> Active Cell Block</div>
             <h1 id="welcomeName">Good morning.</h1>
+            <p style="font-size: 13px; margin-bottom: 14px;">Tap commitments as you finish them:</p>
+            
             <div id="goalsList"></div>
-            <button class="btn-primary" onclick="goTo('screen5')">Report To AI</button>
-            <button class="btn-secondary" onclick="goTo('screen7')">View History</button>
-            <button class="btn-secondary" onclick="resetGoals()">Change Goals</button>
+
+            <button class="btn-primary" onclick="playClick(); goTo('screen5')">Submit Night Report 🌙</button>
+            <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Enter Focus Lockdown 🔒</button>
+            <button class="btn-secondary" onclick="playClick(); goTo('screen7')">View Verdict Log 📜</button>
+            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments ✏️</button>
         </div>
     </div>
 
     <!-- SCREEN 5: NIGHT REPORT -->
     <div id="screen5" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Night Report</div>
-            <h1>Answer for your day.</h1>
-            <div class="toggle-wrap" onclick="toggleGoals()">
+            <div class="label"><span class="label-dot"></span> Nightly Reckoning</div>
+            <h1>Did you execute?</h1>
+            <p>No rationalizations. Stand before the verdict.</p>
+
+            <div class="toggle-wrap" onclick="toggleReportStatus()">
                 <div class="toggle-ball" id="toggleBall"></div>
-                <div class="toggle-option active" id="opt-yes">Completed</div>
-                <div class="toggle-option" id="opt-no">Failed</div>
+                <div class="toggle-option active" id="opt-yes">All Completed ✓</div>
+                <div class="toggle-option" id="opt-no">Failed / Missed ✗</div>
             </div>
-            <input id="excuseInput" type="text" placeholder="What happened today?" />
-            <button class="btn-primary" onclick="submitReport()">Submit</button>
+
+            <textarea id="excuseInput" rows="3" placeholder="What really happened today? (Be honest with yourself)"></textarea>
+            
+            <button class="btn-primary" onclick="submitReport()">Request AI Verdict ⚖️</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
         </div>
     </div>
 
     <!-- SCREEN 6: AI VERDICT -->
     <div id="screen6" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> AI Verdict</div>
-            <h1>The verdict.</h1>
+            <div class="label"><span class="label-dot"></span> FocusJail Decision</div>
+            <h1>The Sentence.</h1>
             <div class="verdict-card">
-                <div class="verdict-label">FocusJail says</div>
-                <p id="aiResponse">Analyzing your day...</p>
+                <p id="aiResponse">The warden is evaluating your daily record...</p>
             </div>
-            <button class="btn-primary" onclick="goTo('screen4')">Face Tomorrow</button>
+            <button class="btn-primary" onclick="shareVerdict()">Copy Verdict to Share 📋</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Face Tomorrow</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: DEEP FOCUS TIMER -->
+    <div id="screenTimer" class="screen">
+        <div class="card" id="timerCard">
+            <div class="label"><span class="label-dot"></span> Lockdown Cell</div>
+            <h1>Deep Work Session</h1>
+            
+            <div class="cell-bars">
+                <div class="cell-bar"></div>
+                <div class="cell-bar"></div>
+                <div class="cell-bar"></div>
+                <div class="cell-bar"></div>
+                <div class="cell-bar"></div>
+            </div>
+
+            <div class="timer-display" id="timerTime">25:00</div>
+            
+            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Lockdown 🔒</button>
+            <button class="btn-secondary" onclick="resetTimer()">Reset to 25m</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Exit Cell</button>
         </div>
     </div>
 
     <!-- SCREEN 7: HISTORY -->
     <div id="screen7" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Your Week</div>
-            <h1>Last 7 days.</h1>
+            <div class="label"><span class="label-dot"></span> Inmate Archives</div>
+            <h1>Sentence History</h1>
             <div id="historyList"></div>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
         </div>
     </div>
 
     <script>
         var goalsCompleted = true;
+        var soundEnabled = true;
+        var timerInterval = null;
+        var timerSeconds = 25 * 60;
+        var timerRunning = false;
+        var audioCtx = null;
+
+        // Web Audio Synthesizer
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playTone(freq, type, duration) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                var osc = audioCtx.createOscillator();
+                var gain = audioCtx.createGain();
+                osc.type = type || 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        function playClick() { playTone(600, 'sine', 0.08); }
+        function playSuccess() { playTone(880, 'triangle', 0.25); }
+        function playFail() { playTone(220, 'sawtooth', 0.35); }
+
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundBtn').textContent = soundEnabled ? '🔊' : '🔇';
+        }
 
         function goTo(id) {
             var screens = document.querySelectorAll('.screen');
-            for (var i = 0; i < screens.length; i++) {
-                screens[i].classList.remove('active');
-            }
-            document.getElementById(id).classList.add('active');
+            screens.forEach(s => s.classList.remove('active'));
+            var target = document.getElementById(id);
+            if (target) target.classList.add('active');
             if (id === 'screen7') loadHistory();
-            spawnParticles();
+            if (id === 'screen4') loadHome();
         }
 
-        function spawnParticles() {
-            var colors = ['#667eea', '#f093fb', '#43e97b', '#f5576c'];
-            for (var i = 0; i < 8; i++) {
-                (function () {
-                    var p = document.createElement('div');
-                    p.className = 'particle';
-                    p.style.left = (20 + Math.random() * 60) + '%';
-                    p.style.bottom = (10 + Math.random() * 30) + '%';
-                    p.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    p.style.animation = 'particleFloat ' + (1 + Math.random() * 1.5) + 's ease forwards';
-                    p.style.animationDelay = (Math.random() * 0.4) + 's';
-                    document.body.appendChild(p);
-                    setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 2500);
-                })();
-            }
-        }
-
-        function checkStreakReset() {
-            var lastReport = localStorage.getItem('lastReportDate');
-            var today = new Date().toDateString();
-            var yesterday = new Date(Date.now() - 86400000).toDateString();
-            if (lastReport && lastReport !== today && lastReport !== yesterday) {
-                localStorage.setItem('streak', 0);
-            }
+        function getInmateRank(streak) {
+            if (streak >= 30) return '👑 Liberated Sovereign';
+            if (streak >= 14) return '🗝️ Parole Candidate';
+            if (streak >= 7) return '⛓️ Chain Breaker';
+            if (streak >= 3) return '🛡️ Model Prisoner';
+            return '🔒 Inmate #0042';
         }
 
         function saveGoals() {
-            var name = document.getElementById('name').value;
-            var g1 = document.getElementById('goal1').value;
-            var g2 = document.getElementById('goal2').value;
-            var g3 = document.getElementById('goal3').value;
-            if (!name || !g1 || !g2 || !g3) { alert('Fill everything. No shortcuts.'); return; }
+            var name = document.getElementById('name').value.trim();
+            var g1 = document.getElementById('goal1').value.trim();
+            var g2 = document.getElementById('goal2').value.trim();
+            var g3 = document.getElementById('goal3').value.trim();
+
+            if (!name || !g1 || !g2 || !g3) {
+                alert('Every slot must be committed. No shortcuts.');
+                return;
+            }
+
             localStorage.setItem('name', name);
-            localStorage.setItem('goals', JSON.stringify([g1, g2, g3]));
+            localStorage.setItem('goals', JSON.stringify([
+                { text: g1, done: false },
+                { text: g2, done: false },
+                { text: g3, done: false }
+            ]));
+
+            playSuccess();
             goTo('screen2b');
         }
 
         function setTone(tone) {
             localStorage.setItem('tone', tone);
-            goTo('screen3');
+            playSuccess();
+            loadHome();
+            goTo('screen4');
+        }
+
+        function toggleGoalCheck(index) {
+            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
+            if (goals[index]) {
+                goals[index].done = !goals[index].done;
+                localStorage.setItem('goals', JSON.stringify(goals));
+                playClick();
+                renderGoalsList();
+            }
+        }
+
+        function renderGoalsList() {
+            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
+            var list = document.getElementById('goalsList');
+            list.innerHTML = '';
+
+            goals.forEach(function(g, i) {
+                var item = document.createElement('div');
+                item.className = 'goal-item' + (g.done ? ' done' : '');
+                item.onclick = function() { toggleGoalCheck(i); };
+
+                item.innerHTML = `
+                    <div class="goal-left">
+                        <div class="goal-checkbox">${g.done ? '✓' : ''}</div>
+                        <span>${g.text}</span>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function renderWeekStrip() {
+            var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
+            var strip = document.getElementById('weekStrip');
+            strip.innerHTML = '';
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            for (var i = 6; i >= 0; i--) {
+                var d = new Date();
+                d.setDate(d.getDate() - i);
+                var dateStr = d.toDateString();
+                var dayName = days[d.getDay()];
+
+                var record = history.find(h => h.date === dateStr);
+                var box = document.createElement('div');
+                box.className = 'day-box' + (record ? (record.completed ? ' completed' : ' failed') : '');
+                box.innerHTML = `<div>${dayName}</div><div>${record ? (record.completed ? '✓' : '✗') : '·'}</div>`;
+                strip.appendChild(box);
+            }
         }
 
         function loadHome() {
-            var name = localStorage.getItem('name') || 'You';
-            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            var streak = localStorage.getItem('streak') || 0;
+            var name = localStorage.getItem('name') || 'Inmate';
+            var streak = parseInt(localStorage.getItem('streak') || 0);
             var hour = new Date().getHours();
-            var isMorning = hour < 17;
-            document.getElementById('welcomeName').textContent = isMorning ? 'Good morning, ' + name + '.' : 'Good evening, ' + name + '.';
-            document.getElementById('modeBadge').textContent = isMorning ? 'Morning Mode' : 'Night Mode';
+            
+            document.getElementById('welcomeName').textContent = (hour < 12 ? 'Morning, ' : (hour < 18 ? 'Afternoon, ' : 'Evening, ')) + name + '.';
             document.getElementById('streakCount').textContent = streak;
-            var list = document.getElementById('goalsList');
-            list.innerHTML = '';
-            for (var i = 0; i < goals.length; i++) {
-                var div = document.createElement('div');
-                div.className = 'goal-item';
-                div.style.animationDelay = (i * 0.1) + 's';
-                div.innerHTML = '<span class="goal-dot"></span>' + goals[i];
-                list.appendChild(div);
+            document.getElementById('rankBadge').textContent = getInmateRank(streak);
+            
+            renderGoalsList();
+            renderWeekStrip();
+        }
+
+        function toggleReportStatus() {
+            goalsCompleted = !goalsCompleted;
+            var ball = document.getElementById('toggleBall');
+            var yes = document.getElementById('opt-yes');
+            var no = document.getElementById('opt-no');
+
+            if (goalsCompleted) {
+                ball.classList.remove('failed');
+                yes.classList.add('active');
+                no.classList.remove('active');
+            } else {
+                ball.classList.add('failed');
+                no.classList.add('active');
+                yes.classList.remove('active');
             }
+            playClick();
+        }
+
+        function submitReport() {
+            var excuse = document.getElementById('excuseInput').value.trim();
+            var rawGoals = JSON.parse(localStorage.getItem('goals') || '[]');
+            var goalsList = rawGoals.map(g => g.text);
+            var name = localStorage.getItem('name') || 'User';
+            var tone = localStorage.getItem('tone') || 'brutal';
+
+            document.getElementById('aiResponse').textContent = 'The Warden is formulating your sentence...';
+            goTo('screen6');
+
+            var backendUrl = 'https://focusjail-backend-production.up.railway.app/verdict';
+
+            fetch(backendUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    goals: goalsList,
+                    completed: goalsCompleted,
+                    excuse: excuse,
+                    tone: tone
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                var verdictText = data.verdict || generateFallbackVerdict(name, goalsCompleted, tone);
+                finishSubmission(verdictText);
+            })
+            .catch(() => {
+                var fallback = generateFallbackVerdict(name, goalsCompleted, tone);
+                finishSubmission(fallback);
+            });
+        }
+
+        function generateFallbackVerdict(name, success, tone) {
+            if (success) {
+                return `${name}, you executed your commitments as promised. Do not get comfortable—momentum is preserved only through tomorrow's discipline.`;
+            } else {
+                return `${name}, you surrendered your day to rationalizations and comfort. The gap between who you want to be and who you are just widened.`;
+            }
+        }
+
+        function finishSubmission(verdict) {
+            var streak = parseInt(localStorage.getItem('streak') || 0);
+            streak = goalsCompleted ? streak + 1 : 0;
+            localStorage.setItem('streak', streak);
+            localStorage.setItem('lastReportDate', new Date().toDateString());
+
+            var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
+            history.push({
+                date: new Date().toDateString(),
+                completed: goalsCompleted,
+                verdict: verdict
+            });
+            if (history.length > 14) history.shift();
+            localStorage.setItem('verdictHistory', JSON.stringify(history));
+
+            // Reset checklist checkmarks for tomorrow
+            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
+            goals.forEach(g => g.done = false);
+            localStorage.setItem('goals', JSON.stringify(goals));
+
+            document.getElementById('aiResponse').textContent = verdict;
+            if (goalsCompleted) playSuccess(); else playFail();
+        }
+
+        function shareVerdict() {
+            var text = `🔒 FocusJail Sentence:\n"${document.getElementById('aiResponse').textContent}"\n\nStreak: ${localStorage.getItem('streak')} days unbroken.`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Sentence copied to clipboard!');
+            });
+        }
+
+        function openEditGoals() {
+            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
+            document.getElementById('name').value = localStorage.getItem('name') || '';
+            document.getElementById('goal1').value = goals[0]?.text || '';
+            document.getElementById('goal2').value = goals[1]?.text || '';
+            document.getElementById('goal3').value = goals[2]?.text || '';
+            goTo('screen2');
         }
 
         function loadHistory() {
             var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
             var container = document.getElementById('historyList');
             container.innerHTML = '';
-            if (history.length === 0) {
-                container.innerHTML = '<div class="empty-history">No reports yet. Submit your first night report to start tracking.</div>';
+            if (!history.length) {
+                container.innerHTML = '<p style="text-align:center; padding: 20px 0;">No sentences logged yet.</p>';
                 return;
             }
-            var reversed = history.slice().reverse();
-            for (var i = 0; i < reversed.length; i++) {
-                var item = reversed[i];
+            history.slice().reverse().forEach(item => {
                 var div = document.createElement('div');
                 div.className = 'history-item';
-                div.innerHTML =
-                    '<div class="history-date">' + item.date + '</div>' +
-                    '<div class="history-status ' + (item.completed ? 'completed' : 'failed') + '">' +
-                    (item.completed ? '✓ Goals Completed' : '✗ Goals Failed') +
-                    '</div>' +
-                    '<div class="history-verdict">' + item.verdict + '</div>';
+                div.innerHTML = `
+                    <div class="history-date">${item.date}</div>
+                    <div class="history-status ${item.completed ? 'completed' : 'failed'}">
+                        ${item.completed ? '✓ Commitments Met' : '✗ Failed Commitments'}
+                    </div>
+                    <div class="history-verdict">${item.verdict}</div>
+                `;
                 container.appendChild(div);
-            }
-        }
-
-        function toggleGoals() {
-            goalsCompleted = !goalsCompleted;
-            var ball = document.getElementById('toggleBall');
-            var yes = document.getElementById('opt-yes');
-            var no = document.getElementById('opt-no');
-            if (goalsCompleted) {
-                ball.classList.remove('right');
-                yes.classList.add('active');
-                no.classList.remove('active');
-            } else {
-                ball.classList.add('right');
-                no.classList.add('active');
-                yes.classList.remove('active');
-            }
-        }
-
-        function submitReport() {
-            var excuse = document.getElementById('excuseInput').value;
-            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            var name = localStorage.getItem('name') || 'User';
-            var tone = localStorage.getItem('tone') || 'brutal';
-
-            var toneInstruction = tone === 'brutal'
-                ? 'Be direct and unfiltered. No sugarcoating. Call out the gap between their promise and reality. Use their name.'
-                : tone === 'firm'
-                    ? 'Be direct and firm. No insults but no softening either. State facts clearly.'
-                    : 'Be encouraging but honest. Acknowledge their effort, gently point out the gap.';
-
-            document.getElementById('aiResponse').textContent = 'Analyzing your day...';
-            goTo('screen6');
-
-            var prompt = 'You are an accountability coach. User: ' + name + '. Goals: ' + goals.join(', ') + '. Completed: ' + (goalsCompleted ? 'Yes' : 'No') + '. What happened: ' + (excuse || 'Nothing given') + '. Tone instruction: ' + toneInstruction + ' Give exactly 2 sentences. No fluff.';
-
-            fetch('https://focusjail-backend-production.up.railway.app/verdict', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt })
-            })
-                .then(function (r) { return r.json(); })
-                .then(function (data) {
-                    var streak = goalsCompleted ? parseInt(localStorage.getItem('streak') || 0) + 1 : 0;
-                    localStorage.setItem('streak', streak);
-                    localStorage.setItem('lastReportDate', new Date().toDateString());
-
-                    var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
-                    history.push({
-                        date: new Date().toDateString(),
-                        completed: goalsCompleted,
-                        verdict: data.verdict
-                    });
-                    if (history.length > 7) history.shift();
-                    localStorage.setItem('verdictHistory', JSON.stringify(history));
-
-                    document.getElementById('aiResponse').textContent = data.verdict;
-                })
-                .catch(function () {
-                    document.getElementById('aiResponse').textContent = 'Could not reach AI. Check your connection.';
-                });
-        }
-
-        function resetGoals() {
-            localStorage.clear();
-            goTo('screen2');
-        }
-
-        document.addEventListener('mousemove', function (e) {
-            var cards = document.querySelectorAll('.card');
-            cards.forEach(function (card) {
-                var rect = card.getBoundingClientRect();
-                var dx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
-                var dy = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
-                card.style.transform = 'rotateY(' + (dx * 6) + 'deg) rotateX(' + (-dy * 6) + 'deg) translateY(-4px)';
             });
-        });
+        }
 
-        document.addEventListener('mouseleave', function () {
-            var cards = document.querySelectorAll('.card');
-            cards.forEach(function (card) { card.style.transform = ''; });
-        });
+        // Deep Work Timer Logic
+        function updateTimerDisplay() {
+            var m = Math.floor(timerSeconds / 60);
+            var s = timerSeconds % 60;
+            document.getElementById('timerTime').textContent = 
+                (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        function toggleTimer() {
+            var btn = document.getElementById('timerBtn');
+            var card = document.getElementById('timerCard');
+            if (timerRunning) {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                btn.textContent = 'Resume Lockdown 🔒';
+                card.classList.remove('locked');
+            } else {
+                timerRunning = true;
+                btn.textContent = 'Pause ⏸️';
+                card.classList.add('locked');
+                playSuccess();
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        btn.textContent = 'Session Complete 🔓';
+                        card.classList.remove('locked');
+                        playSuccess();
+                        alert('Lockdown session completed. Return to the dashboard.');
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerSeconds = 25 * 60;
+            updateTimerDisplay();
+            document.getElementById('timerBtn').textContent = 'Start Lockdown 🔒';
+            document.getElementById('timerCard').classList.remove('locked');
+        }
 
         window.onload = function () {
-            checkStreakReset();
-            if (localStorage.getItem('name')) { loadHome(); goTo('screen4'); }
+            if (localStorage.getItem('name')) {
+                loadHome();
+                goTo('screen4');
+            }
         };
     </script>
 </body>

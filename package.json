@@ -1,26 +1,17 @@
 {
-  "name": "blade",
+  "name": "focusjail",
   "version": "1.0.0",
-  "description": "",
+  "description": "FocusJail - Radical AI accountability system",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iamwarriorofmyuniverse-coder/focusjail-backend.git"
-  },
-  "keywords": [],
+  "keywords": ["accountability", "ai", "productivity", "focus"],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/iamwarriorofmyuniverse-coder/focusjail-backend/issues"
-  },
-  "homepage": "https://github.com/iamwarriorofmyuniverse-coder/focusjail-backend#readme",
+  "license": "MIT",
   "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
   }
 }
