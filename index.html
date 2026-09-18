@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8" />
@@ -22,22 +22,64 @@
 
     <style>
         :root {
-            --bg: #090a10;
-            --surface: rgba(18, 20, 30, 0.75);
-            --surface-hover: rgba(24, 27, 40, 0.85);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-focus: rgba(102, 126, 234, 0.6);
+            /* Shared Color Tokens */
             --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
             --grad-firm: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             --grad-gentle: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
             --grad-danger: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
             --primary: #667eea;
             --accent: #f093fb;
-            --success: #43e97b;
-            --danger: #f5576c;
+            --success: #10b981;
+            --danger: #ef4444;
+            --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Dark Theme (Default) */
+        html[data-theme="dark"] {
+            --bg: #090a10;
+            --surface: rgba(18, 20, 30, 0.78);
+            --surface-hover: rgba(24, 27, 40, 0.88);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.16);
+            --border-focus: rgba(102, 126, 234, 0.6);
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --text-muted: #64748b;
+            --input-bg: rgba(10, 11, 18, 0.65);
+            --card-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            --btn-sec-bg: rgba(255, 255, 255, 0.04);
+            --btn-sec-hover: rgba(255, 255, 255, 0.08);
+            --ambient-top: rgba(102, 126, 234, 0.2);
+            --ambient-bottom: rgba(240, 147, 251, 0.08);
+            --verdict-bg: rgba(10, 11, 18, 0.8);
+            --verdict-text: #e2e8f0;
+            --toggle-bg: rgba(10, 11, 18, 0.8);
+            --toast-bg: rgba(18, 20, 30, 0.95);
+            --checkbox-border: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Light Theme */
+        html[data-theme="light"] {
+            --bg: #f5f7fb;
+            --surface: rgba(255, 255, 255, 0.88);
+            --surface-hover: rgba(255, 255, 255, 0.98);
+            --border: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(0, 0, 0, 0.15);
+            --border-focus: rgba(102, 126, 234, 0.8);
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --text-muted: #94a3b8;
+            --input-bg: rgba(241, 245, 249, 0.9);
+            --card-shadow: 0 16px 36px rgba(100, 116, 139, 0.12), 0 2px 6px rgba(100, 116, 139, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            --btn-sec-bg: rgba(0, 0, 0, 0.04);
+            --btn-sec-hover: rgba(0, 0, 0, 0.07);
+            --ambient-top: rgba(102, 126, 234, 0.14);
+            --ambient-bottom: rgba(240, 147, 251, 0.08);
+            --verdict-bg: rgba(248, 250, 252, 0.95);
+            --verdict-text: #1e293b;
+            --toggle-bg: rgba(0, 0, 0, 0.06);
+            --toast-bg: rgba(255, 255, 255, 0.96);
+            --checkbox-border: rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -45,15 +87,16 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
 
         body {
             background-color: var(--bg);
             background-image: 
-                radial-gradient(circle at 50% -10%, rgba(102, 126, 234, 0.2) 0%, transparent 60%),
-                radial-gradient(circle at 90% 90%, rgba(240, 147, 251, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 50% -10%, var(--ambient-top) 0%, transparent 60%),
+                radial-gradient(circle at 90% 90%, var(--ambient-bottom) 0%, transparent 50%);
             background-attachment: fixed;
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: var(--font-family);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -64,7 +107,7 @@
             position: relative;
         }
 
-        /* Subtle Ambient Glow Effect */
+        /* Subtle Ambient Glow */
         .ambient-glow {
             position: fixed;
             top: 20%;
@@ -88,7 +131,7 @@
             gap: 10px;
         }
         .icon-btn {
-            background: rgba(18, 20, 30, 0.8);
+            background: var(--surface);
             border: 1px solid var(--border);
             color: var(--text-sub);
             border-radius: 50%;
@@ -100,14 +143,14 @@
             cursor: pointer;
             font-size: 15px;
             backdrop-filter: blur(16px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .icon-btn:hover {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            border-color: var(--border-hover);
             transform: translateY(-2px);
-            background: rgba(28, 31, 46, 0.9);
+            background: var(--surface-hover);
         }
         .icon-btn:active {
             transform: translateY(0);
@@ -128,22 +171,22 @@
             max-width: 380px;
         }
         .toast {
-            background: rgba(18, 20, 30, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: var(--toast-bg);
+            border: 1px solid var(--border);
             padding: 13px 18px;
             border-radius: 14px;
             font-size: 13px;
             font-weight: 600;
-            color: #fff;
+            color: var(--text-main);
             backdrop-filter: blur(20px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             display: flex;
             align-items: center;
             gap: 10px;
             animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: auto;
         }
-        .toast.success { color: var(--success); border-color: rgba(67, 233, 123, 0.3); }
+        .toast.success { color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
         .toast.info { color: #f093fb; border-color: rgba(240, 147, 251, 0.3); }
         @keyframes toastIn {
             from { opacity: 0; transform: translateY(-16px) scale(0.96); }
@@ -178,15 +221,15 @@
             border-radius: 24px;
             padding: 30px 24px;
             width: 100%;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: var(--card-shadow);
             backdrop-filter: blur(24px);
             position: relative;
             overflow: hidden;
-            transition: border-color 0.25s ease;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .card:hover {
-            border-color: rgba(255, 255, 255, 0.14);
+            border-color: var(--border-hover);
         }
 
         /* Hero AI Icon / Pulse */
@@ -218,7 +261,7 @@
             font-weight: 700;
             letter-spacing: 1.8px;
             text-transform: uppercase;
-            color: #a5b4fc;
+            color: #667eea;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -237,7 +280,7 @@
             font-family: 'Syne', sans-serif;
             font-size: 26px;
             font-weight: 800;
-            color: #fff;
+            color: var(--text-main);
             line-height: 1.25;
             margin-bottom: 8px;
             letter-spacing: -0.4px;
@@ -250,29 +293,28 @@
             margin-bottom: 22px;
         }
 
-        /* Clean Translucent Inputs */
+        /* Clean Inputs */
         input, textarea, select {
             width: 100%;
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 14px 16px;
             font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            color: #fff;
+            font-family: var(--font-family);
+            color: var(--text-main);
             margin-bottom: 12px;
             outline: none;
-            background: rgba(10, 11, 18, 0.6);
+            background: var(--input-bg);
             transition: all 0.2s ease;
         }
 
         input:focus, textarea:focus, select:focus {
             border-color: var(--border-focus);
-            background: rgba(10, 11, 18, 0.85);
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
         }
 
         input::placeholder, textarea::placeholder {
-            color: #4b5268;
+            color: var(--text-muted);
         }
 
         /* Buttons */
@@ -285,7 +327,7 @@
             color: white;
             font-size: 15px;
             font-weight: 700;
-            font-family: 'DM Sans', sans-serif;
+            font-family: var(--font-family);
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -310,11 +352,11 @@
             padding: 13px;
             border: 1px solid var(--border);
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--btn-sec-bg);
             color: var(--text-sub);
             font-size: 14px;
             font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
+            font-family: var(--font-family);
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.2s ease;
@@ -325,9 +367,9 @@
         }
 
         .btn-secondary:hover {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.16);
-            background: rgba(255, 255, 255, 0.07);
+            color: var(--text-main);
+            border-color: var(--border-hover);
+            background: var(--btn-sec-hover);
             transform: translateY(-1px);
         }
 
@@ -386,7 +428,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--btn-sec-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
             margin-bottom: 10px;
@@ -397,7 +439,7 @@
 
         .goal-item:hover {
             border-color: rgba(102, 126, 234, 0.4);
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--btn-sec-hover);
             transform: translateY(-1px);
         }
 
@@ -405,14 +447,14 @@
             text-decoration: line-through;
             color: var(--text-muted);
             border-color: transparent;
-            background: rgba(255, 255, 255, 0.01);
+            opacity: 0.7;
         }
 
         .goal-checkbox {
             width: 20px;
             height: 20px;
             border-radius: 6px;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border: 1.5px solid var(--checkbox-border);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -459,14 +501,14 @@
 
         .day-box.completed {
             color: var(--success);
-            border-color: rgba(67, 233, 123, 0.35);
-            background: rgba(67, 233, 123, 0.06);
+            border-color: rgba(16, 185, 129, 0.35);
+            background: rgba(16, 185, 129, 0.08);
         }
 
         .day-box.failed {
             color: var(--danger);
-            border-color: rgba(245, 87, 108, 0.3);
-            background: rgba(245, 87, 108, 0.06);
+            border-color: rgba(239, 68, 68, 0.3);
+            background: rgba(239, 68, 68, 0.08);
         }
 
         /* Timer Presets */
@@ -481,7 +523,7 @@
             flex: 1;
             padding: 9px 4px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--btn-sec-bg);
             border: 1px solid var(--border);
             color: var(--text-sub);
             font-size: 12px;
@@ -493,7 +535,7 @@
         .preset-btn.active {
             background: rgba(102, 126, 234, 0.15);
             border-color: rgba(102, 126, 234, 0.5);
-            color: #fff;
+            color: #667eea;
         }
 
         .timer-display {
@@ -510,7 +552,7 @@
 
         /* Verdict Card */
         .verdict-card {
-            background: rgba(10, 11, 18, 0.8);
+            background: var(--verdict-bg);
             border-radius: 18px;
             padding: 22px;
             width: 100%;
@@ -527,7 +569,7 @@
             border-radius: 18px 18px 0 0;
         }
         .verdict-card p {
-            color: #e2e8f0;
+            color: var(--verdict-text);
             font-size: 14px;
             line-height: 1.7;
             margin: 0;
@@ -535,7 +577,7 @@
 
         /* Toggle Switch */
         .toggle-wrap {
-            background: rgba(10, 11, 18, 0.8);
+            background: var(--toggle-bg);
             border: 1px solid var(--border);
             border-radius: 50px;
             padding: 4px;
@@ -622,24 +664,24 @@
 
         /* History Items */
         .history-item {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--btn-sec-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 15px 16px;
             margin-bottom: 10px;
         }
-        .history-date { font-size: 11px; color: #f093fb; font-weight: 700; text-transform: uppercase; }
+        .history-date { font-size: 11px; color: #667eea; font-weight: 700; text-transform: uppercase; }
         .history-status { font-size: 13px; font-weight: 700; margin: 4px 0 6px; }
         .history-status.completed { color: var(--success); }
         .history-status.failed { color: var(--danger); }
-        .history-verdict { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
+        .history-verdict { font-size: 13px; color: var(--text-sub); line-height: 1.5; }
 
         /* Achievement Canvas */
         #achievementCanvas {
             width: 100%;
             max-width: 360px;
             border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             margin-bottom: 18px;
         }
     </style>
@@ -652,8 +694,9 @@
     <!-- Live Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Top Action Nav -->
+    <!-- Top Action Nav with Dark/Light Mode Toggle -->
     <div class="top-nav">
+        <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Light/Dark Mode">☀️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
         <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session">⏱️</button>
@@ -842,6 +885,42 @@
         var timerRunning = false;
         var activeSoundscapeNode = null;
         var audioCtx = null;
+
+        // Theme Engine (Dark / Light Mode)
+        function initTheme() {
+            var savedTheme = localStorage.getItem('focus_theme');
+            if (!savedTheme) {
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                savedTheme = prefersDark ? 'dark' : 'light';
+            }
+            applyTheme(savedTheme);
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('focus_theme', theme);
+            var btn = document.getElementById('themeBtn');
+            if (btn) {
+                btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+                btn.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+            }
+            // Update mobile browser theme color
+            var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute('content', theme === 'dark' ? '#090a10' : '#f5f7fb');
+            }
+        }
+
+        function toggleTheme() {
+            var current = document.documentElement.getAttribute('data-theme') || 'dark';
+            var nextTheme = current === 'dark' ? 'light' : 'dark';
+            applyTheme(nextTheme);
+            playClick();
+            showToast(nextTheme === 'dark' ? 'Dark Mode Activated 🌙' : 'Light Mode Activated ☀️');
+            if (window.posthog) {
+                posthog.capture('theme_toggled', { theme: nextTheme });
+            }
+        }
 
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
@@ -1201,7 +1280,7 @@
             var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
             list.innerHTML = '';
             if (history.length === 0) {
-                list.innerHTML = '<p style="text-align: center; color: #64748b;">No archives recorded yet. Complete daily check-ins to build your history.</p>';
+                list.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No archives recorded yet. Complete daily check-ins to build your history.</p>';
                 return;
             }
             history.slice().reverse().forEach(h => {
@@ -1306,9 +1385,10 @@
             var streak = localStorage.getItem('streak') || 0;
             var rank = getInmateRank(parseInt(streak));
             var verdict = localStorage.getItem('latestVerdict') || 'Consistent daily action leads to extraordinary results.';
+            var isLight = document.documentElement.getAttribute('data-theme') === 'light';
 
-            // Clean Obsidian Background
-            ctx.fillStyle = '#090a10';
+            // Card Background
+            ctx.fillStyle = isLight ? '#ffffff' : '#090a10';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Signature Gradient Top Accent
@@ -1316,51 +1396,51 @@
             grad.addColorStop(0, '#667eea');
             grad.addColorStop(1, '#f093fb');
             ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, canvas.width, 8);
+            ctx.fillRect(0, 0, canvas.width, 10);
 
             // Header Title
-            ctx.fillStyle = '#f8fafc';
+            ctx.fillStyle = isLight ? '#0f172a' : '#f8fafc';
             ctx.font = 'bold 28px "Syne", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('FOCUSPACT MILESTONE', 350, 70);
+            ctx.fillText('FOCUSPACT MILESTONE', 350, 75);
 
-            ctx.fillStyle = '#f093fb';
+            ctx.fillStyle = '#667eea';
             ctx.font = '600 15px "DM Sans", sans-serif';
-            ctx.fillText('DAILY COMMITMENTS & ACCOUNTABILITY', 350, 105);
+            ctx.fillText('DAILY COMMITMENTS & ACCOUNTABILITY', 350, 110);
 
             // Inner Card Box
-            ctx.fillStyle = '#12141e';
-            ctx.fillRect(60, 140, 580, 620);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.fillStyle = isLight ? '#f8fafc' : '#12141e';
+            ctx.fillRect(60, 145, 580, 615);
+            ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
             ctx.lineWidth = 1.5;
-            ctx.strokeRect(60, 140, 580, 620);
+            ctx.strokeRect(60, 145, 580, 615);
 
             // Name & Streak
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = isLight ? '#0f172a' : '#ffffff';
             ctx.font = 'bold 36px "Syne", sans-serif';
-            ctx.fillText(name, 350, 220);
+            ctx.fillText(name, 350, 225);
 
-            ctx.fillStyle = '#43e97b';
+            ctx.fillStyle = '#10b981';
             ctx.font = 'bold 20px "DM Sans", sans-serif';
-            ctx.fillText(`🔥 ${streak} DAY STREAK  •  ${rank}`, 350, 270);
+            ctx.fillText(`🔥 ${streak} DAY STREAK  •  ${rank}`, 350, 275);
 
             // Coach Quote Block
-            ctx.fillStyle = '#0a0b12';
-            ctx.fillRect(90, 330, 520, 280);
-            ctx.strokeStyle = 'rgba(102, 126, 234, 0.3)';
+            ctx.fillStyle = isLight ? '#ffffff' : '#0a0b12';
+            ctx.fillRect(90, 335, 520, 275);
+            ctx.strokeStyle = isLight ? 'rgba(102, 126, 234, 0.3)' : 'rgba(102, 126, 234, 0.3)';
             ctx.lineWidth = 1.5;
-            ctx.strokeRect(90, 330, 520, 280);
+            ctx.strokeRect(90, 335, 520, 275);
 
-            ctx.fillStyle = '#a5b4fc';
+            ctx.fillStyle = '#667eea';
             ctx.font = '700 13px "DM Sans", sans-serif';
-            ctx.fillText('DAILY COACH REFLECTION', 350, 375);
+            ctx.fillText('DAILY COACH REFLECTION', 350, 380);
 
-            ctx.fillStyle = '#f1f5f9';
+            ctx.fillStyle = isLight ? '#334155' : '#f1f5f9';
             ctx.font = 'italic 17px "DM Sans", sans-serif';
-            wrapText(ctx, `"${verdict}"`, 350, 430, 460, 26);
+            wrapText(ctx, `"${verdict}"`, 350, 435, 460, 26);
 
             // Footer URL
-            ctx.fillStyle = '#64748b';
+            ctx.fillStyle = isLight ? '#94a3b8' : '#64748b';
             ctx.font = '14px "DM Sans", sans-serif';
             ctx.fillText('focusjail.netlify.app', 350, 800);
         }
@@ -1408,6 +1488,7 @@
         }
 
         window.onload = function () {
+            initTheme();
             if (localStorage.getItem('name')) {
                 loadHome();
                 goTo('screen4');
