@@ -757,6 +757,7 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav">
+        <button class="icon-btn" onclick="triggerMahoragaWheel()" id="wheelBtn" title="Summon Mahoraga Wheel (JJK)" style="background: rgba(245, 158, 11, 0.15); border-color: #ffd700; color: #ffd700;">⚙️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Live Reminders">🔔</button>
         <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Cell">⏱️</button>
@@ -888,9 +889,10 @@
 
             <button class="btn-primary" onclick="playClick(); goTo('screen5')">Submit Night Report 🌙</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Enter Focus Lockdown 🔒</button>
+            <button class="btn-secondary btn-gold" onclick="triggerMahoragaWheel()">Summon Mahoraga Wheel ⚙️</button>
             <button class="btn-secondary" onclick="playClick(); openMugshotScreen()">View Inmate Mugshot 📸</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screen7')">Sentence Archives 📜</button>
-            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments ⚙️</button>
+            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments</button>
         </div>
     </div>
 
@@ -1162,6 +1164,17 @@
         // ========================================================
         // MAHORAGA WHEEL ACTIVATION
         // ========================================================
+        function triggerMahoragaWheel() {
+            var modal = document.getElementById('mahoragaModal');
+            modal.classList.add('active');
+            playMahoragaClank();
+            showToast('With this treasure I summon... Wheel of Adaptation turned!', 'success');
+
+            setTimeout(() => {
+                modal.classList.remove('active');
+            }, 2500);
+        }
+
         function saveGoalsWithMahoraga() {
             var name = document.getElementById('name').value.trim();
             var g1 = document.getElementById('goal1').value.trim();
