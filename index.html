@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#6366f1" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
 
     <script>
         !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -26,14 +26,12 @@
             --card-bg: rgba(16, 18, 27, 0.88);
             --card-border: rgba(255, 255, 255, 0.08);
             --grad: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-            --grad-gold: linear-gradient(135deg, #ffd700 0%, #ffae00 50%, #d4af37 100%);
             --grad-accent: linear-gradient(135deg, #ff0055 0%, #ff5500 100%);
             --grad-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --danger: #f43f5e;
             --success: #10b981;
-            --gold: #f59e0b;
         }
 
         * {
@@ -67,7 +65,7 @@
         }
         .orb1 { width: 360px; height: 360px; background: #6366f1; top: -100px; left: -100px; animation: floatOrb 12s ease-in-out infinite; }
         .orb2 { width: 300px; height: 300px; background: #ec4899; bottom: -80px; right: -80px; animation: floatOrb 14s ease-in-out infinite reverse; }
-        .orb3 { width: 220px; height: 220px; background: #d97706; top: 45%; left: 50%; animation: floatOrb 18s ease-in-out infinite; }
+        .orb3 { width: 220px; height: 220px; background: #06b6d4; top: 45%; left: 50%; animation: floatOrb 18s ease-in-out infinite; }
 
         @keyframes floatOrb {
             0%, 100% { transform: translate(0, 0) scale(1); }
@@ -291,13 +289,6 @@
             background: rgba(255, 255, 255, 0.06);
         }
 
-        .btn-gold {
-            background: var(--grad-gold);
-            color: #111;
-            font-weight: 800;
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
-        }
-
         /* Streak & Inmate Rank Banner */
         .streak-card {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
@@ -429,102 +420,6 @@
             background: rgba(244, 63, 94, 0.18);
             border-color: var(--danger);
             color: var(--danger);
-        }
-
-        /* ========================================================
-           MAHORAGA 3D DHARMACHAKRA ADAPTATION OVERLAY
-           ======================================================== */
-        .mahoraga-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(4, 5, 8, 0.94);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .mahoraga-modal.active {
-            display: flex;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .mahoraga-scene {
-            width: 240px;
-            height: 240px;
-            perspective: 1000px;
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .mahoraga-wheel-3d {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: mahoragaLevitate 4s ease-in-out infinite, mahoraga3dSpin 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        @keyframes mahoraga3dSpin {
-            0% {
-                transform: rotateX(60deg) rotateZ(0deg) scale(0.6);
-            }
-            80% {
-                transform: rotateX(30deg) rotateZ(450deg) scale(1.08);
-            }
-            100% {
-                transform: rotateX(20deg) rotateZ(405deg) scale(1);
-            }
-        }
-
-        @keyframes mahoragaLevitate {
-            0%, 100% { transform: translateY(0px) rotateX(20deg) rotateZ(405deg); }
-            50% { transform: translateY(-16px) rotateX(15deg) rotateZ(405deg); }
-        }
-
-        .mahoraga-halo {
-            position: absolute;
-            inset: -20px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(99, 102, 241, 0.2) 50%, transparent 70%);
-            filter: blur(15px);
-            animation: pulseAura 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseAura {
-            0%, 100% { opacity: 0.6; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1.15); }
-        }
-
-        .wheel-svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.85));
-        }
-
-        .mahoraga-text {
-            font-family: 'Cinzel', serif;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            background: var(--grad-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .mahoraga-sub {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 13px;
-            color: #94a3b8;
-            letter-spacing: 1.5px;
-            text-align: center;
-            text-transform: uppercase;
         }
 
         /* ========================================================
@@ -742,71 +637,6 @@
         .history-status { font-size: 13px; font-weight: 700; margin: 4px 0 6px; }
         .history-status.completed { color: var(--success); }
         .history-status.failed { color: var(--danger); }
-    <style>
-        /* ========================================================
-           ANIME-ACCURATE SHADOW-SHROUDED MAHORAGA 3D WHEEL
-           ======================================================== */
-        .bg-mahoraga-container {
-            position: fixed;
-            top: 140px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 480px;
-            height: 480px;
-            pointer-events: none;
-            z-index: 0;
-            perspective: 1200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.38;
-            filter: brightness(0.7);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Active Adaptation: Wheel emerges intensely from the shadow */
-        .bg-mahoraga-container.adapting {
-            opacity: 0.95;
-            filter: brightness(1.25) drop-shadow(0 0 50px rgba(255, 215, 0, 0.95));
-            transform: translate(-50%, -50%) scale(1.06);
-        }
-
-        .bg-mahoraga-halo {
-            position: absolute;
-            width: 460px;
-            height: 460px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.25) 0%, rgba(15, 23, 42, 0.8) 45%, rgba(4, 5, 8, 0.95) 70%, transparent 80%);
-            filter: blur(20px);
-            animation: cursedAuraPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes cursedAuraPulse {
-            0%, 100% { transform: scale(0.95); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.85; }
-        }
-
-        .bg-mahoraga-wheel {
-            width: 400px;
-            height: 400px;
-            position: relative;
-            transform-style: preserve-3d;
-            transform: rotateX(50deg) rotateZ(0deg);
-            transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)) drop-shadow(0 25px 45px rgba(0, 0, 0, 0.95));
-            animation: shadowFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes shadowFloat {
-            0%, 100% { transform: rotateX(50deg) translateY(0px) rotateZ(var(--wheel-rot, 0deg)); }
-            50% { transform: rotateX(46deg) translateY(-12px) rotateZ(var(--wheel-rot, 0deg)); }
-        }
-
-        .wheel-svg-realistic {
-            width: 100%;
-            height: 100%;
-        }
-
         .history-verdict { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
     </style>
 </head>
@@ -817,172 +647,14 @@
     <div class="orb orb2"></div>
     <div class="orb orb3"></div>
 
-    <!-- ANIME-ACCURATE BACKGROUND MAHORAGA 3D WHEEL (BEHIND INTERFACE) -->
-    <div class="bg-mahoraga-container">
-        <div class="bg-mahoraga-halo"></div>
-        <div class="bg-mahoraga-wheel" id="bgMahoragaWheel">
-            <svg class="wheel-svg-realistic" viewBox="0 0 400 400">
-                <defs>
-                    <!-- Metallic 3D Gold Shaders -->
-                    <radialGradient id="goldRimGrad" cx="45%" cy="45%" r="55%">
-                        <stop offset="0%" stop-color="#fff9d6" />
-                        <stop offset="35%" stop-color="#ffd700" />
-                        <stop offset="70%" stop-color="#c69214" />
-                        <stop offset="100%" stop-color="#5c4308" />
-                    </radialGradient>
-                    <linearGradient id="goldBevelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#fff8db" />
-                        <stop offset="25%" stop-color="#ffd700" />
-                        <stop offset="60%" stop-color="#a67c00" />
-                        <stop offset="100%" stop-color="#3d2c00" />
-                    </linearGradient>
-                    <radialGradient id="hubCoreGrad" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#ffd700" />
-                        <stop offset="40%" stop-color="#b8860b" />
-                        <stop offset="75%" stop-color="#3b2700" />
-                        <stop offset="100%" stop-color="#090a0f" />
-                    </radialGradient>
-                    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur stdDeviation="3" result="blur" />
-                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                    </filter>
-                </defs>
-
-                <!-- OUTER DHARMA RIM 1 (Heavy Cast Gold) -->
-                <circle cx="200" cy="200" r="162" fill="none" stroke="url(#goldRimGrad)" stroke-width="16" />
-                <circle cx="200" cy="200" r="170" fill="none" stroke="#ffe066" stroke-width="2" opacity="0.8" />
-                <circle cx="200" cy="200" r="154" fill="none" stroke="#3d2c00" stroke-width="3" />
-
-                <!-- INNER RIM 2 -->
-                <circle cx="200" cy="200" r="134" fill="none" stroke="url(#goldBevelGrad)" stroke-width="8" />
-                <circle cx="200" cy="200" r="130" fill="none" stroke="#fff" stroke-width="1" opacity="0.5" />
-
-                <!-- RUNIC RADIAL GROOVES (Between outer and inner rims) -->
-                <circle cx="200" cy="200" r="144" fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.75" />
-
-                <!-- 8 SPOKES (DIVERGENT SILA BLADES) -->
-                <g stroke="url(#goldBevelGrad)" stroke-width="11" stroke-linecap="round" filter="url(#goldGlow)">
-                    <!-- Cardinal Spokes -->
-                    <line x1="200" y1="52" x2="200" y2="134" />
-                    <line x1="200" y1="266" x2="200" y2="348" />
-                    <line x1="52" y1="200" x2="134" y2="200" />
-                    <line x1="266" y1="200" x2="348" y2="200" />
-                    <!-- Diagonal Spokes -->
-                    <line x1="95" y1="95" x2="153" y2="153" />
-                    <line x1="247" y1="247" x2="305" y2="305" />
-                    <line x1="305" y1="95" x2="247" y2="153" />
-                    <line x1="153" y1="247" x2="95" y2="305" />
-                </g>
-
-                <!-- INNER HUB (Ornate Lotus & Dharma Core) -->
-                <circle cx="200" cy="200" r="54" fill="url(#hubCoreGrad)" stroke="url(#goldRimGrad)" stroke-width="7" />
-                <circle cx="200" cy="200" r="42" fill="none" stroke="#ffd700" stroke-width="2.5" />
-                <circle cx="200" cy="200" r="22" fill="#06070a" stroke="url(#goldRimGrad)" stroke-width="4" />
-                <circle cx="200" cy="200" r="8" fill="#ffd700" filter="url(#goldGlow)" />
-
-                <!-- 8 PROTRUDING HANDLES (Eight-Handled Sword Pillars) -->
-                <!-- Top Handle (0 deg) -->
-                <rect x="193" y="14" width="14" height="26" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                <circle cx="200" cy="12" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-
-                <!-- Bottom Handle (180 deg) -->
-                <rect x="193" y="360" width="14" height="26" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                <circle cx="200" cy="388" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-
-                <!-- Left Handle (270 deg) -->
-                <rect x="14" y="193" width="26" height="14" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                <circle cx="12" cy="200" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-
-                <!-- Right Handle (90 deg) -->
-                <rect x="360" y="193" width="26" height="14" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                <circle cx="388" cy="200" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-
-                <!-- Top-Left Handle (315 deg) -->
-                <g transform="rotate(45 200 200)">
-                    <rect x="193" y="14" width="14" height="26" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                    <circle cx="200" cy="12" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-                </g>
-                <!-- Top-Right Handle (45 deg) -->
-                <g transform="rotate(135 200 200)">
-                    <rect x="193" y="14" width="14" height="26" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                    <circle cx="200" cy="12" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-                </g>
-                <!-- Bottom-Right Handle (135 deg) -->
-                <g transform="rotate(225 200 200)">
-                    <rect x="193" y="14" width="14" height="26" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                    <circle cx="200" cy="12" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-                </g>
-                <!-- Bottom-Left Handle (225 deg) -->
-                <g transform="rotate(315 200 200)">
-                    <rect x="193" y="14" width="14" height="26" rx="6" fill="url(#goldRimGrad)" stroke="#3a2800" stroke-width="2" />
-                    <circle cx="200" cy="12" r="10" fill="url(#goldRimGrad)" stroke="#221500" stroke-width="2" />
-                </g>
-            </svg>
-        </div>
-    </div>
-
     <!-- Live Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Top Action Nav -->
     <div class="top-nav">
-        <button class="icon-btn" onclick="triggerMahoragaWheel()" id="wheelBtn" title="Summon Mahoraga Wheel (JJK)" style="background: rgba(245, 158, 11, 0.15); border-color: #ffd700; color: #ffd700;">⚙️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Live Reminders">🔔</button>
         <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Cell">⏱️</button>
-    </div>
-
-    <!-- ========================================================
-         MAHORAGA 3D ADAPTATION MODAL (JJK WHEEL)
-         ======================================================== -->
-    <div class="mahoraga-modal" id="mahoragaModal">
-        <div class="mahoraga-scene">
-            <div class="mahoraga-halo"></div>
-            <div class="mahoraga-wheel-3d">
-                <svg class="wheel-svg" viewBox="0 0 200 200">
-                    <defs>
-                        <radialGradient id="goldGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#fff4b8" />
-                            <stop offset="50%" stop-color="#ffd700" />
-                            <stop offset="100%" stop-color="#b8860b" />
-                        </radialGradient>
-                        <linearGradient id="spokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#ffe066" />
-                            <stop offset="100%" stop-color="#996515" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Outer Ring -->
-                    <circle cx="100" cy="100" r="82" fill="none" stroke="url(#goldGrad)" stroke-width="8" />
-                    <circle cx="100" cy="100" r="74" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.6" />
-                    <!-- Inner Hub -->
-                    <circle cx="100" cy="100" r="28" fill="url(#goldGrad)" stroke="#4a3000" stroke-width="3" />
-                    <circle cx="100" cy="100" r="14" fill="#07080c" stroke="url(#goldGrad)" stroke-width="2" />
-                    
-                    <!-- 8 Spokes -->
-                    <g stroke="url(#spokeGrad)" stroke-width="6" stroke-linecap="round">
-                        <line x1="100" y1="28" x2="100" y2="72" />
-                        <line x1="100" y1="128" x2="100" y2="172" />
-                        <line x1="28" y1="100" x2="72" y2="100" />
-                        <line x1="128" y1="100" x2="172" y2="100" />
-                        <line x1="49" y1="49" x2="80" y2="80" />
-                        <line x1="120" y1="120" x2="151" y2="151" />
-                        <line x1="151" y1="49" x2="120" y2="80" />
-                        <line x1="80" y1="120" x2="49" y2="151" />
-                    </g>
-                    <!-- 8 Outer Orbs/Gems of Dharma -->
-                    <circle cx="100" cy="18" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                    <circle cx="100" cy="182" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                    <circle cx="18" cy="100" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                    <circle cx="182" cy="100" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                    <circle cx="42" cy="42" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                    <circle cx="158" cy="158" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                    <circle cx="158" cy="42" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                    <circle cx="42" cy="158" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
-                </svg>
-            </div>
-        </div>
-        <div class="mahoraga-text">ADAPTING TO PHENOMENON</div>
-        <div class="mahoraga-sub">Eight-Spoke Wheel Has Turned ⚙️</div>
     </div>
 
     <!-- SCREEN 1: ONBOARDING -->
@@ -1005,7 +677,7 @@
             <input id="goal1" type="text" placeholder="1. Deep Work: e.g., Ship feature X" />
             <input id="goal2" type="text" placeholder="2. Physical: e.g., 45m workout" />
             <input id="goal3" type="text" placeholder="3. Habit: e.g., Read 20 pages" />
-            <button class="btn-primary btn-gold" onclick="saveGoalsWithMahoraga()">Turn The Wheel & Commit ⚙️</button>
+            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🔒</button>
         </div>
     </div>
 
@@ -1058,7 +730,6 @@
 
             <button class="btn-primary" onclick="playClick(); goTo('screen5')">Submit Night Report 🌙</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Enter Focus Lockdown 🔒</button>
-            <button class="btn-secondary btn-gold" onclick="triggerMahoragaWheel()">Summon Mahoraga Wheel ⚙️</button>
             <button class="btn-secondary" onclick="playClick(); openMugshotScreen()">View Inmate Mugshot 📸</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screen7')">Sentence Archives 📜</button>
             <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments</button>
@@ -1217,7 +888,7 @@
         }
 
         // ========================================================
-        // WEB AUDIO API SYNTHESIZER (No external audio files)
+        // WEB AUDIO API SYNTHESIZER
         // ========================================================
         function initAudio() {
             if (!audioCtx) {
@@ -1247,26 +918,6 @@
         function playSuccess() { playTone(880, 'triangle', 0.25); }
         function playFail() { playTone(200, 'sawtooth', 0.4); }
 
-        // Mahoraga Wheel Metallic Click & Cursed Clank Sound
-        function playMahoragaClank() {
-            if (!soundEnabled) return;
-            try {
-                initAudio();
-                // Metallic heavy impact 1
-                playTone(180, 'sawtooth', 0.3);
-                playTone(420, 'triangle', 0.2);
-                setTimeout(() => {
-                    // Double metallic latch
-                    playTone(600, 'square', 0.15);
-                    playTone(900, 'sine', 0.4);
-                }, 220);
-                setTimeout(() => {
-                    // Final celestial lock
-                    playTone(1200, 'triangle', 0.6);
-                }, 600);
-            } catch(e) {}
-        }
-
         function toggleAudio() {
             soundEnabled = !soundEnabled;
             document.getElementById('soundBtn').textContent = soundEnabled ? '🔊' : '🔇';
@@ -1292,7 +943,6 @@
             initAudio();
 
             if (type === 'brown') {
-                // Brown Noise Generator via White Noise buffer + Lowpass Filter
                 var bufferSize = 2 * audioCtx.sampleRate;
                 var noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
                 var output = noiseBuffer.getChannelData(0);
@@ -1317,7 +967,6 @@
                 noise.start();
                 activeSoundscapeNode = noise;
             } else if (type === 'rain') {
-                // Rain & Cyber Drone
                 var osc = audioCtx.createOscillator();
                 var gain = audioCtx.createGain();
                 osc.type = 'triangle';
@@ -1330,38 +979,7 @@
             }
         }
 
-        // ========================================================
-        // MAHORAGA WHEEL ADAPTATION (SHADOW REVEAL & SPIN)
-        // ========================================================
-        var bgWheelRotation = 0;
-        var adaptationTimeout = null;
-
-        function spinBackgroundWheel(deg = 45) {
-            bgWheelRotation += deg;
-            var container = document.querySelector('.bg-mahoraga-container');
-            var wheel = document.getElementById('bgMahoragaWheel');
-
-            if (container) {
-                container.classList.add('adapting');
-                clearTimeout(adaptationTimeout);
-                adaptationTimeout = setTimeout(() => {
-                    container.classList.remove('adapting');
-                }, 2200);
-            }
-
-            if (wheel) {
-                wheel.style.setProperty('--wheel-rot', bgWheelRotation + 'deg');
-                wheel.style.transform = `rotateX(50deg) rotateZ(${bgWheelRotation}deg)`;
-            }
-            playMahoragaClank();
-        }
-
-        function triggerMahoragaWheel() {
-            spinBackgroundWheel(45);
-            showToast('With this treasure I summon... Wheel of Adaptation turned!', 'success');
-        }
-
-        function saveGoalsWithMahoraga() {
+        function saveGoals() {
             var name = document.getElementById('name').value.trim();
             var g1 = document.getElementById('goal1').value.trim();
             var g2 = document.getElementById('goal2').value.trim();
@@ -1379,12 +997,9 @@
                 { text: g3, done: false }
             ]));
 
-            spinBackgroundWheel(90);
-            showToast('With this treasure... Wheel of Adaptation turned!', 'success');
-
-            setTimeout(() => {
-                goTo('screen2b');
-            }, 800);
+            playSuccess();
+            showToast('Commitments locked in!', 'success');
+            goTo('screen2b');
         }
 
         function setTone(tone) {
@@ -1417,10 +1032,9 @@
                 goals[index].done = !goals[index].done;
                 localStorage.setItem('goals', JSON.stringify(goals));
                 
-                // Spin the background Mahoraga wheel on completing commitments!
                 if (goals[index].done) {
-                    spinBackgroundWheel(45);
-                    showToast('Commitment fulfilled! Wheel adapted ⚙️', 'success');
+                    playSuccess();
+                    showToast('Commitment fulfilled! 🎯', 'success');
                 } else {
                     playClick();
                 }
@@ -1658,7 +1272,7 @@
                 timerRunning = true;
                 btn.textContent = 'Pause ⏸️';
                 card.classList.add('locked');
-                playMahoragaClank();
+                playSuccess();
                 changeSoundscape(document.getElementById('soundscapeSelect').value);
 
                 // Request Fullscreen
