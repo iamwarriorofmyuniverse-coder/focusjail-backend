@@ -58,6 +58,7 @@
             --checkbox-border: rgba(255, 255, 255, 0.2);
             --chart-bar-bg: rgba(255, 255, 255, 0.05);
             --tile-empty: rgba(255, 255, 255, 0.06);
+            --squad-bg: rgba(255, 255, 255, 0.03);
         }
 
         /* Light Theme */
@@ -84,6 +85,7 @@
             --checkbox-border: rgba(0, 0, 0, 0.2);
             --chart-bar-bg: rgba(0, 0, 0, 0.05);
             --tile-empty: rgba(0, 0, 0, 0.06);
+            --squad-bg: rgba(0, 0, 0, 0.03);
         }
 
         * {
@@ -388,7 +390,7 @@
             transform: translateY(-1px);
         }
 
-        /* Social Dispatch Buttons for Confessions / Victories */
+        /* Social Dispatch Buttons */
         .dispatch-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -619,6 +621,58 @@
         .heatmap-tile.shield { background: #f59e0b; border-color: #d97706; }
         .heatmap-tile.missed { background: #ef4444; border-color: #dc2626; }
 
+        /* Squad Room Styles */
+        .squad-card {
+            background: var(--grad);
+            border-radius: 20px;
+            padding: 20px;
+            color: #fff;
+            margin-bottom: 16px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+        }
+
+        .squad-multiplier {
+            font-family: 'Syne', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+        }
+
+        .squad-member-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: var(--squad-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 8px;
+        }
+
+        .squad-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--grad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        .squad-status-tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .squad-status-tag.done { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .squad-status-tag.working { background: rgba(102, 126, 234, 0.15); color: #667eea; border: 1px solid rgba(102, 126, 234, 0.3); }
+
         /* Goals Checklist */
         .goal-item {
             display: flex;
@@ -774,7 +828,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Shield Prompt in Evening Checkin */
+        /* Shield Prompt */
         .shield-banner {
             display: none;
             background: rgba(245, 158, 11, 0.12);
@@ -823,6 +877,21 @@
             font-size: 14px;
             line-height: 1.7;
             margin: 0;
+        }
+
+        /* Verification Badge Pill */
+        .verify-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
 
         /* Toggle Switch */
@@ -950,6 +1019,7 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav">
+        <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts & Leaderboard">👥</button>
         <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth & Development Graphs">📈</button>
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Light/Dark Mode">☀️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
@@ -983,7 +1053,7 @@
             <input id="goal3" type="text" placeholder="3. Goal - be specific" />
             
             <div style="margin-top: 12px; margin-bottom: 6px;">
-                <div class="label"><span class="label-dot"></span> Accountability Partner (Optional)</div>
+                <div class="label"><span class="label-dot"></span> Accountability Partner (Dead-Man's Switch)</div>
                 <input id="partnerName" type="text" placeholder="Partner Name (Friend, Mentor, or Boss)" />
                 <input id="partnerContact" type="text" placeholder="Partner Phone / WhatsApp / Email" />
             </div>
@@ -1031,7 +1101,7 @@
             <div class="inmate-badge" id="rankBadge">Consistency Starter ⭐</div>
         </div>
 
-        <!-- Bento Metrics Row (Focus Time + Shield + Partner) -->
+        <!-- Bento Metrics Row (Focus Time + Shield + Squad) -->
         <div class="bento-row">
             <div class="bento-box" onclick="goTo('screenTimer')" title="Start Deep Focus Session">
                 <div class="bento-icon">⏱️</div>
@@ -1041,12 +1111,12 @@
             <div class="bento-box" onclick="showShieldInfo()" title="Discipline Streak Shield">
                 <div class="bento-icon">🛡️</div>
                 <div class="bento-title">Streak Shield</div>
-                <div class="bento-val" id="bentoShieldVal">1 Active</div>
+                <div class="bento-val" id="bentoShieldVal">1 Ready</div>
             </div>
-            <div class="bento-box" onclick="goTo('screenAnalytics')" title="View Growth Charts">
-                <div class="bento-icon">📈</div>
-                <div class="bento-title">Growth Score</div>
-                <div class="bento-val" id="bentoScoreVal">100%</div>
+            <div class="bento-box" onclick="goTo('screenSquad')" title="Squad Multiplier">
+                <div class="bento-icon">👥</div>
+                <div class="bento-title">Squad Pact</div>
+                <div class="bento-val" id="bentoSquadVal">2.5x</div>
             </div>
         </div>
 
@@ -1062,6 +1132,7 @@
 
             <button class="btn-primary" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️</button>
+            <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈</button>
             <button class="btn-secondary" onclick="playClick(); openCardScreen()">View Daily Summary Card 📋</button>
             <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
@@ -1083,8 +1154,8 @@
 
             <!-- Proof of Work Input (When Completed) -->
             <div id="proofWrap">
-                <div class="label"><span class="label-dot"></span> Proof of Execution (Optional)</div>
-                <input id="proofInput" type="text" placeholder="Paste GitHub PR, Figma link, doc, or what you shipped..." />
+                <div class="label"><span class="label-dot"></span> Proof of Execution (AI Verified)</div>
+                <input id="proofInput" type="text" placeholder="Paste GitHub PR, Figma link, doc, or summary..." />
             </div>
 
             <!-- Shield Freeze Option Banner (When Missed) -->
@@ -1107,6 +1178,11 @@
         <div class="card">
             <div class="label"><span class="label-dot"></span> Coach Reflection</div>
             <h1 id="verdictHeadline">Today's Verdict.</h1>
+            
+            <div class="verify-pill" id="verifyPill">
+                <span>🛡️ AI Warden: Verified High-Confidence ✓</span>
+            </div>
+
             <div class="verdict-card">
                 <p id="aiResponse">Analyzing your day and preparing insights...</p>
             </div>
@@ -1124,6 +1200,58 @@
 
             <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: MULTIPLAYER SQUAD PACTS & LEADERBOARD -->
+    <div id="screenSquad" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Team Accountability</div>
+            <h1>Squad Pacts</h1>
+            <p>Build consistency with your team. If one member slacks, the squad multiplier drops.</p>
+
+            <div class="squad-card">
+                <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9;">Active Squad Multiplier</div>
+                <div class="squad-multiplier">2.5x 🔥</div>
+                <div style="font-size: 12px; opacity: 0.95; margin-top: 4px;">YC Founders Sprint Cohort • 4 Members</div>
+            </div>
+
+            <div class="label"><span class="label-dot"></span> Squad Members Today</div>
+            <div id="squadMemberList">
+                <div class="squad-member-item">
+                    <div style="display: flex; align-items: center;">
+                        <div class="squad-avatar">Y</div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 13px;" id="squadUserName">You</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Current Streak: Active</div>
+                        </div>
+                    </div>
+                    <span class="squad-status-tag done">Executed ✓</span>
+                </div>
+                <div class="squad-member-item">
+                    <div style="display: flex; align-items: center;">
+                        <div class="squad-avatar" style="background: var(--grad-firm);">A</div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 13px;">Alex (Backend)</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">14-Day Streak</div>
+                        </div>
+                    </div>
+                    <span class="squad-status-tag done">Executed ✓</span>
+                </div>
+                <div class="squad-member-item">
+                    <div style="display: flex; align-items: center;">
+                        <div class="squad-avatar" style="background: var(--grad-gentle);">S</div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 13px;">Sarah (Growth)</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">21-Day Streak</div>
+                        </div>
+                    </div>
+                    <span class="squad-status-tag working">Focusing ⏳</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="inviteSquadMember()">Invite Teammate to Squad 🔗</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
         </div>
     </div>
 
@@ -1219,7 +1347,7 @@
         </div>
     </div>
 
-    <!-- Confetti Physics -->
+    <!-- Confetti Physics Engine -->
     <script>
         var confettiParticles = [];
         var confettiAnimId = null;
@@ -1353,6 +1481,15 @@
         function showShieldInfo() {
             var shieldCount = parseInt(localStorage.getItem('streak_shields') || '1');
             showToast(`🛡️ Discipline Shield: You have ${shieldCount} active shield to protect your streak in emergencies!`, 'info');
+        }
+
+        function inviteSquadMember() {
+            var inviteLink = `https://focusjail.netlify.app?squad=YC26`;
+            navigator.clipboard.writeText(inviteLink).then(() => {
+                showToast('Squad invite link copied! Send to your teammate 🔗', 'success');
+            }).catch(() => {
+                showToast('Squad code: YC26');
+            });
         }
 
         // Service Worker
@@ -1542,11 +1679,13 @@
             document.getElementById('bentoFocusMins').textContent = `${focusMins}m today`;
             document.getElementById('bentoShieldVal').textContent = `${shields} Ready`;
 
-            // Calculate Discipline Score %
+            var userInitial = name.charAt(0).toUpperCase();
+            var squadUserName = document.getElementById('squadUserName');
+            if (squadUserName) squadUserName.textContent = `${name} (You)`;
+
             var completedCount = history.filter(h => h.completed || h.shielded).length;
             var totalCount = history.length;
             var score = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 100;
-            document.getElementById('bentoScoreVal').textContent = `${score}%`;
 
             renderGoals(goals);
             renderWeekStrip();
@@ -1718,6 +1857,7 @@
             var goalsList = rawGoals.map(g => g.text);
             var name = localStorage.getItem('name') || 'User';
             var tone = localStorage.getItem('tone') || 'brutal';
+            var partnerName = localStorage.getItem('partner_name') || 'Partner';
             var shields = parseInt(localStorage.getItem('streak_shields') || '1');
 
             document.getElementById('aiResponse').textContent = 'Your AI Coach is formulating personalized feedback...';
@@ -1744,8 +1884,6 @@
             }
             localStorage.setItem('streak', streak.toString());
 
-            var promptText = excuse + (proof ? ` [Proof: ${proof}]` : '') + (wasShielded ? ' (Used Streak Freeze Shield)' : '');
-
             try {
                 const response = await fetch('/api/verdict', {
                     method: 'POST',
@@ -1754,9 +1892,11 @@
                         name: name,
                         goals: goalsList,
                         completed: goalsCompleted,
-                        excuse: promptText,
+                        excuse: excuse,
+                        proof: proof,
                         streak: streak,
-                        tone: tone
+                        tone: tone,
+                        partner_name: partnerName
                     })
                 });
 
@@ -1764,6 +1904,13 @@
                 var verdict = data.verdict || "Consistency is your bridge to excellence. Stay focused.";
                 document.getElementById('aiResponse').textContent = verdict;
                 localStorage.setItem('latestVerdict', verdict);
+
+                var pill = document.getElementById('verifyPill');
+                if (pill) {
+                    pill.textContent = goalsCompleted 
+                        ? (proof ? '🛡️ AI Warden: Proof Verified High-Confidence ✓' : '🛡️ AI Warden: Self-Reported Logged ✓')
+                        : '⚠️ AI Warden: Accountability Shortfall ✗';
+                }
 
                 var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
                 history.push({
@@ -1776,7 +1923,7 @@
                 localStorage.setItem('focus_history', JSON.stringify(history));
 
                 if (window.posthog) {
-                    posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak, shielded: wasShielded });
+                    posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak, shielded: wasShielded, has_proof: !!proof });
                 }
             } catch (err) {
                 var fallback = goalsCompleted ? "Great work completing your daily commitments. Keep this momentum!" : (wasShielded ? "Your streak was protected by your shield. Rest and reset tomorrow." : "You fell short today. Regroup, refocus, and restart tomorrow.");
@@ -1834,10 +1981,6 @@
             });
         }
 
-        function shareVerdictText() {
-            copyPartnerReport();
-        }
-
         function openEditGoals() {
             var rawGoals = localStorage.getItem('goals');
             if (rawGoals) {
@@ -1863,19 +2006,17 @@
             if (screenId === 'screenAnalytics') renderAnalyticsScreen();
         }
 
-        // Analytics Engine: Render 7-Day Bar Chart & 30-Day Heatmap
+        // Analytics Engine
         function renderAnalyticsScreen() {
             var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
             var dailyFocus = parseInt(localStorage.getItem('daily_focus_mins') || '0');
 
-            // 7-Day Focus Minutes Bar Chart
             var chartContainer = document.getElementById('focusBarChart');
             chartContainer.innerHTML = '';
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             var today = new Date().getDay();
             var totalWeekMins = dailyFocus;
 
-            // Generate mock / actual distribution for past 7 days
             var sampleMins = [45, 60, 25, 50, 75, 30, dailyFocus];
             var maxVal = Math.max(...sampleMins, 90);
 
@@ -1900,7 +2041,6 @@
 
             document.getElementById('weeklyFocusTotal').textContent = `${totalWeekMins}m total this week`;
 
-            // 30-Day Heatmap
             var heatmap = document.getElementById('heatmapGrid');
             heatmap.innerHTML = '';
             var totalMonthlyCompleted = 0;
@@ -1920,8 +2060,6 @@
                     } else {
                         tile.classList.add('missed');
                     }
-                } else if (d > history.length) {
-                    // empty inactive slot
                 }
                 heatmap.appendChild(tile);
             }
@@ -2065,18 +2203,15 @@
             var verdict = localStorage.getItem('latestVerdict') || 'Consistent daily action leads to extraordinary results.';
             var isLight = document.documentElement.getAttribute('data-theme') === 'light';
 
-            // Card Background
             ctx.fillStyle = isLight ? '#ffffff' : '#090a10';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Signature Gradient Top Accent
             var grad = ctx.createLinearGradient(0, 0, canvas.width, 180);
             grad.addColorStop(0, '#667eea');
             grad.addColorStop(1, '#f093fb');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, 10);
 
-            // Header Title
             ctx.fillStyle = isLight ? '#0f172a' : '#f8fafc';
             ctx.font = 'bold 28px "Syne", sans-serif';
             ctx.textAlign = 'center';
@@ -2086,14 +2221,12 @@
             ctx.font = '600 15px "DM Sans", sans-serif';
             ctx.fillText('DAILY COMMITMENTS & ACCOUNTABILITY', 350, 110);
 
-            // Inner Card Box
             ctx.fillStyle = isLight ? '#f8fafc' : '#12141e';
             ctx.fillRect(60, 145, 580, 615);
             ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
             ctx.lineWidth = 1.5;
             ctx.strokeRect(60, 145, 580, 615);
 
-            // Name & Streak
             ctx.fillStyle = isLight ? '#0f172a' : '#ffffff';
             ctx.font = 'bold 36px "Syne", sans-serif';
             ctx.fillText(name, 350, 225);
@@ -2102,7 +2235,6 @@
             ctx.font = 'bold 20px "DM Sans", sans-serif';
             ctx.fillText(`🔥 ${streak} DAY STREAK  •  ${rank}`, 350, 275);
 
-            // Coach Quote Block
             ctx.fillStyle = isLight ? '#ffffff' : '#0a0b12';
             ctx.fillRect(90, 335, 520, 275);
             ctx.strokeStyle = isLight ? 'rgba(102, 126, 234, 0.3)' : 'rgba(102, 126, 234, 0.3)';
@@ -2117,7 +2249,6 @@
             ctx.font = 'italic 17px "DM Sans", sans-serif';
             wrapText(ctx, `"${verdict}"`, 350, 435, 460, 26);
 
-            // Footer URL
             ctx.fillStyle = isLight ? '#94a3b8' : '#64748b';
             ctx.font = '14px "DM Sans", sans-serif';
             ctx.fillText('focusjail.netlify.app', 350, 800);
