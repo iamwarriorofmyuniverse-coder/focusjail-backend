@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>FocusPact - Daily Commitments & Intelligent Accountability</title>
     <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#1e212d" />
+    <meta name="theme-color" content="#667eea" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
 
     <script>
         !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -22,15 +22,19 @@
 
     <style>
         :root {
-            --bg: #1e212d;
-            --neu-dark: #14161f;
-            --neu-light: #282c3b;
-            --primary: #6366f1;
-            --accent: #ec4899;
-            --success: #10b981;
-            --text-main: #f1f5f9;
+            --bg: #0f111a;
+            --neu-dark: #090a10;
+            --neu-light: #191c29;
+            --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            --grad-firm: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --grad-gentle: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --grad-danger: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+            --primary: #667eea;
+            --accent: #f093fb;
+            --success: #43e97b;
+            --danger: #f5576c;
+            --text-main: #f8fafc;
             --text-sub: #94a3b8;
-            --text-muted: #64748b;
         }
 
         * {
@@ -42,7 +46,7 @@
 
         body {
             background: var(--bg);
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -51,6 +55,24 @@
             padding: 20px 16px;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* Floating Vibrant Glow Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.28;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb1 { width: 340px; height: 340px; background: #667eea; top: -90px; left: -90px; animation: floatOrb 12s ease-in-out infinite; }
+        .orb2 { width: 280px; height: 280px; background: #f093fb; bottom: -70px; right: -70px; animation: floatOrb 14s ease-in-out infinite reverse; }
+        .orb3 { width: 200px; height: 200px; background: #43e97b; top: 40%; left: 55%; animation: floatOrb 16s ease-in-out infinite; }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-25px) scale(1.08); }
         }
 
         /* Top Action Bar */
@@ -74,11 +96,11 @@
             justify-content: center;
             cursor: pointer;
             font-size: 16px;
-            box-shadow: 5px 5px 10px var(--neu-dark), -5px -5px 10px var(--neu-light);
+            box-shadow: 5px 5px 12px var(--neu-dark), -5px -5px 12px var(--neu-light);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .icon-btn:hover {
-            color: var(--primary);
+            color: #fff;
             transform: translateY(-2px);
         }
         .icon-btn:active {
@@ -116,7 +138,7 @@
             pointer-events: auto;
         }
         .toast.success { color: var(--success); }
-        .toast.info { color: var(--primary); }
+        .toast.info { color: #f093fb; }
         @keyframes toastIn {
             from { opacity: 0; transform: translateY(-20px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -156,11 +178,11 @@
         }
 
         .label {
-            font-size: 11px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #818cf8;
+            color: #a5b4fc;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -171,13 +193,19 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #818cf8;
-            box-shadow: 0 0 10px #818cf8;
+            background: var(--grad);
+            box-shadow: 0 0 10px #f093fb;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.35); opacity: 0.75; }
         }
 
         h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 26px;
+            font-size: 27px;
             font-weight: 800;
             color: #fff;
             line-height: 1.25;
@@ -199,7 +227,7 @@
             border-radius: 16px;
             padding: 15px 18px;
             font-size: 14px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             color: #fff;
             margin-bottom: 14px;
             outline: none;
@@ -209,28 +237,28 @@
         }
 
         input:focus, textarea:focus, select:focus {
-            box-shadow: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light), 0 0 0 1.5px rgba(99, 102, 241, 0.4);
+            box-shadow: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light), 0 0 0 1.5px rgba(102, 126, 234, 0.5);
         }
 
         input::placeholder, textarea::placeholder {
-            color: #555b70;
+            color: #4b5268;
         }
 
-        /* Neumorphic Buttons */
+        /* Vibrant Gradient Neumorphic Primary Button */
         .btn-primary {
             width: 100%;
             padding: 16px;
             border: none;
             border-radius: 16px;
-            background: linear-gradient(145deg, #6366f1, #4f46e5);
+            background: var(--grad);
             color: white;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             cursor: pointer;
             margin-top: 10px;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 0 20px rgba(99, 102, 241, 0.35);
+            box-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 20px rgba(102, 126, 234, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -238,8 +266,8 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 0 25px rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 8px 30px rgba(102, 126, 234, 0.6);
         }
 
         .btn-primary:active {
@@ -254,8 +282,9 @@
             border-radius: 16px;
             background: var(--bg);
             color: var(--text-sub);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
             cursor: pointer;
             margin-top: 10px;
             transition: all 0.2s ease;
@@ -267,7 +296,7 @@
         }
 
         .btn-secondary:hover {
-            color: #fff;
+            color: #f093fb;
             transform: translateY(-2px);
             box-shadow: 7px 7px 15px var(--neu-dark), -7px -7px 15px var(--neu-light);
         }
@@ -277,34 +306,40 @@
             transform: translateY(0);
         }
 
-        /* Neumorphic Streak Card */
+        /* Streak Card with Signature Gradient */
         .streak-card {
-            background: var(--bg);
+            background: var(--grad);
             border-radius: 24px;
-            padding: 24px 20px;
+            padding: 26px 20px;
             text-align: center;
             margin-bottom: 18px;
             width: 100%;
             position: relative;
-            box-shadow: 10px 10px 22px var(--neu-dark), -10px -10px 22px var(--neu-light);
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(102, 126, 234, 0.4), 10px 10px 22px var(--neu-dark);
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
 
         .streak-number {
             font-family: 'Syne', sans-serif;
-            font-size: 54px;
+            font-size: 58px;
             font-weight: 800;
-            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
             line-height: 1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .streak-label {
-            color: var(--text-sub);
-            font-size: 11px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 12px;
             margin-top: 6px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             font-weight: 700;
         }
 
@@ -312,12 +347,12 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: var(--bg);
-            box-shadow: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
             border-radius: 30px;
             padding: 5px 16px;
             font-size: 12px;
-            color: #e2e8f0;
+            color: #fff;
             margin-top: 10px;
             font-weight: 600;
         }
@@ -364,7 +399,7 @@
         }
 
         .goal-item.done .goal-checkbox {
-            background: var(--success);
+            background: var(--grad);
             box-shadow: inset 2px 2px 4px rgba(0,0,0,0.3);
             color: #fff;
         }
@@ -404,7 +439,7 @@
 
         .day-box.failed {
             box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
-            color: #f43f5e;
+            color: var(--danger);
         }
 
         /* Focus Session Presets */
@@ -431,29 +466,39 @@
 
         .preset-btn.active {
             box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
-            color: var(--primary);
+            color: #f093fb;
         }
 
         .timer-display {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Syne', sans-serif;
             font-size: 64px;
             font-weight: 800;
             text-align: center;
             margin: 20px 0;
             letter-spacing: -1px;
-            color: #fff;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* AI Coach Reflection Card */
         .verdict-card {
-            background: var(--bg);
+            background: #090a10;
             border-radius: 20px;
             padding: 24px;
             width: 100%;
             margin-bottom: 20px;
-            box-shadow: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+            box-shadow: inset 5px 5px 10px #040508, inset -5px -5px 10px #151824;
             position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .verdict-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--grad);
+            border-radius: 20px 20px 0 0;
         }
         .verdict-card p {
             color: #e2e8f0;
@@ -479,8 +524,8 @@
             flex: 1;
             text-align: center;
             padding: 12px;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 600;
             color: #64748b;
             border-radius: 40px;
             transition: color 0.3s;
@@ -495,21 +540,22 @@
             left: 5px;
             width: calc(50% - 5px);
             height: calc(100% - 10px);
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: var(--grad);
             border-radius: 40px;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .toggle-ball.failed {
             transform: translateX(100%);
-            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            background: var(--grad-danger);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
         }
 
-        /* Tone Selection Cards */
+        /* Tone Selection Cards (The Original Vibrant Gradients) */
         .tone-btn {
             width: 100%;
-            padding: 18px;
+            padding: 18px 16px;
             border: none;
             border-radius: 20px;
             color: white;
@@ -518,25 +564,32 @@
             text-align: left;
             display: flex;
             align-items: center;
-            gap: 16px;
-            background: var(--bg);
-            box-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light);
-            transition: all 0.2s ease;
+            gap: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .tone-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light);
         }
 
-        .tone-btn:active {
-            box-shadow: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
-            transform: translateY(0);
+        .tone-brutal {
+            background: var(--grad);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4), 6px 6px 14px var(--neu-dark);
         }
 
-        .tone-emoji { font-size: 28px; }
-        .tone-title { font-size: 15px; font-weight: 700; }
-        .tone-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+        .tone-firm {
+            background: var(--grad-firm);
+            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.4), 6px 6px 14px var(--neu-dark);
+        }
+
+        .tone-gentle {
+            background: var(--grad-gentle);
+            box-shadow: 0 4px 20px rgba(67, 233, 123, 0.4), 6px 6px 14px var(--neu-dark);
+        }
+
+        .tone-emoji { font-size: 26px; }
+        .tone-title { font-size: 16px; font-weight: 700; }
+        .tone-desc { font-size: 13px; opacity: 0.9; margin-top: 2px; }
 
         /* History Items */
         .history-item {
@@ -546,10 +599,10 @@
             margin-bottom: 12px;
             box-shadow: 5px 5px 12px var(--neu-dark), -5px -5px 12px var(--neu-light);
         }
-        .history-date { font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; }
+        .history-date { font-size: 11px; color: #f093fb; font-weight: 700; text-transform: uppercase; }
         .history-status { font-size: 13px; font-weight: 700; margin: 4px 0 6px; }
         .history-status.completed { color: var(--success); }
-        .history-status.failed { color: #f43f5e; }
+        .history-status.failed { color: var(--danger); }
         .history-verdict { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
 
         /* Achievement Canvas */
@@ -565,6 +618,10 @@
 
 <body>
 
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
     <!-- Live Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
@@ -578,10 +635,10 @@
     <!-- SCREEN 1: WELCOME & ONBOARDING -->
     <div id="screen1" class="screen active">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> FocusPact Protocol</div>
+            <div class="label"><span class="label-dot"></span> FocusPact</div>
             <h1>Commit to What Matters.</h1>
             <p>Make a pact with yourself every morning. Execute your 3 non-negotiables, log your focus sessions, and build unstoppable consistency.</p>
-            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started ✨</button>
+            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">I'm Ready ✨</button>
         </div>
     </div>
 
@@ -592,38 +649,38 @@
             <h1>Your 3 Commitments.</h1>
             <p>Clear goals create clear results. What are your 3 core priorities for today?</p>
             <input id="name" type="text" placeholder="Your Name" />
-            <input id="goal1" type="text" placeholder="1. Deep Work: e.g., Finish project milestone" />
-            <input id="goal2" type="text" placeholder="2. Health: e.g., 45-min workout" />
-            <input id="goal3" type="text" placeholder="3. Habit: e.g., Read 20 pages" />
-            <button class="btn-primary" onclick="saveGoals()">Lock In Commitments 🎯</button>
+            <input id="goal1" type="text" placeholder="1. Goal - be specific" />
+            <input id="goal2" type="text" placeholder="2. Goal - be specific" />
+            <input id="goal3" type="text" placeholder="3. Goal - be specific" />
+            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯</button>
         </div>
     </div>
 
     <!-- SCREEN 2B: COACHING STYLE -->
     <div id="screen2b" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Accountability Coaching</div>
+            <div class="label"><span class="label-dot"></span> Accountability Style</div>
             <h1>Choose Your AI Coach.</h1>
-            <p>Select the coaching style that best motivates you to stay on track.</p>
-            <div class="tone-btn" onclick="setTone('firm')">
-                <span class="tone-emoji">⚡</span>
-                <div>
-                    <div class="tone-title">Direct Strategist</div>
-                    <div class="tone-desc">Clear, objective, and focused on high standards and execution.</div>
-                </div>
-            </div>
-            <div class="tone-btn" onclick="setTone('brutal')">
+            <p>Select what coaching tone works best for you.</p>
+            <div class="tone-btn tone-brutal" onclick="setTone('brutal')">
                 <span class="tone-emoji">🔥</span>
                 <div>
-                    <div class="tone-title">High-Intensity Coach</div>
-                    <div class="tone-desc">Uncompromising truth. Zero sugarcoating. Pushes you to your limit.</div>
+                    <div class="tone-title">Brutal</div>
+                    <div class="tone-desc">No mercy. Raw truth. Zero excuses.</div>
                 </div>
             </div>
-            <div class="tone-btn" onclick="setTone('gentle')">
+            <div class="tone-btn tone-firm" onclick="setTone('firm')">
+                <span class="tone-emoji">💪</span>
+                <div>
+                    <div class="tone-title">Firm</div>
+                    <div class="tone-desc">Direct and fair. No insults, no softening.</div>
+                </div>
+            </div>
+            <div class="tone-btn tone-gentle" onclick="setTone('gentle')">
                 <span class="tone-emoji">🌱</span>
                 <div>
-                    <div class="tone-title">Mindful Mentor</div>
-                    <div class="tone-desc">Empathetic, constructive guidance and positive reinforcement.</div>
+                    <div class="tone-title">Gentle</div>
+                    <div class="tone-desc">Encouraging but honest. Good for beginners.</div>
                 </div>
             </div>
         </div>
@@ -633,7 +690,7 @@
     <div id="screen4" class="screen">
         <div class="streak-card">
             <div class="streak-number" id="streakCount">0</div>
-            <div class="streak-label">Days Consistent Streak</div>
+            <div class="streak-label">Day Streak</div>
             <div class="inmate-badge" id="rankBadge">Consistency Starter ⭐</div>
         </div>
 
@@ -658,16 +715,16 @@
     <div id="screen5" class="screen">
         <div class="card">
             <div class="label"><span class="label-dot"></span> Evening Reflection</div>
-            <h1>Daily Check-In.</h1>
-            <p>Did you honor your daily commitments today?</p>
+            <h1>Answer for your day.</h1>
+            <p>Did you complete what you promised today?</p>
 
             <div class="toggle-wrap" onclick="toggleReportStatus()">
                 <div class="toggle-ball" id="toggleBall"></div>
                 <div class="toggle-option active" id="opt-yes">Completed All ✓</div>
-                <div class="toggle-option" id="opt-no">Missed / Incomplete ✗</div>
+                <div class="toggle-option" id="opt-no">Missed / Failed ✗</div>
             </div>
 
-            <textarea id="excuseInput" rows="3" placeholder="Daily notes: What went well or what blocked you today?"></textarea>
+            <textarea id="excuseInput" rows="3" placeholder="What happened today?"></textarea>
             
             <button class="btn-primary" onclick="submitReport()">Get AI Coach Feedback 💡</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
@@ -889,7 +946,7 @@
             var g3 = document.getElementById('goal3').value.trim();
 
             if (!name || !g1 || !g2 || !g3) {
-                alert('Please fill out all 3 daily commitments.');
+                alert('Please fill out all 3 commitments.');
                 return;
             }
 
@@ -1025,7 +1082,7 @@
             var rawGoals = JSON.parse(localStorage.getItem('goals') || '[]');
             var goalsList = rawGoals.map(g => g.text);
             var name = localStorage.getItem('name') || 'User';
-            var tone = localStorage.getItem('tone') || 'firm';
+            var tone = localStorage.getItem('tone') || 'brutal';
 
             document.getElementById('aiResponse').textContent = 'Your AI Coach is formulating personalized feedback...';
             goTo('screen6');
@@ -1204,28 +1261,28 @@
             var verdict = localStorage.getItem('latestVerdict') || 'Consistent daily action leads to extraordinary results.';
 
             // Soft Neumorphic Canvas Background
-            ctx.fillStyle = '#1e212d';
+            ctx.fillStyle = '#0f111a';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Subtle Gradient Header
+            // Signature Gradient Header
             var grad = ctx.createLinearGradient(0, 0, canvas.width, 180);
-            grad.addColorStop(0, '#6366f1');
-            grad.addColorStop(1, '#ec4899');
+            grad.addColorStop(0, '#667eea');
+            grad.addColorStop(1, '#f093fb');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, 8);
 
             // Header Title
             ctx.fillStyle = '#f8fafc';
-            ctx.font = 'bold 28px "Plus Jakarta Sans", sans-serif';
+            ctx.font = 'bold 28px "Syne", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('FOCUSPACT DAILY MILESTONE', 350, 70);
+            ctx.fillText('FOCUSPACT MILESTONE', 350, 70);
 
-            ctx.fillStyle = '#818cf8';
-            ctx.font = '600 15px "Plus Jakarta Sans", sans-serif';
-            ctx.fillText('HONORING DAILY COMMITMENTS', 350, 105);
+            ctx.fillStyle = '#f093fb';
+            ctx.font = '600 15px "DM Sans", sans-serif';
+            ctx.fillText('DAILY COMMITMENTS & ACCOUNTABILITY', 350, 105);
 
             // Inner Neumorphic Card Box
-            ctx.fillStyle = '#1e212d';
+            ctx.fillStyle = '#0f111a';
             ctx.fillRect(60, 140, 580, 620);
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
             ctx.lineWidth = 2;
@@ -1233,31 +1290,31 @@
 
             // Name & Streak
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 36px "Plus Jakarta Sans", sans-serif';
+            ctx.font = 'bold 36px "Syne", sans-serif';
             ctx.fillText(name, 350, 220);
 
-            ctx.fillStyle = '#10b981';
-            ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
+            ctx.fillStyle = '#43e97b';
+            ctx.font = 'bold 20px "DM Sans", sans-serif';
             ctx.fillText(`🔥 ${streak} DAY STREAK  •  ${rank}`, 350, 270);
 
             // Coach Quote Block (Inset Box)
-            ctx.fillStyle = '#171922';
+            ctx.fillStyle = '#090a10';
             ctx.fillRect(90, 330, 520, 280);
-            ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
+            ctx.strokeStyle = 'rgba(102, 126, 234, 0.5)';
             ctx.lineWidth = 1.5;
             ctx.strokeRect(90, 330, 520, 280);
 
-            ctx.fillStyle = '#818cf8';
-            ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
+            ctx.fillStyle = '#a5b4fc';
+            ctx.font = '700 13px "DM Sans", sans-serif';
             ctx.fillText('DAILY COACH REFLECTION', 350, 375);
 
             ctx.fillStyle = '#f1f5f9';
-            ctx.font = 'italic 17px "Plus Jakarta Sans", sans-serif';
+            ctx.font = 'italic 17px "DM Sans", sans-serif';
             wrapText(ctx, `"${verdict}"`, 350, 430, 460, 26);
 
             // Footer URL
             ctx.fillStyle = '#64748b';
-            ctx.font = '14px "Plus Jakarta Sans", sans-serif';
+            ctx.font = '14px "DM Sans", sans-serif';
             ctx.fillText('focusjail.netlify.app', 350, 800);
         }
 
