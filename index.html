@@ -22,11 +22,11 @@
 
     <style>
         :root {
-            /* Shared Color Tokens */
             --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
             --grad-firm: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             --grad-gentle: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
             --grad-danger: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+            --grad-shield: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
             --primary: #667eea;
             --accent: #f093fb;
             --success: #10b981;
@@ -34,7 +34,7 @@
             --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        /* Dark Theme (Default) */
+        /* Dark Theme */
         html[data-theme="dark"] {
             --bg: #090a10;
             --surface: rgba(18, 20, 30, 0.78);
@@ -56,6 +56,7 @@
             --toggle-bg: rgba(10, 11, 18, 0.8);
             --toast-bg: rgba(18, 20, 30, 0.95);
             --checkbox-border: rgba(255, 255, 255, 0.2);
+            --bento-bg: rgba(255, 255, 255, 0.03);
         }
 
         /* Light Theme */
@@ -80,6 +81,7 @@
             --toggle-bg: rgba(0, 0, 0, 0.06);
             --toast-bg: rgba(255, 255, 255, 0.96);
             --checkbox-border: rgba(0, 0, 0, 0.2);
+            --bento-bg: rgba(0, 0, 0, 0.03);
         }
 
         * {
@@ -107,7 +109,18 @@
             position: relative;
         }
 
-        /* Subtle Ambient Glow */
+        /* Fullscreen Confetti Canvas */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Ambient Glow */
         .ambient-glow {
             position: fixed;
             top: 20%;
@@ -219,7 +232,7 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 30px 24px;
+            padding: 28px 22px;
             width: 100%;
             box-shadow: var(--card-shadow);
             backdrop-filter: blur(24px);
@@ -236,7 +249,7 @@
         .hero-orb-wrap {
             width: 72px;
             height: 72px;
-            margin: 0 auto 20px;
+            margin: 0 auto 18px;
             position: relative;
             display: flex;
             align-items: center;
@@ -278,7 +291,7 @@
 
         h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 800;
             color: var(--text-main);
             line-height: 1.25;
@@ -290,10 +303,10 @@
             font-size: 14px;
             color: var(--text-sub);
             line-height: 1.6;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
-        /* Clean Inputs */
+        /* Inputs */
         input, textarea, select {
             width: 100%;
             border: 1px solid var(--border);
@@ -383,7 +396,7 @@
             border-radius: 22px;
             padding: 24px 20px;
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             width: 100%;
             position: relative;
             overflow: hidden;
@@ -422,12 +435,59 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Goals Checklist */
+        /* Mini Bento Metrics Row (Focus Time + Shield) */
+        .bento-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 14px;
+        }
+
+        .bento-box {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .bento-box:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-hover);
+        }
+
+        .bento-icon {
+            font-size: 20px;
+        }
+
+        .bento-title {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .bento-val {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+            font-family: 'Syne', sans-serif;
+            margin-top: 1px;
+        }
+
+        /* Goals Checklist with Inline Quick Edit */
         .goal-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 16px;
+            padding: 12px 14px;
             background: var(--btn-sec-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -476,6 +536,25 @@
             align-items: center;
             overflow: hidden;
             text-overflow: ellipsis;
+            flex: 1;
+        }
+
+        .goal-edit-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            padding: 4px 6px;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .goal-edit-btn:hover {
+            opacity: 1;
+            color: #667eea;
+            transform: scale(1.15);
         }
 
         /* 7-Day Consistency Strip */
@@ -511,9 +590,16 @@
             background: rgba(239, 68, 68, 0.08);
         }
 
+        .day-box.shielded {
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.35);
+            background: rgba(245, 158, 11, 0.08);
+        }
+
         /* Timer Presets */
         .timer-presets {
             display: flex;
+            flex-wrap: wrap;
             gap: 6px;
             width: 100%;
             margin-bottom: 16px;
@@ -521,6 +607,7 @@
 
         .preset-btn {
             flex: 1;
+            min-width: 60px;
             padding: 9px 4px;
             border-radius: 12px;
             background: var(--btn-sec-bg);
@@ -548,6 +635,32 @@
             background: var(--grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* Shield Prompt in Evening Checkin */
+        .shield-banner {
+            display: none;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #f59e0b;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shield-toggle-btn {
+            background: var(--grad-shield);
+            color: #1e1b4b;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-left: auto;
         }
 
         /* Verdict Card */
@@ -674,6 +787,7 @@
         .history-status { font-size: 13px; font-weight: 700; margin: 4px 0 6px; }
         .history-status.completed { color: var(--success); }
         .history-status.failed { color: var(--danger); }
+        .history-status.shielded { color: #f59e0b; }
         .history-verdict { font-size: 13px; color: var(--text-sub); line-height: 1.5; }
 
         /* Achievement Canvas */
@@ -691,10 +805,13 @@
 
     <div class="ambient-glow"></div>
 
+    <!-- Celebration Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
     <!-- Live Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Top Action Nav with Dark/Light Mode Toggle -->
+    <!-- Top Action Nav -->
     <div class="top-nav">
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Light/Dark Mode">☀️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
@@ -762,12 +879,32 @@
 
     <!-- SCREEN 4: HOME DASHBOARD -->
     <div id="screen4" class="screen">
+        <!-- Main Streak Card -->
         <div class="streak-card">
             <div class="streak-number" id="streakCount">0</div>
             <div class="streak-label">Day Streak</div>
             <div class="inmate-badge" id="rankBadge">Consistency Starter ⭐</div>
         </div>
 
+        <!-- Bento Metrics Row (Daily Focus Tracker + Streak Shield) -->
+        <div class="bento-row">
+            <div class="bento-box" onclick="goTo('screenTimer')" title="Start Deep Focus Session">
+                <div class="bento-icon">⏱️</div>
+                <div>
+                    <div class="bento-title">Focus Logged</div>
+                    <div class="bento-val" id="bentoFocusMins">0m today</div>
+                </div>
+            </div>
+            <div class="bento-box" onclick="showShieldInfo()" title="Discipline Streak Shield">
+                <div class="bento-icon">🛡️</div>
+                <div>
+                    <div class="bento-title">Streak Shield</div>
+                    <div class="bento-val" id="bentoShieldVal">1 Active</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7-Day History Strip -->
         <div class="week-strip" id="weekStrip"></div>
 
         <div class="card">
@@ -781,7 +918,7 @@
             <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️</button>
             <button class="btn-secondary" onclick="playClick(); openCardScreen()">View Daily Summary Card 📋</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screen7')">Consistency History 📜</button>
-            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments ✏️</button>
+            <button class="btn-secondary" onclick="openEditGoals()">Edit All Commitments ✏️</button>
         </div>
     </div>
 
@@ -798,7 +935,13 @@
                 <div class="toggle-option" id="opt-no">Missed / Failed ✗</div>
             </div>
 
-            <textarea id="excuseInput" rows="3" placeholder="What happened today?"></textarea>
+            <!-- Shield Freeze Option Banner -->
+            <div class="shield-banner" id="shieldBanner">
+                <span>🛡️ <strong>Shield available:</strong> Protect your streak for 1 emergency today.</span>
+                <button class="shield-toggle-btn" id="shieldBtn" onclick="toggleUseShield()">Use Shield</button>
+            </div>
+
+            <textarea id="excuseInput" rows="3" placeholder="What happened today? (Optional notes or reflection)"></textarea>
             
             <button class="btn-primary" onclick="submitReport()">Get AI Coach Feedback 💡</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
@@ -825,12 +968,13 @@
             <div class="label"><span class="label-dot"></span> Deep Work Session</div>
             <h1>Focus Mode</h1>
             
-            <!-- Timer Presets -->
+            <!-- Timer Presets + Custom Duration -->
             <div class="timer-presets">
-                <button class="preset-btn" onclick="setTimerPreset(15)">15m Sprint</button>
-                <button class="preset-btn active" onclick="setTimerPreset(25)">25m Pomodoro</button>
-                <button class="preset-btn" onclick="setTimerPreset(50)">50m Deep</button>
-                <button class="preset-btn" onclick="setTimerPreset(90)">90m Flow</button>
+                <button class="preset-btn" onclick="setTimerPreset(15)">15m</button>
+                <button class="preset-btn active" onclick="setTimerPreset(25)">25m</button>
+                <button class="preset-btn" onclick="setTimerPreset(50)">50m</button>
+                <button class="preset-btn" onclick="setTimerPreset(90)">90m</button>
+                <button class="preset-btn" onclick="promptCustomTimer()">Custom ⚙️</button>
             </div>
 
             <!-- Focus Soundscape Selector -->
@@ -875,9 +1019,76 @@
         </div>
     </div>
 
-    <!-- App Logic & Features -->
+    <!-- Lightweight Confetti Physics Engine -->
+    <script>
+        var confettiParticles = [];
+        var confettiAnimId = null;
+
+        function triggerConfetti() {
+            var canvas = document.getElementById('confettiCanvas');
+            var ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            var colors = ['#667eea', '#f093fb', '#4facfe', '#00f2fe', '#43e97b', '#f6d365', '#ffffff'];
+            confettiParticles = [];
+
+            for (var i = 0; i < 90; i++) {
+                confettiParticles.push({
+                    x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 16,
+                    vy: (Math.random() * -18) - 4,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rot: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 10,
+                    opacity: 1,
+                    decay: Math.random() * 0.015 + 0.008
+                });
+            }
+
+            if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                var active = false;
+
+                for (var i = 0; i < confettiParticles.length; i++) {
+                    var p = confettiParticles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.45; // gravity
+                    p.vx *= 0.98;
+                    p.rot += p.rotSpeed;
+                    p.opacity -= p.decay;
+
+                    if (p.opacity > 0) {
+                        active = true;
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rot * Math.PI) / 180);
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = Math.max(0, p.opacity);
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                        ctx.restore();
+                    }
+                }
+
+                if (active) {
+                    confettiAnimId = requestAnimationFrame(render);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            render();
+        }
+    </script>
+
+    <!-- App Logic & Enhancements -->
     <script>
         var goalsCompleted = true;
+        var usingShield = false;
         var soundEnabled = true;
         var timerInterval = null;
         var timerSeconds = 25 * 60;
@@ -886,7 +1097,7 @@
         var activeSoundscapeNode = null;
         var audioCtx = null;
 
-        // Theme Engine (Dark / Light Mode)
+        // Theme Engine
         function initTheme() {
             var savedTheme = localStorage.getItem('focus_theme');
             if (!savedTheme) {
@@ -904,7 +1115,6 @@
                 btn.textContent = theme === 'dark' ? '☀️' : '🌙';
                 btn.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
             }
-            // Update mobile browser theme color
             var themeColorMeta = document.querySelector('meta[name="theme-color"]');
             if (themeColorMeta) {
                 themeColorMeta.setAttribute('content', theme === 'dark' ? '#090a10' : '#f5f7fb');
@@ -922,7 +1132,33 @@
             }
         }
 
-        // Register Service Worker for PWA
+        // Smart Daily Auto-Roll Engine
+        function checkDailyAutoRoll() {
+            var todayStr = new Date().toDateString();
+            var lastActive = localStorage.getItem('last_active_date');
+
+            if (lastActive && lastActive !== todayStr) {
+                // New day detected: auto-reset goals for a fresh start while preserving text
+                var rawGoals = localStorage.getItem('goals');
+                if (rawGoals) {
+                    var goals = JSON.parse(rawGoals);
+                    goals.forEach(g => g.done = false);
+                    localStorage.setItem('goals', JSON.stringify(goals));
+                }
+                // Reset daily focus minutes
+                localStorage.setItem('daily_focus_mins', '0');
+                showToast('🌅 Good morning! Fresh daily commitments ready for today.', 'success');
+            }
+            localStorage.setItem('last_active_date', todayStr);
+        }
+
+        // Streak Shield Info
+        function showShieldInfo() {
+            var shieldCount = parseInt(localStorage.getItem('streak_shields') || '1');
+            showToast(`🛡️ Discipline Shield: You have ${shieldCount} active shield to protect your streak in emergencies!`, 'info');
+        }
+
+        // Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(() => {});
         }
@@ -932,7 +1168,7 @@
             var container = document.getElementById('toastContainer');
             var toast = document.createElement('div');
             toast.className = 'toast ' + type;
-            toast.innerHTML = (type === 'success' ? '✨ ' : '⚡ ') + msg;
+            toast.innerHTML = (type === 'success' ? '✨ ' : (type === 'info' ? '🛡️ ' : '⚡ ')) + msg;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
@@ -940,7 +1176,7 @@
             }, 3500);
         }
 
-        // Push Notifications API
+        // Push Notifications
         function requestNotificationPermission() {
             if (!('Notification' in window)) {
                 showToast('Notifications not supported on this device.');
@@ -997,7 +1233,7 @@
             showToast(soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted');
         }
 
-        // Focus Soundscapes
+        // Soundscapes
         function stopSoundscape() {
             if (activeSoundscapeNode) {
                 try {
@@ -1069,6 +1305,8 @@
             ];
             localStorage.setItem('goals', JSON.stringify(goals));
             localStorage.setItem('streak', localStorage.getItem('streak') || '0');
+            localStorage.setItem('streak_shields', localStorage.getItem('streak_shields') || '1');
+            localStorage.setItem('daily_focus_mins', localStorage.getItem('daily_focus_mins') || '0');
 
             if (window.posthog) {
                 posthog.capture('goals_committed', { name: name, count: 3 });
@@ -1093,12 +1331,17 @@
             var streak = parseInt(localStorage.getItem('streak') || '0');
             var rawGoals = localStorage.getItem('goals');
             var goals = rawGoals ? JSON.parse(rawGoals) : [];
+            var focusMins = parseInt(localStorage.getItem('daily_focus_mins') || '0');
+            var shields = parseInt(localStorage.getItem('streak_shields') || '1');
 
             document.getElementById('welcomeName').textContent = `Good day, ${name}.`;
             document.getElementById('streakCount').textContent = streak;
 
             var rank = getInmateRank(streak);
             document.getElementById('rankBadge').textContent = rank;
+
+            document.getElementById('bentoFocusMins').textContent = `${focusMins}m today`;
+            document.getElementById('bentoShieldVal').textContent = `${shields} Available`;
 
             renderGoals(goals);
             renderWeekStrip();
@@ -1111,10 +1354,10 @@
             goals.forEach((g, idx) => {
                 var item = document.createElement('div');
                 item.className = 'goal-item' + (g.done ? ' done' : '');
-                item.onclick = function () { toggleGoal(idx); };
 
                 var left = document.createElement('div');
                 left.className = 'goal-left';
+                left.onclick = function () { toggleGoal(idx); };
 
                 var checkbox = document.createElement('div');
                 checkbox.className = 'goal-checkbox';
@@ -1125,9 +1368,34 @@
 
                 left.appendChild(checkbox);
                 left.appendChild(text);
+
+                var editBtn = document.createElement('button');
+                editBtn.className = 'goal-edit-btn';
+                editBtn.textContent = '✏️';
+                editBtn.title = 'Quick Edit Goal';
+                editBtn.onclick = function (e) {
+                    e.stopPropagation();
+                    quickEditGoal(idx);
+                };
+
                 item.appendChild(left);
+                item.appendChild(editBtn);
                 container.appendChild(item);
             });
+        }
+
+        function quickEditGoal(idx) {
+            var rawGoals = localStorage.getItem('goals');
+            if (!rawGoals) return;
+            var goals = JSON.parse(rawGoals);
+            var newText = prompt('Update your daily commitment:', goals[idx].text);
+            if (newText && newText.trim() !== '') {
+                goals[idx].text = newText.trim();
+                localStorage.setItem('goals', JSON.stringify(goals));
+                playClick();
+                renderGoals(goals);
+                showToast('Goal updated!', 'success');
+            }
         }
 
         function toggleGoal(idx) {
@@ -1136,8 +1404,18 @@
             var goals = JSON.parse(rawGoals);
             goals[idx].done = !goals[idx].done;
             localStorage.setItem('goals', JSON.stringify(goals));
-            if (goals[idx].done) playSuccess();
-            else playClick();
+
+            if (goals[idx].done) {
+                playSuccess();
+                // Check if all goals are done for micro-celebration
+                var allDone = goals.every(g => g.done);
+                if (allDone) {
+                    triggerConfetti();
+                    showToast('🎉 All 3 commitments completed! Legendary execution!', 'success');
+                }
+            } else {
+                playClick();
+            }
             renderGoals(goals);
         }
 
@@ -1159,6 +1437,9 @@
                     if (histItem.completed) {
                         dayEl.classList.add('completed');
                         dayEl.textContent += ' ✓';
+                    } else if (histItem.shielded) {
+                        dayEl.classList.add('shielded');
+                        dayEl.textContent += ' 🛡️';
                     } else {
                         dayEl.classList.add('failed');
                         dayEl.textContent += ' ✗';
@@ -1170,19 +1451,43 @@
 
         function toggleReportStatus() {
             goalsCompleted = !goalsCompleted;
+            usingShield = false;
             playClick();
             var ball = document.getElementById('toggleBall');
             var optYes = document.getElementById('opt-yes');
             var optNo = document.getElementById('opt-no');
+            var shieldBanner = document.getElementById('shieldBanner');
+            var shields = parseInt(localStorage.getItem('streak_shields') || '1');
 
             if (goalsCompleted) {
                 ball.classList.remove('failed');
                 optYes.classList.add('active');
                 optNo.classList.remove('active');
+                shieldBanner.style.display = 'none';
             } else {
                 ball.classList.add('failed');
                 optNo.classList.add('active');
                 optYes.classList.remove('active');
+                if (shields > 0) {
+                    shieldBanner.style.display = 'flex';
+                }
+            }
+        }
+
+        function toggleUseShield() {
+            usingShield = !usingShield;
+            var btn = document.getElementById('shieldBtn');
+            if (usingShield) {
+                btn.textContent = 'Shield Active ✓';
+                btn.style.background = '#10b981';
+                btn.style.color = '#fff';
+                playSuccess();
+                showToast('🛡️ Shield will protect your streak for today.');
+            } else {
+                btn.textContent = 'Use Shield';
+                btn.style.background = 'var(--grad-shield)';
+                btn.style.color = '#1e1b4b';
+                playClick();
             }
         }
 
@@ -1193,13 +1498,23 @@
             var goalsList = rawGoals.map(g => g.text);
             var name = localStorage.getItem('name') || 'User';
             var tone = localStorage.getItem('tone') || 'brutal';
+            var shields = parseInt(localStorage.getItem('streak_shields') || '1');
 
             document.getElementById('aiResponse').textContent = 'Your AI Coach is formulating personalized feedback...';
             goTo('screen6');
 
+            var wasShielded = false;
+
             if (goalsCompleted) {
                 streak += 1;
                 playSuccess();
+                triggerConfetti();
+            } else if (usingShield && shields > 0) {
+                wasShielded = true;
+                shields -= 1;
+                localStorage.setItem('streak_shields', shields.toString());
+                playTone(440, 'triangle', 0.2);
+                showToast('🛡️ Streak Freeze Shield used. Streak preserved!', 'info');
             } else {
                 streak = 0;
                 playAlert();
@@ -1214,7 +1529,7 @@
                         name: name,
                         goals: goalsList,
                         completed: goalsCompleted,
-                        excuse: excuse,
+                        excuse: excuse + (wasShielded ? ' (Used Streak Freeze Shield)' : ''),
                         streak: streak,
                         tone: tone
                     })
@@ -1229,15 +1544,16 @@
                 history.push({
                     date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
                     completed: goalsCompleted,
+                    shielded: wasShielded,
                     verdict: verdict
                 });
                 localStorage.setItem('focus_history', JSON.stringify(history));
 
                 if (window.posthog) {
-                    posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak });
+                    posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak, shielded: wasShielded });
                 }
             } catch (err) {
-                var fallback = goalsCompleted ? "Great work completing your daily commitments. Keep this momentum!" : "You fell short today. Regroup, refocus, and restart tomorrow.";
+                var fallback = goalsCompleted ? "Great work completing your daily commitments. Keep this momentum!" : (wasShielded ? "Your streak was protected by your shield. Rest and reset tomorrow." : "You fell short today. Regroup, refocus, and restart tomorrow.");
                 document.getElementById('aiResponse').textContent = fallback;
                 localStorage.setItem('latestVerdict', fallback);
             }
@@ -1273,6 +1589,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if (screenId === 'screen7') renderHistoryScreen();
+            if (screenId === 'screen4') loadHome();
         }
 
         function renderHistoryScreen() {
@@ -1286,9 +1603,11 @@
             history.slice().reverse().forEach(h => {
                 var div = document.createElement('div');
                 div.className = 'history-item';
+                var statusText = h.completed ? 'COMPLETED ALL GOALS ✓' : (h.shielded ? 'STREAK SHIELD USED 🛡️' : 'MISSED COMMITMENTS ✗');
+                var statusClass = h.completed ? 'completed' : (h.shielded ? 'shielded' : 'failed');
                 div.innerHTML = `
                     <div class="history-date">${h.date}</div>
-                    <div class="history-status ${h.completed ? 'completed' : 'failed'}">${h.completed ? 'COMPLETED ALL GOALS ✓' : 'MISSED COMMITMENTS ✗'}</div>
+                    <div class="history-status ${statusClass}">${statusText}</div>
                     <div class="history-verdict">"${h.verdict}"</div>
                 `;
                 list.appendChild(div);
@@ -1311,8 +1630,22 @@
             timerSeconds = mins * 60;
             updateTimerDisplay();
             document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) event.target.classList.add('active');
             playClick();
+        }
+
+        function promptCustomTimer() {
+            if (timerRunning) return;
+            var custom = prompt('Enter focus session duration in minutes (1 - 180):', '45');
+            if (custom) {
+                var val = parseInt(custom);
+                if (val > 0 && val <= 180) {
+                    setTimerPreset(val);
+                    showToast(`Timer set to ${val} minutes.`);
+                } else {
+                    alert('Please enter a valid time between 1 and 180 minutes.');
+                }
+            }
         }
 
         function updateTimerDisplay() {
@@ -1348,7 +1681,14 @@
                         btn.textContent = 'Start Focus Session ⏱️';
                         stopSoundscape();
                         playSuccess();
-                        showToast('Deep Focus Session Complete! Great work.', 'success');
+                        triggerConfetti();
+                        
+                        // Accumulate Focus Minutes
+                        var prevMins = parseInt(localStorage.getItem('daily_focus_mins') || '0');
+                        var newMins = prevMins + currentPreset;
+                        localStorage.setItem('daily_focus_mins', newMins.toString());
+
+                        showToast(`Deep Focus Complete! +${currentPreset}m logged today.`, 'success');
                         if (window.posthog) {
                             posthog.capture('focus_session_completed', { duration: currentPreset });
                         }
@@ -1489,6 +1829,7 @@
 
         window.onload = function () {
             initTheme();
+            checkDailyAutoRoll();
             if (localStorage.getItem('name')) {
                 loadHome();
                 goTo('screen4');
