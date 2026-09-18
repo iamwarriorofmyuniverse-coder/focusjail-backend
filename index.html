@@ -744,54 +744,62 @@
         .history-status.failed { color: var(--danger); }
     <style>
         /* ========================================================
-           ANIME-ACCURATE BACKGROUND MAHORAGA 3D WHEEL
+           ANIME-ACCURATE SHADOW-SHROUDED MAHORAGA 3D WHEEL
            ======================================================== */
         .bg-mahoraga-container {
             position: fixed;
             top: 140px;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 460px;
-            height: 460px;
+            width: 480px;
+            height: 480px;
             pointer-events: none;
             z-index: 0;
             perspective: 1200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.82;
-            transition: opacity 0.5s ease;
+            opacity: 0.38;
+            filter: brightness(0.7);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Active Adaptation: Wheel emerges intensely from the shadow */
+        .bg-mahoraga-container.adapting {
+            opacity: 0.95;
+            filter: brightness(1.25) drop-shadow(0 0 50px rgba(255, 215, 0, 0.95));
+            transform: translate(-50%, -50%) scale(1.06);
         }
 
         .bg-mahoraga-halo {
             position: absolute;
-            width: 440px;
-            height: 440px;
+            width: 460px;
+            height: 460px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.35) 0%, rgba(217, 119, 6, 0.2) 40%, rgba(99, 102, 241, 0.1) 65%, transparent 75%);
-            filter: blur(25px);
-            animation: cursedAuraPulse 3s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.25) 0%, rgba(15, 23, 42, 0.8) 45%, rgba(4, 5, 8, 0.95) 70%, transparent 80%);
+            filter: blur(20px);
+            animation: cursedAuraPulse 4s ease-in-out infinite;
         }
 
         @keyframes cursedAuraPulse {
-            0%, 100% { transform: scale(0.95); opacity: 0.6; }
-            50% { transform: scale(1.15); opacity: 1; }
+            0%, 100% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.85; }
         }
 
         .bg-mahoraga-wheel {
-            width: 380px;
-            height: 380px;
+            width: 400px;
+            height: 400px;
             position: relative;
             transform-style: preserve-3d;
-            transform: rotateX(46deg) rotateZ(0deg);
+            transform: rotateX(50deg) rotateZ(0deg);
             transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.75)) drop-shadow(0 15px 35px rgba(0, 0, 0, 0.9));
-            animation: bgFloat 5s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)) drop-shadow(0 25px 45px rgba(0, 0, 0, 0.95));
+            animation: shadowFloat 6s ease-in-out infinite;
         }
 
-        @keyframes bgFloat {
-            0%, 100% { transform: rotateX(46deg) translateY(0px) rotateZ(var(--wheel-rot, 0deg)); }
-            50% { transform: rotateX(42deg) translateY(-14px) rotateZ(var(--wheel-rot, 0deg)); }
+        @keyframes shadowFloat {
+            0%, 100% { transform: rotateX(50deg) translateY(0px) rotateZ(var(--wheel-rot, 0deg)); }
+            50% { transform: rotateX(46deg) translateY(-12px) rotateZ(var(--wheel-rot, 0deg)); }
         }
 
         .wheel-svg-realistic {
@@ -1323,16 +1331,27 @@
         }
 
         // ========================================================
-        // MAHORAGA WHEEL ADAPTATION (BACKGROUND & MODAL)
+        // MAHORAGA WHEEL ADAPTATION (SHADOW REVEAL & SPIN)
         // ========================================================
         var bgWheelRotation = 0;
+        var adaptationTimeout = null;
 
         function spinBackgroundWheel(deg = 45) {
             bgWheelRotation += deg;
+            var container = document.querySelector('.bg-mahoraga-container');
             var wheel = document.getElementById('bgMahoragaWheel');
+
+            if (container) {
+                container.classList.add('adapting');
+                clearTimeout(adaptationTimeout);
+                adaptationTimeout = setTimeout(() => {
+                    container.classList.remove('adapting');
+                }, 2200);
+            }
+
             if (wheel) {
                 wheel.style.setProperty('--wheel-rot', bgWheelRotation + 'deg');
-                wheel.style.transform = `rotateX(46deg) rotateZ(${bgWheelRotation}deg)`;
+                wheel.style.transform = `rotateX(50deg) rotateZ(${bgWheelRotation}deg)`;
             }
             playMahoragaClank();
         }
