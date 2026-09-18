@@ -1310,7 +1310,9 @@
             document.getElementById('aiResponse').textContent = 'The Warden is formulating your sentence...';
             goTo('screen6');
 
-            var backendUrl = 'https://focusjail-backend-production.up.railway.app/verdict';
+            var backendUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                ? 'http://localhost:3000/verdict'
+                : '/.netlify/functions/verdict';
 
             fetch(backendUrl, {
                 method: 'POST',
