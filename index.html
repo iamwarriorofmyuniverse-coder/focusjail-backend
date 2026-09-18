@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>FocusJail - Radical AI Accountability</title>
+    <title>FocusJail - Radical AI Accountability & Deep Lockdown</title>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
     <script>
         !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
         posthog.init('phc_naJRdCPhvpCKvuasu7zkEZ7z9WAw7iZUgNt5dGBqG5nB', {
@@ -20,16 +22,18 @@
 
     <style>
         :root {
-            --bg: #090a0f;
-            --card-bg: rgba(18, 20, 29, 0.88);
+            --bg: #07080c;
+            --card-bg: rgba(16, 18, 27, 0.88);
             --card-border: rgba(255, 255, 255, 0.08);
             --grad: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --grad-gold: linear-gradient(135deg, #ffd700 0%, #ffae00 50%, #d4af37 100%);
             --grad-accent: linear-gradient(135deg, #ff0055 0%, #ff5500 100%);
             --grad-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --danger: #f43f5e;
             --success: #10b981;
+            --gold: #f59e0b;
         }
 
         * {
@@ -61,9 +65,9 @@
             pointer-events: none;
             z-index: 0;
         }
-        .orb1 { width: 350px; height: 350px; background: #6366f1; top: -100px; left: -100px; animation: floatOrb 12s ease-in-out infinite; }
+        .orb1 { width: 360px; height: 360px; background: #6366f1; top: -100px; left: -100px; animation: floatOrb 12s ease-in-out infinite; }
         .orb2 { width: 300px; height: 300px; background: #ec4899; bottom: -80px; right: -80px; animation: floatOrb 14s ease-in-out infinite reverse; }
-        .orb3 { width: 220px; height: 220px; background: #06b6d4; top: 45%; left: 50%; animation: floatOrb 18s ease-in-out infinite; }
+        .orb3 { width: 220px; height: 220px; background: #d97706; top: 45%; left: 50%; animation: floatOrb 18s ease-in-out infinite; }
 
         @keyframes floatOrb {
             0%, 100% { transform: translate(0, 0) scale(1); }
@@ -75,7 +79,7 @@
             position: fixed;
             top: 16px;
             right: 16px;
-            z-index: 10;
+            z-index: 20;
             display: flex;
             gap: 8px;
         }
@@ -84,26 +88,68 @@
             border: 1px solid var(--card-border);
             color: var(--text-secondary);
             border-radius: 50%;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             backdrop-filter: blur(10px);
-            font-size: 15px;
+            font-size: 16px;
             transition: all 0.2s;
         }
         .icon-btn:hover {
             color: #fff;
-            border-color: rgba(255,255,255,0.2);
-            transform: scale(1.05);
+            border-color: rgba(255,255,255,0.25);
+            transform: scale(1.08);
         }
 
+        /* Live Toast Notification System */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+            width: 90%;
+            max-width: 380px;
+        }
+        .toast {
+            background: rgba(18, 20, 29, 0.95);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 13px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+        }
+        .toast.violation {
+            border-color: var(--danger);
+            background: rgba(45, 10, 20, 0.95);
+        }
+        .toast.success {
+            border-color: var(--success);
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Screens */
         .screen {
             display: none;
             width: 100%;
-            max-width: 420px;
+            max-width: 430px;
             position: relative;
             z-index: 1;
         }
@@ -125,7 +171,7 @@
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-radius: 26px;
-            padding: 30px 24px;
+            padding: 28px 22px;
             width: 100%;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             border: 1px solid var(--card-border);
@@ -155,7 +201,7 @@
 
         h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 27px;
+            font-size: 26px;
             font-weight: 800;
             color: #fff;
             line-height: 1.2;
@@ -170,7 +216,7 @@
             margin-bottom: 20px;
         }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
@@ -184,7 +230,7 @@
             background: rgba(255, 255, 255, 0.04);
         }
 
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             border-color: #818cf8;
             background: rgba(255, 255, 255, 0.08);
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
@@ -205,7 +251,7 @@
             font-weight: 700;
             font-family: 'DM Sans', sans-serif;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
             transition: all 0.2s;
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
             display: flex;
@@ -233,6 +279,10 @@
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-secondary:hover {
@@ -241,14 +291,21 @@
             background: rgba(255, 255, 255, 0.06);
         }
 
+        .btn-gold {
+            background: var(--grad-gold);
+            color: #111;
+            font-weight: 800;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
         /* Streak & Inmate Rank Banner */
         .streak-card {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 22px;
-            padding: 22px 20px;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             width: 100%;
             position: relative;
             backdrop-filter: blur(12px);
@@ -256,7 +313,7 @@
 
         .streak-number {
             font-family: 'Syne', sans-serif;
-            font-size: 56px;
+            font-size: 54px;
             font-weight: 800;
             background: var(--grad);
             -webkit-background-clip: text;
@@ -283,7 +340,7 @@
             padding: 4px 12px;
             font-size: 12px;
             color: #cbd5e1;
-            margin-top: 10px;
+            margin-top: 8px;
             font-weight: 600;
         }
 
@@ -292,7 +349,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 16px;
+            padding: 13px 15px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 14px;
             margin-bottom: 8px;
@@ -346,7 +403,7 @@
             display: flex;
             justify-content: space-between;
             gap: 6px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             width: 100%;
         }
 
@@ -374,40 +431,148 @@
             color: var(--danger);
         }
 
-        /* Tone Selection Cards */
-        .tone-btn {
-            width: 100%;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: white;
-            cursor: pointer;
-            margin-top: 10px;
-            text-align: left;
-            display: flex;
+        /* ========================================================
+           MAHORAGA 3D DHARMACHAKRA ADAPTATION OVERLAY
+           ======================================================== */
+        .mahoraga-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 5, 8, 0.94);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
             align-items: center;
-            gap: 14px;
-            background: rgba(255, 255, 255, 0.03);
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .mahoraga-modal.active {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .mahoraga-scene {
+            width: 240px;
+            height: 240px;
+            perspective: 1000px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .mahoraga-wheel-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: mahoragaLevitate 4s ease-in-out infinite, mahoraga3dSpin 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes mahoraga3dSpin {
+            0% {
+                transform: rotateX(60deg) rotateZ(0deg) scale(0.6);
+            }
+            80% {
+                transform: rotateX(30deg) rotateZ(450deg) scale(1.08);
+            }
+            100% {
+                transform: rotateX(20deg) rotateZ(405deg) scale(1);
+            }
+        }
+
+        @keyframes mahoragaLevitate {
+            0%, 100% { transform: translateY(0px) rotateX(20deg) rotateZ(405deg); }
+            50% { transform: translateY(-16px) rotateX(15deg) rotateZ(405deg); }
+        }
+
+        .mahoraga-halo {
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(99, 102, 241, 0.2) 50%, transparent 70%);
+            filter: blur(15px);
+            animation: pulseAura 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseAura {
+            0%, 100% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .wheel-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.85));
+        }
+
+        .mahoraga-text {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: var(--grad-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .mahoraga-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            color: #94a3b8;
+            letter-spacing: 1.5px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* ========================================================
+           LOCKDOWN CELL & TAB-SWITCH PENALTY
+           ======================================================== */
+        .timer-presets {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .preset-btn {
+            flex: 1;
+            padding: 8px 4px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
             transition: all 0.2s;
         }
 
-        .tone-btn:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.07);
+        .preset-btn.active {
+            background: var(--grad);
+            color: #fff;
+            border-color: transparent;
         }
 
-        .tone-emoji { font-size: 26px; }
-        .tone-title { font-size: 15px; font-weight: 700; }
-        .tone-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+        .soundscape-select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
 
-        /* Focus Jail Timer Screen */
         .timer-display {
             font-family: 'Space Grotesk', monospace;
-            font-size: 58px;
+            font-size: 62px;
             font-weight: 700;
             text-align: center;
-            margin: 24px 0 10px;
+            margin: 12px 0;
             letter-spacing: 2px;
             color: #fff;
         }
@@ -415,9 +580,9 @@
         .cell-bars {
             display: flex;
             justify-content: space-around;
-            height: 70px;
+            height: 60px;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             opacity: 0.2;
             transition: opacity 0.3s;
         }
@@ -428,7 +593,45 @@
             border-radius: 2px;
         }
         .locked .cell-bars {
-            opacity: 0.9;
+            opacity: 0.95;
+            animation: barPulse 2s ease-in-out infinite;
+        }
+        @keyframes barPulse {
+            0%, 100% { filter: drop-shadow(0 0 2px #6366f1); }
+            50% { filter: drop-shadow(0 0 10px #ec4899); }
+        }
+
+        .violation-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        /* ========================================================
+           MUGSHOT CARD GENERATOR SCREEN
+           ======================================================== */
+        .mugshot-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        #mugshotCanvas {
+            width: 100%;
+            max-width: 360px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         /* Verdict Card */
@@ -500,6 +703,33 @@
             background: var(--grad-accent);
         }
 
+        /* Tone Selection Cards */
+        .tone-btn {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.2s;
+        }
+
+        .tone-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .tone-emoji { font-size: 26px; }
+        .tone-title { font-size: 15px; font-weight: 700; }
+        .tone-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
         /* History items */
         .history-item {
             background: rgba(255, 255, 255, 0.03);
@@ -522,9 +752,67 @@
     <div class="orb orb2"></div>
     <div class="orb orb3"></div>
 
+    <!-- Live Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Top Action Nav -->
     <div class="top-nav">
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
+        <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Live Reminders">🔔</button>
         <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Cell">⏱️</button>
+    </div>
+
+    <!-- ========================================================
+         MAHORAGA 3D ADAPTATION MODAL (JJK WHEEL)
+         ======================================================== -->
+    <div class="mahoraga-modal" id="mahoragaModal">
+        <div class="mahoraga-scene">
+            <div class="mahoraga-halo"></div>
+            <div class="mahoraga-wheel-3d">
+                <svg class="wheel-svg" viewBox="0 0 200 200">
+                    <defs>
+                        <radialGradient id="goldGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fff4b8" />
+                            <stop offset="50%" stop-color="#ffd700" />
+                            <stop offset="100%" stop-color="#b8860b" />
+                        </radialGradient>
+                        <linearGradient id="spokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffe066" />
+                            <stop offset="100%" stop-color="#996515" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Outer Ring -->
+                    <circle cx="100" cy="100" r="82" fill="none" stroke="url(#goldGrad)" stroke-width="8" />
+                    <circle cx="100" cy="100" r="74" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.6" />
+                    <!-- Inner Hub -->
+                    <circle cx="100" cy="100" r="28" fill="url(#goldGrad)" stroke="#4a3000" stroke-width="3" />
+                    <circle cx="100" cy="100" r="14" fill="#07080c" stroke="url(#goldGrad)" stroke-width="2" />
+                    
+                    <!-- 8 Spokes -->
+                    <g stroke="url(#spokeGrad)" stroke-width="6" stroke-linecap="round">
+                        <line x1="100" y1="28" x2="100" y2="72" />
+                        <line x1="100" y1="128" x2="100" y2="172" />
+                        <line x1="28" y1="100" x2="72" y2="100" />
+                        <line x1="128" y1="100" x2="172" y2="100" />
+                        <line x1="49" y1="49" x2="80" y2="80" />
+                        <line x1="120" y1="120" x2="151" y2="151" />
+                        <line x1="151" y1="49" x2="120" y2="80" />
+                        <line x1="80" y1="120" x2="49" y2="151" />
+                    </g>
+                    <!-- 8 Outer Orbs/Gems of Dharma -->
+                    <circle cx="100" cy="18" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                    <circle cx="100" cy="182" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                    <circle cx="18" cy="100" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                    <circle cx="182" cy="100" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                    <circle cx="42" cy="42" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                    <circle cx="158" cy="158" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                    <circle cx="158" cy="42" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                    <circle cx="42" cy="158" r="8" fill="url(#goldGrad)" stroke="#000" stroke-width="1.5" />
+                </svg>
+            </div>
+        </div>
+        <div class="mahoraga-text">ADAPTING TO PHENOMENON</div>
+        <div class="mahoraga-sub">Eight-Spoke Wheel Has Turned ⚙️</div>
     </div>
 
     <!-- SCREEN 1: ONBOARDING -->
@@ -532,7 +820,7 @@
         <div class="card">
             <div class="label"><span class="label-dot"></span> FocusJail Protocol</div>
             <h1>Stop Negotiating With Yourself.</h1>
-            <p>You lose 7+ hours every day to cheap dopamine. FocusJail holds you hostage to your own promises every night with zero sugarcoating.</p>
+            <p>You lose 7+ hours every day to cheap dopamine. FocusJail holds you hostage to your own promises with zero sugarcoating.</p>
             <button class="btn-primary" onclick="playClick(); goTo('screen2')">Lock In 🔒</button>
         </div>
     </div>
@@ -547,7 +835,7 @@
             <input id="goal1" type="text" placeholder="1. Deep Work: e.g., Ship feature X" />
             <input id="goal2" type="text" placeholder="2. Physical: e.g., 45m workout" />
             <input id="goal3" type="text" placeholder="3. Habit: e.g., Read 20 pages" />
-            <button class="btn-primary" onclick="saveGoals()">Set Commitments</button>
+            <button class="btn-primary btn-gold" onclick="saveGoalsWithMahoraga()">Turn The Wheel & Commit ⚙️</button>
         </div>
     </div>
 
@@ -600,8 +888,9 @@
 
             <button class="btn-primary" onclick="playClick(); goTo('screen5')">Submit Night Report 🌙</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Enter Focus Lockdown 🔒</button>
-            <button class="btn-secondary" onclick="playClick(); goTo('screen7')">View Verdict Log 📜</button>
-            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments ✏️</button>
+            <button class="btn-secondary" onclick="playClick(); openMugshotScreen()">View Inmate Mugshot 📸</button>
+            <button class="btn-secondary" onclick="playClick(); goTo('screen7')">Sentence Archives 📜</button>
+            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments ⚙️</button>
         </div>
     </div>
 
@@ -633,16 +922,21 @@
             <div class="verdict-card">
                 <p id="aiResponse">The warden is evaluating your daily record...</p>
             </div>
-            <button class="btn-primary" onclick="shareVerdict()">Copy Verdict to Share 📋</button>
+            <button class="btn-primary" onclick="openMugshotScreen()">Generate Inmate Mugshot 📸</button>
+            <button class="btn-secondary" onclick="shareVerdictText()">Copy Text Sentence 📋</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Face Tomorrow</button>
         </div>
     </div>
 
-    <!-- SCREEN: DEEP FOCUS TIMER -->
+    <!-- SCREEN: FOCUS LOCKDOWN CELL (FULLSCREEN + TAB PENALTY + SOUNDSCAPES) -->
     <div id="screenTimer" class="screen">
         <div class="card" id="timerCard">
-            <div class="label"><span class="label-dot"></span> Lockdown Cell</div>
-            <h1>Deep Work Session</h1>
+            <div class="label"><span class="label-dot"></span> Solitary Confinement</div>
+            <h1>Deep Work Lockdown</h1>
+
+            <div id="violationBanner" class="violation-pill" style="display:none;">
+                🚨 Parole Violations: <span id="violationCount">0</span>
+            </div>
             
             <div class="cell-bars">
                 <div class="cell-bar"></div>
@@ -652,15 +946,48 @@
                 <div class="cell-bar"></div>
             </div>
 
+            <!-- Timer Presets -->
+            <div class="timer-presets">
+                <button class="preset-btn" onclick="setTimerPreset(15)">15m Sprint</button>
+                <button class="preset-btn active" onclick="setTimerPreset(25)">25m Standard</button>
+                <button class="preset-btn" onclick="setTimerPreset(50)">50m Deep</button>
+                <button class="preset-btn" onclick="setTimerPreset(90)">90m Flow</button>
+            </div>
+
+            <!-- Focus Soundscape Selector -->
+            <select class="soundscape-select" id="soundscapeSelect" onchange="changeSoundscape(this.value)">
+                <option value="none">🔇 Silent Focus</option>
+                <option value="brown">🌊 Deep Brown Noise (ADHD & Concentration)</option>
+                <option value="rain">🌧️ Cyber Rain & Synth Drone</option>
+                <option value="clock">⏱️ Cellblock Clock Ticking</option>
+            </select>
+
             <div class="timer-display" id="timerTime">25:00</div>
             
-            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Lockdown 🔒</button>
-            <button class="btn-secondary" onclick="resetTimer()">Reset to 25m</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Exit Cell</button>
+            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Lockdown & Fullscreen 🔒</button>
+            <button class="btn-secondary" onclick="resetTimer()">Reset Timer</button>
+            <button class="btn-secondary" onclick="exitLockdown()">Exit Cell</button>
         </div>
     </div>
 
-    <!-- SCREEN 7: HISTORY -->
+    <!-- SCREEN: SHARABLE MUGSHOT GENERATOR -->
+    <div id="screenMugshot" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Department of Corrections</div>
+            <h1>Inmate Mugshot</h1>
+            <p>Your official record. Share to assert public accountability.</p>
+
+            <div class="mugshot-container">
+                <canvas id="mugshotCanvas" width="700" height="900"></canvas>
+            </div>
+
+            <button class="btn-primary" onclick="downloadMugshot()">Download Mugshot PNG 📥</button>
+            <button class="btn-secondary" onclick="copyMugshotToClipboard()">Copy to Clipboard 📋</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 7: SENTENCE HISTORY -->
     <div id="screen7" class="screen">
         <div class="card">
             <div class="label"><span class="label-dot"></span> Inmate Archives</div>
@@ -675,14 +1002,57 @@
         var soundEnabled = true;
         var timerInterval = null;
         var timerSeconds = 25 * 60;
+        var currentPreset = 25;
         var timerRunning = false;
+        var tabViolations = 0;
+        var activeSoundscapeNode = null;
         var audioCtx = null;
 
-        // Web Audio Synthesizer
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+
+        // Live Toast Notification
+        function showToast(msg, type = 'normal') {
+            var container = document.getElementById('toastContainer');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = (type === 'violation' ? '🚨 ' : (type === 'success' ? '✨ ' : '🔒 ')) + msg;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Push Notifications API
+        function requestNotificationPermission() {
+            if (!('Notification' in window)) {
+                showToast('Notifications not supported on this device.');
+                return;
+            }
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    showToast('Live Reminders Enabled! Roll call set for 8:00 AM & 9:30 PM.', 'success');
+                    new Notification('FocusJail Activated', {
+                        body: 'The Warden is monitoring your daily execution.',
+                        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🔒</text></svg>'
+                    });
+                } else {
+                    showToast('Notification permission denied.');
+                }
+            });
+        }
+
+        // ========================================================
+        // WEB AUDIO API SYNTHESIZER (No external audio files)
+        // ========================================================
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
         function playTone(freq, type, duration) {
@@ -693,7 +1063,7 @@
                 var gain = audioCtx.createGain();
                 osc.type = type || 'sine';
                 osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -704,11 +1074,129 @@
 
         function playClick() { playTone(600, 'sine', 0.08); }
         function playSuccess() { playTone(880, 'triangle', 0.25); }
-        function playFail() { playTone(220, 'sawtooth', 0.35); }
+        function playFail() { playTone(200, 'sawtooth', 0.4); }
+
+        // Mahoraga Wheel Metallic Click & Cursed Clank Sound
+        function playMahoragaClank() {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                // Metallic heavy impact 1
+                playTone(180, 'sawtooth', 0.3);
+                playTone(420, 'triangle', 0.2);
+                setTimeout(() => {
+                    // Double metallic latch
+                    playTone(600, 'square', 0.15);
+                    playTone(900, 'sine', 0.4);
+                }, 220);
+                setTimeout(() => {
+                    // Final celestial lock
+                    playTone(1200, 'triangle', 0.6);
+                }, 600);
+            } catch(e) {}
+        }
 
         function toggleAudio() {
             soundEnabled = !soundEnabled;
             document.getElementById('soundBtn').textContent = soundEnabled ? '🔊' : '🔇';
+            showToast(soundEnabled ? 'Audio FX Enabled' : 'Audio FX Muted');
+        }
+
+        // ========================================================
+        // FOCUS SOUNDSCAPES SYNTHESIZER
+        // ========================================================
+        function stopSoundscape() {
+            if (activeSoundscapeNode) {
+                try {
+                    activeSoundscapeNode.stop();
+                    activeSoundscapeNode.disconnect();
+                } catch(e) {}
+                activeSoundscapeNode = null;
+            }
+        }
+
+        function changeSoundscape(type) {
+            stopSoundscape();
+            if (type === 'none' || !soundEnabled) return;
+            initAudio();
+
+            if (type === 'brown') {
+                // Brown Noise Generator via White Noise buffer + Lowpass Filter
+                var bufferSize = 2 * audioCtx.sampleRate;
+                var noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                var output = noiseBuffer.getChannelData(0);
+                var lastOut = 0.0;
+                for (var i = 0; i < bufferSize; i++) {
+                    var white = Math.random() * 2 - 1;
+                    output[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = output[i];
+                    output[i] *= 3.5;
+                }
+                var noise = audioCtx.createBufferSource();
+                noise.buffer = noiseBuffer;
+                noise.loop = true;
+                var filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 400;
+                var gain = audioCtx.createGain();
+                gain.gain.value = 0.15;
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                noise.start();
+                activeSoundscapeNode = noise;
+            } else if (type === 'rain') {
+                // Rain & Cyber Drone
+                var osc = audioCtx.createOscillator();
+                var gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.value = 110;
+                gain.gain.value = 0.06;
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                activeSoundscapeNode = osc;
+            }
+        }
+
+        // ========================================================
+        // MAHORAGA WHEEL ACTIVATION
+        // ========================================================
+        function saveGoalsWithMahoraga() {
+            var name = document.getElementById('name').value.trim();
+            var g1 = document.getElementById('goal1').value.trim();
+            var g2 = document.getElementById('goal2').value.trim();
+            var g3 = document.getElementById('goal3').value.trim();
+
+            if (!name || !g1 || !g2 || !g3) {
+                alert('Every slot must be committed. No shortcuts.');
+                return;
+            }
+
+            localStorage.setItem('name', name);
+            localStorage.setItem('goals', JSON.stringify([
+                { text: g1, done: false },
+                { text: g2, done: false },
+                { text: g3, done: false }
+            ]));
+
+            // Trigger Mahoraga 3D Wheel Modal
+            var modal = document.getElementById('mahoragaModal');
+            modal.classList.add('active');
+            playMahoragaClank();
+            showToast('With this treasure... Wheel of Adaptation turned!', 'success');
+
+            setTimeout(() => {
+                modal.classList.remove('active');
+                goTo('screen2b');
+            }, 2200);
+        }
+
+        function setTone(tone) {
+            localStorage.setItem('tone', tone);
+            playSuccess();
+            loadHome();
+            goTo('screen4');
         }
 
         function goTo(id) {
@@ -728,35 +1216,6 @@
             return '🔒 Inmate #0042';
         }
 
-        function saveGoals() {
-            var name = document.getElementById('name').value.trim();
-            var g1 = document.getElementById('goal1').value.trim();
-            var g2 = document.getElementById('goal2').value.trim();
-            var g3 = document.getElementById('goal3').value.trim();
-
-            if (!name || !g1 || !g2 || !g3) {
-                alert('Every slot must be committed. No shortcuts.');
-                return;
-            }
-
-            localStorage.setItem('name', name);
-            localStorage.setItem('goals', JSON.stringify([
-                { text: g1, done: false },
-                { text: g2, done: false },
-                { text: g3, done: false }
-            ]));
-
-            playSuccess();
-            goTo('screen2b');
-        }
-
-        function setTone(tone) {
-            localStorage.setItem('tone', tone);
-            playSuccess();
-            loadHome();
-            goTo('screen4');
-        }
-
         function toggleGoalCheck(index) {
             var goals = JSON.parse(localStorage.getItem('goals') || '[]');
             if (goals[index]) {
@@ -764,6 +1223,9 @@
                 localStorage.setItem('goals', JSON.stringify(goals));
                 playClick();
                 renderGoalsList();
+                if (goals.every(g => g.done)) {
+                    showToast('All daily commitments fulfilled! Submit your report.', 'success');
+                }
             }
         }
 
@@ -885,6 +1347,7 @@
             streak = goalsCompleted ? streak + 1 : 0;
             localStorage.setItem('streak', streak);
             localStorage.setItem('lastReportDate', new Date().toDateString());
+            localStorage.setItem('latestVerdict', verdict);
 
             var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
             history.push({
@@ -895,7 +1358,6 @@
             if (history.length > 14) history.shift();
             localStorage.setItem('verdictHistory', JSON.stringify(history));
 
-            // Reset checklist checkmarks for tomorrow
             var goals = JSON.parse(localStorage.getItem('goals') || '[]');
             goals.forEach(g => g.done = false);
             localStorage.setItem('goals', JSON.stringify(goals));
@@ -904,10 +1366,10 @@
             if (goalsCompleted) playSuccess(); else playFail();
         }
 
-        function shareVerdict() {
+        function shareVerdictText() {
             var text = `🔒 FocusJail Sentence:\n"${document.getElementById('aiResponse').textContent}"\n\nStreak: ${localStorage.getItem('streak')} days unbroken.`;
             navigator.clipboard.writeText(text).then(() => {
-                alert('Sentence copied to clipboard!');
+                showToast('Sentence copied to clipboard!', 'success');
             });
         }
 
@@ -942,7 +1404,34 @@
             });
         }
 
-        // Deep Work Timer Logic
+        // ========================================================
+        // TAB-SWITCH PENALTY & FULLSCREEN LOCKDOWN
+        // ========================================================
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && timerRunning) {
+                tabViolations++;
+                document.getElementById('violationBanner').style.display = 'inline-flex';
+                document.getElementById('violationCount').textContent = tabViolations;
+                playFail();
+                showToast('🚨 PAROLE VIOLATION DETECTED: You navigated away from the lockdown cell!', 'violation');
+                
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('🚨 FocusJail Lockdown Breach', {
+                        body: 'Warning: Leaving your cell during solitary confinement logs an infraction.',
+                    });
+                }
+            }
+        });
+
+        function setTimerPreset(mins) {
+            currentPreset = mins;
+            timerSeconds = mins * 60;
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            updateTimerDisplay();
+            playClick();
+        }
+
         function updateTimerDisplay() {
             var m = Math.floor(timerSeconds / 60);
             var s = timerSeconds % 60;
@@ -953,16 +1442,27 @@
         function toggleTimer() {
             var btn = document.getElementById('timerBtn');
             var card = document.getElementById('timerCard');
+
             if (timerRunning) {
                 clearInterval(timerInterval);
                 timerRunning = false;
+                stopSoundscape();
                 btn.textContent = 'Resume Lockdown 🔒';
                 card.classList.remove('locked');
             } else {
                 timerRunning = true;
                 btn.textContent = 'Pause ⏸️';
                 card.classList.add('locked');
-                playSuccess();
+                playMahoragaClank();
+                changeSoundscape(document.getElementById('soundscapeSelect').value);
+
+                // Request Fullscreen
+                try {
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(() => {});
+                    }
+                } catch(e) {}
+
                 timerInterval = setInterval(() => {
                     if (timerSeconds > 0) {
                         timerSeconds--;
@@ -970,10 +1470,11 @@
                     } else {
                         clearInterval(timerInterval);
                         timerRunning = false;
+                        stopSoundscape();
                         btn.textContent = 'Session Complete 🔓';
                         card.classList.remove('locked');
                         playSuccess();
-                        alert('Lockdown session completed. Return to the dashboard.');
+                        showToast('Lockdown session completed! Cell unlocked.', 'success');
                     }
                 }, 1000);
             }
@@ -982,10 +1483,149 @@
         function resetTimer() {
             clearInterval(timerInterval);
             timerRunning = false;
-            timerSeconds = 25 * 60;
+            stopSoundscape();
+            timerSeconds = currentPreset * 60;
             updateTimerDisplay();
-            document.getElementById('timerBtn').textContent = 'Start Lockdown 🔒';
+            document.getElementById('timerBtn').textContent = 'Start Lockdown & Fullscreen 🔒';
             document.getElementById('timerCard').classList.remove('locked');
+        }
+
+        function exitLockdown() {
+            resetTimer();
+            if (document.fullscreenElement && document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            }
+            goTo('screen4');
+        }
+
+        // ========================================================
+        // CANVAS INMATE MUGSHOT CARD GENERATOR
+        // ========================================================
+        function openMugshotScreen() {
+            goTo('screenMugshot');
+            drawMugshot();
+        }
+
+        function drawMugshot() {
+            var canvas = document.getElementById('mugshotCanvas');
+            var ctx = canvas.getContext('2d');
+            var name = localStorage.getItem('name') || 'INMATE #0042';
+            var streak = localStorage.getItem('streak') || 0;
+            var rank = getInmateRank(parseInt(streak));
+            var verdict = localStorage.getItem('latestVerdict') || 'Sentenced to radical accountability. Zero excuses allowed.';
+
+            // Background Prison Wall with Height Chart
+            ctx.fillStyle = '#0f111a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Height Grid Lines
+            ctx.strokeStyle = '#232838';
+            ctx.lineWidth = 2;
+            for (var y = 140; y < 650; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(40, y);
+                ctx.lineTo(660, y);
+                ctx.stroke();
+            }
+
+            // Facility Header
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = 'bold 28px Syne, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('FOCUSJAIL CORRECTIONAL FACILITY', 350, 60);
+
+            ctx.fillStyle = '#818cf8';
+            ctx.font = '600 16px "DM Sans", sans-serif';
+            ctx.fillText('DEPARTMENT OF RADICAL ACCOUNTABILITY', 350, 90);
+
+            // Silhouette / Inmate Icon
+            ctx.fillStyle = '#1e2333';
+            ctx.beginPath();
+            ctx.arc(350, 260, 70, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(350, 420, 120, 80, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Inmate ID Placard Card (Held by inmate)
+            ctx.fillStyle = '#040508';
+            ctx.fillRect(100, 480, 500, 240);
+            ctx.strokeStyle = '#818cf8';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(100, 480, 500, 240);
+
+            // Placard Text
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 26px "Space Grotesk", monospace';
+            ctx.fillText(name.toUpperCase(), 350, 525);
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '600 16px "DM Sans", sans-serif';
+            ctx.fillText(`STREAK: ${streak} DAYS UNBROKEN  |  ${rank}`, 350, 560);
+
+            // Verdict Quote in Placard
+            ctx.fillStyle = '#e2e8f0';
+            ctx.font = 'italic 15px "DM Sans", sans-serif';
+            wrapText(ctx, `"${verdict}"`, 350, 600, 440, 22);
+
+            // Red Official Stamp
+            ctx.save();
+            ctx.translate(520, 660);
+            ctx.rotate(-0.2);
+            ctx.strokeStyle = '#f43f5e';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(-80, -25, 160, 50);
+            ctx.fillStyle = '#f43f5e';
+            ctx.font = 'bold 18px "Space Grotesk", sans-serif';
+            ctx.fillText('CONFINED', 0, 6);
+            ctx.restore();
+
+            // Footer URL
+            ctx.fillStyle = '#64748b';
+            ctx.font = '14px "Space Grotesk", monospace';
+            ctx.fillText('focusjail.netlify.app', 350, 860);
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            var words = text.split(' ');
+            var line = '';
+            for (var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + ' ';
+                var metrics = ctx.measureText(testLine);
+                var testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, y);
+        }
+
+        function downloadMugshot() {
+            var canvas = document.getElementById('mugshotCanvas');
+            var link = document.createElement('a');
+            link.download = `FocusJail_Mugshot_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showToast('Mugshot downloaded!', 'success');
+        }
+
+        function copyMugshotToClipboard() {
+            var canvas = document.getElementById('mugshotCanvas');
+            canvas.toBlob(blob => {
+                if (navigator.clipboard && navigator.clipboard.write) {
+                    navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]).then(() => {
+                        showToast('Mugshot image copied to clipboard!', 'success');
+                    }).catch(() => {
+                        showToast('Could not copy image directly. Use download button.');
+                    });
+                }
+            });
         }
 
         window.onload = function () {
