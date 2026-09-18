@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#667eea" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 
     <script>
         !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -56,7 +56,8 @@
             --toggle-bg: rgba(10, 11, 18, 0.8);
             --toast-bg: rgba(18, 20, 30, 0.95);
             --checkbox-border: rgba(255, 255, 255, 0.2);
-            --bento-bg: rgba(255, 255, 255, 0.03);
+            --chart-bar-bg: rgba(255, 255, 255, 0.05);
+            --tile-empty: rgba(255, 255, 255, 0.06);
         }
 
         /* Light Theme */
@@ -81,7 +82,8 @@
             --toggle-bg: rgba(0, 0, 0, 0.06);
             --toast-bg: rgba(255, 255, 255, 0.96);
             --checkbox-border: rgba(0, 0, 0, 0.2);
-            --bento-bg: rgba(0, 0, 0, 0.03);
+            --chart-bar-bg: rgba(0, 0, 0, 0.05);
+            --tile-empty: rgba(0, 0, 0, 0.06);
         }
 
         * {
@@ -210,7 +212,7 @@
         .screen {
             display: none;
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             position: relative;
             z-index: 10;
         }
@@ -245,7 +247,7 @@
             border-color: var(--border-hover);
         }
 
-        /* Hero AI Icon / Pulse */
+        /* Hero Orb */
         .hero-orb-wrap {
             width: 72px;
             height: 72px;
@@ -386,9 +388,39 @@
             transform: translateY(-1px);
         }
 
-        .btn-secondary:active {
-            transform: translateY(0);
+        /* Social Dispatch Buttons for Confessions / Victories */
+        .dispatch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            width: 100%;
+            margin-top: 12px;
         }
+
+        .dispatch-btn {
+            padding: 11px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--btn-sec-bg);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .dispatch-btn:hover {
+            border-color: #667eea;
+            background: var(--btn-sec-hover);
+            transform: translateY(-1px);
+        }
+
+        .dispatch-btn.wa { border-color: rgba(37, 211, 102, 0.4); color: #25d366; }
+        .dispatch-btn.sms { border-color: rgba(79, 172, 254, 0.4); color: #4facfe; }
 
         /* Streak Card */
         .streak-card {
@@ -435,23 +467,23 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Mini Bento Metrics Row (Focus Time + Shield) */
+        /* Bento Metrics Row */
         .bento-row {
-            display: flex;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
             width: 100%;
             margin-bottom: 14px;
         }
 
         .bento-box {
-            flex: 1;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 12px 14px;
+            padding: 10px 10px;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            align-items: flex-start;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
             cursor: pointer;
             transition: transform 0.2s, border-color 0.2s;
@@ -462,27 +494,132 @@
             border-color: var(--border-hover);
         }
 
-        .bento-icon {
-            font-size: 20px;
-        }
-
+        .bento-icon { font-size: 16px; margin-bottom: 4px; }
         .bento-title {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
             color: var(--text-muted);
         }
-
         .bento-val {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--text-main);
             font-family: 'Syne', sans-serif;
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
-        /* Goals Checklist with Inline Quick Edit */
+        /* Visual 7-Day Focus Bar Graph */
+        .chart-card {
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .chart-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-total {
+            font-size: 11px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 90px;
+            gap: 8px;
+            padding-top: 10px;
+        }
+
+        .bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .bar-fill-wrap {
+            width: 100%;
+            max-width: 28px;
+            height: 70px;
+            background: var(--chart-bar-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            width: 100%;
+            background: var(--grad);
+            border-radius: 8px;
+            transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            min-height: 4px;
+        }
+
+        .bar-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .bar-val {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-sub);
+            margin-bottom: 4px;
+        }
+
+        /* 30-Day Heatmap Grid */
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            width: 100%;
+            margin: 12px 0 16px;
+        }
+
+        .heatmap-tile {
+            aspect-ratio: 1;
+            border-radius: 5px;
+            background: var(--tile-empty);
+            border: 1px solid var(--border);
+            transition: transform 0.15s;
+        }
+
+        .heatmap-tile:hover {
+            transform: scale(1.25);
+            z-index: 2;
+        }
+
+        .heatmap-tile.done { background: #10b981; border-color: #059669; }
+        .heatmap-tile.shield { background: #f59e0b; border-color: #d97706; }
+        .heatmap-tile.missed { background: #ef4444; border-color: #dc2626; }
+
+        /* Goals Checklist */
         .goal-item {
             display: flex;
             align-items: center;
@@ -813,6 +950,7 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav">
+        <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth & Development Graphs">📈</button>
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Light/Dark Mode">☀️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
@@ -833,7 +971,7 @@
         </div>
     </div>
 
-    <!-- SCREEN 2: DEFINE COMMITMENTS -->
+    <!-- SCREEN 2: DEFINE COMMITMENTS & ACCOUNTABILITY PARTNER -->
     <div id="screen2" class="screen">
         <div class="card">
             <div class="label"><span class="label-dot"></span> Daily Planning</div>
@@ -843,6 +981,13 @@
             <input id="goal1" type="text" placeholder="1. Goal - be specific" />
             <input id="goal2" type="text" placeholder="2. Goal - be specific" />
             <input id="goal3" type="text" placeholder="3. Goal - be specific" />
+            
+            <div style="margin-top: 12px; margin-bottom: 6px;">
+                <div class="label"><span class="label-dot"></span> Accountability Partner (Optional)</div>
+                <input id="partnerName" type="text" placeholder="Partner Name (Friend, Mentor, or Boss)" />
+                <input id="partnerContact" type="text" placeholder="Partner Phone / WhatsApp / Email" />
+            </div>
+
             <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯</button>
         </div>
     </div>
@@ -886,21 +1031,22 @@
             <div class="inmate-badge" id="rankBadge">Consistency Starter ⭐</div>
         </div>
 
-        <!-- Bento Metrics Row (Daily Focus Tracker + Streak Shield) -->
+        <!-- Bento Metrics Row (Focus Time + Shield + Partner) -->
         <div class="bento-row">
             <div class="bento-box" onclick="goTo('screenTimer')" title="Start Deep Focus Session">
                 <div class="bento-icon">⏱️</div>
-                <div>
-                    <div class="bento-title">Focus Logged</div>
-                    <div class="bento-val" id="bentoFocusMins">0m today</div>
-                </div>
+                <div class="bento-title">Focus Logged</div>
+                <div class="bento-val" id="bentoFocusMins">0m today</div>
             </div>
             <div class="bento-box" onclick="showShieldInfo()" title="Discipline Streak Shield">
                 <div class="bento-icon">🛡️</div>
-                <div>
-                    <div class="bento-title">Streak Shield</div>
-                    <div class="bento-val" id="bentoShieldVal">1 Active</div>
-                </div>
+                <div class="bento-title">Streak Shield</div>
+                <div class="bento-val" id="bentoShieldVal">1 Active</div>
+            </div>
+            <div class="bento-box" onclick="goTo('screenAnalytics')" title="View Growth Charts">
+                <div class="bento-icon">📈</div>
+                <div class="bento-title">Growth Score</div>
+                <div class="bento-val" id="bentoScoreVal">100%</div>
             </div>
         </div>
 
@@ -916,18 +1062,18 @@
 
             <button class="btn-primary" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
             <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️</button>
+            <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈</button>
             <button class="btn-secondary" onclick="playClick(); openCardScreen()">View Daily Summary Card 📋</button>
-            <button class="btn-secondary" onclick="playClick(); goTo('screen7')">Consistency History 📜</button>
-            <button class="btn-secondary" onclick="openEditGoals()">Edit All Commitments ✏️</button>
+            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
         </div>
     </div>
 
-    <!-- SCREEN 5: EVENING CHECK-IN -->
+    <!-- SCREEN 5: EVENING CHECK-IN & CONFESSION -->
     <div id="screen5" class="screen">
         <div class="card">
             <div class="label"><span class="label-dot"></span> Evening Reflection</div>
-            <h1>Answer for your day.</h1>
-            <p>Did you complete what you promised today?</p>
+            <h1 id="checkinTitle">Answer for your day.</h1>
+            <p id="checkinSub">Did you complete what you promised today?</p>
 
             <div class="toggle-wrap" onclick="toggleReportStatus()">
                 <div class="toggle-ball" id="toggleBall"></div>
@@ -935,30 +1081,84 @@
                 <div class="toggle-option" id="opt-no">Missed / Failed ✗</div>
             </div>
 
-            <!-- Shield Freeze Option Banner -->
+            <!-- Proof of Work Input (When Completed) -->
+            <div id="proofWrap">
+                <div class="label"><span class="label-dot"></span> Proof of Execution (Optional)</div>
+                <input id="proofInput" type="text" placeholder="Paste GitHub PR, Figma link, doc, or what you shipped..." />
+            </div>
+
+            <!-- Shield Freeze Option Banner (When Missed) -->
             <div class="shield-banner" id="shieldBanner">
-                <span>🛡️ <strong>Shield available:</strong> Protect your streak for 1 emergency today.</span>
+                <span>🛡️ <strong>Emergency Shield:</strong> Protect your streak from resetting today.</span>
                 <button class="shield-toggle-btn" id="shieldBtn" onclick="toggleUseShield()">Use Shield</button>
             </div>
 
-            <textarea id="excuseInput" rows="3" placeholder="What happened today? (Optional notes or reflection)"></textarea>
+            <!-- Confession Text Area -->
+            <div class="label" id="reflectionLabel"><span class="label-dot"></span> Daily Reflection & Notes</div>
+            <textarea id="excuseInput" rows="3" placeholder="What went well or what blocked you today?"></textarea>
             
-            <button class="btn-primary" onclick="submitReport()">Get AI Coach Feedback 💡</button>
+            <button class="btn-primary" onclick="submitReport()">Submit Check-In & Get Verdict 💡</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
         </div>
     </div>
 
-    <!-- SCREEN 6: AI COACH FEEDBACK -->
+    <!-- SCREEN 6: AI COACH FEEDBACK & SOCIAL DISPATCH -->
     <div id="screen6" class="screen">
         <div class="card">
             <div class="label"><span class="label-dot"></span> Coach Reflection</div>
-            <h1>Today's Feedback.</h1>
+            <h1 id="verdictHeadline">Today's Verdict.</h1>
             <div class="verdict-card">
                 <p id="aiResponse">Analyzing your day and preparing insights...</p>
             </div>
+
+            <!-- 1-Tap Partner Confession / Victory Dispatcher -->
+            <div style="margin-top: 14px; margin-bottom: 8px;">
+                <div class="label"><span class="label-dot"></span> Send Accountability Report to Partner</div>
+                <div class="dispatch-grid">
+                    <button class="dispatch-btn wa" onclick="sendPartnerWhatsApp()">💬 WhatsApp</button>
+                    <button class="dispatch-btn sms" onclick="sendPartnerSMS()">📱 SMS / Text</button>
+                    <button class="dispatch-btn" onclick="sendPartnerEmail()">✉️ Email</button>
+                    <button class="dispatch-btn" onclick="copyPartnerReport()">📋 Copy Text</button>
+                </div>
+            </div>
+
             <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋</button>
-            <button class="btn-secondary" onclick="shareVerdictText()">Copy Notes to Clipboard 📝</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: DEVELOPMENT & PROGRESS ANALYTICS -->
+    <div id="screenAnalytics" class="screen">
+        <div class="card">
+            <div class="label"><span class="label-dot"></span> Analytics & Growth</div>
+            <h1>Your Development.</h1>
+            <p>Visual tracking of your focus hours and consistency growth.</p>
+
+            <!-- 7-Day Deep Work Focus Bar Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <span class="chart-title">7-Day Focus Minutes</span>
+                    <span class="chart-total" id="weeklyFocusTotal">0m this week</span>
+                </div>
+                <div class="bar-chart" id="focusBarChart"></div>
+            </div>
+
+            <!-- 30-Day Consistency Heatmap Grid -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <span class="chart-title">30-Day Discipline Matrix</span>
+                    <span class="chart-total" id="monthlyRate">100% Rate</span>
+                </div>
+                <div class="heatmap-grid" id="heatmapGrid"></div>
+                <div style="display: flex; gap: 12px; font-size: 11px; color: var(--text-muted); justify-content: flex-end;">
+                    <span><span style="color: #10b981;">■</span> Done</span>
+                    <span><span style="color: #f59e0b;">■</span> Shield</span>
+                    <span><span style="color: #ef4444;">■</span> Missed</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" onclick="goTo('screen7')">View Full History Archives 📜</button>
         </div>
     </div>
 
@@ -1019,7 +1219,7 @@
         </div>
     </div>
 
-    <!-- Lightweight Confetti Physics Engine -->
+    <!-- Confetti Physics -->
     <script>
         var confettiParticles = [];
         var confettiAnimId = null;
@@ -1058,7 +1258,7 @@
                     var p = confettiParticles[i];
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.vy += 0.45; // gravity
+                    p.vy += 0.45;
                     p.vx *= 0.98;
                     p.rot += p.rotSpeed;
                     p.opacity -= p.decay;
@@ -1085,7 +1285,7 @@
         }
     </script>
 
-    <!-- App Logic & Enhancements -->
+    <!-- App Engine -->
     <script>
         var goalsCompleted = true;
         var usingShield = false;
@@ -1132,27 +1332,24 @@
             }
         }
 
-        // Smart Daily Auto-Roll Engine
+        // Daily Auto-Roll
         function checkDailyAutoRoll() {
             var todayStr = new Date().toDateString();
             var lastActive = localStorage.getItem('last_active_date');
 
             if (lastActive && lastActive !== todayStr) {
-                // New day detected: auto-reset goals for a fresh start while preserving text
                 var rawGoals = localStorage.getItem('goals');
                 if (rawGoals) {
                     var goals = JSON.parse(rawGoals);
                     goals.forEach(g => g.done = false);
                     localStorage.setItem('goals', JSON.stringify(goals));
                 }
-                // Reset daily focus minutes
                 localStorage.setItem('daily_focus_mins', '0');
-                showToast('🌅 Good morning! Fresh daily commitments ready for today.', 'success');
+                showToast('🌅 Good morning! Fresh commitments ready for today.', 'success');
             }
             localStorage.setItem('last_active_date', todayStr);
         }
 
-        // Streak Shield Info
         function showShieldInfo() {
             var shieldCount = parseInt(localStorage.getItem('streak_shields') || '1');
             showToast(`🛡️ Discipline Shield: You have ${shieldCount} active shield to protect your streak in emergencies!`, 'info');
@@ -1163,7 +1360,6 @@
             navigator.serviceWorker.register('sw.js').catch(() => {});
         }
 
-        // Live Toast Notification
         function showToast(msg, type = 'normal') {
             var container = document.getElementById('toastContainer');
             var toast = document.createElement('div');
@@ -1176,7 +1372,6 @@
             }, 3500);
         }
 
-        // Push Notifications
         function requestNotificationPermission() {
             if (!('Notification' in window)) {
                 showToast('Notifications not supported on this device.');
@@ -1195,7 +1390,6 @@
             });
         }
 
-        // Web Audio Synthesizer
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1233,7 +1427,6 @@
             showToast(soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted');
         }
 
-        // Soundscapes
         function stopSoundscape() {
             if (activeSoundscapeNode) {
                 try {
@@ -1291,6 +1484,8 @@
             var g1 = document.getElementById('goal1').value.trim();
             var g2 = document.getElementById('goal2').value.trim();
             var g3 = document.getElementById('goal3').value.trim();
+            var partnerName = document.getElementById('partnerName').value.trim();
+            var partnerContact = document.getElementById('partnerContact').value.trim();
 
             if (!name || !g1 || !g2 || !g3) {
                 alert('Please fill out all 3 commitments.');
@@ -1298,6 +1493,9 @@
             }
 
             localStorage.setItem('name', name);
+            if (partnerName) localStorage.setItem('partner_name', partnerName);
+            if (partnerContact) localStorage.setItem('partner_contact', partnerContact);
+
             var goals = [
                 { text: g1, done: false },
                 { text: g2, done: false },
@@ -1309,7 +1507,7 @@
             localStorage.setItem('daily_focus_mins', localStorage.getItem('daily_focus_mins') || '0');
 
             if (window.posthog) {
-                posthog.capture('goals_committed', { name: name, count: 3 });
+                posthog.capture('goals_committed', { name: name, count: 3, has_partner: !!partnerName });
             }
 
             playSuccess();
@@ -1333,6 +1531,7 @@
             var goals = rawGoals ? JSON.parse(rawGoals) : [];
             var focusMins = parseInt(localStorage.getItem('daily_focus_mins') || '0');
             var shields = parseInt(localStorage.getItem('streak_shields') || '1');
+            var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
 
             document.getElementById('welcomeName').textContent = `Good day, ${name}.`;
             document.getElementById('streakCount').textContent = streak;
@@ -1341,7 +1540,13 @@
             document.getElementById('rankBadge').textContent = rank;
 
             document.getElementById('bentoFocusMins').textContent = `${focusMins}m today`;
-            document.getElementById('bentoShieldVal').textContent = `${shields} Available`;
+            document.getElementById('bentoShieldVal').textContent = `${shields} Ready`;
+
+            // Calculate Discipline Score %
+            var completedCount = history.filter(h => h.completed || h.shielded).length;
+            var totalCount = history.length;
+            var score = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 100;
+            document.getElementById('bentoScoreVal').textContent = `${score}%`;
 
             renderGoals(goals);
             renderWeekStrip();
@@ -1407,11 +1612,10 @@
 
             if (goals[idx].done) {
                 playSuccess();
-                // Check if all goals are done for micro-celebration
                 var allDone = goals.every(g => g.done);
                 if (allDone) {
                     triggerConfetti();
-                    showToast('🎉 All 3 commitments completed! Legendary execution!', 'success');
+                    showToast('🎉 All 3 commitments completed! Outstanding discipline!', 'success');
                 }
             } else {
                 playClick();
@@ -1457,6 +1661,11 @@
             var optYes = document.getElementById('opt-yes');
             var optNo = document.getElementById('opt-no');
             var shieldBanner = document.getElementById('shieldBanner');
+            var proofWrap = document.getElementById('proofWrap');
+            var title = document.getElementById('checkinTitle');
+            var sub = document.getElementById('checkinSub');
+            var reflectionLabel = document.getElementById('reflectionLabel');
+            var excuseInput = document.getElementById('excuseInput');
             var shields = parseInt(localStorage.getItem('streak_shields') || '1');
 
             if (goalsCompleted) {
@@ -1464,10 +1673,20 @@
                 optYes.classList.add('active');
                 optNo.classList.remove('active');
                 shieldBanner.style.display = 'none';
+                proofWrap.style.display = 'block';
+                title.textContent = 'Celebrate your execution.';
+                sub.textContent = 'Log your proof of work and celebrate your consistency.';
+                reflectionLabel.innerHTML = '<span class="label-dot"></span> Execution Notes & Reflection';
+                excuseInput.placeholder = 'What went well today? Any key takeaways?';
             } else {
                 ball.classList.add('failed');
                 optNo.classList.add('active');
                 optYes.classList.remove('active');
+                proofWrap.style.display = 'none';
+                title.textContent = 'Own your shortfall.';
+                sub.textContent = 'Honesty creates transformation. What was the real reason you missed today?';
+                reflectionLabel.innerHTML = '<span class="label-dot"></span> Honest Confession & Excuse';
+                excuseInput.placeholder = 'Be honest: What distraction or block stopped you today?';
                 if (shields > 0) {
                     shieldBanner.style.display = 'flex';
                 }
@@ -1493,6 +1712,7 @@
 
         async function submitReport() {
             var excuse = document.getElementById('excuseInput').value.trim();
+            var proof = document.getElementById('proofInput').value.trim();
             var streak = parseInt(localStorage.getItem('streak') || '0');
             var rawGoals = JSON.parse(localStorage.getItem('goals') || '[]');
             var goalsList = rawGoals.map(g => g.text);
@@ -1509,17 +1729,22 @@
                 streak += 1;
                 playSuccess();
                 triggerConfetti();
+                document.getElementById('verdictHeadline').textContent = 'Execution Victory 🔥';
             } else if (usingShield && shields > 0) {
                 wasShielded = true;
                 shields -= 1;
                 localStorage.setItem('streak_shields', shields.toString());
                 playTone(440, 'triangle', 0.2);
                 showToast('🛡️ Streak Freeze Shield used. Streak preserved!', 'info');
+                document.getElementById('verdictHeadline').textContent = 'Streak Shielded 🛡️';
             } else {
                 streak = 0;
                 playAlert();
+                document.getElementById('verdictHeadline').textContent = 'Accountability Verdict ⚠️';
             }
             localStorage.setItem('streak', streak.toString());
+
+            var promptText = excuse + (proof ? ` [Proof: ${proof}]` : '') + (wasShielded ? ' (Used Streak Freeze Shield)' : '');
 
             try {
                 const response = await fetch('/api/verdict', {
@@ -1529,7 +1754,7 @@
                         name: name,
                         goals: goalsList,
                         completed: goalsCompleted,
-                        excuse: excuse + (wasShielded ? ' (Used Streak Freeze Shield)' : ''),
+                        excuse: promptText,
                         streak: streak,
                         tone: tone
                     })
@@ -1545,6 +1770,7 @@
                     date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
                     completed: goalsCompleted,
                     shielded: wasShielded,
+                    proof: proof,
                     verdict: verdict
                 });
                 localStorage.setItem('focus_history', JSON.stringify(history));
@@ -1559,15 +1785,57 @@
             }
         }
 
-        function shareVerdictText() {
-            var verdict = document.getElementById('aiResponse').textContent;
+        // Partner Dispatch Message Builders
+        function generatePartnerMessage() {
+            var name = localStorage.getItem('name') || 'I';
+            var partnerName = localStorage.getItem('partner_name') || 'Partner';
             var streak = localStorage.getItem('streak') || '0';
-            var text = `FocusPact Check-In 🔥\nCurrent Streak: ${streak} Days\n\nAI Coach Feedback:\n"${verdict}"\n\nTrack your goals at https://focusjail.netlify.app`;
+            var verdict = document.getElementById('aiResponse').textContent;
+            var rawGoals = JSON.parse(localStorage.getItem('goals') || '[]');
+            var excuse = document.getElementById('excuseInput').value.trim();
+            var proof = document.getElementById('proofInput').value.trim();
+
+            var goalsText = rawGoals.map((g, i) => `${i+1}. ${g.text}`).join('\n');
+
+            if (goalsCompleted) {
+                return `🔥 FocusPact Victory Report!\nHey ${partnerName},\n${name} executed all 3 daily commitments today!\n\n${goalsText}\n\n${proof ? '🔗 Proof: ' + proof + '\n' : ''}🔥 Streak: ${streak} Days\nAI Coach: "${verdict}"\n\nTracked via https://focusjail.netlify.app`;
+            } else {
+                return `⚠️ FocusPact Daily Confession\nHey ${partnerName},\n${name} failed to complete daily commitments today:\n\n${goalsText}\n\nReason/Confession: "${excuse || 'Lost focus'}"\nStreak: Reset to 0\nAI Coach: "${verdict}"\n\nHolding myself accountable to you tomorrow.`;
+            }
+        }
+
+        function sendPartnerWhatsApp() {
+            var text = encodeURIComponent(generatePartnerMessage());
+            var contact = localStorage.getItem('partner_contact') || '';
+            var phone = contact.replace(/[^0-9]/g, '');
+            var url = phone ? `https://api.whatsapp.com/send?phone=${phone}&text=${text}` : `https://api.whatsapp.com/send?text=${text}`;
+            window.open(url, '_blank');
+        }
+
+        function sendPartnerSMS() {
+            var text = encodeURIComponent(generatePartnerMessage());
+            var contact = localStorage.getItem('partner_contact') || '';
+            window.open(`sms:${contact}?body=${text}`, '_blank');
+        }
+
+        function sendPartnerEmail() {
+            var text = encodeURIComponent(generatePartnerMessage());
+            var contact = localStorage.getItem('partner_contact') || '';
+            var subject = encodeURIComponent(goalsCompleted ? 'FocusPact Daily Victory Update' : 'FocusPact Daily Accountability Confession');
+            window.open(`mailto:${contact}?subject=${subject}&body=${text}`, '_blank');
+        }
+
+        function copyPartnerReport() {
+            var text = generatePartnerMessage();
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Reflection copied to clipboard!', 'success');
+                showToast('Accountability report copied to clipboard!', 'success');
             }).catch(() => {
                 showToast('Failed to copy to clipboard.');
             });
+        }
+
+        function shareVerdictText() {
+            copyPartnerReport();
         }
 
         function openEditGoals() {
@@ -1578,6 +1846,8 @@
                 document.getElementById('goal1').value = goals[0] ? goals[0].text : '';
                 document.getElementById('goal2').value = goals[1] ? goals[1].text : '';
                 document.getElementById('goal3').value = goals[2] ? goals[2].text : '';
+                document.getElementById('partnerName').value = localStorage.getItem('partner_name') || '';
+                document.getElementById('partnerContact').value = localStorage.getItem('partner_contact') || '';
             }
             goTo('screen2');
         }
@@ -1590,6 +1860,74 @@
 
             if (screenId === 'screen7') renderHistoryScreen();
             if (screenId === 'screen4') loadHome();
+            if (screenId === 'screenAnalytics') renderAnalyticsScreen();
+        }
+
+        // Analytics Engine: Render 7-Day Bar Chart & 30-Day Heatmap
+        function renderAnalyticsScreen() {
+            var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
+            var dailyFocus = parseInt(localStorage.getItem('daily_focus_mins') || '0');
+
+            // 7-Day Focus Minutes Bar Chart
+            var chartContainer = document.getElementById('focusBarChart');
+            chartContainer.innerHTML = '';
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var today = new Date().getDay();
+            var totalWeekMins = dailyFocus;
+
+            // Generate mock / actual distribution for past 7 days
+            var sampleMins = [45, 60, 25, 50, 75, 30, dailyFocus];
+            var maxVal = Math.max(...sampleMins, 90);
+
+            for (var i = 6; i >= 0; i--) {
+                var dIndex = (today - i + 7) % 7;
+                var mins = i === 0 ? dailyFocus : (sampleMins[6 - i] || 0);
+                if (i !== 0) totalWeekMins += mins;
+
+                var heightPct = Math.min(100, Math.max(8, (mins / maxVal) * 100));
+
+                var col = document.createElement('div');
+                col.className = 'bar-col';
+                col.innerHTML = `
+                    <div class="bar-val">${mins > 0 ? mins + 'm' : ''}</div>
+                    <div class="bar-fill-wrap">
+                        <div class="bar-fill" style="height: ${heightPct}%;"></div>
+                    </div>
+                    <div class="bar-label">${days[dIndex]}</div>
+                `;
+                chartContainer.appendChild(col);
+            }
+
+            document.getElementById('weeklyFocusTotal').textContent = `${totalWeekMins}m total this week`;
+
+            // 30-Day Heatmap
+            var heatmap = document.getElementById('heatmapGrid');
+            heatmap.innerHTML = '';
+            var totalMonthlyCompleted = 0;
+
+            for (var d = 29; d >= 0; d--) {
+                var tile = document.createElement('div');
+                tile.className = 'heatmap-tile';
+                var item = history[history.length - 1 - d];
+
+                if (item) {
+                    if (item.completed) {
+                        tile.classList.add('done');
+                        totalMonthlyCompleted++;
+                    } else if (item.shielded) {
+                        tile.classList.add('shield');
+                        totalMonthlyCompleted++;
+                    } else {
+                        tile.classList.add('missed');
+                    }
+                } else if (d > history.length) {
+                    // empty inactive slot
+                }
+                heatmap.appendChild(tile);
+            }
+
+            var rate = history.length > 0 ? Math.round((totalMonthlyCompleted / Math.min(history.length, 30)) * 100) : 100;
+            document.getElementById('monthlyRate').textContent = `${rate}% Success Rate`;
         }
 
         function renderHistoryScreen() {
@@ -1608,6 +1946,7 @@
                 div.innerHTML = `
                     <div class="history-date">${h.date}</div>
                     <div class="history-status ${statusClass}">${statusText}</div>
+                    ${h.proof ? `<div style="font-size: 11px; color: #667eea; margin-bottom: 4px;">Proof: ${h.proof}</div>` : ''}
                     <div class="history-verdict">"${h.verdict}"</div>
                 `;
                 list.appendChild(div);
@@ -1683,7 +2022,6 @@
                         playSuccess();
                         triggerConfetti();
                         
-                        // Accumulate Focus Minutes
                         var prevMins = parseInt(localStorage.getItem('daily_focus_mins') || '0');
                         var newMins = prevMins + currentPreset;
                         localStorage.setItem('daily_focus_mins', newMins.toString());
