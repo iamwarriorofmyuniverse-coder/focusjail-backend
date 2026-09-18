@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#667eea" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 
     <script>
         !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -22,19 +22,22 @@
 
     <style>
         :root {
-            --bg: #0f111a;
-            --neu-dark: #090a10;
-            --neu-light: #191c29;
+            --bg: #090a10;
+            --card-bg: rgba(16, 18, 28, 0.78);
+            --neu-dark: #050508;
+            --neu-light: #161a28;
             --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
             --grad-firm: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             --grad-gentle: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
             --grad-danger: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
             --primary: #667eea;
             --accent: #f093fb;
+            --cyan: #00f2fe;
             --success: #43e97b;
             --danger: #f5576c;
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
+            --border-glow: rgba(102, 126, 234, 0.3);
         }
 
         * {
@@ -45,7 +48,11 @@
         }
 
         body {
-            background: var(--bg);
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(rgba(102, 126, 234, 0.08) 1px, transparent 1px),
+                radial-gradient(rgba(240, 147, 251, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px, 64px 64px;
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-main);
             min-height: 100vh;
@@ -57,22 +64,33 @@
             position: relative;
         }
 
+        /* 3D AI Core Canvas Background */
+        #aiCoreCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* Floating Vibrant Glow Orbs */
         .orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.28;
+            filter: blur(90px);
+            opacity: 0.22;
             pointer-events: none;
             z-index: 0;
         }
-        .orb1 { width: 340px; height: 340px; background: #667eea; top: -90px; left: -90px; animation: floatOrb 12s ease-in-out infinite; }
-        .orb2 { width: 280px; height: 280px; background: #f093fb; bottom: -70px; right: -70px; animation: floatOrb 14s ease-in-out infinite reverse; }
-        .orb3 { width: 200px; height: 200px; background: #43e97b; top: 40%; left: 55%; animation: floatOrb 16s ease-in-out infinite; }
+        .orb1 { width: 380px; height: 380px; background: #667eea; top: -100px; left: -100px; animation: floatOrb 14s ease-in-out infinite; }
+        .orb2 { width: 320px; height: 320px; background: #f093fb; bottom: -80px; right: -80px; animation: floatOrb 16s ease-in-out infinite reverse; }
+        .orb3 { width: 240px; height: 240px; background: #00f2fe; top: 35%; left: 60%; animation: floatOrb 18s ease-in-out infinite; }
 
         @keyframes floatOrb {
             0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-25px) scale(1.08); }
+            50% { transform: translateY(-30px) scale(1.1); }
         }
 
         /* Top Action Bar */
@@ -80,13 +98,13 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 20;
+            z-index: 30;
             display: flex;
             gap: 12px;
         }
         .icon-btn {
-            background: var(--bg);
-            border: none;
+            background: rgba(16, 18, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-sub);
             border-radius: 50%;
             width: 44px;
@@ -96,16 +114,51 @@
             justify-content: center;
             cursor: pointer;
             font-size: 16px;
-            box-shadow: 5px 5px 12px var(--neu-dark), -5px -5px 12px var(--neu-light);
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(12px);
+            box-shadow: 4px 4px 12px var(--neu-dark), -4px -4px 12px var(--neu-light);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .icon-btn:hover {
             color: #fff;
+            border-color: rgba(102, 126, 234, 0.5);
             transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
         }
         .icon-btn:active {
-            box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
             transform: translateY(0);
+            box-shadow: inset 2px 2px 5px var(--neu-dark);
+        }
+
+        /* Cyber Pill Badge */
+        .cyber-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border-radius: 30px;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.25);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #a5b4fc;
+            margin-bottom: 16px;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.15);
+        }
+
+        .radar-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #00f2fe;
+            box-shadow: 0 0 8px #00f2fe;
+            animation: pulseRadar 1.8s ease-in-out infinite;
+        }
+
+        @keyframes pulseRadar {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
         }
 
         /* Floating Toast Alerts */
@@ -123,22 +176,23 @@
             max-width: 380px;
         }
         .toast {
-            background: var(--bg);
-            border: none;
+            background: rgba(16, 18, 28, 0.95);
+            border: 1px solid rgba(102, 126, 234, 0.3);
             padding: 14px 20px;
             border-radius: 16px;
             font-size: 13px;
             font-weight: 600;
             color: #fff;
-            box-shadow: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(102, 126, 234, 0.2);
             display: flex;
             align-items: center;
             gap: 10px;
             animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: auto;
         }
-        .toast.success { color: var(--success); }
-        .toast.info { color: #f093fb; }
+        .toast.success { color: var(--success); border-color: rgba(67, 233, 123, 0.4); }
+        .toast.info { color: #f093fb; border-color: rgba(240, 147, 251, 0.4); }
         @keyframes toastIn {
             from { opacity: 0; transform: translateY(-20px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -148,9 +202,9 @@
         .screen {
             display: none;
             width: 100%;
-            max-width: 420px;
+            max-width: 430px;
             position: relative;
-            z-index: 1;
+            z-index: 10;
         }
 
         .screen.active {
@@ -161,20 +215,87 @@
         }
 
         @keyframes screenFadeIn {
-            from { opacity: 0; transform: translateY(14px) scale(0.98); }
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Neumorphic Raised Card */
+        /* Futuristic Glassmorphic + Neumorphic Card */
         .card {
-            background: var(--bg);
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 28px;
             padding: 32px 26px;
             width: 100%;
-            box-shadow: 14px 14px 28px var(--neu-dark), -14px -14px 28px var(--neu-light);
+            box-shadow: 16px 16px 36px var(--neu-dark), -16px -16px 36px var(--neu-light), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
-            border: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(102, 126, 234, 0.35);
+            box-shadow: 16px 16px 36px var(--neu-dark), -16px -16px 36px var(--neu-light), 0 0 25px rgba(102, 126, 234, 0.15);
+        }
+
+        /* Interactive 3D AI Core center sphere */
+        .ai-core-hero-widget {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .core-glow-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.25) 0%, rgba(240, 147, 251, 0.15) 50%, transparent 70%);
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(0.95); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .core-sphere {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #00f2fe 30%, #667eea 65%, #180b38 100%);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.6), 0 0 60px rgba(102, 126, 234, 0.4), inset -6px -6px 12px rgba(0,0,0,0.6);
+            position: relative;
+            animation: floatSphere 4s ease-in-out infinite;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .core-sphere:hover {
+            transform: scale(1.12);
+            box-shadow: 0 0 45px rgba(0, 242, 254, 0.8), 0 0 80px rgba(240, 147, 251, 0.6);
+        }
+
+        .core-sphere::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 25px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            filter: blur(2px);
+            transform: rotate(-30deg);
+        }
+
+        @keyframes floatSphere {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(5deg); }
         }
 
         .label {
@@ -205,7 +326,7 @@
 
         h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 27px;
+            font-size: 28px;
             font-weight: 800;
             color: #fff;
             line-height: 1.25;
@@ -223,7 +344,7 @@
         /* Inset (Sunken) Inputs */
         input, textarea, select {
             width: 100%;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 15px 18px;
             font-size: 14px;
@@ -231,13 +352,14 @@
             color: #fff;
             margin-bottom: 14px;
             outline: none;
-            background: var(--bg);
+            background: rgba(9, 10, 16, 0.85);
             box-shadow: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         input:focus, textarea:focus, select:focus {
-            box-shadow: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light), 0 0 0 1.5px rgba(102, 126, 234, 0.5);
+            border-color: rgba(102, 126, 234, 0.6);
+            box-shadow: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light), 0 0 15px rgba(102, 126, 234, 0.3);
         }
 
         input::placeholder, textarea::placeholder {
@@ -257,12 +379,26 @@
             font-family: 'DM Sans', sans-serif;
             cursor: pointer;
             margin-top: 10px;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 20px rgba(102, 126, 234, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
 
         .btn-primary:hover {
@@ -271,16 +407,16 @@
         }
 
         .btn-primary:active {
-            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.4);
             transform: translateY(0);
         }
 
         .btn-secondary {
             width: 100%;
             padding: 14px;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
-            background: var(--bg);
+            background: rgba(16, 18, 28, 0.7);
             color: var(--text-sub);
             font-size: 14px;
             font-weight: 600;
@@ -297,16 +433,17 @@
 
         .btn-secondary:hover {
             color: #f093fb;
+            border-color: rgba(240, 147, 251, 0.3);
             transform: translateY(-2px);
-            box-shadow: 7px 7px 15px var(--neu-dark), -7px -7px 15px var(--neu-light);
+            box-shadow: 7px 7px 15px var(--neu-dark), -7px -7px 15px var(--neu-light), 0 0 15px rgba(240, 147, 251, 0.15);
         }
 
         .btn-secondary:active {
-            box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+            box-shadow: inset 3px 3px 6px var(--neu-dark);
             transform: translateY(0);
         }
 
-        /* Streak Card with Signature Gradient */
+        /* Streak Card with Signature Gradient & Cyber Highlights */
         .streak-card {
             background: var(--grad);
             border-radius: 24px;
@@ -316,26 +453,26 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 35px rgba(102, 126, 234, 0.4), 10px 10px 22px var(--neu-dark);
+            box-shadow: 0 10px 35px rgba(102, 126, 234, 0.45), 10px 10px 22px var(--neu-dark);
             animation: floatCard 4s ease-in-out infinite;
         }
 
         @keyframes floatCard {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
+            50% { transform: translateY(-5px); }
         }
 
         .streak-number {
             font-family: 'Syne', sans-serif;
-            font-size: 58px;
+            font-size: 60px;
             font-weight: 800;
             color: #fff;
             line-height: 1;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 12px rgba(0,0,0,0.25);
         }
 
         .streak-label {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 12px;
             margin-top: 6px;
             text-transform: uppercase;
@@ -347,7 +484,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(8px);
             border-radius: 30px;
             padding: 5px 16px;
@@ -355,6 +492,7 @@
             color: #fff;
             margin-top: 10px;
             font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         /* Interactive Daily Goals Checklist */
@@ -363,23 +501,27 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px 18px;
-            background: var(--bg);
+            background: rgba(16, 18, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 18px;
             margin-bottom: 12px;
             font-size: 14px;
             box-shadow: 5px 5px 12px var(--neu-dark), -5px -5px 12px var(--neu-light);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         .goal-item:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            border-color: rgba(102, 126, 234, 0.4);
+            box-shadow: 6px 6px 16px var(--neu-dark), -6px -6px 16px var(--neu-light), 0 0 15px rgba(102, 126, 234, 0.15);
         }
 
         .goal-item.done {
             box-shadow: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
             text-decoration: line-through;
             color: #64748b;
+            border-color: transparent;
         }
 
         .goal-checkbox {
@@ -400,7 +542,7 @@
 
         .goal-item.done .goal-checkbox {
             background: var(--grad);
-            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
             color: #fff;
         }
 
@@ -422,7 +564,8 @@
 
         .day-box {
             flex: 1;
-            background: var(--bg);
+            background: rgba(16, 18, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 10px 4px;
             text-align: center;
@@ -433,13 +576,15 @@
         }
 
         .day-box.completed {
-            box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+            box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light), 0 0 10px rgba(67, 233, 123, 0.2);
             color: var(--success);
+            border-color: rgba(67, 233, 123, 0.3);
         }
 
         .day-box.failed {
             box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
             color: var(--danger);
+            border-color: rgba(245, 87, 108, 0.3);
         }
 
         /* Focus Session Presets */
@@ -454,8 +599,8 @@
             flex: 1;
             padding: 10px 4px;
             border-radius: 12px;
-            background: var(--bg);
-            border: none;
+            background: rgba(16, 18, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-sub);
             font-size: 12px;
             font-weight: 700;
@@ -465,12 +610,13 @@
         }
 
         .preset-btn.active {
-            box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+            box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light), 0 0 12px rgba(240, 147, 251, 0.3);
             color: #f093fb;
+            border-color: rgba(240, 147, 251, 0.4);
         }
 
         .timer-display {
-            font-family: 'Syne', sans-serif;
+            font-family: 'JetBrains Mono', 'Syne', monospace;
             font-size: 64px;
             font-weight: 800;
             text-align: center;
@@ -479,18 +625,19 @@
             background: var(--grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.3));
         }
 
         /* AI Coach Reflection Card */
         .verdict-card {
-            background: #090a10;
+            background: rgba(9, 10, 16, 0.95);
             border-radius: 20px;
             padding: 24px;
             width: 100%;
             margin-bottom: 20px;
-            box-shadow: inset 5px 5px 10px #040508, inset -5px -5px 10px #151824;
+            box-shadow: inset 5px 5px 10px #040508, inset -5px -5px 10px #151824, 0 0 20px rgba(102, 126, 234, 0.15);
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.25);
         }
         .verdict-card::before {
             content: '';
@@ -499,6 +646,7 @@
             height: 3px;
             background: var(--grad);
             border-radius: 20px 20px 0 0;
+            box-shadow: 0 0 10px #f093fb;
         }
         .verdict-card p {
             color: #e2e8f0;
@@ -509,7 +657,8 @@
 
         /* Neumorphic Toggle Switch */
         .toggle-wrap {
-            background: var(--bg);
+            background: rgba(9, 10, 16, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 50px;
             padding: 5px;
             display: flex;
@@ -552,7 +701,7 @@
             box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
         }
 
-        /* Tone Selection Cards (The Original Vibrant Gradients) */
+        /* Tone Selection Cards */
         .tone-btn {
             width: 100%;
             padding: 18px 16px;
@@ -565,11 +714,11 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.25s, box-shadow 0.25s;
         }
 
         .tone-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         .tone-brutal {
@@ -593,7 +742,8 @@
 
         /* History Items */
         .history-item {
-            background: var(--bg);
+            background: rgba(16, 18, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 18px;
             padding: 16px 18px;
             margin-bottom: 12px;
@@ -610,13 +760,16 @@
             width: 100%;
             max-width: 360px;
             border-radius: 20px;
-            box-shadow: 10px 10px 25px var(--neu-dark), -10px -10px 25px var(--neu-light);
+            box-shadow: 10px 10px 25px var(--neu-dark), -10px -10px 25px var(--neu-light), 0 0 20px rgba(102, 126, 234, 0.2);
             margin-bottom: 20px;
         }
     </style>
 </head>
 
 <body>
+
+    <!-- 3D Interactive AI Core Background Canvas -->
+    <canvas id="aiCoreCanvas"></canvas>
 
     <div class="orb orb1"></div>
     <div class="orb orb2"></div>
@@ -635,9 +788,18 @@
     <!-- SCREEN 1: WELCOME & ONBOARDING -->
     <div id="screen1" class="screen active">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> FocusPact</div>
+            <div class="cyber-pill">
+                <span class="radar-dot"></span> FOCUSPACT AI CORE ONLINE
+            </div>
+            
+            <!-- Interactive 3D AI Core center sphere -->
+            <div class="ai-core-hero-widget" onclick="triggerCoreShockwave(event)">
+                <div class="core-glow-ring"></div>
+                <div class="core-sphere"></div>
+            </div>
+
             <h1>Commit to What Matters.</h1>
-            <p>Make a pact with yourself every morning. Execute your 3 non-negotiables, log your focus sessions, and build unstoppable consistency.</p>
+            <p>Make a pact with yourself every morning. Execute your 3 non-negotiables, log your deep focus sessions, and build unstoppable consistency.</p>
             <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">I'm Ready ✨</button>
         </div>
     </div>
@@ -734,7 +896,9 @@
     <!-- SCREEN 6: AI COACH FEEDBACK -->
     <div id="screen6" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Coach Reflection</div>
+            <div class="cyber-pill">
+                <span class="radar-dot"></span> NEURAL VERDICT GENERATED
+            </div>
             <h1>Today's Feedback.</h1>
             <div class="verdict-card">
                 <p id="aiResponse">Analyzing your day and preparing insights...</p>
@@ -748,7 +912,9 @@
     <!-- SCREEN: DEEP FOCUS SESSION TIMER -->
     <div id="screenTimer" class="screen">
         <div class="card" id="timerCard">
-            <div class="label"><span class="label-dot"></span> Deep Work Session</div>
+            <div class="cyber-pill">
+                <span class="radar-dot"></span> FOCUS PROTOCOL ACTIVE
+            </div>
             <h1>Focus Mode</h1>
             
             <!-- Timer Presets -->
@@ -801,6 +967,209 @@
         </div>
     </div>
 
+    <!-- Interactive 3D AI Core Canvas Engine -->
+    <script>
+        (function initAICore() {
+            var canvas = document.getElementById('aiCoreCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var width, height;
+            var particles = [];
+            var mouse = { x: 0, y: 0, targetX: 0, targetY: 0, active: false };
+            var rotX = 0, rotY = 0;
+            var shockwaves = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Track Mouse & Touch with Smooth Spring Dampening
+            window.addEventListener('mousemove', function (e) {
+                mouse.targetX = (e.clientX - width / 2) / (width / 2);
+                mouse.targetY = (e.clientY - height / 2) / (height / 2);
+                mouse.active = true;
+            });
+
+            window.addEventListener('touchmove', function (e) {
+                if (e.touches.length > 0) {
+                    mouse.targetX = (e.touches[0].clientX - width / 2) / (width / 2);
+                    mouse.targetY = (e.touches[0].clientY - height / 2) / (height / 2);
+                    mouse.active = true;
+                }
+            }, { passive: true });
+
+            window.triggerCoreShockwave = function(e) {
+                var cx = width / 2;
+                var cy = height / 2;
+                shockwaves.push({ radius: 10, maxRadius: Math.max(width, height) * 0.75, opacity: 1, color: '#00f2fe' });
+                shockwaves.push({ radius: 5, maxRadius: Math.max(width, height) * 0.6, opacity: 0.8, color: '#f093fb' });
+                if (window.playTone) playTone(784, 'sine', 0.2, 0.15);
+            };
+
+            // Generate 3D Spherical Node Lattice
+            var nodeCount = 72;
+            var radius = 220;
+            var nodes = [];
+            for (var i = 0; i < nodeCount; i++) {
+                var theta = Math.acos(1 - 2 * (i + 0.5) / nodeCount);
+                var phi = Math.PI * (1 + Math.sqrt(5)) * i;
+                nodes.push({
+                    x: radius * Math.sin(theta) * Math.cos(phi),
+                    y: radius * Math.sin(theta) * Math.sin(phi),
+                    z: radius * Math.cos(theta),
+                    baseX: radius * Math.sin(theta) * Math.cos(phi),
+                    baseY: radius * Math.sin(theta) * Math.sin(phi),
+                    baseZ: radius * Math.cos(theta),
+                    pulsePhase: Math.random() * Math.PI * 2
+                });
+            }
+
+            // Floating Ambient Dust Particles
+            var dustCount = 45;
+            for (var d = 0; d < dustCount; d++) {
+                particles.push({
+                    x: (Math.random() - 0.5) * width,
+                    y: (Math.random() - 0.5) * height,
+                    z: (Math.random() - 0.5) * 600,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    size: Math.random() * 2 + 1,
+                    color: Math.random() > 0.5 ? '#667eea' : '#f093fb'
+                });
+            }
+
+            var time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.015;
+
+                ctx.clearRect(0, 0, width, height);
+
+                // Smooth rotation & interactive tilt
+                mouse.x += (mouse.targetX - mouse.x) * 0.06;
+                mouse.y += (mouse.targetY - mouse.y) * 0.06;
+
+                rotY += 0.006 + mouse.x * 0.015;
+                rotX += 0.003 + mouse.y * 0.01;
+
+                var cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+                var cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+
+                var cx = width / 2;
+                var cy = height / 2;
+                var fov = 480;
+
+                // Render Shockwaves
+                for (var s = shockwaves.length - 1; s >= 0; s--) {
+                    var sw = shockwaves[s];
+                    sw.radius += 12;
+                    sw.opacity -= 0.018;
+                    if (sw.opacity <= 0) {
+                        shockwaves.splice(s, 1);
+                        continue;
+                    }
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, sw.radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = sw.color;
+                    ctx.globalAlpha = sw.opacity;
+                    ctx.lineWidth = 2.5;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+
+                // Project and render 3D Core Nodes
+                var projected = [];
+                for (var i = 0; i < nodes.length; i++) {
+                    var n = nodes[i];
+                    
+                    // Radial Breathing pulse
+                    var pulse = 1 + Math.sin(time * 2 + n.pulsePhase) * 0.06;
+                    var px = n.baseX * pulse;
+                    var py = n.baseY * pulse;
+                    var pz = n.baseZ * pulse;
+
+                    // Y-axis rotation
+                    var x1 = px * cosY - pz * sinY;
+                    var z1 = px * sinY + pz * cosY;
+
+                    // X-axis rotation
+                    var y2 = py * cosX - z1 * sinX;
+                    var z2 = py * sinX + z1 * cosX;
+
+                    var scale = fov / (fov + z2 + 350);
+                    var x2d = cx + x1 * scale;
+                    var y2d = cy + y2 * scale;
+
+                    projected.push({ x: x2d, y: y2d, z: z2, scale: scale, i: i });
+                }
+
+                // Sort by depth (Z-buffer)
+                projected.sort(function (a, b) { return a.z - b.z; });
+
+                // Render Interconnected Lattice Lines
+                ctx.lineWidth = 0.75;
+                for (var i = 0; i < projected.length; i++) {
+                    for (var j = i + 1; j < projected.length; j++) {
+                        var p1 = projected[i];
+                        var p2 = projected[j];
+                        var dx = p1.x - p2.x;
+                        var dy = p1.y - p2.y;
+                        var dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 75 * p1.scale) {
+                            var alpha = (1 - dist / (75 * p1.scale)) * 0.35 * Math.max(0.1, (p1.z + 300) / 600);
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(102, 126, 234, ${alpha})`;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // Render Luminous Core Nodes
+                for (var k = 0; k < projected.length; k++) {
+                    var p = projected[k];
+                    var alpha = Math.max(0.15, (p.z + 260) / 520);
+                    var nodeSize = Math.max(1.2, 3.2 * p.scale);
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, nodeSize, 0, Math.PI * 2);
+                    ctx.fillStyle = k % 3 === 0 ? `rgba(0, 242, 254, ${alpha})` : (k % 2 === 0 ? `rgba(240, 147, 251, ${alpha})` : `rgba(102, 126, 234, ${alpha})`);
+                    ctx.shadowColor = '#00f2fe';
+                    ctx.shadowBlur = 8 * p.scale;
+                    ctx.fill();
+                }
+                ctx.shadowBlur = 0;
+
+                // Render Ambient Particles
+                for (var d = 0; d < particles.length; d++) {
+                    var pt = particles[d];
+                    pt.x += pt.vx;
+                    pt.y += pt.vy;
+                    if (pt.x < -width / 2) pt.x = width / 2;
+                    if (pt.x > width / 2) pt.x = -width / 2;
+                    if (pt.y < -height / 2) pt.y = height / 2;
+                    if (pt.y > height / 2) pt.y = -height / 2;
+
+                    var pScale = fov / (fov + pt.z + 400);
+                    ctx.beginPath();
+                    ctx.arc(cx + pt.x * pScale, cy + pt.y * pScale, pt.size * pScale, 0, Math.PI * 2);
+                    ctx.fillStyle = pt.color;
+                    ctx.globalAlpha = 0.25 * pScale;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                }
+            }
+            animate();
+        })();
+    </script>
+
+    <!-- App Logic & Features -->
     <script>
         var goalsCompleted = true;
         var soundEnabled = true;
@@ -821,7 +1190,7 @@
             var container = document.getElementById('toastContainer');
             var toast = document.createElement('div');
             toast.className = 'toast ' + type;
-            toast.innerHTML = (type === 'success' ? '✨ ' : '🎯 ') + msg;
+            toast.innerHTML = (type === 'success' ? '✨ ' : '⚡ ') + msg;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
@@ -951,134 +1320,133 @@
             }
 
             localStorage.setItem('name', name);
-            localStorage.setItem('goals', JSON.stringify([
+            var goals = [
                 { text: g1, done: false },
                 { text: g2, done: false },
                 { text: g3, done: false }
-            ]));
+            ];
+            localStorage.setItem('goals', JSON.stringify(goals));
+            localStorage.setItem('streak', localStorage.getItem('streak') || '0');
+
+            if (window.posthog) {
+                posthog.capture('goals_committed', { name: name, count: 3 });
+            }
 
             playSuccess();
-            showToast('Daily commitments saved!', 'success');
             goTo('screen2b');
         }
 
         function setTone(tone) {
             localStorage.setItem('tone', tone);
+            if (window.posthog) {
+                posthog.capture('coaching_tone_selected', { tone: tone });
+            }
             playSuccess();
             loadHome();
             goTo('screen4');
         }
 
-        function goTo(id) {
-            var screens = document.querySelectorAll('.screen');
-            screens.forEach(s => s.classList.remove('active'));
-            var target = document.getElementById(id);
-            if (target) target.classList.add('active');
-            if (id === 'screen7') loadHistory();
-            if (id === 'screen4') loadHome();
+        function loadHome() {
+            var name = localStorage.getItem('name') || 'User';
+            var streak = parseInt(localStorage.getItem('streak') || '0');
+            var rawGoals = localStorage.getItem('goals');
+            var goals = rawGoals ? JSON.parse(rawGoals) : [];
+
+            document.getElementById('welcomeName').textContent = `Good day, ${name}.`;
+            document.getElementById('streakCount').textContent = streak;
+
+            var rank = getInmateRank(streak);
+            document.getElementById('rankBadge').textContent = rank;
+
+            renderGoals(goals);
+            renderWeekStrip();
         }
 
-        function getInmateRank(streak) {
-            if (streak >= 30) return '👑 Consistency Master';
-            if (streak >= 14) return '⭐ Habit Champion';
-            if (streak >= 7) return '⚡ Momentum Builder';
-            if (streak >= 3) return '🌱 Consistent Focus';
-            return '🎯 Focus Starter';
-        }
+        function renderGoals(goals) {
+            var container = document.getElementById('goalsList');
+            container.innerHTML = '';
 
-        function toggleGoalCheck(index) {
-            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            if (goals[index]) {
-                goals[index].done = !goals[index].done;
-                localStorage.setItem('goals', JSON.stringify(goals));
-                
-                if (goals[index].done) {
-                    playSuccess();
-                    showToast('Commitment completed! ✨', 'success');
-                } else {
-                    playClick();
-                }
-
-                renderGoalsList();
-                if (goals.every(g => g.done)) {
-                    showToast('All daily goals completed! Great work today.', 'success');
-                }
-            }
-        }
-
-        function renderGoalsList() {
-            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            var list = document.getElementById('goalsList');
-            list.innerHTML = '';
-
-            goals.forEach(function(g, i) {
+            goals.forEach((g, idx) => {
                 var item = document.createElement('div');
                 item.className = 'goal-item' + (g.done ? ' done' : '');
-                item.onclick = function() { toggleGoalCheck(i); };
+                item.onclick = function () { toggleGoal(idx); };
 
-                item.innerHTML = `
-                    <div class="goal-left">
-                        <div class="goal-checkbox">${g.done ? '✓' : ''}</div>
-                        <span>${g.text}</span>
-                    </div>
-                `;
-                list.appendChild(item);
+                var left = document.createElement('div');
+                left.className = 'goal-left';
+
+                var checkbox = document.createElement('div');
+                checkbox.className = 'goal-checkbox';
+                checkbox.textContent = g.done ? '✓' : '';
+
+                var text = document.createElement('span');
+                text.textContent = g.text;
+
+                left.appendChild(checkbox);
+                left.appendChild(text);
+                item.appendChild(left);
+                container.appendChild(item);
             });
         }
 
-        function renderWeekStrip() {
-            var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
-            var strip = document.getElementById('weekStrip');
-            strip.innerHTML = '';
-            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-            for (var i = 6; i >= 0; i--) {
-                var d = new Date();
-                d.setDate(d.getDate() - i);
-                var dateStr = d.toDateString();
-                var dayName = days[d.getDay()];
-
-                var record = history.find(h => h.date === dateStr);
-                var box = document.createElement('div');
-                box.className = 'day-box' + (record ? (record.completed ? ' completed' : ' failed') : '');
-                box.innerHTML = `<div>${dayName}</div><div>${record ? (record.completed ? '✓' : '✗') : '·'}</div>`;
-                strip.appendChild(box);
-            }
+        function toggleGoal(idx) {
+            var rawGoals = localStorage.getItem('goals');
+            if (!rawGoals) return;
+            var goals = JSON.parse(rawGoals);
+            goals[idx].done = !goals[idx].done;
+            localStorage.setItem('goals', JSON.stringify(goals));
+            if (goals[idx].done) playSuccess();
+            else playClick();
+            renderGoals(goals);
         }
 
-        function loadHome() {
-            var name = localStorage.getItem('name') || 'User';
-            var streak = parseInt(localStorage.getItem('streak') || 0);
-            var hour = new Date().getHours();
-            
-            document.getElementById('welcomeName').textContent = (hour < 12 ? 'Good morning, ' : (hour < 18 ? 'Good afternoon, ' : 'Good evening, ')) + name + '.';
-            document.getElementById('streakCount').textContent = streak;
-            document.getElementById('rankBadge').textContent = getInmateRank(streak);
-            
-            renderGoalsList();
-            renderWeekStrip();
+        function renderWeekStrip() {
+            var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
+            var container = document.getElementById('weekStrip');
+            container.innerHTML = '';
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var today = new Date().getDay();
+
+            for (var i = 6; i >= 0; i--) {
+                var dIndex = (today - i + 7) % 7;
+                var dayEl = document.createElement('div');
+                dayEl.className = 'day-box';
+                dayEl.textContent = days[dIndex];
+
+                var histItem = history[history.length - 1 - i];
+                if (histItem) {
+                    if (histItem.completed) {
+                        dayEl.classList.add('completed');
+                        dayEl.textContent += ' ✓';
+                    } else {
+                        dayEl.classList.add('failed');
+                        dayEl.textContent += ' ✗';
+                    }
+                }
+                container.appendChild(dayEl);
+            }
         }
 
         function toggleReportStatus() {
             goalsCompleted = !goalsCompleted;
+            playClick();
             var ball = document.getElementById('toggleBall');
-            var yes = document.getElementById('opt-yes');
-            var no = document.getElementById('opt-no');
+            var optYes = document.getElementById('opt-yes');
+            var optNo = document.getElementById('opt-no');
 
             if (goalsCompleted) {
                 ball.classList.remove('failed');
-                yes.classList.add('active');
-                no.classList.remove('active');
+                optYes.classList.add('active');
+                optNo.classList.remove('active');
             } else {
                 ball.classList.add('failed');
-                no.classList.add('active');
-                yes.classList.remove('active');
+                optNo.classList.add('active');
+                optYes.classList.remove('active');
             }
-            playClick();
         }
 
-        function submitReport() {
+        async function submitReport() {
             var excuse = document.getElementById('excuseInput').value.trim();
+            var streak = parseInt(localStorage.getItem('streak') || '0');
             var rawGoals = JSON.parse(localStorage.getItem('goals') || '[]');
             var goalsList = rawGoals.map(g => g.text);
             var name = localStorage.getItem('name') || 'User';
@@ -1087,132 +1455,146 @@
             document.getElementById('aiResponse').textContent = 'Your AI Coach is formulating personalized feedback...';
             goTo('screen6');
 
-            var backendUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-                ? 'http://localhost:3000/verdict'
-                : '/.netlify/functions/verdict';
-
-            fetch(backendUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: name,
-                    goals: goalsList,
-                    completed: goalsCompleted,
-                    excuse: excuse,
-                    tone: tone
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                var verdictText = data.verdict || generateFallbackVerdict(name, goalsCompleted, tone);
-                finishSubmission(verdictText);
-            })
-            .catch(() => {
-                var fallback = generateFallbackVerdict(name, goalsCompleted, tone);
-                finishSubmission(fallback);
-            });
-        }
-
-        function generateFallbackVerdict(name, success, tone) {
-            if (success) {
-                return `Great execution today, ${name}. You honored all your commitments. Keep this momentum rolling into tomorrow!`;
+            if (goalsCompleted) {
+                streak += 1;
+                playSuccess();
             } else {
-                return `Today had some friction, ${name}, but consistency is built by showing up again. Re-align and hit your priorities fresh tomorrow.`;
+                streak = 0;
+                playAlert();
+            }
+            localStorage.setItem('streak', streak.toString());
+
+            try {
+                const response = await fetch('/api/verdict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        goals: goalsList,
+                        completed: goalsCompleted,
+                        excuse: excuse,
+                        streak: streak,
+                        tone: tone
+                    })
+                });
+
+                const data = await response.json();
+                var verdict = data.verdict || "Consistency is your bridge to excellence. Stay focused.";
+                document.getElementById('aiResponse').textContent = verdict;
+                localStorage.setItem('latestVerdict', verdict);
+
+                var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
+                history.push({
+                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    completed: goalsCompleted,
+                    verdict: verdict
+                });
+                localStorage.setItem('focus_history', JSON.stringify(history));
+
+                if (window.posthog) {
+                    posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak });
+                }
+            } catch (err) {
+                var fallback = goalsCompleted ? "Great work completing your daily commitments. Keep this momentum!" : "You fell short today. Regroup, refocus, and restart tomorrow.";
+                document.getElementById('aiResponse').textContent = fallback;
+                localStorage.setItem('latestVerdict', fallback);
             }
         }
 
-        function finishSubmission(verdict) {
-            var streak = parseInt(localStorage.getItem('streak') || 0);
-            streak = goalsCompleted ? streak + 1 : 0;
-            localStorage.setItem('streak', streak);
-            localStorage.setItem('lastReportDate', new Date().toDateString());
-            localStorage.setItem('latestVerdict', verdict);
-
-            var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
-            history.push({
-                date: new Date().toDateString(),
-                completed: goalsCompleted,
-                verdict: verdict
-            });
-            if (history.length > 14) history.shift();
-            localStorage.setItem('verdictHistory', JSON.stringify(history));
-
-            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            goals.forEach(g => g.done = false);
-            localStorage.setItem('goals', JSON.stringify(goals));
-
-            document.getElementById('aiResponse').textContent = verdict;
-            if (goalsCompleted) playSuccess(); else playAlert();
-        }
-
         function shareVerdictText() {
-            var text = `🎯 FocusPact Summary:\n"${document.getElementById('aiResponse').textContent}"\n\nStreak: ${localStorage.getItem('streak')} days consistent.`;
+            var verdict = document.getElementById('aiResponse').textContent;
+            var streak = localStorage.getItem('streak') || '0';
+            var text = `FocusPact Check-In 🔥\nCurrent Streak: ${streak} Days\n\nAI Coach Feedback:\n"${verdict}"\n\nTrack your goals at https://focusjail.netlify.app`;
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Summary copied to clipboard!', 'success');
+                showToast('Reflection copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy to clipboard.');
             });
         }
 
         function openEditGoals() {
-            var goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            document.getElementById('name').value = localStorage.getItem('name') || '';
-            document.getElementById('goal1').value = goals[0]?.text || '';
-            document.getElementById('goal2').value = goals[1]?.text || '';
-            document.getElementById('goal3').value = goals[2]?.text || '';
+            var rawGoals = localStorage.getItem('goals');
+            if (rawGoals) {
+                var goals = JSON.parse(rawGoals);
+                document.getElementById('name').value = localStorage.getItem('name') || '';
+                document.getElementById('goal1').value = goals[0] ? goals[0].text : '';
+                document.getElementById('goal2').value = goals[1] ? goals[1].text : '';
+                document.getElementById('goal3').value = goals[2] ? goals[2].text : '';
+            }
             goTo('screen2');
         }
 
-        function loadHistory() {
-            var history = JSON.parse(localStorage.getItem('verdictHistory') || '[]');
-            var container = document.getElementById('historyList');
-            container.innerHTML = '';
-            if (!history.length) {
-                container.innerHTML = '<p style="text-align:center; padding: 20px 0;">No check-ins logged yet.</p>';
+        function goTo(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            var target = document.getElementById(screenId);
+            if (target) target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (screenId === 'screen7') renderHistoryScreen();
+        }
+
+        function renderHistoryScreen() {
+            var list = document.getElementById('historyList');
+            var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
+            list.innerHTML = '';
+            if (history.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #64748b;">No archives recorded yet. Complete daily check-ins to build your history.</p>';
                 return;
             }
-            history.slice().reverse().forEach(item => {
+            history.slice().reverse().forEach(h => {
                 var div = document.createElement('div');
                 div.className = 'history-item';
                 div.innerHTML = `
-                    <div class="history-date">${item.date}</div>
-                    <div class="history-status ${item.completed ? 'completed' : 'failed'}">
-                        ${item.completed ? '✓ Commitments Met' : '✗ Missed Targets'}
-                    </div>
-                    <div class="history-verdict">${item.verdict}</div>
+                    <div class="history-date">${h.date}</div>
+                    <div class="history-status ${h.completed ? 'completed' : 'failed'}">${h.completed ? 'COMPLETED ALL GOALS ✓' : 'MISSED COMMITMENTS ✗'}</div>
+                    <div class="history-verdict">"${h.verdict}"</div>
                 `;
-                container.appendChild(div);
+                list.appendChild(div);
             });
         }
 
-        // Focus Timer Logic
+        function getInmateRank(streak) {
+            if (streak >= 90) return 'Consistency Legend 👑';
+            if (streak >= 60) return 'Unstoppable Titan ⚡';
+            if (streak >= 30) return 'Iron Discipline Master 🔥';
+            if (streak >= 14) return 'Momentum Builder 🚀';
+            if (streak >= 7) return 'Focus Prodigy 🎯';
+            return 'Consistency Starter ⭐';
+        }
+
+        // Focus Timer Engine
         function setTimerPreset(mins) {
+            if (timerRunning) return;
             currentPreset = mins;
             timerSeconds = mins * 60;
-            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
             updateTimerDisplay();
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
             playClick();
         }
 
         function updateTimerDisplay() {
-            var m = Math.floor(timerSeconds / 60);
-            var s = timerSeconds % 60;
+            var mins = Math.floor(timerSeconds / 60);
+            var secs = timerSeconds % 60;
             document.getElementById('timerTime').textContent = 
-                (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+                `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
 
         function toggleTimer() {
             var btn = document.getElementById('timerBtn');
-
             if (timerRunning) {
                 clearInterval(timerInterval);
                 timerRunning = false;
+                btn.textContent = 'Resume Session ⏱️';
                 stopSoundscape();
-                btn.textContent = 'Resume Focus Session ⏱️';
+                playClick();
             } else {
+                initAudio();
                 timerRunning = true;
                 btn.textContent = 'Pause Session ⏸️';
+                var sel = document.getElementById('soundscapeSelect').value;
+                changeSoundscape(sel);
                 playSuccess();
-                changeSoundscape(document.getElementById('soundscapeSelect').value);
 
                 timerInterval = setInterval(() => {
                     if (timerSeconds > 0) {
@@ -1221,10 +1603,13 @@
                     } else {
                         clearInterval(timerInterval);
                         timerRunning = false;
+                        btn.textContent = 'Start Focus Session ⏱️';
                         stopSoundscape();
-                        btn.textContent = 'Session Complete ✨';
                         playSuccess();
-                        showToast('Focus session completed! Great job.', 'success');
+                        showToast('Deep Focus Session Complete! Great work.', 'success');
+                        if (window.posthog) {
+                            posthog.capture('focus_session_completed', { duration: currentPreset });
+                        }
                     }
                 }, 1000);
             }
@@ -1237,6 +1622,7 @@
             timerSeconds = currentPreset * 60;
             updateTimerDisplay();
             document.getElementById('timerBtn').textContent = 'Start Focus Session ⏱️';
+            playClick();
         }
 
         function exitLockdown() {
@@ -1244,9 +1630,7 @@
             goTo('screen4');
         }
 
-        // ========================================================
-        // CANVAS ACHIEVEMENT CARD GENERATOR
-        // ========================================================
+        // Milestone Achievement Card Generator
         function openCardScreen() {
             goTo('screenCard');
             drawAchievementCard();
@@ -1260,8 +1644,8 @@
             var rank = getInmateRank(parseInt(streak));
             var verdict = localStorage.getItem('latestVerdict') || 'Consistent daily action leads to extraordinary results.';
 
-            // Soft Neumorphic Canvas Background
-            ctx.fillStyle = '#0f111a';
+            // Cyber Canvas Background
+            ctx.fillStyle = '#090a10';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Signature Gradient Header
@@ -1281,11 +1665,11 @@
             ctx.font = '600 15px "DM Sans", sans-serif';
             ctx.fillText('DAILY COMMITMENTS & ACCOUNTABILITY', 350, 105);
 
-            // Inner Neumorphic Card Box
+            // Inner Card Box
             ctx.fillStyle = '#0f111a';
             ctx.fillRect(60, 140, 580, 620);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(102, 126, 234, 0.4)';
+            ctx.lineWidth = 1.5;
             ctx.strokeRect(60, 140, 580, 620);
 
             // Name & Streak
@@ -1297,10 +1681,10 @@
             ctx.font = 'bold 20px "DM Sans", sans-serif';
             ctx.fillText(`🔥 ${streak} DAY STREAK  •  ${rank}`, 350, 270);
 
-            // Coach Quote Block (Inset Box)
-            ctx.fillStyle = '#090a10';
+            // Coach Quote Block
+            ctx.fillStyle = '#05060a';
             ctx.fillRect(90, 330, 520, 280);
-            ctx.strokeStyle = 'rgba(102, 126, 234, 0.5)';
+            ctx.strokeStyle = 'rgba(240, 147, 251, 0.4)';
             ctx.lineWidth = 1.5;
             ctx.strokeRect(90, 330, 520, 280);
 
