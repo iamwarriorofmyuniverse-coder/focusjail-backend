@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>FocusJail - Radical AI Accountability & Deep Lockdown</title>
+    <title>FocusPact - Daily Commitments & Intelligent Accountability</title>
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#6366f1" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
 
     <script>
         !function (t, e) { var o, n, p, r; e.__SV || (window.posthog && window.posthog.__loaded) || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -22,16 +22,20 @@
 
     <style>
         :root {
-            --bg: #07080c;
-            --card-bg: rgba(16, 18, 27, 0.88);
+            --bg: #090b11;
+            --card-bg: rgba(17, 21, 32, 0.82);
             --card-border: rgba(255, 255, 255, 0.08);
-            --grad: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-            --grad-accent: linear-gradient(135deg, #ff0055 0%, #ff5500 100%);
-            --grad-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --danger: #f43f5e;
+            --card-hover-border: rgba(99, 102, 241, 0.3);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #ec4899;
+            --grad-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --grad-emerald: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --text-muted: #64748b;
             --success: #10b981;
+            --warning: #f59e0b;
         }
 
         * {
@@ -43,8 +47,8 @@
 
         body {
             background: var(--bg);
-            font-family: 'DM Sans', sans-serif;
-            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -54,23 +58,18 @@
             position: relative;
         }
 
-        /* Ambient Glow Orbs */
-        .orb {
+        /* Subtle Ambient Glows */
+        .ambient-glow {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.22;
+            filter: blur(100px);
+            opacity: 0.18;
             pointer-events: none;
             z-index: 0;
         }
-        .orb1 { width: 360px; height: 360px; background: #6366f1; top: -100px; left: -100px; animation: floatOrb 12s ease-in-out infinite; }
-        .orb2 { width: 300px; height: 300px; background: #ec4899; bottom: -80px; right: -80px; animation: floatOrb 14s ease-in-out infinite reverse; }
-        .orb3 { width: 220px; height: 220px; background: #06b6d4; top: 45%; left: 50%; animation: floatOrb 18s ease-in-out infinite; }
-
-        @keyframes floatOrb {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -30px) scale(1.1); }
-        }
+        .glow-1 { width: 400px; height: 400px; background: #6366f1; top: -100px; left: -100px; }
+        .glow-2 { width: 350px; height: 350px; background: #ec4899; bottom: -80px; right: -80px; }
+        .glow-3 { width: 250px; height: 250px; background: #06b6d4; top: 40%; left: 55%; }
 
         /* Top Action Bar */
         .top-nav {
@@ -82,9 +81,9 @@
             gap: 8px;
         }
         .icon-btn {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--card-border);
-            color: var(--text-secondary);
+            color: var(--text-sub);
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -92,17 +91,18 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            backdrop-filter: blur(10px);
-            font-size: 16px;
-            transition: all 0.2s;
+            backdrop-filter: blur(12px);
+            font-size: 15px;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .icon-btn:hover {
             color: #fff;
-            border-color: rgba(255,255,255,0.25);
-            transform: scale(1.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.09);
         }
 
-        /* Live Toast Notification System */
+        /* Floating Toast Alerts */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -117,12 +117,13 @@
             max-width: 380px;
         }
         .toast {
-            background: rgba(18, 20, 29, 0.95);
+            background: rgba(20, 24, 38, 0.95);
             border: 1px solid var(--card-border);
             backdrop-filter: blur(16px);
-            padding: 12px 16px;
+            padding: 12px 18px;
             border-radius: 14px;
             font-size: 13px;
+            font-weight: 500;
             color: #fff;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: flex;
@@ -131,23 +132,18 @@
             animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: auto;
         }
-        .toast.violation {
-            border-color: var(--danger);
-            background: rgba(45, 10, 20, 0.95);
-        }
-        .toast.success {
-            border-color: var(--success);
-        }
+        .toast.success { border-color: rgba(16, 185, 129, 0.4); }
+        .toast.info { border-color: rgba(99, 102, 241, 0.4); }
         @keyframes toastIn {
             from { opacity: 0; transform: translateY(-20px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Screens */
+        /* Screen Transitions */
         .screen {
             display: none;
             width: 100%;
-            max-width: 430px;
+            max-width: 420px;
             position: relative;
             z-index: 1;
         }
@@ -160,18 +156,19 @@
         }
 
         @keyframes screenFadeIn {
-            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            from { opacity: 0; transform: translateY(14px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
+        /* Modern Glass Card */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border-radius: 26px;
-            padding: 28px 22px;
+            border-radius: 24px;
+            padding: 30px 24px;
             width: 100%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             border: 1px solid var(--card-border);
             position: relative;
             overflow: hidden;
@@ -180,7 +177,7 @@
         .label {
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: #818cf8;
             margin-bottom: 12px;
@@ -190,11 +187,11 @@
         }
 
         .label-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: #818cf8;
-            box-shadow: 0 0 10px #818cf8;
+            box-shadow: 0 0 8px #818cf8;
         }
 
         h1 {
@@ -202,56 +199,57 @@
             font-size: 26px;
             font-weight: 800;
             color: #fff;
-            line-height: 1.2;
+            line-height: 1.25;
             margin-bottom: 10px;
             letter-spacing: -0.5px;
         }
 
         p {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: var(--text-sub);
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         input, textarea, select {
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
             border-radius: 14px;
             padding: 14px 16px;
             font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             color: #fff;
             margin-bottom: 12px;
             outline: none;
-            transition: all 0.2s;
-            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.03);
         }
 
         input:focus, textarea:focus, select:focus {
             border-color: #818cf8;
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.18);
         }
 
         input::placeholder, textarea::placeholder {
-            color: #64748b;
+            color: #475569;
         }
 
+        /* Modern Gradient Buttons */
         .btn-primary {
             width: 100%;
             padding: 15px;
             border: none;
             border-radius: 14px;
-            background: var(--grad);
+            background: var(--grad-primary);
             color: white;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             cursor: pointer;
             margin-top: 8px;
-            transition: all 0.2s;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -260,7 +258,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.45);
         }
 
         .btn-primary:active { transform: scale(0.98); }
@@ -268,15 +266,15 @@
         .btn-secondary {
             width: 100%;
             padding: 13px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.03);
-            color: var(--text-secondary);
-            font-size: 14px;
+            color: var(--text-sub);
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             margin-top: 8px;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -284,17 +282,17 @@
         }
 
         .btn-secondary:hover {
-            border-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.2);
             color: #fff;
             background: rgba(255, 255, 255, 0.06);
         }
 
-        /* Streak & Inmate Rank Banner */
+        /* Streak & Momentum Card */
         .streak-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 22px;
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(236, 72, 153, 0.12) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 22px 20px;
             text-align: center;
             margin-bottom: 14px;
             width: 100%;
@@ -304,20 +302,20 @@
 
         .streak-number {
             font-family: 'Syne', sans-serif;
-            font-size: 54px;
+            font-size: 52px;
             font-weight: 800;
-            background: var(--grad);
+            background: var(--grad-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1;
         }
 
         .streak-label {
-            color: #94a3b8;
+            color: var(--text-sub);
             font-size: 11px;
             margin-top: 4px;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             font-weight: 700;
         }
 
@@ -325,39 +323,39 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 30px;
-            padding: 4px 12px;
+            padding: 4px 14px;
             font-size: 12px;
-            color: #cbd5e1;
+            color: #e2e8f0;
             margin-top: 8px;
             font-weight: 600;
         }
 
-        /* Interactive Goal Checklist */
+        /* Interactive Daily Goals Checklist */
         .goal-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 13px 15px;
+            padding: 14px 16px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 14px;
             margin-bottom: 8px;
             font-size: 14px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .goal-item:hover {
             background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--card-hover-border);
         }
 
         .goal-item.done {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.25);
             text-decoration: line-through;
             color: #94a3b8;
         }
@@ -374,6 +372,7 @@
             transition: all 0.2s;
             margin-right: 12px;
             flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .goal-item.done .goal-checkbox {
@@ -389,7 +388,7 @@
             text-overflow: ellipsis;
         }
 
-        /* 7-Day Heat Strip */
+        /* 7-Day Consistency Strip */
         .week-strip {
             display: flex;
             justify-content: space-between;
@@ -400,7 +399,7 @@
 
         .day-box {
             flex: 1;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 10px;
             padding: 8px 4px;
@@ -411,20 +410,18 @@
         }
 
         .day-box.completed {
-            background: rgba(16, 185, 129, 0.18);
+            background: rgba(16, 185, 129, 0.16);
             border-color: var(--success);
             color: var(--success);
         }
 
         .day-box.failed {
-            background: rgba(244, 63, 94, 0.18);
-            border-color: var(--danger);
-            color: var(--danger);
+            background: rgba(244, 63, 94, 0.16);
+            border-color: #f43f5e;
+            color: #f43f5e;
         }
 
-        /* ========================================================
-           LOCKDOWN CELL & TAB-SWITCH PENALTY
-           ======================================================== */
+        /* Focus Session & Timer */
         .timer-presets {
             display: flex;
             gap: 6px;
@@ -440,13 +437,13 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: #94a3b8;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .preset-btn.active {
-            background: var(--grad);
+            background: var(--grad-primary);
             color: #fff;
             border-color: transparent;
         }
@@ -455,88 +452,31 @@
             width: 100%;
             padding: 10px 14px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
             color: #fff;
             font-size: 13px;
             margin-bottom: 16px;
         }
 
         .timer-display {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 62px;
-            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 60px;
+            font-weight: 800;
             text-align: center;
-            margin: 12px 0;
-            letter-spacing: 2px;
+            margin: 16px 0;
+            letter-spacing: -1px;
             color: #fff;
         }
 
-        .cell-bars {
-            display: flex;
-            justify-content: space-around;
-            height: 60px;
-            width: 100%;
-            margin-bottom: 16px;
-            opacity: 0.2;
-            transition: opacity 0.3s;
-        }
-        .cell-bar {
-            width: 4px;
-            height: 100%;
-            background: #fff;
-            border-radius: 2px;
-        }
-        .locked .cell-bars {
-            opacity: 0.95;
-            animation: barPulse 2s ease-in-out infinite;
-        }
-        @keyframes barPulse {
-            0%, 100% { filter: drop-shadow(0 0 2px #6366f1); }
-            50% { filter: drop-shadow(0 0 10px #ec4899); }
-        }
-
-        .violation-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(244, 63, 94, 0.15);
-            border: 1px solid var(--danger);
-            color: var(--danger);
-            border-radius: 30px;
-            padding: 4px 12px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        /* ========================================================
-           MUGSHOT CARD GENERATOR SCREEN
-           ======================================================== */
-        .mugshot-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        #mugshotCanvas {
-            width: 100%;
-            max-width: 360px;
-            border-radius: 18px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        /* Verdict Card */
+        /* AI Coach Feedback Card */
         .verdict-card {
-            background: #030407;
-            border-radius: 18px;
+            background: #0d101a;
+            border-radius: 16px;
             padding: 22px;
             width: 100%;
             margin-bottom: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
         .verdict-card::before {
@@ -544,21 +484,21 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 3px;
-            background: var(--grad);
-            border-radius: 18px 18px 0 0;
+            background: var(--grad-primary);
+            border-radius: 16px 16px 0 0;
         }
         .verdict-card p {
             color: #e2e8f0;
             font-size: 15px;
             line-height: 1.7;
             margin: 0;
-            font-style: italic;
+            font-style: normal;
         }
 
-        /* Toggle Button */
+        /* Completed / Incomplete Toggle */
         .toggle-wrap {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
             border-radius: 50px;
             padding: 4px;
             display: flex;
@@ -588,21 +528,21 @@
             left: 4px;
             width: calc(50% - 4px);
             height: calc(100% - 8px);
-            background: var(--grad);
+            background: var(--grad-emerald);
             border-radius: 40px;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .toggle-ball.failed {
             transform: translateX(100%);
-            background: var(--grad-accent);
+            background: linear-gradient(135deg, #f43f5e 0%, #ec4899 100%);
         }
 
-        /* Tone Selection Cards */
+        /* Accountability Style Selection */
         .tone-btn {
             width: 100%;
             padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
             border-radius: 16px;
             color: white;
             cursor: pointer;
@@ -612,40 +552,50 @@
             align-items: center;
             gap: 14px;
             background: rgba(255, 255, 255, 0.03);
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .tone-btn:hover {
             transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .tone-emoji { font-size: 26px; }
         .tone-title { font-size: 15px; font-weight: 700; }
-        .tone-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+        .tone-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
 
-        /* History items */
+        /* History & Summary Items */
         .history-item {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 14px;
             padding: 14px 16px;
             margin-bottom: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
         }
-        .history-date { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; }
+        .history-date { font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; }
         .history-status { font-size: 13px; font-weight: 700; margin: 4px 0 6px; }
         .history-status.completed { color: var(--success); }
-        .history-status.failed { color: var(--danger); }
+        .history-status.failed { color: #f43f5e; }
         .history-verdict { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
+
+        /* Canvas Card */
+        #achievementCanvas {
+            width: 100%;
+            max-width: 360px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 16px;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
 
     <!-- Live Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
@@ -653,145 +603,133 @@
     <!-- Top Action Nav -->
     <div class="top-nav">
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
-        <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Live Reminders">🔔</button>
-        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Cell">⏱️</button>
+        <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
+        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session">⏱️</button>
     </div>
 
-    <!-- SCREEN 1: ONBOARDING -->
+    <!-- SCREEN 1: WELCOME & ONBOARDING -->
     <div id="screen1" class="screen active">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> FocusJail Protocol</div>
-            <h1>Stop Negotiating With Yourself.</h1>
-            <p>You lose 7+ hours every day to cheap dopamine. FocusJail holds you hostage to your own promises with zero sugarcoating.</p>
-            <button class="btn-primary" onclick="playClick(); goTo('screen2')">Lock In 🔒</button>
+            <div class="label"><span class="label-dot"></span> FocusPact Protocol</div>
+            <h1>Commit to What Matters.</h1>
+            <p>Make a pact with yourself every morning. Execute your 3 non-negotiables, log your focus sessions, and build unstoppable consistency.</p>
+            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started ✨</button>
         </div>
     </div>
 
-    <!-- SCREEN 2: SETUP GOALS -->
+    <!-- SCREEN 2: DEFINE COMMITMENTS -->
     <div id="screen2" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Inmate Dossier</div>
-            <h1>Define Commitments.</h1>
-            <p>Vague goals lead to failed lives. Enter 3 non-negotiable targets.</p>
-            <input id="name" type="text" placeholder="Your Name or Alias" />
-            <input id="goal1" type="text" placeholder="1. Deep Work: e.g., Ship feature X" />
-            <input id="goal2" type="text" placeholder="2. Physical: e.g., 45m workout" />
+            <div class="label"><span class="label-dot"></span> Daily Planning</div>
+            <h1>Your 3 Commitments.</h1>
+            <p>Clear goals create clear results. What are your 3 core priorities for today?</p>
+            <input id="name" type="text" placeholder="Your Name" />
+            <input id="goal1" type="text" placeholder="1. Deep Work: e.g., Finish project milestone" />
+            <input id="goal2" type="text" placeholder="2. Health: e.g., 45-min workout" />
             <input id="goal3" type="text" placeholder="3. Habit: e.g., Read 20 pages" />
-            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🔒</button>
+            <button class="btn-primary" onclick="saveGoals()">Lock In Commitments 🎯</button>
         </div>
     </div>
 
-    <!-- SCREEN 2B: TONE -->
+    <!-- SCREEN 2B: COACHING STYLE -->
     <div id="screen2b" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Warden Style</div>
-            <h1>Select Accountability Tone.</h1>
-            <p>Choose the level of pressure you need to execute.</p>
+            <div class="label"><span class="label-dot"></span> Accountability Coaching</div>
+            <h1>Choose Your AI Coach.</h1>
+            <p>Select the coaching style that best motivates you to stay on track.</p>
+            <div class="tone-btn" onclick="setTone('firm')">
+                <span class="tone-emoji">⚡</span>
+                <div>
+                    <div class="tone-title">Direct Strategist</div>
+                    <div class="tone-desc">Clear, objective, and focused on high standards and execution.</div>
+                </div>
+            </div>
             <div class="tone-btn" onclick="setTone('brutal')">
                 <span class="tone-emoji">🔥</span>
                 <div>
-                    <div class="tone-title">Brutal Warden</div>
-                    <div class="tone-desc">Raw truth, zero mercy, merciless reality check.</div>
-                </div>
-            </div>
-            <div class="tone-btn" onclick="setTone('firm')">
-                <span class="tone-emoji">⚔️</span>
-                <div>
-                    <div class="tone-title">Firm Commander</div>
-                    <div class="tone-desc">Direct, pragmatic, and strictly factual.</div>
+                    <div class="tone-title">High-Intensity Coach</div>
+                    <div class="tone-desc">Uncompromising truth. Zero sugarcoating. Pushes you to your limit.</div>
                 </div>
             </div>
             <div class="tone-btn" onclick="setTone('gentle')">
                 <span class="tone-emoji">🌱</span>
                 <div>
-                    <div class="tone-title">Empathetic Mentor</div>
-                    <div class="tone-desc">Encouraging yet honest course-correction.</div>
+                    <div class="tone-title">Mindful Mentor</div>
+                    <div class="tone-desc">Empathetic, constructive guidance and positive reinforcement.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCREEN 4: DASHBOARD / HOME -->
+    <!-- SCREEN 4: HOME DASHBOARD -->
     <div id="screen4" class="screen">
         <div class="streak-card">
             <div class="streak-number" id="streakCount">0</div>
-            <div class="streak-label">Day Unbroken Streak</div>
-            <div class="inmate-badge" id="rankBadge">Inmate #0042</div>
+            <div class="streak-label">Days Consistent Streak</div>
+            <div class="inmate-badge" id="rankBadge">Consistency Starter ⭐</div>
         </div>
 
         <div class="week-strip" id="weekStrip"></div>
 
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Active Cell Block</div>
+            <div class="label"><span class="label-dot"></span> Today's Commitments</div>
             <h1 id="welcomeName">Good morning.</h1>
-            <p style="font-size: 13px; margin-bottom: 14px;">Tap commitments as you finish them:</p>
+            <p style="font-size: 13px; margin-bottom: 14px;">Tap tasks as you accomplish them:</p>
             
             <div id="goalsList"></div>
 
-            <button class="btn-primary" onclick="playClick(); goTo('screen5')">Submit Night Report 🌙</button>
-            <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Enter Focus Lockdown 🔒</button>
-            <button class="btn-secondary" onclick="playClick(); openMugshotScreen()">View Inmate Mugshot 📸</button>
-            <button class="btn-secondary" onclick="playClick(); goTo('screen7')">Sentence Archives 📜</button>
-            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments</button>
+            <button class="btn-primary" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
+            <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️</button>
+            <button class="btn-secondary" onclick="playClick(); openCardScreen()">View Daily Summary Card 📋</button>
+            <button class="btn-secondary" onclick="playClick(); goTo('screen7')">Consistency History 📜</button>
+            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments ✏️</button>
         </div>
     </div>
 
-    <!-- SCREEN 5: NIGHT REPORT -->
+    <!-- SCREEN 5: EVENING CHECK-IN -->
     <div id="screen5" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Nightly Reckoning</div>
-            <h1>Did you execute?</h1>
-            <p>No rationalizations. Stand before the verdict.</p>
+            <div class="label"><span class="label-dot"></span> Evening Reflection</div>
+            <h1>Daily Check-In.</h1>
+            <p>Did you honor your daily commitments today?</p>
 
             <div class="toggle-wrap" onclick="toggleReportStatus()">
                 <div class="toggle-ball" id="toggleBall"></div>
-                <div class="toggle-option active" id="opt-yes">All Completed ✓</div>
-                <div class="toggle-option" id="opt-no">Failed / Missed ✗</div>
+                <div class="toggle-option active" id="opt-yes">Completed All ✓</div>
+                <div class="toggle-option" id="opt-no">Missed / Incomplete ✗</div>
             </div>
 
-            <textarea id="excuseInput" rows="3" placeholder="What really happened today? (Be honest with yourself)"></textarea>
+            <textarea id="excuseInput" rows="3" placeholder="Daily notes: What went well or what blocked you today?"></textarea>
             
-            <button class="btn-primary" onclick="submitReport()">Request AI Verdict ⚖️</button>
+            <button class="btn-primary" onclick="submitReport()">Get AI Coach Feedback 💡</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
         </div>
     </div>
 
-    <!-- SCREEN 6: AI VERDICT -->
+    <!-- SCREEN 6: AI COACH FEEDBACK -->
     <div id="screen6" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> FocusJail Decision</div>
-            <h1>The Sentence.</h1>
+            <div class="label"><span class="label-dot"></span> Coach Reflection</div>
+            <h1>Today's Feedback.</h1>
             <div class="verdict-card">
-                <p id="aiResponse">The warden is evaluating your daily record...</p>
+                <p id="aiResponse">Analyzing your day and preparing insights...</p>
             </div>
-            <button class="btn-primary" onclick="openMugshotScreen()">Generate Inmate Mugshot 📸</button>
-            <button class="btn-secondary" onclick="shareVerdictText()">Copy Text Sentence 📋</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Face Tomorrow</button>
+            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋</button>
+            <button class="btn-secondary" onclick="shareVerdictText()">Copy Notes to Clipboard 📝</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨</button>
         </div>
     </div>
 
-    <!-- SCREEN: FOCUS LOCKDOWN CELL (FULLSCREEN + TAB PENALTY + SOUNDSCAPES) -->
+    <!-- SCREEN: DEEP FOCUS SESSION TIMER -->
     <div id="screenTimer" class="screen">
         <div class="card" id="timerCard">
-            <div class="label"><span class="label-dot"></span> Solitary Confinement</div>
-            <h1>Deep Work Lockdown</h1>
-
-            <div id="violationBanner" class="violation-pill" style="display:none;">
-                🚨 Parole Violations: <span id="violationCount">0</span>
-            </div>
+            <div class="label"><span class="label-dot"></span> Deep Work Session</div>
+            <h1>Focus Mode</h1>
             
-            <div class="cell-bars">
-                <div class="cell-bar"></div>
-                <div class="cell-bar"></div>
-                <div class="cell-bar"></div>
-                <div class="cell-bar"></div>
-                <div class="cell-bar"></div>
-            </div>
-
             <!-- Timer Presets -->
             <div class="timer-presets">
                 <button class="preset-btn" onclick="setTimerPreset(15)">15m Sprint</button>
-                <button class="preset-btn active" onclick="setTimerPreset(25)">25m Standard</button>
+                <button class="preset-btn active" onclick="setTimerPreset(25)">25m Pomodoro</button>
                 <button class="preset-btn" onclick="setTimerPreset(50)">50m Deep</button>
                 <button class="preset-btn" onclick="setTimerPreset(90)">90m Flow</button>
             </div>
@@ -799,41 +737,40 @@
             <!-- Focus Soundscape Selector -->
             <select class="soundscape-select" id="soundscapeSelect" onchange="changeSoundscape(this.value)">
                 <option value="none">🔇 Silent Focus</option>
-                <option value="brown">🌊 Deep Brown Noise (ADHD & Concentration)</option>
-                <option value="rain">🌧️ Cyber Rain & Synth Drone</option>
-                <option value="clock">⏱️ Cellblock Clock Ticking</option>
+                <option value="brown">🌊 Calming Brown Noise (Deep Concentration)</option>
+                <option value="rain">🌧️ Soft Rain & Ambient Synth</option>
             </select>
 
             <div class="timer-display" id="timerTime">25:00</div>
             
-            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Lockdown & Fullscreen 🔒</button>
+            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️</button>
             <button class="btn-secondary" onclick="resetTimer()">Reset Timer</button>
-            <button class="btn-secondary" onclick="exitLockdown()">Exit Cell</button>
+            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode</button>
         </div>
     </div>
 
-    <!-- SCREEN: SHARABLE MUGSHOT GENERATOR -->
-    <div id="screenMugshot" class="screen">
+    <!-- SCREEN: SHARABLE ACHIEVEMENT CARD -->
+    <div id="screenCard" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Department of Corrections</div>
-            <h1>Inmate Mugshot</h1>
-            <p>Your official record. Share to assert public accountability.</p>
+            <div class="label"><span class="label-dot"></span> Daily Progress</div>
+            <h1>Achievement Card</h1>
+            <p>Celebrate your consistency. Save or share your daily milestone.</p>
 
-            <div class="mugshot-container">
-                <canvas id="mugshotCanvas" width="700" height="900"></canvas>
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <canvas id="achievementCanvas" width="700" height="850"></canvas>
             </div>
 
-            <button class="btn-primary" onclick="downloadMugshot()">Download Mugshot PNG 📥</button>
-            <button class="btn-secondary" onclick="copyMugshotToClipboard()">Copy to Clipboard 📋</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
+            <button class="btn-primary" onclick="downloadCard()">Download Card Image 📥</button>
+            <button class="btn-secondary" onclick="copyCardToClipboard()">Copy Card Image 📋</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
         </div>
     </div>
 
-    <!-- SCREEN 7: SENTENCE HISTORY -->
+    <!-- SCREEN 7: CONSISTENCY ARCHIVES -->
     <div id="screen7" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> Inmate Archives</div>
-            <h1>Sentence History</h1>
+            <div class="label"><span class="label-dot"></span> Performance History</div>
+            <h1>Consistency Log</h1>
             <div id="historyList"></div>
             <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
         </div>
@@ -846,7 +783,6 @@
         var timerSeconds = 25 * 60;
         var currentPreset = 25;
         var timerRunning = false;
-        var tabViolations = 0;
         var activeSoundscapeNode = null;
         var audioCtx = null;
 
@@ -860,7 +796,7 @@
             var container = document.getElementById('toastContainer');
             var toast = document.createElement('div');
             toast.className = 'toast ' + type;
-            toast.innerHTML = (type === 'violation' ? '🚨 ' : (type === 'success' ? '✨ ' : '🔒 ')) + msg;
+            toast.innerHTML = (type === 'success' ? '✨ ' : '🎯 ') + msg;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
@@ -876,20 +812,18 @@
             }
             Notification.requestPermission().then(permission => {
                 if (permission === 'granted') {
-                    showToast('Live Reminders Enabled! Roll call set for 8:00 AM & 9:30 PM.', 'success');
-                    new Notification('FocusJail Activated', {
-                        body: 'The Warden is monitoring your daily execution.',
-                        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🔒</text></svg>'
+                    showToast('Daily Reminders Enabled! Alerts set for 8:00 AM & 9:30 PM.', 'success');
+                    new Notification('FocusPact Activated', {
+                        body: 'Your daily commitment companion is ready.',
+                        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎯</text></svg>'
                     });
                 } else {
-                    showToast('Notification permission denied.');
+                    showToast('Notification permission not granted.');
                 }
             });
         }
 
-        // ========================================================
-        // WEB AUDIO API SYNTHESIZER
-        // ========================================================
+        // Web Audio Synthesizer
         function initAudio() {
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -897,7 +831,7 @@
             if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
-        function playTone(freq, type, duration) {
+        function playTone(freq, type, duration, vol = 0.1) {
             if (!soundEnabled) return;
             try {
                 initAudio();
@@ -905,7 +839,7 @@
                 var gain = audioCtx.createGain();
                 osc.type = type || 'sine';
                 osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -914,19 +848,20 @@
             } catch (e) {}
         }
 
-        function playClick() { playTone(600, 'sine', 0.08); }
-        function playSuccess() { playTone(880, 'triangle', 0.25); }
-        function playFail() { playTone(200, 'sawtooth', 0.4); }
+        function playClick() { playTone(550, 'sine', 0.08); }
+        function playSuccess() { 
+            playTone(523.25, 'triangle', 0.15);
+            setTimeout(() => playTone(659.25, 'triangle', 0.25), 100);
+        }
+        function playAlert() { playTone(350, 'sine', 0.25); }
 
         function toggleAudio() {
             soundEnabled = !soundEnabled;
             document.getElementById('soundBtn').textContent = soundEnabled ? '🔊' : '🔇';
-            showToast(soundEnabled ? 'Audio FX Enabled' : 'Audio FX Muted');
+            showToast(soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted');
         }
 
-        // ========================================================
-        // FOCUS SOUNDSCAPES SYNTHESIZER
-        // ========================================================
+        // Focus Soundscapes
         function stopSoundscape() {
             if (activeSoundscapeNode) {
                 try {
@@ -958,9 +893,9 @@
                 noise.loop = true;
                 var filter = audioCtx.createBiquadFilter();
                 filter.type = 'lowpass';
-                filter.frequency.value = 400;
+                filter.frequency.value = 350;
                 var gain = audioCtx.createGain();
-                gain.gain.value = 0.15;
+                gain.gain.value = 0.14;
                 noise.connect(filter);
                 filter.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -971,7 +906,7 @@
                 var gain = audioCtx.createGain();
                 osc.type = 'triangle';
                 osc.frequency.value = 110;
-                gain.gain.value = 0.06;
+                gain.gain.value = 0.05;
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
@@ -986,7 +921,7 @@
             var g3 = document.getElementById('goal3').value.trim();
 
             if (!name || !g1 || !g2 || !g3) {
-                alert('Every slot must be committed. No shortcuts.');
+                alert('Please fill out all 3 daily commitments.');
                 return;
             }
 
@@ -998,7 +933,7 @@
             ]));
 
             playSuccess();
-            showToast('Commitments locked in!', 'success');
+            showToast('Daily commitments saved!', 'success');
             goTo('screen2b');
         }
 
@@ -1019,11 +954,11 @@
         }
 
         function getInmateRank(streak) {
-            if (streak >= 30) return '👑 Liberated Sovereign';
-            if (streak >= 14) return '🗝️ Parole Candidate';
-            if (streak >= 7) return '⛓️ Chain Breaker';
-            if (streak >= 3) return '🛡️ Model Prisoner';
-            return '🔒 Inmate #0042';
+            if (streak >= 30) return '👑 Consistency Master';
+            if (streak >= 14) return '⭐ Habit Champion';
+            if (streak >= 7) return '⚡ Momentum Builder';
+            if (streak >= 3) return '🌱 Consistent Focus';
+            return '🎯 Focus Starter';
         }
 
         function toggleGoalCheck(index) {
@@ -1034,14 +969,14 @@
                 
                 if (goals[index].done) {
                     playSuccess();
-                    showToast('Commitment fulfilled! 🎯', 'success');
+                    showToast('Commitment completed! ✨', 'success');
                 } else {
                     playClick();
                 }
 
                 renderGoalsList();
                 if (goals.every(g => g.done)) {
-                    showToast('All daily commitments fulfilled! Submit your report.', 'success');
+                    showToast('All daily goals completed! Great work today.', 'success');
                 }
             }
         }
@@ -1087,11 +1022,11 @@
         }
 
         function loadHome() {
-            var name = localStorage.getItem('name') || 'Inmate';
+            var name = localStorage.getItem('name') || 'User';
             var streak = parseInt(localStorage.getItem('streak') || 0);
             var hour = new Date().getHours();
             
-            document.getElementById('welcomeName').textContent = (hour < 12 ? 'Morning, ' : (hour < 18 ? 'Afternoon, ' : 'Evening, ')) + name + '.';
+            document.getElementById('welcomeName').textContent = (hour < 12 ? 'Good morning, ' : (hour < 18 ? 'Good afternoon, ' : 'Good evening, ')) + name + '.';
             document.getElementById('streakCount').textContent = streak;
             document.getElementById('rankBadge').textContent = getInmateRank(streak);
             
@@ -1122,9 +1057,9 @@
             var rawGoals = JSON.parse(localStorage.getItem('goals') || '[]');
             var goalsList = rawGoals.map(g => g.text);
             var name = localStorage.getItem('name') || 'User';
-            var tone = localStorage.getItem('tone') || 'brutal';
+            var tone = localStorage.getItem('tone') || 'firm';
 
-            document.getElementById('aiResponse').textContent = 'The Warden is formulating your sentence...';
+            document.getElementById('aiResponse').textContent = 'Your AI Coach is formulating personalized feedback...';
             goTo('screen6');
 
             var backendUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
@@ -1155,9 +1090,9 @@
 
         function generateFallbackVerdict(name, success, tone) {
             if (success) {
-                return `${name}, you executed your commitments as promised. Do not get comfortable—momentum is preserved only through tomorrow's discipline.`;
+                return `Great execution today, ${name}. You honored all your commitments. Keep this momentum rolling into tomorrow!`;
             } else {
-                return `${name}, you surrendered your day to rationalizations and comfort. The gap between who you want to be and who you are just widened.`;
+                return `Today had some friction, ${name}, but consistency is built by showing up again. Re-align and hit your priorities fresh tomorrow.`;
             }
         }
 
@@ -1182,13 +1117,13 @@
             localStorage.setItem('goals', JSON.stringify(goals));
 
             document.getElementById('aiResponse').textContent = verdict;
-            if (goalsCompleted) playSuccess(); else playFail();
+            if (goalsCompleted) playSuccess(); else playAlert();
         }
 
         function shareVerdictText() {
-            var text = `🔒 FocusJail Sentence:\n"${document.getElementById('aiResponse').textContent}"\n\nStreak: ${localStorage.getItem('streak')} days unbroken.`;
+            var text = `🎯 FocusPact Summary:\n"${document.getElementById('aiResponse').textContent}"\n\nStreak: ${localStorage.getItem('streak')} days consistent.`;
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Sentence copied to clipboard!', 'success');
+                showToast('Summary copied to clipboard!', 'success');
             });
         }
 
@@ -1206,7 +1141,7 @@
             var container = document.getElementById('historyList');
             container.innerHTML = '';
             if (!history.length) {
-                container.innerHTML = '<p style="text-align:center; padding: 20px 0;">No sentences logged yet.</p>';
+                container.innerHTML = '<p style="text-align:center; padding: 20px 0;">No check-ins logged yet.</p>';
                 return;
             }
             history.slice().reverse().forEach(item => {
@@ -1215,7 +1150,7 @@
                 div.innerHTML = `
                     <div class="history-date">${item.date}</div>
                     <div class="history-status ${item.completed ? 'completed' : 'failed'}">
-                        ${item.completed ? '✓ Commitments Met' : '✗ Failed Commitments'}
+                        ${item.completed ? '✓ Commitments Met' : '✗ Missed Targets'}
                     </div>
                     <div class="history-verdict">${item.verdict}</div>
                 `;
@@ -1223,25 +1158,7 @@
             });
         }
 
-        // ========================================================
-        // TAB-SWITCH PENALTY & FULLSCREEN LOCKDOWN
-        // ========================================================
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden && timerRunning) {
-                tabViolations++;
-                document.getElementById('violationBanner').style.display = 'inline-flex';
-                document.getElementById('violationCount').textContent = tabViolations;
-                playFail();
-                showToast('🚨 PAROLE VIOLATION DETECTED: You navigated away from the lockdown cell!', 'violation');
-                
-                if ('Notification' in window && Notification.permission === 'granted') {
-                    new Notification('🚨 FocusJail Lockdown Breach', {
-                        body: 'Warning: Leaving your cell during solitary confinement logs an infraction.',
-                    });
-                }
-            }
-        });
-
+        // Focus Timer Logic
         function setTimerPreset(mins) {
             currentPreset = mins;
             timerSeconds = mins * 60;
@@ -1260,27 +1177,17 @@
 
         function toggleTimer() {
             var btn = document.getElementById('timerBtn');
-            var card = document.getElementById('timerCard');
 
             if (timerRunning) {
                 clearInterval(timerInterval);
                 timerRunning = false;
                 stopSoundscape();
-                btn.textContent = 'Resume Lockdown 🔒';
-                card.classList.remove('locked');
+                btn.textContent = 'Resume Focus Session ⏱️';
             } else {
                 timerRunning = true;
-                btn.textContent = 'Pause ⏸️';
-                card.classList.add('locked');
+                btn.textContent = 'Pause Session ⏸️';
                 playSuccess();
                 changeSoundscape(document.getElementById('soundscapeSelect').value);
-
-                // Request Fullscreen
-                try {
-                    if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen().catch(() => {});
-                    }
-                } catch(e) {}
 
                 timerInterval = setInterval(() => {
                     if (timerSeconds > 0) {
@@ -1290,10 +1197,9 @@
                         clearInterval(timerInterval);
                         timerRunning = false;
                         stopSoundscape();
-                        btn.textContent = 'Session Complete 🔓';
-                        card.classList.remove('locked');
+                        btn.textContent = 'Session Complete ✨';
                         playSuccess();
-                        showToast('Lockdown session completed! Cell unlocked.', 'success');
+                        showToast('Focus session completed! Great job.', 'success');
                     }
                 }, 1000);
             }
@@ -1305,104 +1211,86 @@
             stopSoundscape();
             timerSeconds = currentPreset * 60;
             updateTimerDisplay();
-            document.getElementById('timerBtn').textContent = 'Start Lockdown & Fullscreen 🔒';
-            document.getElementById('timerCard').classList.remove('locked');
+            document.getElementById('timerBtn').textContent = 'Start Focus Session ⏱️';
         }
 
         function exitLockdown() {
             resetTimer();
-            if (document.fullscreenElement && document.exitFullscreen) {
-                document.exitFullscreen().catch(() => {});
-            }
             goTo('screen4');
         }
 
         // ========================================================
-        // CANVAS INMATE MUGSHOT CARD GENERATOR
+        // CANVAS ACHIEVEMENT CARD GENERATOR
         // ========================================================
-        function openMugshotScreen() {
-            goTo('screenMugshot');
-            drawMugshot();
+        function openCardScreen() {
+            goTo('screenCard');
+            drawAchievementCard();
         }
 
-        function drawMugshot() {
-            var canvas = document.getElementById('mugshotCanvas');
+        function drawAchievementCard() {
+            var canvas = document.getElementById('achievementCanvas');
             var ctx = canvas.getContext('2d');
-            var name = localStorage.getItem('name') || 'INMATE #0042';
+            var name = localStorage.getItem('name') || 'User';
             var streak = localStorage.getItem('streak') || 0;
             var rank = getInmateRank(parseInt(streak));
-            var verdict = localStorage.getItem('latestVerdict') || 'Sentenced to radical accountability. Zero excuses allowed.';
+            var verdict = localStorage.getItem('latestVerdict') || 'Consistent daily action leads to extraordinary results.';
 
-            // Background Prison Wall with Height Chart
-            ctx.fillStyle = '#0f111a';
+            // Background
+            ctx.fillStyle = '#0f1322';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Height Grid Lines
-            ctx.strokeStyle = '#232838';
-            ctx.lineWidth = 2;
-            for (var y = 140; y < 650; y += 40) {
-                ctx.beginPath();
-                ctx.moveTo(40, y);
-                ctx.lineTo(660, y);
-                ctx.stroke();
-            }
+            // Subtle Gradient Header
+            var grad = ctx.createLinearGradient(0, 0, canvas.width, 180);
+            grad.addColorStop(0, '#6366f1');
+            grad.addColorStop(1, '#ec4899');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, 10);
 
-            // Facility Header
+            // Header Title
             ctx.fillStyle = '#f8fafc';
-            ctx.font = 'bold 28px Syne, sans-serif';
+            ctx.font = 'bold 28px "Plus Jakarta Sans", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('FOCUSJAIL CORRECTIONAL FACILITY', 350, 60);
+            ctx.fillText('FOCUSPACT DAILY MILESTONE', 350, 70);
 
             ctx.fillStyle = '#818cf8';
-            ctx.font = '600 16px "DM Sans", sans-serif';
-            ctx.fillText('DEPARTMENT OF RADICAL ACCOUNTABILITY', 350, 90);
+            ctx.font = '600 15px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('HONORING DAILY COMMITMENTS', 350, 105);
 
-            // Silhouette / Inmate Icon
-            ctx.fillStyle = '#1e2333';
-            ctx.beginPath();
-            ctx.arc(350, 260, 70, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.ellipse(350, 420, 120, 80, 0, 0, Math.PI * 2);
-            ctx.fill();
+            // Inner Card
+            ctx.fillStyle = '#161b2e';
+            ctx.fillRect(60, 140, 580, 620);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(60, 140, 580, 620);
 
-            // Inmate ID Placard Card (Held by inmate)
-            ctx.fillStyle = '#040508';
-            ctx.fillRect(100, 480, 500, 240);
-            ctx.strokeStyle = '#818cf8';
-            ctx.lineWidth = 3;
-            ctx.strokeRect(100, 480, 500, 240);
+            // Name & Streak
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 36px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(name, 350, 220);
 
-            // Placard Text
-            ctx.fillStyle = '#ffd700';
-            ctx.font = 'bold 26px "Space Grotesk", monospace';
-            ctx.fillText(name.toUpperCase(), 350, 525);
+            ctx.fillStyle = '#10b981';
+            ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(`🔥 ${streak} DAY STREAK  •  ${rank}`, 350, 270);
 
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '600 16px "DM Sans", sans-serif';
-            ctx.fillText(`STREAK: ${streak} DAYS UNBROKEN  |  ${rank}`, 350, 560);
+            // Coach Quote Block
+            ctx.fillStyle = '#090b14';
+            ctx.fillRect(90, 330, 520, 280);
+            ctx.strokeStyle = '#6366f1';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(90, 330, 520, 280);
 
-            // Verdict Quote in Placard
-            ctx.fillStyle = '#e2e8f0';
-            ctx.font = 'italic 15px "DM Sans", sans-serif';
-            wrapText(ctx, `"${verdict}"`, 350, 600, 440, 22);
+            ctx.fillStyle = '#818cf8';
+            ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('DAILY COACH REFLECTION', 350, 375);
 
-            // Red Official Stamp
-            ctx.save();
-            ctx.translate(520, 660);
-            ctx.rotate(-0.2);
-            ctx.strokeStyle = '#f43f5e';
-            ctx.lineWidth = 4;
-            ctx.strokeRect(-80, -25, 160, 50);
-            ctx.fillStyle = '#f43f5e';
-            ctx.font = 'bold 18px "Space Grotesk", sans-serif';
-            ctx.fillText('CONFINED', 0, 6);
-            ctx.restore();
+            ctx.fillStyle = '#f1f5f9';
+            ctx.font = 'italic 17px "Plus Jakarta Sans", sans-serif';
+            wrapText(ctx, `"${verdict}"`, 350, 430, 460, 26);
 
             // Footer URL
             ctx.fillStyle = '#64748b';
-            ctx.font = '14px "Space Grotesk", monospace';
-            ctx.fillText('focusjail.netlify.app', 350, 860);
+            ctx.font = '14px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('focusjail.netlify.app', 350, 800);
         }
 
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -1423,25 +1311,25 @@
             ctx.fillText(line, x, y);
         }
 
-        function downloadMugshot() {
-            var canvas = document.getElementById('mugshotCanvas');
+        function downloadCard() {
+            var canvas = document.getElementById('achievementCanvas');
             var link = document.createElement('a');
-            link.download = `FocusJail_Mugshot_${Date.now()}.png`;
+            link.download = `FocusPact_Milestone_${Date.now()}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
-            showToast('Mugshot downloaded!', 'success');
+            showToast('Milestone card downloaded!', 'success');
         }
 
-        function copyMugshotToClipboard() {
-            var canvas = document.getElementById('mugshotCanvas');
+        function copyCardToClipboard() {
+            var canvas = document.getElementById('achievementCanvas');
             canvas.toBlob(blob => {
                 if (navigator.clipboard && navigator.clipboard.write) {
                     navigator.clipboard.write([
                         new ClipboardItem({ 'image/png': blob })
                     ]).then(() => {
-                        showToast('Mugshot image copied to clipboard!', 'success');
+                        showToast('Milestone image copied to clipboard!', 'success');
                     }).catch(() => {
-                        showToast('Could not copy image directly. Use download button.');
+                        showToast('Use download button to save image.');
                     });
                 }
             });
