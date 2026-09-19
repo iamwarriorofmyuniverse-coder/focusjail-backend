@@ -1324,7 +1324,7 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav">
-        <button class="icon-btn" onclick="openInstallModal()" title="Install App to Home Screen [I]">📲 <span class="kbd-badge">I</span></button>
+        <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen [I]">📲 <span class="kbd-badge">I</span></button>
         <button class="icon-btn" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts [?]">⌨️ <span class="kbd-badge">?</span></button>
         <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts [S]">👥 <span class="kbd-badge">S</span></button>
         <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth Graphs [A]">📈 <span class="kbd-badge">A</span></button>
@@ -1515,7 +1515,7 @@
                 <div class="week-strip" id="weekStrip"></div>
 
                 <!-- Install App Teaser Banner -->
-                <div class="install-banner" onclick="openInstallModal()" title="Add FocusPact to your Home Screen">
+                <div class="install-banner" id="installBanner" onclick="openInstallModal()" title="Add FocusPact to your Home Screen">
                     <div class="install-banner-left">
                         <img src="icon-192.png" alt="App Icon" class="install-banner-icon" />
                         <div>
@@ -1848,13 +1848,51 @@
         var audioCtx = null;
         var deferredPrompt = null;
 
-        // PWA Install Prompt Handler
+        // PWA Install Prompt & Installed Detection Handler
+        function isPWAInstalled() {
+            var isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+                               window.navigator.standalone === true ||
+                               (document.referrer && document.referrer.includes('android-app://')) ||
+                               localStorage.getItem('focus_pwa_installed') === 'true';
+            return isStandalone;
+        }
+
+        function checkInstalledState() {
+            var installed = isPWAInstalled();
+            var navBtn = document.getElementById('installNavBtn');
+            var banner = document.getElementById('installBanner');
+            if (installed) {
+                if (navBtn) navBtn.style.display = 'none';
+                if (banner) banner.style.display = 'none';
+            } else {
+                if (navBtn) navBtn.style.display = '';
+                if (banner) banner.style.display = '';
+            }
+        }
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             var installBtn = document.getElementById('nativeInstallBtn');
             if (installBtn) installBtn.style.display = 'block';
+            checkInstalledState();
         });
+
+        window.addEventListener('appinstalled', () => {
+            localStorage.setItem('focus_pwa_installed', 'true');
+            checkInstalledState();
+            if (window.posthog) posthog.capture('pwa_installed_event');
+            showToast('FocusPact added to Home Screen! 🎉', 'success');
+        });
+
+        if (window.matchMedia) {
+            window.matchMedia('(display-mode: standalone)').addEventListener('change', (e) => {
+                if (e.matches) {
+                    localStorage.setItem('focus_pwa_installed', 'true');
+                }
+                checkInstalledState();
+            });
+        }
 
         function openInstallModal() {
             var modal = document.getElementById('installModal');
@@ -1880,6 +1918,8 @@
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
+                        localStorage.setItem('focus_pwa_installed', 'true');
+                        checkInstalledState();
                         showToast('Thank you for installing FocusPact! 🎯', 'success');
                         if (window.posthog) posthog.capture('pwa_installed_accepted');
                     }
@@ -2168,6 +2208,7 @@
 
             renderGoals(goals);
             renderWeekStrip();
+            checkInstalledState();
         }
 
         function renderGoals(goals) {
@@ -2873,6 +2914,7 @@
 
         window.onload = function () {
             initTheme();
+            checkInstalledState();
             checkDailyAutoRoll();
             if (localStorage.getItem('name')) {
                 loadHome();
