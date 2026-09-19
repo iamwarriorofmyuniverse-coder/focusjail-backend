@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>FocusPact - Daily Commitments & Intelligent Accountability</title>
     <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" href="icon-192.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <meta name="theme-color" content="#667eea" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FocusPact" />
+    <meta name="description" content="Intelligent Daily Commitments, Deep Work Sessions & Squad Accountability" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
@@ -135,7 +142,7 @@
         /* User-Select Protection for Precision Touchpad Clicks */
         .icon-btn, .btn-primary, .btn-secondary, .bento-box, .preset-btn, 
         .goal-item, .heatmap-tile, .tone-btn, .dispatch-btn, .streak-card, 
-        .toggle-wrap, .kbd-badge, .nav-shortcut, .day-box {
+        .toggle-wrap, .kbd-badge, .nav-shortcut, .day-box, .hero-app-icon {
             user-select: none;
             -webkit-user-select: none;
         }
@@ -225,6 +232,30 @@
 
         .icon-btn:active {
             transform: translateY(0);
+        }
+
+        /* App Icon in Hero */
+        .hero-orb-wrap {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-app-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            box-shadow: 0 10px 32px rgba(102, 126, 234, 0.45), 0 0 50px rgba(240, 147, 251, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-app-icon:hover {
+            transform: scale(1.08) rotate(2deg);
         }
 
         /* Keyboard Badges */
@@ -332,30 +363,6 @@
 
         .card:hover {
             border-color: var(--border-hover);
-        }
-
-        /* Hero Orb */
-        .hero-orb-wrap {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 18px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-orb {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: var(--grad);
-            box-shadow: 0 0 28px rgba(102, 126, 234, 0.5), 0 0 50px rgba(240, 147, 251, 0.3);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
         }
 
         .label {
@@ -473,6 +480,60 @@
             border-color: var(--border-hover);
             background: var(--btn-sec-hover);
             transform: translateY(-1px);
+        }
+
+        /* Install App Banner (In-App Prompt) */
+        .install-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .install-banner:hover {
+            transform: translateY(-2px);
+            border-color: #667eea;
+            background: var(--surface-hover);
+        }
+
+        .install-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .install-banner-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .install-banner-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .install-banner-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .install-badge-btn {
+            background: var(--grad);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
         }
 
         /* Social Dispatch Buttons */
@@ -1143,13 +1204,13 @@
             margin-bottom: 18px;
         }
 
-        /* Keyboard Modal Overlay */
+        /* Modal Overlay */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -1263,6 +1324,7 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav">
+        <button class="icon-btn" onclick="openInstallModal()" title="Install App to Home Screen [I]">📲 <span class="kbd-badge">I</span></button>
         <button class="icon-btn" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts [?]">⌨️ <span class="kbd-badge">?</span></button>
         <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts [S]">👥 <span class="kbd-badge">S</span></button>
         <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth Graphs [A]">📈 <span class="kbd-badge">A</span></button>
@@ -1272,6 +1334,31 @@
         <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session [F]">⏱️ <span class="kbd-badge">F</span></button>
     </div>
 
+    <!-- MODAL: INSTALL APP TO HOME SCREEN -->
+    <div class="modal-overlay" id="installModal" onclick="if(event.target === this) closeInstallModal()">
+        <div class="modal-card" style="text-align: center;">
+            <div style="display: flex; justify-content: center; margin-bottom: 14px;">
+                <img src="icon-192.png" alt="FocusPact Icon" class="hero-app-icon" />
+            </div>
+            <div class="label" style="justify-content: center;"><span class="label-dot"></span> App Installation</div>
+            <h1>Keep FocusPact on Your Phone & Laptop</h1>
+            <p style="margin-bottom: 18px;">Install FocusPact to your home screen or desktop for 1-tap instant access, standalone full-screen focus, and offline support.</p>
+
+            <div id="installGuideBox" style="text-align: left; background: var(--btn-sec-bg); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 18px; font-size: 13px; line-height: 1.6;">
+                <div id="installGuideContent">
+                    <strong>📲 On Mobile (Safari / iOS):</strong><br/>
+                    1. Tap the <strong>Share</strong> button (box with upward arrow).<br/>
+                    2. Scroll down & tap <strong>"Add to Home Screen"</strong> ➕.<br/><br/>
+                    <strong>🤖 On Android / Chrome / Laptop:</strong><br/>
+                    Click the button below to install directly to your device.
+                </div>
+            </div>
+
+            <button class="btn-primary" id="nativeInstallBtn" onclick="triggerNativeInstall()">Install App Now 📲</button>
+            <button class="btn-secondary" onclick="closeInstallModal()">Close</button>
+        </div>
+    </div>
+
     <!-- MODAL: KEYBOARD & TOUCHPAD SHORTCUTS -->
     <div class="modal-overlay" id="shortcutsModal" onclick="if(event.target === this) toggleShortcutsModal()">
         <div class="modal-card">
@@ -1279,6 +1366,10 @@
             <h1>Keyboard Shortcuts</h1>
             <p style="margin-bottom: 16px;">Designed for ultra-fast, touchpad-friendly productivity.</p>
             
+            <div class="shortcut-row">
+                <span>Install Native App</span>
+                <div class="shortcut-keys"><span class="shortcut-key">I</span></div>
+            </div>
             <div class="shortcut-row">
                 <span>Start / Pause Focus Timer</span>
                 <div class="shortcut-keys"><span class="shortcut-key">Space</span></div>
@@ -1328,7 +1419,7 @@
     <div id="screen1" class="screen active">
         <div class="card">
             <div class="hero-orb-wrap">
-                <div class="hero-orb">🎯</div>
+                <img src="icon-192.png" alt="FocusPact Hologram Icon" class="hero-app-icon" />
             </div>
 
             <div class="label" style="justify-content: center;"><span class="label-dot"></span> FocusPact</div>
@@ -1422,6 +1513,18 @@
 
                 <!-- 7-Day History Strip -->
                 <div class="week-strip" id="weekStrip"></div>
+
+                <!-- Install App Teaser Banner -->
+                <div class="install-banner" onclick="openInstallModal()" title="Add FocusPact to your Home Screen">
+                    <div class="install-banner-left">
+                        <img src="icon-192.png" alt="App Icon" class="install-banner-icon" />
+                        <div>
+                            <div class="install-banner-title">Install FocusPact App</div>
+                            <div class="install-banner-sub">Keep close on Home Screen 📲</div>
+                        </div>
+                    </div>
+                    <button class="install-badge-btn">Install</button>
+                </div>
 
                 <!-- Quick Action Hub -->
                 <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
@@ -1743,6 +1846,55 @@
         var timerRunning = false;
         var activeSoundscapeNode = null;
         var audioCtx = null;
+        var deferredPrompt = null;
+
+        // PWA Install Prompt Handler
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            var installBtn = document.getElementById('nativeInstallBtn');
+            if (installBtn) installBtn.style.display = 'block';
+        });
+
+        function openInstallModal() {
+            var modal = document.getElementById('installModal');
+            if (modal) {
+                modal.classList.add('active');
+                playClick();
+                if (window.posthog) {
+                    posthog.capture('install_modal_opened');
+                }
+            }
+        }
+
+        function closeInstallModal() {
+            var modal = document.getElementById('installModal');
+            if (modal) {
+                modal.classList.remove('active');
+                playClick();
+            }
+        }
+
+        function triggerNativeInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('Thank you for installing FocusPact! 🎯', 'success');
+                        if (window.posthog) posthog.capture('pwa_installed_accepted');
+                    }
+                    deferredPrompt = null;
+                    closeInstallModal();
+                });
+            } else {
+                var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                if (isIOS) {
+                    alert('To install on iPhone/iPad:\n1. Tap the Share button in Safari.\n2. Tap "Add to Home Screen".');
+                } else {
+                    showToast('To install: Click the (⋮) menu in your browser and select "Install App" or "Add to Home Screen".', 'info');
+                }
+            }
+        }
 
         // Theme Engine
         function initTheme() {
@@ -1846,7 +1998,7 @@
                     showToast('Daily Reminders Enabled! Alerts set for 8:00 AM & 9:30 PM.', 'success');
                     new Notification('FocusPact Activated', {
                         body: 'Your daily commitment companion is ready.',
-                        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎯</text></svg>'
+                        icon: 'icon-192.png'
                     });
                 } else {
                     showToast('Notification permission not granted.');
@@ -2638,6 +2790,11 @@
 
             // Escape key always works
             if (e.key === 'Escape') {
+                var instModal = document.getElementById('installModal');
+                if (instModal && instModal.classList.contains('active')) {
+                    closeInstallModal();
+                    return;
+                }
                 var modal = document.getElementById('shortcutsModal');
                 if (modal && modal.classList.contains('active')) {
                     toggleShortcutsModal();
@@ -2654,7 +2811,10 @@
 
             var key = e.key.toLowerCase();
 
-            if (key === '?' || (e.shiftKey && key === '/')) {
+            if (key === 'i') {
+                e.preventDefault();
+                openInstallModal();
+            } else if (key === '?' || (e.shiftKey && key === '/')) {
                 e.preventDefault();
                 toggleShortcutsModal();
             } else if (key === 't') {

@@ -1,9 +1,12 @@
-// FocusJail Service Worker
-const CACHE_NAME = 'focusjail-v2';
+// FocusPact Service Worker
+const CACHE_NAME = 'focuspact-v3';
 const ASSETS = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (e) => {
