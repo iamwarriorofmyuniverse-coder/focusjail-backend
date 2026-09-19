@@ -37,15 +37,15 @@
         /* Dark Theme */
         html[data-theme="dark"] {
             --bg: #090a10;
-            --surface: rgba(18, 20, 30, 0.78);
-            --surface-hover: rgba(24, 27, 40, 0.88);
+            --surface: rgba(18, 20, 30, 0.82);
+            --surface-hover: rgba(26, 30, 46, 0.92);
             --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.16);
+            --border-hover: rgba(255, 255, 255, 0.18);
             --border-focus: rgba(102, 126, 234, 0.6);
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --text-muted: #64748b;
-            --input-bg: rgba(10, 11, 18, 0.65);
+            --input-bg: rgba(10, 11, 18, 0.7);
             --card-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             --btn-sec-bg: rgba(255, 255, 255, 0.04);
             --btn-sec-hover: rgba(255, 255, 255, 0.08);
@@ -59,15 +59,17 @@
             --chart-bar-bg: rgba(255, 255, 255, 0.05);
             --tile-empty: rgba(255, 255, 255, 0.06);
             --squad-bg: rgba(255, 255, 255, 0.03);
+            --kbd-bg: rgba(255, 255, 255, 0.06);
+            --kbd-border: rgba(255, 255, 255, 0.12);
         }
 
         /* Light Theme */
         html[data-theme="light"] {
             --bg: #f5f7fb;
-            --surface: rgba(255, 255, 255, 0.88);
+            --surface: rgba(255, 255, 255, 0.92);
             --surface-hover: rgba(255, 255, 255, 0.98);
             --border: rgba(0, 0, 0, 0.08);
-            --border-hover: rgba(0, 0, 0, 0.15);
+            --border-hover: rgba(0, 0, 0, 0.16);
             --border-focus: rgba(102, 126, 234, 0.8);
             --text-main: #0f172a;
             --text-sub: #475569;
@@ -86,6 +88,8 @@
             --chart-bar-bg: rgba(0, 0, 0, 0.05);
             --tile-empty: rgba(0, 0, 0, 0.06);
             --squad-bg: rgba(0, 0, 0, 0.03);
+            --kbd-bg: rgba(0, 0, 0, 0.05);
+            --kbd-border: rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -94,6 +98,46 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        /* Touchpad / Laptop Ergonomics & Momentum Scrolling */
+        html, body {
+            overscroll-behavior-x: none;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Sleek Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.16);
+            border-radius: 10px;
+        }
+        html[data-theme="light"] ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.16);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.6);
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+        }
+        html[data-theme="light"] * {
+            scrollbar-color: rgba(0, 0, 0, 0.16) transparent;
+        }
+
+        /* User-Select Protection for Precision Touchpad Clicks */
+        .icon-btn, .btn-primary, .btn-secondary, .bento-box, .preset-btn, 
+        .goal-item, .heatmap-tile, .tone-btn, .dispatch-btn, .streak-card, 
+        .toggle-wrap, .kbd-badge, .nav-shortcut, .day-box {
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
@@ -130,10 +174,10 @@
             top: 20%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 500px;
-            height: 350px;
-            background: radial-gradient(ellipse, rgba(102, 126, 234, 0.12) 0%, rgba(240, 147, 251, 0.06) 50%, transparent 75%);
-            filter: blur(60px);
+            width: 550px;
+            height: 380px;
+            background: radial-gradient(ellipse, rgba(102, 126, 234, 0.14) 0%, rgba(240, 147, 251, 0.07) 50%, transparent 75%);
+            filter: blur(70px);
             pointer-events: none;
             z-index: 0;
         }
@@ -145,15 +189,18 @@
             right: 20px;
             z-index: 50;
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            align-items: center;
         }
+
         .icon-btn {
             background: var(--surface);
             border: 1px solid var(--border);
             color: var(--text-sub);
-            border-radius: 50%;
-            width: 42px;
-            height: 42px;
+            border-radius: 12px;
+            min-width: 40px;
+            height: 40px;
+            padding: 0 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -162,15 +209,43 @@
             backdrop-filter: blur(16px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
+
         .icon-btn:hover {
             color: var(--text-main);
             border-color: var(--border-hover);
             transform: translateY(-2px);
             background: var(--surface-hover);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
+
         .icon-btn:active {
             transform: translateY(0);
+        }
+
+        /* Keyboard Badges */
+        .kbd-badge {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: var(--kbd-bg);
+            border: 1px solid var(--kbd-border);
+            color: var(--text-muted);
+            border-radius: 6px;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            padding: 2px 6px;
+            margin-left: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover .kbd-badge, .btn-secondary:hover .kbd-badge {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         /* Toast Container */
@@ -185,7 +260,7 @@
             gap: 8px;
             pointer-events: none;
             width: 90%;
-            max-width: 380px;
+            max-width: 420px;
         }
         .toast {
             background: var(--toast-bg);
@@ -214,7 +289,7 @@
         .screen {
             display: none;
             width: 100%;
-            max-width: 440px;
+            max-width: 460px;
             position: relative;
             z-index: 10;
         }
@@ -236,13 +311,13 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 28px 22px;
+            padding: 28px 24px;
             width: 100%;
             box-shadow: var(--card-shadow);
             backdrop-filter: blur(24px);
             position: relative;
             overflow: hidden;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
         }
 
         .card:hover {
@@ -435,6 +510,12 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 8px 30px rgba(102, 126, 234, 0.35);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .streak-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(102, 126, 234, 0.45);
         }
 
         .streak-number {
@@ -482,18 +563,19 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 10px 10px;
+            padding: 12px 10px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
             cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
         }
 
         .bento-box:hover {
             transform: translateY(-2px);
             border-color: var(--border-hover);
+            background: var(--surface-hover);
         }
 
         .bento-icon { font-size: 16px; margin-bottom: 4px; }
@@ -517,9 +599,14 @@
             background: var(--btn-sec-bg);
             border: 1px solid var(--border);
             border-radius: 18px;
-            padding: 16px;
+            padding: 18px;
             margin-bottom: 16px;
             width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .chart-card:hover {
+            border-color: var(--border-hover);
         }
 
         .chart-header {
@@ -547,7 +634,7 @@
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
-            height: 90px;
+            height: 96px;
             gap: 8px;
             padding-top: 10px;
         }
@@ -559,12 +646,18 @@
             align-items: center;
             height: 100%;
             justify-content: flex-end;
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+
+        .bar-col:hover {
+            transform: translateY(-2px);
         }
 
         .bar-fill-wrap {
             width: 100%;
-            max-width: 28px;
-            height: 70px;
+            max-width: 32px;
+            height: 72px;
             background: var(--chart-bar-bg);
             border-radius: 8px;
             display: flex;
@@ -609,12 +702,14 @@
             border-radius: 5px;
             background: var(--tile-empty);
             border: 1px solid var(--border);
-            transition: transform 0.15s;
+            transition: transform 0.15s, box-shadow 0.15s;
+            cursor: pointer;
         }
 
         .heatmap-tile:hover {
-            transform: scale(1.25);
+            transform: scale(1.3);
             z-index: 2;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .heatmap-tile.done { background: #10b981; border-color: #059669; }
@@ -647,6 +742,12 @@
             border: 1px solid var(--border);
             border-radius: 14px;
             margin-bottom: 8px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .squad-member-item:hover {
+            transform: translateY(-1px);
+            border-color: var(--border-hover);
         }
 
         .squad-avatar {
@@ -678,7 +779,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 14px;
+            padding: 14px 16px;
             background: var(--btn-sec-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -689,7 +790,7 @@
         }
 
         .goal-item:hover {
-            border-color: rgba(102, 126, 234, 0.4);
+            border-color: rgba(102, 126, 234, 0.45);
             background: var(--btn-sec-hover);
             transform: translateY(-1px);
         }
@@ -702,14 +803,14 @@
         }
 
         .goal-checkbox {
-            width: 20px;
-            height: 20px;
-            border-radius: 6px;
+            width: 22px;
+            height: 22px;
+            border-radius: 7px;
             border: 1.5px solid var(--checkbox-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 12px;
             transition: all 0.2s;
             margin-right: 12px;
             flex-shrink: 0;
@@ -728,6 +829,18 @@
             overflow: hidden;
             text-overflow: ellipsis;
             flex: 1;
+        }
+
+        .goal-num-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-right: 8px;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: var(--kbd-bg);
+            border: 1px solid var(--kbd-border);
         }
 
         .goal-edit-btn {
@@ -762,11 +875,16 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 8px 2px;
+            padding: 9px 2px;
             text-align: center;
             font-size: 11px;
             color: var(--text-muted);
             font-weight: 700;
+            transition: transform 0.15s;
+        }
+
+        .day-box:hover {
+            transform: translateY(-2px);
         }
 
         .day-box.completed {
@@ -799,7 +917,7 @@
         .preset-btn {
             flex: 1;
             min-width: 60px;
-            padding: 9px 4px;
+            padding: 10px 6px;
             border-radius: 12px;
             background: var(--btn-sec-bg);
             border: 1px solid var(--border);
@@ -808,6 +926,15 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
         }
 
         .preset-btn.active {
@@ -818,7 +945,7 @@
 
         .timer-display {
             font-family: 'Syne', sans-serif;
-            font-size: 60px;
+            font-size: 64px;
             font-weight: 800;
             text-align: center;
             margin: 16px 0;
@@ -1004,6 +1131,118 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             margin-bottom: 18px;
         }
+
+        /* Keyboard Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+            animation: screenFadeIn 0.25s ease;
+        }
+        .modal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+        }
+        .shortcut-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+        .shortcut-row:last-child {
+            border-bottom: none;
+        }
+        .shortcut-keys {
+            display: flex;
+            gap: 4px;
+        }
+        .shortcut-key {
+            background: var(--kbd-bg);
+            border: 1px solid var(--kbd-border);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Laptop & Touchpad Responsive Layout Engine (>= 860px) */
+        @media (min-width: 860px) {
+            .screen {
+                max-width: 960px;
+            }
+
+            .laptop-grid-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                width: 100%;
+                align-items: start;
+            }
+
+            .laptop-grid-dashboard {
+                display: grid;
+                grid-template-columns: 380px 1fr;
+                gap: 20px;
+                width: 100%;
+                align-items: start;
+            }
+
+            .top-nav {
+                top: 24px;
+                right: 32px;
+                background: var(--surface);
+                padding: 6px 10px;
+                border-radius: 30px;
+                border: 1px solid var(--border);
+                backdrop-filter: blur(20px);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            }
+
+            .top-nav .icon-btn {
+                border: none;
+                background: transparent;
+                box-shadow: none;
+                border-radius: 20px;
+                height: 36px;
+                padding: 0 10px;
+            }
+
+            .top-nav .icon-btn:hover {
+                background: var(--btn-sec-hover);
+            }
+
+            .kbd-badge {
+                display: inline-flex !important;
+            }
+
+            .card {
+                padding: 32px 28px;
+            }
+
+            .timer-display {
+                font-size: 80px;
+                margin: 24px 0;
+            }
+        }
     </style>
 </head>
 
@@ -1019,12 +1258,65 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav">
-        <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts & Leaderboard">👥</button>
-        <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth & Development Graphs">📈</button>
-        <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Light/Dark Mode">☀️</button>
-        <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
+        <button class="icon-btn" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts [?]">⌨️ <span class="kbd-badge">?</span></button>
+        <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts [S]">👥 <span class="kbd-badge">S</span></button>
+        <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth Graphs [A]">📈 <span class="kbd-badge">A</span></button>
+        <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme [T]">☀️ <span class="kbd-badge">T</span></button>
+        <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound [M]">🔊 <span class="kbd-badge">M</span></button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
-        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session">⏱️</button>
+        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session [F]">⏱️ <span class="kbd-badge">F</span></button>
+    </div>
+
+    <!-- MODAL: KEYBOARD & TOUCHPAD SHORTCUTS -->
+    <div class="modal-overlay" id="shortcutsModal" onclick="if(event.target === this) toggleShortcutsModal()">
+        <div class="modal-card">
+            <div class="label"><span class="label-dot"></span> Touchpad & Laptop Controls</div>
+            <h1>Keyboard Shortcuts</h1>
+            <p style="margin-bottom: 16px;">Designed for ultra-fast, touchpad-friendly productivity.</p>
+            
+            <div class="shortcut-row">
+                <span>Start / Pause Focus Timer</span>
+                <div class="shortcut-keys"><span class="shortcut-key">Space</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Toggle Commitments 1, 2, 3</span>
+                <div class="shortcut-keys"><span class="shortcut-key">1</span><span class="shortcut-key">2</span><span class="shortcut-key">3</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Open Deep Focus Mode</span>
+                <div class="shortcut-keys"><span class="shortcut-key">F</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Open Growth & Development Graphs</span>
+                <div class="shortcut-keys"><span class="shortcut-key">A</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Open Squad Room & Leaderboard</span>
+                <div class="shortcut-keys"><span class="shortcut-key">S</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Open Evening Check-In</span>
+                <div class="shortcut-keys"><span class="shortcut-key">E</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Toggle Light / Dark Mode</span>
+                <div class="shortcut-keys"><span class="shortcut-key">T</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Toggle Sound Effects</span>
+                <div class="shortcut-keys"><span class="shortcut-key">M</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Back to Dashboard / Close Modal</span>
+                <div class="shortcut-keys"><span class="shortcut-key">Esc</span></div>
+            </div>
+
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted);">
+                💡 <strong>Touchpad Tip:</strong> Two-finger smooth scroll works seamlessly across all analytics & history archives without horizontal back-swipe interrupts.
+            </div>
+
+            <button class="btn-primary" style="margin-top: 16px;" onclick="toggleShortcutsModal()">Got it (Esc) ✨</button>
+        </div>
     </div>
 
     <!-- SCREEN 1: WELCOME & ONBOARDING -->
@@ -1037,7 +1329,7 @@
             <div class="label" style="justify-content: center;"><span class="label-dot"></span> FocusPact</div>
             <h1 style="text-align: center;">Commit to What Matters.</h1>
             <p style="text-align: center;">Make a pact with yourself every morning. Execute your 3 non-negotiables, track your deep focus sessions, and build unstoppable consistency.</p>
-            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started ✨</button>
+            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started ✨ <span class="kbd-badge">Enter</span></button>
         </div>
     </div>
 
@@ -1058,7 +1350,7 @@
                 <input id="partnerContact" type="text" placeholder="Partner Phone / WhatsApp / Email" />
             </div>
 
-            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯</button>
+            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯 <span class="kbd-badge">Enter</span></button>
         </div>
     </div>
 
@@ -1071,71 +1363,83 @@
             <div class="tone-btn tone-brutal" onclick="setTone('brutal')">
                 <span class="tone-emoji">🔥</span>
                 <div>
-                    <div class="tone-title">Brutal</div>
+                    <div class="tone-title">Brutal <span class="kbd-badge">1</span></div>
                     <div class="tone-desc">No mercy. Raw truth. Zero excuses.</div>
                 </div>
             </div>
             <div class="tone-btn tone-firm" onclick="setTone('firm')">
                 <span class="tone-emoji">💪</span>
                 <div>
-                    <div class="tone-title">Firm</div>
+                    <div class="tone-title">Firm <span class="kbd-badge">2</span></div>
                     <div class="tone-desc">Direct and fair. No insults, no softening.</div>
                 </div>
             </div>
             <div class="tone-btn tone-gentle" onclick="setTone('gentle')">
                 <span class="tone-emoji">🌱</span>
                 <div>
-                    <div class="tone-title">Gentle</div>
+                    <div class="tone-title">Gentle <span class="kbd-badge">3</span></div>
                     <div class="tone-desc">Encouraging but honest. Good for beginners.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCREEN 4: HOME DASHBOARD -->
+    <!-- SCREEN 4: HOME DASHBOARD (ADAPTIVE LAPTOP GRID) -->
     <div id="screen4" class="screen">
-        <!-- Main Streak Card -->
-        <div class="streak-card">
-            <div class="streak-number" id="streakCount">0</div>
-            <div class="streak-label">Day Streak</div>
-            <div class="inmate-badge" id="rankBadge">Consistency Starter ⭐</div>
-        </div>
+        <div class="laptop-grid-dashboard">
+            <!-- Left Side / Stats & Deck -->
+            <div>
+                <!-- Main Streak Card -->
+                <div class="streak-card">
+                    <div class="streak-number" id="streakCount">0</div>
+                    <div class="streak-label">Day Streak</div>
+                    <div class="inmate-badge" id="rankBadge">Consistency Starter ⭐</div>
+                </div>
 
-        <!-- Bento Metrics Row (Focus Time + Shield + Squad) -->
-        <div class="bento-row">
-            <div class="bento-box" onclick="goTo('screenTimer')" title="Start Deep Focus Session">
-                <div class="bento-icon">⏱️</div>
-                <div class="bento-title">Focus Logged</div>
-                <div class="bento-val" id="bentoFocusMins">0m today</div>
+                <!-- Bento Metrics Row (Focus Time + Shield + Squad) -->
+                <div class="bento-row">
+                    <div class="bento-box" onclick="goTo('screenTimer')" title="Start Deep Focus Session [F]">
+                        <div class="bento-icon">⏱️</div>
+                        <div class="bento-title">Focus Logged</div>
+                        <div class="bento-val" id="bentoFocusMins">0m today</div>
+                    </div>
+                    <div class="bento-box" onclick="showShieldInfo()" title="Discipline Streak Shield">
+                        <div class="bento-icon">🛡️</div>
+                        <div class="bento-title">Streak Shield</div>
+                        <div class="bento-val" id="bentoShieldVal">1 Ready</div>
+                    </div>
+                    <div class="bento-box" onclick="goTo('screenSquad')" title="Squad Multiplier [S]">
+                        <div class="bento-icon">👥</div>
+                        <div class="bento-title">Squad Pact</div>
+                        <div class="bento-val" id="bentoSquadVal">2.5x</div>
+                    </div>
+                </div>
+
+                <!-- 7-Day History Strip -->
+                <div class="week-strip" id="weekStrip"></div>
+
+                <!-- Quick Action Hub -->
+                <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
+                    <button class="btn-secondary" style="margin-top: 0;" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️ <span class="kbd-badge">F</span></button>
+                    <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥 <span class="kbd-badge">S</span></button>
+                    <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈 <span class="kbd-badge">A</span></button>
+                    <button class="btn-secondary" onclick="playClick(); openCardScreen()">Milestone Achievement Card 📋 <span class="kbd-badge">C</span></button>
+                </div>
             </div>
-            <div class="bento-box" onclick="showShieldInfo()" title="Discipline Streak Shield">
-                <div class="bento-icon">🛡️</div>
-                <div class="bento-title">Streak Shield</div>
-                <div class="bento-val" id="bentoShieldVal">1 Ready</div>
+
+            <!-- Right Side / Today's Commitments & Evening Launcher -->
+            <div>
+                <div class="card">
+                    <div class="label"><span class="label-dot"></span> Today's Commitments</div>
+                    <h1 id="welcomeName">Good morning.</h1>
+                    <p style="font-size: 13px; margin-bottom: 14px;">Click or press <kbd class="kbd-badge" style="display:inline-flex;">1</kbd> <kbd class="kbd-badge" style="display:inline-flex;">2</kbd> <kbd class="kbd-badge" style="display:inline-flex;">3</kbd> as you complete them:</p>
+                    
+                    <div id="goalsList"></div>
+
+                    <button class="btn-primary" style="margin-top: 14px;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙 <span class="kbd-badge">E</span></button>
+                    <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
+                </div>
             </div>
-            <div class="bento-box" onclick="goTo('screenSquad')" title="Squad Multiplier">
-                <div class="bento-icon">👥</div>
-                <div class="bento-title">Squad Pact</div>
-                <div class="bento-val" id="bentoSquadVal">2.5x</div>
-            </div>
-        </div>
-
-        <!-- 7-Day History Strip -->
-        <div class="week-strip" id="weekStrip"></div>
-
-        <div class="card">
-            <div class="label"><span class="label-dot"></span> Today's Commitments</div>
-            <h1 id="welcomeName">Good morning.</h1>
-            <p style="font-size: 13px; margin-bottom: 14px;">Tap tasks as you accomplish them:</p>
-            
-            <div id="goalsList"></div>
-
-            <button class="btn-primary" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
-            <button class="btn-secondary" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️</button>
-            <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥</button>
-            <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈</button>
-            <button class="btn-secondary" onclick="playClick(); openCardScreen()">View Daily Summary Card 📋</button>
-            <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
         </div>
     </div>
 
@@ -1168,8 +1472,8 @@
             <div class="label" id="reflectionLabel"><span class="label-dot"></span> Daily Reflection & Notes</div>
             <textarea id="excuseInput" rows="3" placeholder="What went well or what blocked you today?"></textarea>
             
-            <button class="btn-primary" onclick="submitReport()">Submit Check-In & Get Verdict 💡</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
+            <button class="btn-primary" onclick="submitReport()">Submit Check-In & Get Verdict 💡 <span class="kbd-badge">Enter</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1198,8 +1502,8 @@
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨</button>
+            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋 <span class="kbd-badge">C</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨ <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1210,48 +1514,54 @@
             <h1>Squad Pacts</h1>
             <p>Build consistency with your team. If one member slacks, the squad multiplier drops.</p>
 
-            <div class="squad-card">
-                <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9;">Active Squad Multiplier</div>
-                <div class="squad-multiplier">2.5x 🔥</div>
-                <div style="font-size: 12px; opacity: 0.95; margin-top: 4px;">YC Founders Sprint Cohort • 4 Members</div>
+            <div class="laptop-grid-2">
+                <div>
+                    <div class="squad-card">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9;">Active Squad Multiplier</div>
+                        <div class="squad-multiplier">2.5x 🔥</div>
+                        <div style="font-size: 12px; opacity: 0.95; margin-top: 4px;">YC Founders Sprint Cohort • 4 Members</div>
+                    </div>
+                    <button class="btn-primary" onclick="inviteSquadMember()">Invite Teammate to Squad 🔗</button>
+                </div>
+
+                <div>
+                    <div class="label"><span class="label-dot"></span> Live Squad Feed</div>
+                    <div id="squadMemberList">
+                        <div class="squad-member-item">
+                            <div style="display: flex; align-items: center;">
+                                <div class="squad-avatar">Y</div>
+                                <div>
+                                    <div style="font-weight: 700; font-size: 13px;" id="squadUserName">You</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">Current Streak: Active</div>
+                                </div>
+                            </div>
+                            <span class="squad-status-tag done">Executed ✓</span>
+                        </div>
+                        <div class="squad-member-item">
+                            <div style="display: flex; align-items: center;">
+                                <div class="squad-avatar" style="background: var(--grad-firm);">A</div>
+                                <div>
+                                    <div style="font-weight: 700; font-size: 13px;">Alex (Backend)</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">14-Day Streak</div>
+                                </div>
+                            </div>
+                            <span class="squad-status-tag done">Executed ✓</span>
+                        </div>
+                        <div class="squad-member-item">
+                            <div style="display: flex; align-items: center;">
+                                <div class="squad-avatar" style="background: var(--grad-gentle);">S</div>
+                                <div>
+                                    <div style="font-weight: 700; font-size: 13px;">Sarah (Growth)</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">21-Day Streak</div>
+                                </div>
+                            </div>
+                            <span class="squad-status-tag working">Focusing ⏳</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="label"><span class="label-dot"></span> Squad Members Today</div>
-            <div id="squadMemberList">
-                <div class="squad-member-item">
-                    <div style="display: flex; align-items: center;">
-                        <div class="squad-avatar">Y</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 13px;" id="squadUserName">You</div>
-                            <div style="font-size: 11px; color: var(--text-muted);">Current Streak: Active</div>
-                        </div>
-                    </div>
-                    <span class="squad-status-tag done">Executed ✓</span>
-                </div>
-                <div class="squad-member-item">
-                    <div style="display: flex; align-items: center;">
-                        <div class="squad-avatar" style="background: var(--grad-firm);">A</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 13px;">Alex (Backend)</div>
-                            <div style="font-size: 11px; color: var(--text-muted);">14-Day Streak</div>
-                        </div>
-                    </div>
-                    <span class="squad-status-tag done">Executed ✓</span>
-                </div>
-                <div class="squad-member-item">
-                    <div style="display: flex; align-items: center;">
-                        <div class="squad-avatar" style="background: var(--grad-gentle);">S</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 13px;">Sarah (Growth)</div>
-                            <div style="font-size: 11px; color: var(--text-muted);">21-Day Streak</div>
-                        </div>
-                    </div>
-                    <span class="squad-status-tag working">Focusing ⏳</span>
-                </div>
-            </div>
-
-            <button class="btn-primary" onclick="inviteSquadMember()">Invite Teammate to Squad 🔗</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" style="margin-top: 14px;" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1262,46 +1572,50 @@
             <h1>Your Development.</h1>
             <p>Visual tracking of your focus hours and consistency growth.</p>
 
-            <!-- 7-Day Deep Work Focus Bar Chart -->
-            <div class="chart-card">
-                <div class="chart-header">
-                    <span class="chart-title">7-Day Focus Minutes</span>
-                    <span class="chart-total" id="weeklyFocusTotal">0m this week</span>
+            <div class="laptop-grid-2">
+                <!-- 7-Day Deep Work Focus Bar Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <span class="chart-title">7-Day Focus Minutes</span>
+                        <span class="chart-total" id="weeklyFocusTotal">0m this week</span>
+                    </div>
+                    <div class="bar-chart" id="focusBarChart"></div>
                 </div>
-                <div class="bar-chart" id="focusBarChart"></div>
+
+                <!-- 30-Day Consistency Heatmap Grid -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <span class="chart-title">30-Day Discipline Matrix</span>
+                        <span class="chart-total" id="monthlyRate">100% Rate</span>
+                    </div>
+                    <div class="heatmap-grid" id="heatmapGrid"></div>
+                    <div style="display: flex; gap: 12px; font-size: 11px; color: var(--text-muted); justify-content: flex-end;">
+                        <span><span style="color: #10b981;">■</span> Done</span>
+                        <span><span style="color: #f59e0b;">■</span> Shield</span>
+                        <span><span style="color: #ef4444;">■</span> Missed</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- 30-Day Consistency Heatmap Grid -->
-            <div class="chart-card">
-                <div class="chart-header">
-                    <span class="chart-title">30-Day Discipline Matrix</span>
-                    <span class="chart-total" id="monthlyRate">100% Rate</span>
-                </div>
-                <div class="heatmap-grid" id="heatmapGrid"></div>
-                <div style="display: flex; gap: 12px; font-size: 11px; color: var(--text-muted); justify-content: flex-end;">
-                    <span><span style="color: #10b981;">■</span> Done</span>
-                    <span><span style="color: #f59e0b;">■</span> Shield</span>
-                    <span><span style="color: #ef4444;">■</span> Missed</span>
-                </div>
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                <button class="btn-primary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
+                <button class="btn-secondary" onclick="goTo('screen7')">View Full History Archives 📜</button>
             </div>
-
-            <button class="btn-primary" onclick="goTo('screen4')">Back to Dashboard</button>
-            <button class="btn-secondary" onclick="goTo('screen7')">View Full History Archives 📜</button>
         </div>
     </div>
 
     <!-- SCREEN: DEEP FOCUS SESSION TIMER -->
     <div id="screenTimer" class="screen">
-        <div class="card" id="timerCard">
+        <div class="card" id="timerCard" style="max-width: 580px; margin: 0 auto;">
             <div class="label"><span class="label-dot"></span> Deep Work Session</div>
             <h1>Focus Mode</h1>
             
             <!-- Timer Presets + Custom Duration -->
             <div class="timer-presets">
-                <button class="preset-btn" onclick="setTimerPreset(15)">15m</button>
-                <button class="preset-btn active" onclick="setTimerPreset(25)">25m</button>
-                <button class="preset-btn" onclick="setTimerPreset(50)">50m</button>
-                <button class="preset-btn" onclick="setTimerPreset(90)">90m</button>
+                <button class="preset-btn" onclick="setTimerPreset(15)">15m <span class="kbd-badge">1</span></button>
+                <button class="preset-btn active" onclick="setTimerPreset(25)">25m <span class="kbd-badge">2</span></button>
+                <button class="preset-btn" onclick="setTimerPreset(50)">50m <span class="kbd-badge">3</span></button>
+                <button class="preset-btn" onclick="setTimerPreset(90)">90m <span class="kbd-badge">4</span></button>
                 <button class="preset-btn" onclick="promptCustomTimer()">Custom ⚙️</button>
             </div>
 
@@ -1314,9 +1628,9 @@
 
             <div class="timer-display" id="timerTime">25:00</div>
             
-            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️</button>
-            <button class="btn-secondary" onclick="resetTimer()">Reset Timer</button>
-            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode</button>
+            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️ <span class="kbd-badge">Space</span></button>
+            <button class="btn-secondary" onclick="resetTimer()">Reset Timer <span class="kbd-badge">R</span></button>
+            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1333,7 +1647,7 @@
 
             <button class="btn-primary" onclick="downloadCard()">Download Card Image 📥</button>
             <button class="btn-secondary" onclick="copyCardToClipboard()">Copy Card Image 📋</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1343,7 +1657,7 @@
             <div class="label"><span class="label-dot"></span> Performance History</div>
             <h1>Consistency Log</h1>
             <div id="historyList"></div>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1440,8 +1754,8 @@
             localStorage.setItem('focus_theme', theme);
             var btn = document.getElementById('themeBtn');
             if (btn) {
-                btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-                btn.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+                btn.innerHTML = (theme === 'dark' ? '☀️' : '🌙') + ' <span class="kbd-badge">T</span>';
+                btn.title = theme === 'dark' ? 'Switch to Light Mode [T]' : 'Switch to Dark Mode [T]';
             }
             var themeColorMeta = document.querySelector('meta[name="theme-color"]');
             if (themeColorMeta) {
@@ -1457,6 +1771,14 @@
             showToast(nextTheme === 'dark' ? 'Dark Mode Activated 🌙' : 'Light Mode Activated ☀️');
             if (window.posthog) {
                 posthog.capture('theme_toggled', { theme: nextTheme });
+            }
+        }
+
+        function toggleShortcutsModal() {
+            var modal = document.getElementById('shortcutsModal');
+            if (modal) {
+                modal.classList.toggle('active');
+                playClick();
             }
         }
 
@@ -1560,7 +1882,7 @@
 
         function toggleAudio() {
             soundEnabled = !soundEnabled;
-            document.getElementById('soundBtn').textContent = soundEnabled ? '🔊' : '🔇';
+            document.getElementById('soundBtn').innerHTML = (soundEnabled ? '🔊' : '🔇') + ' <span class="kbd-badge">M</span>';
             showToast(soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted');
         }
 
@@ -1707,10 +2029,15 @@
                 checkbox.className = 'goal-checkbox';
                 checkbox.textContent = g.done ? '✓' : '';
 
+                var numBadge = document.createElement('span');
+                numBadge.className = 'goal-num-badge';
+                numBadge.textContent = (idx + 1);
+
                 var text = document.createElement('span');
                 text.textContent = g.text;
 
                 left.appendChild(checkbox);
+                left.appendChild(numBadge);
                 left.appendChild(text);
 
                 var editBtn = document.createElement('button');
@@ -1746,6 +2073,7 @@
             var rawGoals = localStorage.getItem('goals');
             if (!rawGoals) return;
             var goals = JSON.parse(rawGoals);
+            if (!goals[idx]) return;
             goals[idx].done = !goals[idx].done;
             localStorage.setItem('goals', JSON.stringify(goals));
 
@@ -2106,8 +2434,10 @@
             currentPreset = mins;
             timerSeconds = mins * 60;
             updateTimerDisplay();
-            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-            if (event && event.target) event.target.classList.add('active');
+            document.querySelectorAll('.preset-btn').forEach(b => {
+                b.classList.remove('active');
+                if (b.textContent.includes(mins + 'm')) b.classList.add('active');
+            });
             playClick();
         }
 
@@ -2137,13 +2467,13 @@
             if (timerRunning) {
                 clearInterval(timerInterval);
                 timerRunning = false;
-                btn.textContent = 'Resume Session ⏱️';
+                btn.innerHTML = 'Resume Session ⏱️ <span class="kbd-badge">Space</span>';
                 stopSoundscape();
                 playClick();
             } else {
                 initAudio();
                 timerRunning = true;
-                btn.textContent = 'Pause Session ⏸️';
+                btn.innerHTML = 'Pause Session ⏸️ <span class="kbd-badge">Space</span>';
                 var sel = document.getElementById('soundscapeSelect').value;
                 changeSoundscape(sel);
                 playSuccess();
@@ -2155,7 +2485,7 @@
                     } else {
                         clearInterval(timerInterval);
                         timerRunning = false;
-                        btn.textContent = 'Start Focus Session ⏱️';
+                        btn.innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge">Space</span>';
                         stopSoundscape();
                         playSuccess();
                         triggerConfetti();
@@ -2179,7 +2509,7 @@
             stopSoundscape();
             timerSeconds = currentPreset * 60;
             updateTimerDisplay();
-            document.getElementById('timerBtn').textContent = 'Start Focus Session ⏱️';
+            document.getElementById('timerBtn').innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge">Space</span>';
             playClick();
         }
 
@@ -2295,6 +2625,86 @@
                 }
             });
         }
+
+        // Global Laptop Keyboard Shortcuts Dispatcher
+        window.addEventListener('keydown', function(e) {
+            var tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+            var isInput = tag === 'input' || tag === 'textarea' || tag === 'select';
+
+            // Escape key always works
+            if (e.key === 'Escape') {
+                var modal = document.getElementById('shortcutsModal');
+                if (modal && modal.classList.contains('active')) {
+                    toggleShortcutsModal();
+                    return;
+                }
+                var activeScreen = document.querySelector('.screen.active');
+                if (activeScreen && activeScreen.id !== 'screen4' && activeScreen.id !== 'screen1') {
+                    goTo('screen4');
+                }
+                return;
+            }
+
+            if (isInput) return; // Don't intercept typing in forms
+
+            var key = e.key.toLowerCase();
+
+            if (key === '?' || (e.shiftKey && key === '/')) {
+                e.preventDefault();
+                toggleShortcutsModal();
+            } else if (key === 't') {
+                e.preventDefault();
+                toggleTheme();
+            } else if (key === 'm') {
+                e.preventDefault();
+                toggleAudio();
+            } else if (key === ' ') {
+                var timerScr = document.getElementById('screenTimer');
+                if (timerScr && timerScr.classList.contains('active')) {
+                    e.preventDefault();
+                    toggleTimer();
+                }
+            } else if (key === 'r') {
+                var timerScr = document.getElementById('screenTimer');
+                if (timerScr && timerScr.classList.contains('active')) {
+                    e.preventDefault();
+                    resetTimer();
+                }
+            } else if (key === '1') {
+                var curScr = document.querySelector('.screen.active');
+                if (curScr && curScr.id === 'screen4') toggleGoal(0);
+                else if (curScr && curScr.id === 'screenTimer') setTimerPreset(15);
+                else if (curScr && curScr.id === 'screen2b') setTone('brutal');
+            } else if (key === '2') {
+                var curScr = document.querySelector('.screen.active');
+                if (curScr && curScr.id === 'screen4') toggleGoal(1);
+                else if (curScr && curScr.id === 'screenTimer') setTimerPreset(25);
+                else if (curScr && curScr.id === 'screen2b') setTone('firm');
+            } else if (key === '3') {
+                var curScr = document.querySelector('.screen.active');
+                if (curScr && curScr.id === 'screen4') toggleGoal(2);
+                else if (curScr && curScr.id === 'screenTimer') setTimerPreset(50);
+                else if (curScr && curScr.id === 'screen2b') setTone('gentle');
+            } else if (key === '4') {
+                var curScr = document.querySelector('.screen.active');
+                if (curScr && curScr.id === 'screenTimer') setTimerPreset(90);
+            } else if (key === 'f') {
+                e.preventDefault();
+                goTo('screenTimer');
+            } else if (key === 'a') {
+                e.preventDefault();
+                goTo('screenAnalytics');
+            } else if (key === 's') {
+                e.preventDefault();
+                goTo('screenSquad');
+            } else if (key === 'e') {
+                e.preventDefault();
+                goTo('screen5');
+            } else if (key === 'c') {
+                e.preventDefault();
+                openCardScreen();
+            }
+        });
 
         window.onload = function () {
             initTheme();
