@@ -59,8 +59,8 @@
             --chart-bar-bg: rgba(255, 255, 255, 0.05);
             --tile-empty: rgba(255, 255, 255, 0.06);
             --squad-bg: rgba(255, 255, 255, 0.03);
-            --kbd-bg: rgba(255, 255, 255, 0.06);
-            --kbd-border: rgba(255, 255, 255, 0.12);
+            --kbd-bg: rgba(255, 255, 255, 0.08);
+            --kbd-border: rgba(255, 255, 255, 0.14);
         }
 
         /* Light Theme */
@@ -88,7 +88,7 @@
             --chart-bar-bg: rgba(0, 0, 0, 0.05);
             --tile-empty: rgba(0, 0, 0, 0.06);
             --squad-bg: rgba(0, 0, 0, 0.03);
-            --kbd-bg: rgba(0, 0, 0, 0.05);
+            --kbd-bg: rgba(0, 0, 0, 0.06);
             --kbd-border: rgba(0, 0, 0, 0.12);
         }
 
@@ -150,9 +150,10 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 24px 16px;
+            justify-content: flex-start;
+            padding: 82px 20px 48px;
             overflow-x: hidden;
             position: relative;
         }
@@ -182,42 +183,44 @@
             z-index: 0;
         }
 
-        /* Top Action Bar */
+        /* Top Action Bar (Fixed, elegant floating glass bar with safe margin) */
         .top-nav {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 50;
+            top: 16px;
+            right: 24px;
+            z-index: 100;
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
+            background: var(--surface);
+            padding: 5px 10px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
 
         .icon-btn {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: transparent;
+            border: none;
             color: var(--text-sub);
-            border-radius: 12px;
-            min-width: 40px;
-            height: 40px;
-            padding: 0 10px;
+            border-radius: 20px;
+            min-width: 38px;
+            height: 36px;
+            padding: 0 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 15px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
         }
 
         .icon-btn:hover {
             color: var(--text-main);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-            background: var(--surface-hover);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-1px);
+            background: var(--btn-sec-hover);
         }
 
         .icon-btn:active {
@@ -242,10 +245,17 @@
             transition: all 0.2s;
         }
 
-        .btn-primary:hover .kbd-badge, .btn-secondary:hover .kbd-badge {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.15);
+        .btn-primary .kbd-badge {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.38);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .btn-secondary:hover .kbd-badge {
+            color: var(--text-main);
+            border-color: var(--border-hover);
         }
 
         /* Toast Container */
@@ -587,11 +597,12 @@
             color: var(--text-muted);
         }
         .bento-val {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 800;
             color: var(--text-main);
-            font-family: 'Syne', sans-serif;
-            margin-top: 2px;
+            font-family: 'Plus Jakarta Sans', 'DM Sans', sans-serif;
+            margin-top: 3px;
+            letter-spacing: -0.2px;
         }
 
         /* Visual 7-Day Focus Bar Graph */
@@ -1206,30 +1217,6 @@
                 align-items: start;
             }
 
-            .top-nav {
-                top: 24px;
-                right: 32px;
-                background: var(--surface);
-                padding: 6px 10px;
-                border-radius: 30px;
-                border: 1px solid var(--border);
-                backdrop-filter: blur(20px);
-                box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            }
-
-            .top-nav .icon-btn {
-                border: none;
-                background: transparent;
-                box-shadow: none;
-                border-radius: 20px;
-                height: 36px;
-                padding: 0 10px;
-            }
-
-            .top-nav .icon-btn:hover {
-                background: var(--btn-sec-hover);
-            }
-
             .kbd-badge {
                 display: inline-flex !important;
             }
@@ -1241,6 +1228,24 @@
             .timer-display {
                 font-size: 80px;
                 margin: 24px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 72px 16px 36px;
+            }
+            .top-nav {
+                top: 12px;
+                right: 12px;
+                padding: 4px 8px;
+                gap: 4px;
+            }
+            .icon-btn {
+                min-width: 34px;
+                height: 34px;
+                font-size: 13px;
+                padding: 0 6px;
             }
         }
     </style>
