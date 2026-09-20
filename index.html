@@ -258,9 +258,9 @@
             transform: scale(1.08) rotate(2deg);
         }
 
-        /* Keyboard Badges */
+        /* Keyboard Badges (Hidden on mobile/touch, visible on laptop/PC) */
         .kbd-badge {
-            display: none;
+            display: none !important;
             align-items: center;
             justify-content: center;
             background: var(--kbd-bg);
@@ -274,19 +274,15 @@
             margin-left: 6px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.06);
             transition: all 0.2s;
+            vertical-align: middle;
         }
 
-        .btn-primary .kbd-badge {
-            display: inline-flex;
-            background: rgba(255, 255, 255, 0.22);
-            border-color: rgba(255, 255, 255, 0.38);
-            color: #ffffff;
-            font-weight: 700;
+        .desktop-only {
+            display: none !important;
         }
 
-        .btn-secondary:hover .kbd-badge {
-            color: var(--text-main);
-            border-color: var(--border-hover);
+        .mobile-only {
+            display: block;
         }
 
         /* Toast Container */
@@ -1262,6 +1258,31 @@
                 max-width: 960px;
             }
 
+            .desktop-only {
+                display: inline-flex !important;
+            }
+
+            .mobile-only {
+                display: none !important;
+            }
+
+            .kbd-badge {
+                display: inline-flex !important;
+            }
+
+            .btn-primary .kbd-badge {
+                display: inline-flex !important;
+                background: rgba(255, 255, 255, 0.22);
+                border-color: rgba(255, 255, 255, 0.38);
+                color: #ffffff;
+                font-weight: 700;
+            }
+
+            .btn-secondary:hover .kbd-badge {
+                color: var(--text-main);
+                border-color: var(--border-hover);
+            }
+
             .laptop-grid-2 {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
@@ -1278,10 +1299,6 @@
                 align-items: start;
             }
 
-            .kbd-badge {
-                display: inline-flex !important;
-            }
-
             .card {
                 padding: 32px 28px;
             }
@@ -1292,21 +1309,42 @@
             }
         }
 
-        @media (max-width: 768px) {
+        /* Mobile & Touch Devices (< 860px) */
+        @media (max-width: 859px) {
             body {
-                padding: 72px 16px 36px;
+                padding: 68px 14px 36px;
             }
             .top-nav {
-                top: 12px;
-                right: 12px;
-                padding: 4px 8px;
-                gap: 4px;
+                top: 10px;
+                right: 10px;
+                padding: 5px 8px;
+                gap: 5px;
+                max-width: calc(100vw - 20px);
+                overflow-x: auto;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .top-nav::-webkit-scrollbar {
+                display: none;
             }
             .icon-btn {
-                min-width: 34px;
-                height: 34px;
-                font-size: 13px;
+                min-width: 36px;
+                height: 36px;
+                font-size: 15px;
                 padding: 0 6px;
+                border-radius: 12px;
+            }
+            .kbd-badge {
+                display: none !important;
+            }
+            .desktop-only {
+                display: none !important;
+            }
+            .mobile-only {
+                display: block !important;
+            }
+            .btn-primary:active, .btn-secondary:active, .preset-btn:active, .dispatch-btn:active, .goal-item:active, .soundscape-pill:active {
+                transform: scale(0.97);
             }
         }
     </style>
@@ -1325,7 +1363,7 @@
     <!-- Top Action Nav -->
     <div class="top-nav">
         <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen [I]">📲 <span class="kbd-badge">I</span></button>
-        <button class="icon-btn" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts [?]">⌨️ <span class="kbd-badge">?</span></button>
+        <button class="icon-btn desktop-only" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts [?]">⌨️ <span class="kbd-badge">?</span></button>
         <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts [S]">👥 <span class="kbd-badge">S</span></button>
         <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth Graphs [A]">📈 <span class="kbd-badge">A</span></button>
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme [T]">☀️ <span class="kbd-badge">T</span></button>
@@ -1362,14 +1400,10 @@
     <!-- MODAL: KEYBOARD & TOUCHPAD SHORTCUTS -->
     <div class="modal-overlay" id="shortcutsModal" onclick="if(event.target === this) toggleShortcutsModal()">
         <div class="modal-card">
-            <div class="label"><span class="label-dot"></span> Touchpad & Laptop Controls</div>
-            <h1>Keyboard Shortcuts</h1>
-            <p style="margin-bottom: 16px;">Designed for ultra-fast, touchpad-friendly productivity.</p>
+            <div class="label"><span class="label-dot"></span> Device & Controls Guide</div>
+            <h1>Productivity Shortcuts</h1>
+            <p style="margin-bottom: 16px;">Fast controls tailored for Mobile, Laptop, and PC workflows.</p>
             
-            <div class="shortcut-row">
-                <span>Install Native App</span>
-                <div class="shortcut-keys"><span class="shortcut-key">I</span></div>
-            </div>
             <div class="shortcut-row">
                 <span>Start / Pause Focus Timer</span>
                 <div class="shortcut-keys"><span class="shortcut-key">Space</span></div>
@@ -1379,39 +1413,40 @@
                 <div class="shortcut-keys"><span class="shortcut-key">1</span><span class="shortcut-key">2</span><span class="shortcut-key">3</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Open Deep Focus Mode</span>
+                <span>Deep Focus Session</span>
                 <div class="shortcut-keys"><span class="shortcut-key">F</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Open Growth & Development Graphs</span>
+                <span>Growth & Development Graphs</span>
                 <div class="shortcut-keys"><span class="shortcut-key">A</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Open Squad Room & Leaderboard</span>
+                <span>Squad Room & Leaderboard</span>
                 <div class="shortcut-keys"><span class="shortcut-key">S</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Open Evening Check-In</span>
+                <span>Evening Reflection & Check-In</span>
                 <div class="shortcut-keys"><span class="shortcut-key">E</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Toggle Light / Dark Mode</span>
+                <span>Toggle Light / Dark Theme</span>
                 <div class="shortcut-keys"><span class="shortcut-key">T</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Toggle Sound Effects</span>
+                <span>Mute / Unmute Focus Audio</span>
                 <div class="shortcut-keys"><span class="shortcut-key">M</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Back to Dashboard / Close Modal</span>
+                <span>Back to Home / Close Modal</span>
                 <div class="shortcut-keys"><span class="shortcut-key">Esc</span></div>
             </div>
 
-            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted);">
-                💡 <strong>Touchpad Tip:</strong> Two-finger smooth scroll works seamlessly across all analytics & history archives without horizontal back-swipe interrupts.
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                📱 <strong>Mobile & Touch:</strong> 1-tap fast actions with tactile feedback. Add to Home Screen for fullscreen focus.<br/>
+                💻 <strong>Laptop & PC:</strong> Instant hotkeys above + two-finger smooth touchpad scrolling.
             </div>
 
-            <button class="btn-primary" style="margin-top: 16px;" onclick="toggleShortcutsModal()">Got it (Esc) ✨</button>
+            <button class="btn-primary" style="margin-top: 16px;" onclick="toggleShortcutsModal()">Got it ✨</button>
         </div>
     </div>
 
@@ -1540,7 +1575,7 @@
                 <div class="card">
                     <div class="label"><span class="label-dot"></span> Today's Commitments</div>
                     <h1 id="welcomeName">Good morning.</h1>
-                    <p style="font-size: 13px; margin-bottom: 14px;">Click or press <kbd class="kbd-badge" style="display:inline-flex;">1</kbd> <kbd class="kbd-badge" style="display:inline-flex;">2</kbd> <kbd class="kbd-badge" style="display:inline-flex;">3</kbd> as you complete them:</p>
+                    <p style="font-size: 13px; margin-bottom: 14px;">Tap or click commitments as you complete them <span class="desktop-only">(or press <kbd class="kbd-badge">1</kbd> <kbd class="kbd-badge">2</kbd> <kbd class="kbd-badge">3</kbd>)</span>:</p>
                     
                     <div id="goalsList"></div>
 
