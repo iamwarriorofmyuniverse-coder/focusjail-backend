@@ -27,7 +27,40 @@
         })
     </script>
 
+    <script>
+        // Instant PWA Standalone Pre-render Detection
+        (function() {
+            var isStandalone = (window.matchMedia && (
+                window.matchMedia('(display-mode: standalone)').matches ||
+                window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+                window.matchMedia('(display-mode: minimal-ui)').matches ||
+                window.matchMedia('(display-mode: fullscreen)').matches
+            )) || window.navigator.standalone === true || localStorage.getItem('focus_pwa_installed') === 'true';
+            if (isStandalone) {
+                document.documentElement.classList.add('pwa-installed');
+            }
+        })();
+    </script>
+
     <style>
+        /* Instant PWA Installed Hide Rules */
+        @media all and (display-mode: standalone), all and (display-mode: window-controls-overlay), all and (display-mode: minimal-ui), all and (display-mode: fullscreen) {
+            #installNavBtn,
+            #installBanner,
+            .install-banner {
+                display: none !important;
+            }
+        }
+
+        html.pwa-installed #installNavBtn,
+        html.pwa-installed #installBanner,
+        html.pwa-installed .install-banner,
+        body.pwa-installed #installNavBtn,
+        body.pwa-installed #installBanner,
+        body.pwa-installed .install-banner {
+            display: none !important;
+        }
+
         :root {
             --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
             --grad-firm: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -1394,6 +1427,7 @@
 
             <button class="btn-primary" id="nativeInstallBtn" onclick="triggerNativeInstall()">Install App Now 📲</button>
             <button class="btn-secondary" onclick="closeInstallModal()">Close</button>
+            <button class="btn-secondary" style="font-size: 12px; color: var(--text-muted); margin-top: 8px; width: 100%; border-style: dashed;" onclick="markAsInstalled()">Already installed? Hide install icon ✔️</button>
         </div>
     </div>
 
@@ -1883,17 +1917,26 @@
         var audioCtx = null;
         var deferredPrompt = null;
 
-        // PWA Install Prompt & Installed Detection Handler
+        // PWA Install Prompt & Comprehensive Installed Detection Engine
         function isPWAInstalled() {
-            var isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
-                               window.navigator.standalone === true ||
-                               (document.referrer && document.referrer.includes('android-app://')) ||
-                               localStorage.getItem('focus_pwa_installed') === 'true';
-            return isStandalone;
+            var isStandalone = (window.matchMedia && (
+                window.matchMedia('(display-mode: standalone)').matches ||
+                window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+                window.matchMedia('(display-mode: minimal-ui)').matches ||
+                window.matchMedia('(display-mode: fullscreen)').matches
+            )) ||
+            window.navigator.standalone === true ||
+            (document.referrer && document.referrer.includes('android-app://')) ||
+            localStorage.getItem('focus_pwa_installed') === 'true';
+            return !!isStandalone;
         }
 
         function checkInstalledState() {
             var installed = isPWAInstalled();
+            if (installed) {
+                document.documentElement.classList.add('pwa-installed');
+                if (document.body) document.body.classList.add('pwa-installed');
+            }
             var navBtn = document.getElementById('installNavBtn');
             var banner = document.getElementById('installBanner');
             if (installed) {
@@ -1903,6 +1946,25 @@
                 if (navBtn) navBtn.style.display = '';
                 if (banner) banner.style.display = '';
             }
+        }
+
+        function markAsInstalled() {
+            localStorage.setItem('focus_pwa_installed', 'true');
+            document.documentElement.classList.add('pwa-installed');
+            checkInstalledState();
+            closeInstallModal();
+            showToast('App status saved as installed! 🎯', 'success');
+        }
+
+        // Check if installed via Chromium getInstalledRelatedApps (Chrome, Edge, Android)
+        if ('getInstalledRelatedApps' in navigator) {
+            navigator.getInstalledRelatedApps().then(function(relatedApps) {
+                if (relatedApps && relatedApps.length > 0) {
+                    localStorage.setItem('focus_pwa_installed', 'true');
+                    document.documentElement.classList.add('pwa-installed');
+                    checkInstalledState();
+                }
+            }).catch(function() {});
         }
 
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -1915,17 +1977,23 @@
 
         window.addEventListener('appinstalled', () => {
             localStorage.setItem('focus_pwa_installed', 'true');
+            document.documentElement.classList.add('pwa-installed');
             checkInstalledState();
             if (window.posthog) posthog.capture('pwa_installed_event');
             showToast('FocusPact added to Home Screen! 🎉', 'success');
         });
 
         if (window.matchMedia) {
-            window.matchMedia('(display-mode: standalone)').addEventListener('change', (e) => {
-                if (e.matches) {
-                    localStorage.setItem('focus_pwa_installed', 'true');
-                }
-                checkInstalledState();
+            ['(display-mode: standalone)', '(display-mode: window-controls-overlay)', '(display-mode: minimal-ui)', '(display-mode: fullscreen)'].forEach(function(q) {
+                try {
+                    window.matchMedia(q).addEventListener('change', function(e) {
+                        if (e.matches) {
+                            localStorage.setItem('focus_pwa_installed', 'true');
+                            document.documentElement.classList.add('pwa-installed');
+                        }
+                        checkInstalledState();
+                    });
+                } catch(err) {}
             });
         }
 
@@ -1954,6 +2022,7 @@
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
                         localStorage.setItem('focus_pwa_installed', 'true');
+                        document.documentElement.classList.add('pwa-installed');
                         checkInstalledState();
                         showToast('Thank you for installing FocusPact! 🎯', 'success');
                         if (window.posthog) posthog.capture('pwa_installed_accepted');
