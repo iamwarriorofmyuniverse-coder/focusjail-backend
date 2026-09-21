@@ -28,7 +28,7 @@
     </script>
 
     <script>
-        // Instant PWA Standalone Pre-render Detection
+        // Instant Pre-render Device & PWA Detection
         (function() {
             var isStandalone = (window.matchMedia && (
                 window.matchMedia('(display-mode: standalone)').matches ||
@@ -38,6 +38,11 @@
             )) || window.navigator.standalone === true || localStorage.getItem('focus_pwa_installed') === 'true';
             if (isStandalone) {
                 document.documentElement.classList.add('pwa-installed');
+            }
+
+            var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || (window.innerWidth < 860);
+            if (isTouch) {
+                document.documentElement.classList.add('touch-device');
             }
         })();
     </script>
@@ -58,6 +63,16 @@
         body.pwa-installed #installNavBtn,
         body.pwa-installed #installBanner,
         body.pwa-installed .install-banner {
+            display: none !important;
+        }
+
+        /* Touch Device Complete Keyboard Badge Suppression */
+        html.touch-device .kbd-badge,
+        html.touch-device .desktop-only,
+        html.touch-device .shortcut-badge,
+        body.touch-device .kbd-badge,
+        body.touch-device .desktop-only,
+        body.touch-device .shortcut-badge {
             display: none !important;
         }
 
@@ -1285,25 +1300,25 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
-        /* Laptop & Touchpad Responsive Layout Engine (>= 860px) */
-        @media (min-width: 860px) {
+        /* Laptop & Touchpad Responsive Layout Engine (>= 860px AND fine pointer) */
+        @media screen and (min-width: 860px) and (hover: hover) and (pointer: fine) {
             .screen {
                 max-width: 960px;
             }
 
-            .desktop-only {
+            html:not(.touch-device) .desktop-only {
                 display: inline-flex !important;
             }
 
-            .mobile-only {
+            html:not(.touch-device) .mobile-only {
                 display: none !important;
             }
 
-            .kbd-badge {
+            html:not(.touch-device) .kbd-badge {
                 display: inline-flex !important;
             }
 
-            .btn-primary .kbd-badge {
+            html:not(.touch-device) .btn-primary .kbd-badge {
                 display: inline-flex !important;
                 background: rgba(255, 255, 255, 0.22);
                 border-color: rgba(255, 255, 255, 0.38);
@@ -1311,7 +1326,7 @@
                 font-weight: 700;
             }
 
-            .btn-secondary:hover .kbd-badge {
+            html:not(.touch-device) .btn-secondary:hover .kbd-badge {
                 color: var(--text-main);
                 border-color: var(--border-hover);
             }
@@ -1342,8 +1357,8 @@
             }
         }
 
-        /* Mobile & Touch Devices (< 860px) */
-        @media (max-width: 859px) {
+        /* Mobile & Touch Devices (< 860px OR coarse pointer OR touch device) */
+        @media screen and (max-width: 859px), screen and (pointer: coarse), screen and (hover: none) {
             body {
                 padding: 68px 14px 36px;
             }
@@ -1367,10 +1382,9 @@
                 padding: 0 6px;
                 border-radius: 12px;
             }
-            .kbd-badge {
-                display: none !important;
-            }
-            .desktop-only {
+            .kbd-badge,
+            .desktop-only,
+            .shortcut-badge {
                 display: none !important;
             }
             .mobile-only {
@@ -1395,14 +1409,14 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav">
-        <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen [I]">📲 <span class="kbd-badge">I</span></button>
-        <button class="icon-btn desktop-only" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts [?]">⌨️ <span class="kbd-badge">?</span></button>
-        <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts [S]">👥 <span class="kbd-badge">S</span></button>
-        <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth Graphs [A]">📈 <span class="kbd-badge">A</span></button>
-        <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme [T]">☀️ <span class="kbd-badge">T</span></button>
-        <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound [M]">🔊 <span class="kbd-badge">M</span></button>
+        <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen">📲</button>
+        <button class="icon-btn desktop-only" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts">⌨️</button>
+        <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts">👥</button>
+        <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth Graphs">📈</button>
+        <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme">☀️</button>
+        <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
-        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session [F]">⏱️ <span class="kbd-badge">F</span></button>
+        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session">⏱️</button>
     </div>
 
     <!-- MODAL: INSTALL APP TO HOME SCREEN -->
@@ -1494,7 +1508,7 @@
             <div class="label" style="justify-content: center;"><span class="label-dot"></span> FocusPact</div>
             <h1 style="text-align: center;">Commit to What Matters.</h1>
             <p style="text-align: center;">Make a pact with yourself every morning. Execute your 3 non-negotiables, track your deep focus sessions, and build unstoppable consistency.</p>
-            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started ✨ <span class="kbd-badge">Enter</span></button>
+            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started ✨ <span class="kbd-badge desktop-only">Enter</span></button>
         </div>
     </div>
 
@@ -1515,7 +1529,7 @@
                 <input id="partnerContact" type="text" placeholder="Partner Phone / WhatsApp / Email" />
             </div>
 
-            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯 <span class="kbd-badge">Enter</span></button>
+            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯 <span class="kbd-badge desktop-only">Enter</span></button>
         </div>
     </div>
 
@@ -1528,21 +1542,21 @@
             <div class="tone-btn tone-brutal" onclick="setTone('brutal')">
                 <span class="tone-emoji">🔥</span>
                 <div>
-                    <div class="tone-title">Brutal <span class="kbd-badge">1</span></div>
+                    <div class="tone-title">Brutal <span class="kbd-badge desktop-only">1</span></div>
                     <div class="tone-desc">No mercy. Raw truth. Zero excuses.</div>
                 </div>
             </div>
             <div class="tone-btn tone-firm" onclick="setTone('firm')">
                 <span class="tone-emoji">💪</span>
                 <div>
-                    <div class="tone-title">Firm <span class="kbd-badge">2</span></div>
+                    <div class="tone-title">Firm <span class="kbd-badge desktop-only">2</span></div>
                     <div class="tone-desc">Direct and fair. No insults, no softening.</div>
                 </div>
             </div>
             <div class="tone-btn tone-gentle" onclick="setTone('gentle')">
                 <span class="tone-emoji">🌱</span>
                 <div>
-                    <div class="tone-title">Gentle <span class="kbd-badge">3</span></div>
+                    <div class="tone-title">Gentle <span class="kbd-badge desktop-only">3</span></div>
                     <div class="tone-desc">Encouraging but honest. Good for beginners.</div>
                 </div>
             </div>
@@ -1597,10 +1611,10 @@
 
                 <!-- Quick Action Hub -->
                 <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
-                    <button class="btn-secondary" style="margin-top: 0;" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️ <span class="kbd-badge">F</span></button>
-                    <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥 <span class="kbd-badge">S</span></button>
-                    <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈 <span class="kbd-badge">A</span></button>
-                    <button class="btn-secondary" onclick="playClick(); openCardScreen()">Milestone Achievement Card 📋 <span class="kbd-badge">C</span></button>
+                    <button class="btn-secondary" style="margin-top: 0;" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️ <span class="kbd-badge desktop-only">F</span></button>
+                    <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥 <span class="kbd-badge desktop-only">S</span></button>
+                    <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈 <span class="kbd-badge desktop-only">A</span></button>
+                    <button class="btn-secondary" onclick="playClick(); openCardScreen()">Milestone Achievement Card 📋 <span class="kbd-badge desktop-only">C</span></button>
                 </div>
             </div>
 
@@ -1609,11 +1623,11 @@
                 <div class="card">
                     <div class="label"><span class="label-dot"></span> Today's Commitments</div>
                     <h1 id="welcomeName">Good morning.</h1>
-                    <p style="font-size: 13px; margin-bottom: 14px;">Tap or click commitments as you complete them <span class="desktop-only">(or press <kbd class="kbd-badge">1</kbd> <kbd class="kbd-badge">2</kbd> <kbd class="kbd-badge">3</kbd>)</span>:</p>
+                    <p style="font-size: 13px; margin-bottom: 14px;">Tap or click commitments as you complete them <span class="desktop-only">(or press <kbd class="kbd-badge desktop-only">1</kbd> <kbd class="kbd-badge desktop-only">2</kbd> <kbd class="kbd-badge desktop-only">3</kbd>)</span>:</p>
                     
                     <div id="goalsList"></div>
 
-                    <button class="btn-primary" style="margin-top: 14px;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙 <span class="kbd-badge">E</span></button>
+                    <button class="btn-primary" style="margin-top: 14px;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙 <span class="kbd-badge desktop-only">E</span></button>
                     <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
                 </div>
             </div>
@@ -1649,8 +1663,8 @@
             <div class="label" id="reflectionLabel"><span class="label-dot"></span> Daily Reflection & Notes</div>
             <textarea id="excuseInput" rows="3" placeholder="What went well or what blocked you today?"></textarea>
             
-            <button class="btn-primary" onclick="submitReport()">Submit Check-In & Get Verdict 💡 <span class="kbd-badge">Enter</span></button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back <span class="kbd-badge">Esc</span></button>
+            <button class="btn-primary" onclick="submitReport()">Submit Check-In & Get Verdict 💡 <span class="kbd-badge desktop-only">Enter</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back <span class="kbd-badge desktop-only">Esc</span></button>
         </div>
     </div>
 
@@ -1679,8 +1693,8 @@
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋 <span class="kbd-badge">C</span></button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨ <span class="kbd-badge">Esc</span></button>
+            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋 <span class="kbd-badge desktop-only">C</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨ <span class="kbd-badge desktop-only">Esc</span></button>
         </div>
     </div>
 
@@ -1738,7 +1752,7 @@
                 </div>
             </div>
 
-            <button class="btn-secondary" style="margin-top: 14px;" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
+            <button class="btn-secondary" style="margin-top: 14px;" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge desktop-only">Esc</span></button>
         </div>
     </div>
 
@@ -1775,7 +1789,7 @@
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 8px;">
-                <button class="btn-primary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
+                <button class="btn-primary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge desktop-only">Esc</span></button>
                 <button class="btn-secondary" onclick="goTo('screen7')">View Full History Archives 📜</button>
             </div>
         </div>
@@ -1789,10 +1803,10 @@
             
             <!-- Timer Presets + Custom Duration -->
             <div class="timer-presets">
-                <button class="preset-btn" onclick="setTimerPreset(15)">15m <span class="kbd-badge">1</span></button>
-                <button class="preset-btn active" onclick="setTimerPreset(25)">25m <span class="kbd-badge">2</span></button>
-                <button class="preset-btn" onclick="setTimerPreset(50)">50m <span class="kbd-badge">3</span></button>
-                <button class="preset-btn" onclick="setTimerPreset(90)">90m <span class="kbd-badge">4</span></button>
+                <button class="preset-btn" onclick="setTimerPreset(15)">15m <span class="kbd-badge desktop-only">1</span></button>
+                <button class="preset-btn active" onclick="setTimerPreset(25)">25m <span class="kbd-badge desktop-only">2</span></button>
+                <button class="preset-btn" onclick="setTimerPreset(50)">50m <span class="kbd-badge desktop-only">3</span></button>
+                <button class="preset-btn" onclick="setTimerPreset(90)">90m <span class="kbd-badge desktop-only">4</span></button>
                 <button class="preset-btn" onclick="promptCustomTimer()">Custom ⚙️</button>
             </div>
 
@@ -1805,9 +1819,9 @@
 
             <div class="timer-display" id="timerTime">25:00</div>
             
-            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️ <span class="kbd-badge">Space</span></button>
-            <button class="btn-secondary" onclick="resetTimer()">Reset Timer <span class="kbd-badge">R</span></button>
-            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode <span class="kbd-badge">Esc</span></button>
+            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️ <span class="kbd-badge desktop-only">Space</span></button>
+            <button class="btn-secondary" onclick="resetTimer()">Reset Timer <span class="kbd-badge desktop-only">R</span></button>
+            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode <span class="kbd-badge desktop-only">Esc</span></button>
         </div>
     </div>
 
@@ -1824,7 +1838,7 @@
 
             <button class="btn-primary" onclick="downloadCard()">Download Card Image 📥</button>
             <button class="btn-secondary" onclick="copyCardToClipboard()">Copy Card Image 📋</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge desktop-only">Esc</span></button>
         </div>
     </div>
 
@@ -1834,7 +1848,7 @@
             <div class="label"><span class="label-dot"></span> Performance History</div>
             <h1>Consistency Log</h1>
             <div id="historyList"></div>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge desktop-only">Esc</span></button>
         </div>
     </div>
 
@@ -2055,8 +2069,8 @@
             localStorage.setItem('focus_theme', theme);
             var btn = document.getElementById('themeBtn');
             if (btn) {
-                btn.innerHTML = (theme === 'dark' ? '☀️' : '🌙') + ' <span class="kbd-badge">T</span>';
-                btn.title = theme === 'dark' ? 'Switch to Light Mode [T]' : 'Switch to Dark Mode [T]';
+                btn.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+                btn.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
             }
             var themeColorMeta = document.querySelector('meta[name="theme-color"]');
             if (themeColorMeta) {
@@ -2183,7 +2197,11 @@
 
         function toggleAudio() {
             soundEnabled = !soundEnabled;
-            document.getElementById('soundBtn').innerHTML = (soundEnabled ? '🔊' : '🔇') + ' <span class="kbd-badge">M</span>';
+            var btn = document.getElementById('soundBtn');
+            if (btn) {
+                btn.innerHTML = soundEnabled ? '🔊' : '🔇';
+                btn.title = soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted';
+            }
             showToast(soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted');
         }
 
@@ -2769,13 +2787,13 @@
             if (timerRunning) {
                 clearInterval(timerInterval);
                 timerRunning = false;
-                btn.innerHTML = 'Resume Session ⏱️ <span class="kbd-badge">Space</span>';
+                btn.innerHTML = 'Resume Session ⏱️ <span class="kbd-badge desktop-only">Space</span>';
                 stopSoundscape();
                 playClick();
             } else {
                 initAudio();
                 timerRunning = true;
-                btn.innerHTML = 'Pause Session ⏸️ <span class="kbd-badge">Space</span>';
+                btn.innerHTML = 'Pause Session ⏸️ <span class="kbd-badge desktop-only">Space</span>';
                 var sel = document.getElementById('soundscapeSelect').value;
                 changeSoundscape(sel);
                 playSuccess();
@@ -2787,7 +2805,7 @@
                     } else {
                         clearInterval(timerInterval);
                         timerRunning = false;
-                        btn.innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge">Space</span>';
+                        btn.innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge desktop-only">Space</span>';
                         stopSoundscape();
                         playSuccess();
                         triggerConfetti();
@@ -2811,7 +2829,7 @@
             stopSoundscape();
             timerSeconds = currentPreset * 60;
             updateTimerDisplay();
-            document.getElementById('timerBtn').innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge">Space</span>';
+            document.getElementById('timerBtn').innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge desktop-only">Space</span>';
             playClick();
         }
 
