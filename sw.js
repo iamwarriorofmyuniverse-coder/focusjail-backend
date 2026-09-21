@@ -1,5 +1,5 @@
 // FocusPact Service Worker
-const CACHE_NAME = 'focuspact-v7';
+const CACHE_NAME = 'focuspact-v8';
 const ASSETS = [
   './',
   './index.html',

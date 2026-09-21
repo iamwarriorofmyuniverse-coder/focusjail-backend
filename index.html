@@ -76,6 +76,21 @@
             display: none !important;
         }
 
+        /* Netlify Injected Badge & Drawer Suppression */
+        [data-netlify-deploy-id],
+        #netlify-identity-widget,
+        .netlify-identity-menu,
+        netlify-drawer,
+        div[class*="netlify"],
+        iframe[src*="netlify"],
+        [aria-label*="Netlify"],
+        [id*="netlify-drawer"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
         :root {
             --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
             --grad-firm: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
