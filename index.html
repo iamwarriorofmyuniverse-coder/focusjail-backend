@@ -1380,10 +1380,20 @@
         /* Mobile & Touch Devices (< 860px OR coarse pointer OR touch device) */
         @media screen and (max-width: 859px), screen and (pointer: coarse), screen and (hover: none) {
             body {
-                padding: 68px 14px 36px;
+                padding: calc(68px + env(safe-area-inset-top, 0px)) 14px calc(36px + env(safe-area-inset-bottom, 0px));
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            input, textarea {
+                -webkit-user-select: text;
+                user-select: text;
+                font-size: 16px !important;
+            }
+            select {
+                font-size: 16px !important;
             }
             .top-nav {
-                top: 10px;
+                top: calc(10px + env(safe-area-inset-top, 0px));
                 right: 10px;
                 padding: 5px 8px;
                 gap: 5px;
@@ -1411,7 +1421,7 @@
             .mobile-only {
                 display: block !important;
             }
-            .btn-primary:active, .btn-secondary:active, .preset-btn:active, .dispatch-btn:active, .goal-item:active, .soundscape-pill:active {
+            .btn-primary:active, .btn-secondary:active, .preset-btn:active, .dispatch-btn:active, .goal-item:active, .soundscape-pill:active, .bento-box:active {
                 transform: scale(0.97);
             }
         }
@@ -1857,8 +1867,8 @@
                 <canvas id="achievementCanvas" width="700" height="850"></canvas>
             </div>
 
-            <button class="btn-primary" onclick="downloadCard()">Download Card Image 📥</button>
-            <button class="btn-secondary" onclick="copyCardToClipboard()">Copy Card Image 📋</button>
+            <button class="btn-primary" onclick="shareOrCopyCard()">Share or Save Card 🚀</button>
+            <button class="btn-secondary" onclick="downloadCard()">Download Card Image 📥</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge desktop-only">Esc</span></button>
         </div>
     </div>
@@ -2954,17 +2964,39 @@
             showToast('Milestone card downloaded!', 'success');
         }
 
-        function copyCardToClipboard() {
+        function shareOrCopyCard() {
             var canvas = document.getElementById('achievementCanvas');
             canvas.toBlob(blob => {
-                if (navigator.clipboard && navigator.clipboard.write) {
+                if (!blob) return;
+                var file = new File([blob], `FocusPact_Milestone_${Date.now()}.png`, { type: 'image/png' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        title: 'FocusPact Milestone',
+                        text: 'Check out my focus streak and commitments on FocusPact!',
+                        files: [file]
+                    }).then(() => {
+                        showToast('Milestone card shared!', 'success');
+                    }).catch((err) => {
+                        if (err.name !== 'AbortError') {
+                            downloadCard();
+                        }
+                    });
+                } else if (navigator.share) {
+                    navigator.share({
+                        title: 'FocusPact Milestone',
+                        text: 'Check out my focus streak and commitments on FocusPact! https://focusjail.netlify.app',
+                        url: 'https://focusjail.netlify.app'
+                    }).catch(() => {});
+                } else if (navigator.clipboard && navigator.clipboard.write) {
                     navigator.clipboard.write([
                         new ClipboardItem({ 'image/png': blob })
                     ]).then(() => {
                         showToast('Milestone image copied to clipboard!', 'success');
                     }).catch(() => {
-                        showToast('Use download button to save image.');
+                        downloadCard();
                     });
+                } else {
+                    downloadCard();
                 }
             });
         }
@@ -3061,6 +3093,11 @@
             initTheme();
             checkInstalledState();
             checkDailyAutoRoll();
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').then(reg => {
+                    reg.update();
+                }).catch(() => {});
+            }
             if (localStorage.getItem('name')) {
                 loadHome();
                 goTo('screen4');
