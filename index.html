@@ -70,9 +70,11 @@
         html.touch-device .kbd-badge,
         html.touch-device .desktop-only,
         html.touch-device .shortcut-badge,
+        html.touch-device .goal-num-badge,
         body.touch-device .kbd-badge,
         body.touch-device .desktop-only,
-        body.touch-device .shortcut-badge {
+        body.touch-device .shortcut-badge,
+        body.touch-device .goal-num-badge {
             display: none !important;
         }
 
@@ -963,6 +965,7 @@
         }
 
         .goal-num-badge {
+            display: none !important;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 700;
@@ -972,6 +975,7 @@
             border-radius: 4px;
             background: var(--kbd-bg);
             border: 1px solid var(--kbd-border);
+            vertical-align: middle;
         }
 
         .goal-edit-btn {
@@ -1329,7 +1333,8 @@
                 display: none !important;
             }
 
-            html:not(.touch-device) .kbd-badge {
+            html:not(.touch-device) .kbd-badge,
+            html:not(.touch-device) .goal-num-badge {
                 display: inline-flex !important;
             }
 
@@ -1399,7 +1404,8 @@
             }
             .kbd-badge,
             .desktop-only,
-            .shortcut-badge {
+            .shortcut-badge,
+            .goal-num-badge {
                 display: none !important;
             }
             .mobile-only {
@@ -2146,7 +2152,9 @@
 
         // Service Worker
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
+            navigator.serviceWorker.register('sw.js').then(function(reg) {
+                if (reg) reg.update();
+            }).catch(function() {});
         }
 
         function showToast(msg, type = 'normal') {
@@ -2365,7 +2373,7 @@
                 checkbox.textContent = g.done ? '✓' : '';
 
                 var numBadge = document.createElement('span');
-                numBadge.className = 'goal-num-badge';
+                numBadge.className = 'goal-num-badge desktop-only';
                 numBadge.textContent = (idx + 1);
 
                 var text = document.createElement('span');
