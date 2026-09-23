@@ -13,6 +13,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="FocusPact" />
     <meta name="description" content="Intelligent Daily Commitments, Deep Work Sessions & Squad Accountability" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1439,15 +1442,11 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Top Action Nav -->
-    <div class="top-nav">
+    <div class="top-nav" id="mainTopNav">
         <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen">📲</button>
-        <button class="icon-btn desktop-only" onclick="toggleShortcutsModal()" title="Keyboard & Touchpad Shortcuts">⌨️</button>
-        <button class="icon-btn" onclick="goTo('screenSquad')" title="Squad Pacts">👥</button>
-        <button class="icon-btn" onclick="goTo('screenAnalytics')" title="Growth Graphs">📈</button>
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme">☀️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
-        <button class="icon-btn" onclick="goTo('screenTimer')" title="Deep Focus Session">⏱️</button>
     </div>
 
     <!-- MODAL: INSTALL APP TO HOME SCREEN -->
@@ -3089,9 +3088,16 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js').then(reg => {
+                navigator.serviceWorker.register('./sw.js?v=12').then(reg => {
                     reg.update();
                 }).catch(() => {});
+                var refreshing = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (!refreshing) {
+                        refreshing = true;
+                        window.location.reload();
+                    }
+                });
             }
             if (localStorage.getItem('name')) {
                 loadHome();
