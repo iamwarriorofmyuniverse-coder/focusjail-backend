@@ -1,5 +1,5 @@
 // FocusPact Service Worker
-const CACHE_NAME = 'focuspact-v10';
+const CACHE_NAME = 'focuspact-v11';
 const ASSETS = [
   './',
   './index.html',
@@ -26,9 +26,16 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Network first, cache fallback
+  if (e.request.method !== 'GET') return;
+  // Network first with instant cache update, cache fallback for offline
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    fetch(e.request).then((networkResponse) => {
+      if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+        const clone = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+      }
+      return networkResponse;
+    }).catch(() => caches.match(e.request))
   );
 });
 
