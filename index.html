@@ -46,6 +46,10 @@
             var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || (window.innerWidth < 860);
             if (isTouch) {
                 document.documentElement.classList.add('touch-device');
+                document.documentElement.classList.remove('desktop-device');
+            } else {
+                document.documentElement.classList.add('desktop-device');
+                document.documentElement.classList.remove('touch-device');
             }
         })();
     </script>
@@ -326,9 +330,9 @@
             transform: scale(1.08) rotate(2deg);
         }
 
-        /* Keyboard Badges (Hidden on mobile/touch, visible on laptop/PC) */
+        /* Keyboard Badges (Hidden on mobile/touch by default, visible on laptop/PC) */
         .kbd-badge {
-            display: none !important;
+            display: none;
             align-items: center;
             justify-content: center;
             background: var(--kbd-bg);
@@ -346,7 +350,7 @@
         }
 
         .desktop-only {
-            display: none !important;
+            display: none;
         }
 
         .mobile-only {
@@ -1444,6 +1448,7 @@
     <!-- Top Action Nav -->
     <div class="top-nav" id="mainTopNav">
         <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen">📲</button>
+        <button class="icon-btn desktop-only" onclick="toggleShortcutsModal()" title="Keyboard Shortcuts (?)">⌨️</button>
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle Theme">☀️</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
@@ -1559,7 +1564,7 @@
                 <input id="partnerContact" type="text" placeholder="Partner Phone / WhatsApp / Email" />
             </div>
 
-            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯</button>
+            <button class="btn-primary" onclick="saveGoals()">Commit Goals 🎯 <span class="kbd-badge">Enter</span></button>
         </div>
     </div>
 
@@ -1572,21 +1577,21 @@
             <div class="tone-btn tone-brutal" onclick="setTone('brutal')">
                 <span class="tone-emoji">🔥</span>
                 <div>
-                    <div class="tone-title">Brutal</div>
+                    <div class="tone-title">Brutal <span class="kbd-badge">1</span></div>
                     <div class="tone-desc">No mercy. Raw truth. Zero excuses.</div>
                 </div>
             </div>
             <div class="tone-btn tone-firm" onclick="setTone('firm')">
                 <span class="tone-emoji">💪</span>
                 <div>
-                    <div class="tone-title">Firm</div>
+                    <div class="tone-title">Firm <span class="kbd-badge">2</span></div>
                     <div class="tone-desc">Direct and fair. No insults, no softening.</div>
                 </div>
             </div>
             <div class="tone-btn tone-gentle" onclick="setTone('gentle')">
                 <span class="tone-emoji">🌱</span>
                 <div>
-                    <div class="tone-title">Gentle</div>
+                    <div class="tone-title">Gentle <span class="kbd-badge">3</span></div>
                     <div class="tone-desc">Encouraging but honest. Good for beginners.</div>
                 </div>
             </div>
@@ -1641,10 +1646,10 @@
 
                 <!-- Quick Action Hub -->
                 <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
-                    <button class="btn-secondary" style="margin-top: 0;" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️</button>
-                    <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥</button>
-                    <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈</button>
-                    <button class="btn-secondary" onclick="playClick(); openCardScreen()">Milestone Achievement Card 📋</button>
+                    <button class="btn-secondary" style="margin-top: 0;" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️ <span class="kbd-badge">F</span></button>
+                    <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥 <span class="kbd-badge">S</span></button>
+                    <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈 <span class="kbd-badge">A</span></button>
+                    <button class="btn-secondary" onclick="playClick(); openCardScreen()">Milestone Achievement Card 📋 <span class="kbd-badge">C</span></button>
                 </div>
             </div>
 
@@ -1657,7 +1662,7 @@
                     
                     <div id="goalsList"></div>
 
-                    <button class="btn-primary" style="margin-top: 14px;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
+                    <button class="btn-primary" style="margin-top: 14px;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙 <span class="kbd-badge">E</span></button>
                     <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
                 </div>
             </div>
@@ -1693,8 +1698,8 @@
             <div class="label" id="reflectionLabel"><span class="label-dot"></span> Daily Reflection & Notes</div>
             <textarea id="excuseInput" rows="3" placeholder="What went well or what blocked you today?"></textarea>
             
-            <button class="btn-primary" onclick="submitReport()">Submit Check-In & Get Verdict 💡</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back</button>
+            <button class="btn-primary" onclick="submitReport()">Submit Check-In & Get Verdict 💡 <span class="kbd-badge">Enter</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1723,8 +1728,8 @@
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨</button>
+            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card 📋 <span class="kbd-badge">C</span></button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Ready for Tomorrow ✨ <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1782,7 +1787,7 @@
                 </div>
             </div>
 
-            <button class="btn-secondary" style="margin-top: 14px;" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" style="margin-top: 14px;" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1819,7 +1824,7 @@
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 8px;">
-                <button class="btn-primary" onclick="goTo('screen4')">Back to Dashboard</button>
+                <button class="btn-primary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
                 <button class="btn-secondary" onclick="goTo('screen7')">View Full History Archives 📜</button>
             </div>
         </div>
@@ -1833,10 +1838,10 @@
             
             <!-- Timer Presets + Custom Duration -->
             <div class="timer-presets">
-                <button class="preset-btn" onclick="setTimerPreset(15)">15m</button>
-                <button class="preset-btn active" onclick="setTimerPreset(25)">25m</button>
-                <button class="preset-btn" onclick="setTimerPreset(50)">50m</button>
-                <button class="preset-btn" onclick="setTimerPreset(90)">90m</button>
+                <button class="preset-btn" onclick="setTimerPreset(15)">15m <span class="kbd-badge">1</span></button>
+                <button class="preset-btn active" onclick="setTimerPreset(25)">25m <span class="kbd-badge">2</span></button>
+                <button class="preset-btn" onclick="setTimerPreset(50)">50m <span class="kbd-badge">3</span></button>
+                <button class="preset-btn" onclick="setTimerPreset(90)">90m <span class="kbd-badge">4</span></button>
                 <button class="preset-btn" onclick="promptCustomTimer()">Custom ⚙️</button>
             </div>
 
@@ -1849,9 +1854,9 @@
 
             <div class="timer-display" id="timerTime">25:00</div>
             
-            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️</button>
-            <button class="btn-secondary" onclick="resetTimer()">Reset Timer</button>
-            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode</button>
+            <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️ <span class="kbd-badge">Space</span></button>
+            <button class="btn-secondary" onclick="resetTimer()">Reset Timer <span class="kbd-badge">R</span></button>
+            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1868,7 +1873,7 @@
 
             <button class="btn-primary" onclick="shareOrCopyCard()">Share or Save Card 🚀</button>
             <button class="btn-secondary" onclick="downloadCard()">Download Card Image 📥</button>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -1878,7 +1883,7 @@
             <div class="label"><span class="label-dot"></span> Performance History</div>
             <h1>Consistency Log</h1>
             <div id="historyList"></div>
-            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard <span class="kbd-badge">Esc</span></button>
         </div>
     </div>
 
@@ -2814,13 +2819,13 @@
             if (timerRunning) {
                 clearInterval(timerInterval);
                 timerRunning = false;
-                btn.innerHTML = 'Resume Session ⏱️';
+                btn.innerHTML = 'Resume Session ⏱️ <span class="kbd-badge">Space</span>';
                 stopSoundscape();
                 playClick();
             } else {
                 initAudio();
                 timerRunning = true;
-                btn.innerHTML = 'Pause Session ⏸️';
+                btn.innerHTML = 'Pause Session ⏸️ <span class="kbd-badge">Space</span>';
                 var sel = document.getElementById('soundscapeSelect').value;
                 changeSoundscape(sel);
                 playSuccess();
@@ -2832,7 +2837,7 @@
                     } else {
                         clearInterval(timerInterval);
                         timerRunning = false;
-                        btn.innerHTML = 'Start Focus Session ⏱️';
+                        btn.innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge">Space</span>';
                         stopSoundscape();
                         playSuccess();
                         triggerConfetti();
@@ -2856,7 +2861,7 @@
             stopSoundscape();
             timerSeconds = currentPreset * 60;
             updateTimerDisplay();
-            document.getElementById('timerBtn').innerHTML = 'Start Focus Session ⏱️';
+            document.getElementById('timerBtn').innerHTML = 'Start Focus Session ⏱️ <span class="kbd-badge">Space</span>';
             playClick();
         }
 
@@ -3088,7 +3093,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=12').then(reg => {
+                navigator.serviceWorker.register('./sw.js?v=13').then(reg => {
                     reg.update();
                 }).catch(() => {});
                 var refreshing = false;
