@@ -401,6 +401,31 @@
             display: inline-block;
         }
 
+        /* Strict Lock Bar Styles */
+        .strict-lock-bar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px auto 16px;
+            transition: all 0.2s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .strict-lock-bar:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+        }
+        .strict-lock-bar.active {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.12);
+        }
+
         /* User-Select Protection for Precision Touchpad Clicks */
         .icon-btn, .btn-primary, .btn-secondary, .bento-box, .preset-btn, 
         .goal-item, .heatmap-tile, .tone-btn, .dispatch-btn, .streak-card, 
@@ -1638,6 +1663,7 @@
     <div class="top-nav" id="mainTopNav">
         <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen">📲</button>
         <button class="icon-btn" onclick="openThemeModal()" id="themeBtn" title="Theme & Aesthetic Studio (T)">🎨</button>
+        <button class="icon-btn" onclick="openSyncModal()" id="syncBtn" title="Data Vault & Sync">💾</button>
         <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">🔊</button>
         <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">🔔</button>
     </div>
@@ -1825,6 +1851,48 @@
         </div>
     </div>
 
+    <!-- MODAL: DATA VAULT & SYNC -->
+    <div class="modal-overlay" id="syncModal" onclick="if(event.target === this) closeSyncModal()">
+        <div class="modal-card" style="max-width: 480px; text-align: center;">
+            <div style="font-size: 34px; margin-bottom: 6px;">🛡️</div>
+            <div class="label" style="justify-content: center;"><span class="label-dot"></span> Backup & Cloud Vault</div>
+            <h1>Data Vault & Sync</h1>
+            <p style="margin-bottom: 16px; font-size: 13px;">Protect your streak against cache wipes and sync seamlessly across Phone & Laptop.</p>
+
+            <!-- Vault Actions Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                <div class="bento-box" style="padding: 16px 12px; text-align: center; cursor: pointer;" onclick="exportDataBackup()" title="Download Backup JSON">
+                    <div style="font-size: 26px; margin-bottom: 6px;">📥</div>
+                    <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Export Backup</div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Save .json file</div>
+                </div>
+
+                <div class="bento-box" style="padding: 16px 12px; text-align: center; cursor: pointer;" onclick="triggerImportBackup()" title="Upload & Restore Backup JSON">
+                    <div style="font-size: 26px; margin-bottom: 6px;">📤</div>
+                    <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Restore Backup</div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Upload .json file</div>
+                </div>
+            </div>
+
+            <!-- Instant Cross-Device Sync Code -->
+            <div style="background: var(--btn-sec-bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 16px; text-align: left;">
+                <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">⚡ Instant Cross-Device Sync</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.4;">Copy your secure sync token and paste it on another device to transfer your streak in seconds.</div>
+                
+                <button class="btn-secondary" style="margin-top: 0; font-size: 12px; padding: 9px;" onclick="copySyncCode()">Copy Sync Token 📋</button>
+
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <input type="text" id="syncCodeInput" placeholder="Paste Sync Token here..." style="font-size: 12px; padding: 8px 12px; margin-bottom: 0;" />
+                    <button class="btn-primary" style="width: auto; padding: 8px 16px; margin-top: 0; font-size: 12px;" onclick="applySyncCode()">Sync</button>
+                </div>
+            </div>
+
+            <input type="file" id="backupFileInput" accept=".json" style="display: none;" onchange="handleBackupFile(event)" />
+
+            <button class="btn-secondary" onclick="closeSyncModal()">Close</button>
+        </div>
+    </div>
+
     <!-- SCREEN 1: WELCOME & ONBOARDING -->
     <div id="screen1" class="screen active">
         <div class="card">
@@ -1943,6 +2011,7 @@
                     <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈</button>
                     <button class="btn-secondary" onclick="playClick(); openCardScreen()">Milestone Achievement Card 📋</button>
                     <button class="btn-secondary" onclick="playClick(); openThemeModal()">Theme & Atmosphere Studio 🎨</button>
+                    <button class="btn-secondary" onclick="playClick(); openSyncModal()">Data Vault & Cross-Device Sync 💾</button>
                 </div>
             </div>
 
@@ -2155,9 +2224,19 @@
 
             <div class="timer-display" id="timerTime">25:00</div>
             
+            <!-- Strict Anti-Distraction Mode Bar -->
+            <div class="strict-lock-bar" onclick="toggleStrictLock()" id="strictLockBar" title="Strict Mode: Locks session & detects tab switching">
+                <span id="strictLockIcon">🔓</span>
+                <span style="font-size: 13px; font-weight: 600;">Strict Lock: <strong id="strictLockText" style="color: var(--text-muted);">OFF</strong></span>
+            </div>
+
+            <div id="strictBreachBadge" style="display: none; padding: 6px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 20px; color: #f87171; font-size: 12px; font-weight: 600; margin: 0 auto 14px; width: fit-content;">
+                ⚠️ Distractions Logged: <span id="strictBreachCount">0</span>
+            </div>
+
             <button class="btn-primary" id="timerBtn" onclick="toggleTimer()">Start Focus Session ⏱️</button>
-            <button class="btn-secondary" onclick="resetTimer()">Reset Timer</button>
-            <button class="btn-secondary" onclick="exitLockdown()">Exit Focus Mode</button>
+            <button class="btn-secondary" id="timerResetBtn" onclick="resetTimer()">Reset Timer</button>
+            <button class="btn-secondary" id="timerExitBtn" onclick="exitLockdown()">Exit Focus Mode</button>
         </div>
     </div>
 
@@ -3261,10 +3340,41 @@
         }
 
         var timerEndTime = null;
+        var strictLockEnabled = false;
+        var sessionBreaches = 0;
+
+        function toggleStrictLock() {
+            if (timerRunning) {
+                showToast('🔒 Cannot toggle Strict Lock during an active session!', 'danger');
+                return;
+            }
+            strictLockEnabled = !strictLockEnabled;
+            var bar = document.getElementById('strictLockBar');
+            var icon = document.getElementById('strictLockIcon');
+            var text = document.getElementById('strictLockText');
+            if (bar) bar.classList.toggle('active', strictLockEnabled);
+            if (icon) icon.textContent = strictLockEnabled ? '🔒' : '🔓';
+            if (text) {
+                text.textContent = strictLockEnabled ? 'ON (STRICT)' : 'OFF';
+                text.style.color = strictLockEnabled ? '#f59e0b' : 'var(--text-muted)';
+            }
+            playClick();
+            showToast(strictLockEnabled ? 'Strict Mode Activated: Tab switching & early exits locked!' : 'Strict Mode Deactivated', strictLockEnabled ? 'info' : 'normal');
+        }
 
         function toggleTimer() {
             var btn = document.getElementById('timerBtn');
+            var resetBtn = document.getElementById('timerResetBtn');
+            var exitBtn = document.getElementById('timerExitBtn');
+            var breachBadge = document.getElementById('strictBreachBadge');
+            var breachCountEl = document.getElementById('strictBreachCount');
+
             if (timerRunning) {
+                if (strictLockEnabled) {
+                    showToast('🔒 Strict Lock is active! You cannot pause or quit early.', 'danger');
+                    playAlert();
+                    return;
+                }
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = null;
                 timerRunning = false;
@@ -3279,10 +3389,21 @@
             } else {
                 initAudio();
                 timerRunning = true;
-                btn.innerHTML = 'Pause Session ⏸️';
+                btn.innerHTML = strictLockEnabled ? 'Locked Session Running 🔒' : 'Pause Session ⏸️';
                 var sel = document.getElementById('soundscapeSelect').value;
                 changeSoundscape(sel);
                 playSuccess();
+
+                if (strictLockEnabled) {
+                    sessionBreaches = 0;
+                    if (breachBadge) breachBadge.style.display = 'block';
+                    if (breachCountEl) breachCountEl.textContent = '0';
+                    if (resetBtn) resetBtn.style.display = 'none';
+                    if (exitBtn) exitBtn.style.display = 'none';
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(() => {});
+                    }
+                }
 
                 timerEndTime = Date.now() + (timerSeconds * 1000);
 
@@ -3298,6 +3419,8 @@
                         timerRunning = false;
                         timerEndTime = null;
                         btn.innerHTML = 'Start Focus Session ⏱️';
+                        if (resetBtn) resetBtn.style.display = 'block';
+                        if (exitBtn) exitBtn.style.display = 'block';
                         stopSoundscape();
                         playSuccess();
                         triggerConfetti();
@@ -3306,25 +3429,51 @@
                         var newMins = prevMins + currentPreset;
                         safeStorage.set('daily_focus_mins', newMins.toString());
 
-                        showToast(`Deep Focus Complete! +${currentPreset}m logged today.`, 'success');
+                        if (strictLockEnabled) {
+                            if (sessionBreaches === 0) {
+                                showToast(`🏆 Flawless Focus! +${currentPreset}m logged with ZERO distractions.`, 'success');
+                            } else {
+                                showToast(`Deep Focus Complete! +${currentPreset}m logged (${sessionBreaches} distractions avoided).`, 'info');
+                            }
+                        } else {
+                            showToast(`Deep Focus Complete! +${currentPreset}m logged today.`, 'success');
+                        }
+
                         if (window.posthog) {
-                            posthog.capture('focus_session_completed', { duration: currentPreset });
+                            posthog.capture('focus_session_completed', { duration: currentPreset, strict: strictLockEnabled, breaches: sessionBreaches });
                         }
                     }
                 }, 500);
             }
         }
 
-        // Automatic wall-clock re-sync when switching back to tab
+        // Automatic wall-clock re-sync and anti-distraction breach detector
         document.addEventListener('visibilitychange', function() {
-            if (!document.hidden && timerRunning && timerEndTime) {
-                var remaining = Math.max(0, Math.round((timerEndTime - Date.now()) / 1000));
-                timerSeconds = remaining;
-                updateTimerDisplay();
+            if (document.hidden) {
+                if (timerRunning && strictLockEnabled) {
+                    sessionBreaches++;
+                    var countEl = document.getElementById('strictBreachCount');
+                    if (countEl) countEl.textContent = sessionBreaches;
+                }
+            } else {
+                if (timerRunning && timerEndTime) {
+                    var remaining = Math.max(0, Math.round((timerEndTime - Date.now()) / 1000));
+                    timerSeconds = remaining;
+                    updateTimerDisplay();
+
+                    if (strictLockEnabled && sessionBreaches > 0) {
+                        playAlert();
+                        showToast(`⚠️ Distraction Breach! You navigated away (${sessionBreaches} distractions logged)`, 'danger');
+                    }
+                }
             }
         });
 
         function resetTimer() {
+            if (strictLockEnabled && timerRunning) {
+                showToast('🔒 Strict Lock is active! You cannot reset during an active session.', 'danger');
+                return;
+            }
             if (timerInterval) clearInterval(timerInterval);
             timerInterval = null;
             timerRunning = false;
@@ -3332,13 +3481,171 @@
             stopSoundscape();
             timerSeconds = currentPreset * 60;
             updateTimerDisplay();
-            document.getElementById('timerBtn').innerHTML = 'Start Focus Session ⏱️';
+            var btn = document.getElementById('timerBtn');
+            if (btn) btn.innerHTML = 'Start Focus Session ⏱️';
+            var resetBtn = document.getElementById('timerResetBtn');
+            var exitBtn = document.getElementById('timerExitBtn');
+            if (resetBtn) resetBtn.style.display = 'block';
+            if (exitBtn) exitBtn.style.display = 'block';
             playClick();
         }
 
         function exitLockdown() {
+            if (strictLockEnabled && timerRunning) {
+                showToast('🔒 Strict Lock is active! Complete your timer before exiting.', 'danger');
+                return;
+            }
             resetTimer();
             goTo('screen4');
+        }
+
+        // Data Vault & Cross-Device Sync Engine
+        function openSyncModal() {
+            var modal = document.getElementById('syncModal');
+            if (modal) {
+                modal.classList.add('active');
+                playClick();
+            }
+        }
+
+        function closeSyncModal() {
+            var modal = document.getElementById('syncModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function getFullVaultData() {
+            return {
+                app: 'FocusPact',
+                version: '2.0',
+                exportTimestamp: Date.now(),
+                exportDate: new Date().toISOString(),
+                payload: {
+                    name: safeStorage.get('name', 'User'),
+                    streak: safeStorage.get('streak', '0'),
+                    streak_shields: safeStorage.get('streak_shields', '1'),
+                    goals: safeStorage.getJSON('goals', []),
+                    history: safeStorage.getJSON('history', []),
+                    daily_focus_mins: safeStorage.get('daily_focus_mins', '0'),
+                    focus_theme: safeStorage.get('focus_theme', 'dark'),
+                    last_active_date: safeStorage.get('last_active_date', new Date().toDateString()),
+                    sound_enabled: safeStorage.get('sound_enabled', 'true'),
+                    partner_name: safeStorage.get('partner_name', ''),
+                    partner_phone: safeStorage.get('partner_phone', ''),
+                    latestVerdict: safeStorage.get('latestVerdict', '')
+                }
+            };
+        }
+
+        function restoreVaultData(payload) {
+            if (!payload || typeof payload !== 'object') return false;
+            if (payload.name) safeStorage.set('name', payload.name);
+            if (payload.streak !== undefined) safeStorage.set('streak', payload.streak.toString());
+            if (payload.streak_shields !== undefined) safeStorage.set('streak_shields', payload.streak_shields.toString());
+            if (payload.goals) safeStorage.setJSON('goals', payload.goals);
+            if (payload.history) safeStorage.setJSON('history', payload.history);
+            if (payload.daily_focus_mins !== undefined) safeStorage.set('daily_focus_mins', payload.daily_focus_mins.toString());
+            if (payload.focus_theme) {
+                applyTheme(payload.focus_theme, false);
+            }
+            if (payload.last_active_date) safeStorage.set('last_active_date', payload.last_active_date);
+            if (payload.partner_name) safeStorage.set('partner_name', payload.partner_name);
+            if (payload.partner_phone) safeStorage.set('partner_phone', payload.partner_phone);
+            if (payload.latestVerdict) safeStorage.set('latestVerdict', payload.latestVerdict);
+            
+            loadHome();
+            return true;
+        }
+
+        function exportDataBackup() {
+            try {
+                var data = getFullVaultData();
+                var jsonStr = JSON.stringify(data, null, 2);
+                var blob = new Blob([jsonStr], { type: 'application/json' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                var dateStr = new Date().toISOString().split('T')[0];
+                a.href = url;
+                a.download = `focuspact-vault-backup-${dateStr}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                playSuccess();
+                showToast('🛡️ Backup exported successfully!', 'success');
+            } catch (e) {
+                showToast('Export failed. Please try again.', 'danger');
+            }
+        }
+
+        function triggerImportBackup() {
+            var fileInput = document.getElementById('backupFileInput');
+            if (fileInput) fileInput.click();
+        }
+
+        function handleBackupFile(event) {
+            var file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    var parsed = JSON.parse(e.target.result);
+                    var payload = parsed.payload || parsed;
+                    if (restoreVaultData(payload)) {
+                        playSuccess();
+                        triggerConfetti();
+                        showToast('🛡️ Data Vault Restored Successfully!', 'success');
+                        closeSyncModal();
+                    } else {
+                        showToast('Invalid backup file format.', 'danger');
+                    }
+                } catch (err) {
+                    showToast('Failed to parse backup file.', 'danger');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function copySyncCode() {
+            try {
+                var data = getFullVaultData();
+                var token = 'FP-' + btoa(unescape(encodeURIComponent(JSON.stringify(data.payload))));
+                navigator.clipboard.writeText(token).then(function() {
+                    playSuccess();
+                    showToast('📋 Sync Token copied to clipboard!', 'success');
+                }).catch(function() {
+                    prompt('Copy your Sync Token:', token);
+                });
+            } catch (e) {
+                showToast('Failed to generate sync token.', 'danger');
+            }
+        }
+
+        function applySyncCode() {
+            var input = document.getElementById('syncCodeInput');
+            if (!input || !input.value.trim()) {
+                showToast('Please paste a sync token.', 'info');
+                return;
+            }
+            var raw = input.value.trim();
+            if (raw.startsWith('FP-')) raw = raw.substring(3);
+
+            try {
+                var jsonStr = decodeURIComponent(escape(atob(raw)));
+                var payload = JSON.parse(jsonStr);
+                if (restoreVaultData(payload)) {
+                    playSuccess();
+                    triggerConfetti();
+                    showToast('⚡ Sync successful! Devices synchronized.', 'success');
+                    input.value = '';
+                    closeSyncModal();
+                } else {
+                    showToast('Invalid sync token.', 'danger');
+                }
+            } catch (err) {
+                showToast('Invalid or corrupted sync token.', 'danger');
+            }
         }
 
         // Milestone Achievement Card Generator
@@ -3595,7 +3902,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=21').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=22').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
