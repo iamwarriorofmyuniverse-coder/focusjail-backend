@@ -2230,22 +2230,40 @@
             // Disabled automatic popup to prevent user interruption
         }
 
-        // Daily Auto-Roll
+        // Daily Auto-Roll & Calendar Accuracy Engine
         function checkDailyAutoRoll() {
-            var todayStr = new Date().toDateString();
-            var lastActive = localStorage.getItem('last_active_date');
+            var now = new Date();
+            var todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var todayStr = now.toDateString();
+            var lastActive = safeStorage.get('last_active_date');
 
             if (lastActive && lastActive !== todayStr) {
-                var rawGoals = localStorage.getItem('goals');
-                if (rawGoals) {
-                    var goals = JSON.parse(rawGoals);
-                    goals.forEach(g => g.done = false);
-                    localStorage.setItem('goals', JSON.stringify(goals));
+                var lastActiveDate = new Date(lastActive);
+                var lastMidnight = new Date(lastActiveDate.getFullYear(), lastActiveDate.getMonth(), lastActiveDate.getDate());
+                var diffDays = Math.round((todayMidnight - lastMidnight) / (1000 * 60 * 60 * 24));
+
+                // If user skipped an entire calendar day without check-in
+                if (diffDays > 1) {
+                    var streak = parseInt(safeStorage.get('streak', '0'));
+                    var shields = parseInt(safeStorage.get('streak_shields', '0'));
+                    if (shields > 0 && streak > 0) {
+                        safeStorage.set('streak_shields', (shields - 1).toString());
+                        showToast('🛡️ Auto-Shield protected your streak during your break!', 'info');
+                    } else if (streak > 0) {
+                        safeStorage.set('streak', '0');
+                        showToast('⚡ Inactivity gap detected: Streak reset to 0.', 'normal');
+                    }
                 }
-                localStorage.setItem('daily_focus_mins', '0');
+
+                var goals = safeStorage.getJSON('goals', []);
+                if (goals.length > 0) {
+                    goals.forEach(g => g.done = false);
+                    safeStorage.setJSON('goals', goals);
+                }
+                safeStorage.set('daily_focus_mins', '0');
                 showToast('🌅 Good morning! Fresh commitments ready for today.', 'success');
             }
-            localStorage.setItem('last_active_date', todayStr);
+            safeStorage.set('last_active_date', todayStr);
         }
 
         function showShieldInfo() {
@@ -2913,11 +2931,19 @@
                 `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
 
+        var timerEndTime = null;
+
         function toggleTimer() {
             var btn = document.getElementById('timerBtn');
             if (timerRunning) {
-                clearInterval(timerInterval);
+                if (timerInterval) clearInterval(timerInterval);
+                timerInterval = null;
                 timerRunning = false;
+                if (timerEndTime) {
+                    var remainingSecs = Math.max(0, Math.round((timerEndTime - Date.now()) / 1000));
+                    timerSeconds = remainingSecs;
+                    updateTimerDisplay();
+                }
                 btn.innerHTML = 'Resume Session ⏱️';
                 stopSoundscape();
                 playClick();
@@ -2929,15 +2955,19 @@
                 changeSoundscape(sel);
                 playSuccess();
 
+                timerEndTime = Date.now() + (timerSeconds * 1000);
+
                 if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(() => {
-                    if (timerSeconds > 0) {
-                        timerSeconds--;
-                        updateTimerDisplay();
-                    } else {
+                    var remaining = Math.max(0, Math.round((timerEndTime - Date.now()) / 1000));
+                    timerSeconds = remaining;
+                    updateTimerDisplay();
+
+                    if (remaining <= 0) {
                         clearInterval(timerInterval);
                         timerInterval = null;
                         timerRunning = false;
+                        timerEndTime = null;
                         btn.innerHTML = 'Start Focus Session ⏱️';
                         stopSoundscape();
                         playSuccess();
@@ -2952,13 +2982,24 @@
                             posthog.capture('focus_session_completed', { duration: currentPreset });
                         }
                     }
-                }, 1000);
+                }, 500);
             }
         }
 
+        // Automatic wall-clock re-sync when switching back to tab
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && timerRunning && timerEndTime) {
+                var remaining = Math.max(0, Math.round((timerEndTime - Date.now()) / 1000));
+                timerSeconds = remaining;
+                updateTimerDisplay();
+            }
+        });
+
         function resetTimer() {
-            clearInterval(timerInterval);
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
             timerRunning = false;
+            timerEndTime = null;
             stopSoundscape();
             timerSeconds = currentPreset * 60;
             updateTimerDisplay();
@@ -3199,7 +3240,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=17').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=18').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
