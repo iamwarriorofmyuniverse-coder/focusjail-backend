@@ -1977,6 +1977,52 @@
 
     <!-- App Engine -->
     <script>
+        // Defensive Security & Safe Storage Engine
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        const safeStorage = {
+            get: function(key, fallback = null) {
+                try {
+                    var val = localStorage.getItem(key);
+                    return val !== null ? val : fallback;
+                } catch (e) {
+                    return fallback;
+                }
+            },
+            set: function(key, val) {
+                try {
+                    localStorage.setItem(key, String(val));
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            },
+            getJSON: function(key, fallback = []) {
+                try {
+                    var val = localStorage.getItem(key);
+                    return val ? JSON.parse(val) : fallback;
+                } catch (e) {
+                    return fallback;
+                }
+            },
+            setJSON: function(key, val) {
+                try {
+                    localStorage.setItem(key, JSON.stringify(val));
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+        };
+
         var goalsCompleted = true;
         var usingShield = false;
         var soundEnabled = true;
@@ -2216,18 +2262,13 @@
             });
         }
 
-        // Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(function(reg) {
-                if (reg) reg.update();
-            }).catch(function() {});
-        }
-
         function showToast(msg, type = 'normal') {
             var container = document.getElementById('toastContainer');
+            if (!container) return;
             var toast = document.createElement('div');
             toast.className = 'toast ' + type;
-            toast.innerHTML = (type === 'success' ? '✨ ' : (type === 'info' ? '🛡️ ' : '⚡ ')) + msg;
+            var prefix = (type === 'success' ? '✨ ' : (type === 'info' ? '🛡️ ' : '⚡ '));
+            toast.textContent = prefix + msg;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
@@ -2736,14 +2777,16 @@
             if (screenId === 'screen7') renderHistoryScreen();
             if (screenId === 'screen4') loadHome();
             if (screenId === 'screenAnalytics') renderAnalyticsScreen();
+            if (screenId === 'screenCard') drawAchievementCard();
         }
 
         // Analytics Engine
         function renderAnalyticsScreen() {
-            var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
-            var dailyFocus = parseInt(localStorage.getItem('daily_focus_mins') || '0');
+            var history = safeStorage.getJSON('focus_history', []);
+            var dailyFocus = parseInt(safeStorage.get('daily_focus_mins', '0'));
 
             var chartContainer = document.getElementById('focusBarChart');
+            if (!chartContainer) return;
             chartContainer.innerHTML = '';
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             var today = new Date().getDay();
@@ -2771,9 +2814,11 @@
                 chartContainer.appendChild(col);
             }
 
-            document.getElementById('weeklyFocusTotal').textContent = `${totalWeekMins}m total this week`;
+            var totalElem = document.getElementById('weeklyFocusTotal');
+            if (totalElem) totalElem.textContent = `${totalWeekMins}m total this week`;
 
             var heatmap = document.getElementById('heatmapGrid');
+            if (!heatmap) return;
             heatmap.innerHTML = '';
             var totalMonthlyCompleted = 0;
 
@@ -2797,12 +2842,14 @@
             }
 
             var rate = history.length > 0 ? Math.round((totalMonthlyCompleted / Math.min(history.length, 30)) * 100) : 100;
-            document.getElementById('monthlyRate').textContent = `${rate}% Success Rate`;
+            var rateElem = document.getElementById('monthlyRate');
+            if (rateElem) rateElem.textContent = `${rate}% Success Rate`;
         }
 
         function renderHistoryScreen() {
             var list = document.getElementById('historyList');
-            var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
+            if (!list) return;
+            var history = safeStorage.getJSON('focus_history', []);
             list.innerHTML = '';
             if (history.length === 0) {
                 list.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No archives recorded yet. Complete daily check-ins to build your history.</p>';
@@ -2814,10 +2861,10 @@
                 var statusText = h.completed ? 'COMPLETED ALL GOALS ✓' : (h.shielded ? 'STREAK SHIELD USED 🛡️' : 'MISSED COMMITMENTS ✗');
                 var statusClass = h.completed ? 'completed' : (h.shielded ? 'shielded' : 'failed');
                 div.innerHTML = `
-                    <div class="history-date">${h.date}</div>
-                    <div class="history-status ${statusClass}">${statusText}</div>
-                    ${h.proof ? `<div style="font-size: 11px; color: #667eea; margin-bottom: 4px;">Proof: ${h.proof}</div>` : ''}
-                    <div class="history-verdict">"${h.verdict}"</div>
+                    <div class="history-date">${escapeHTML(h.date)}</div>
+                    <div class="history-status ${statusClass}">${escapeHTML(statusText)}</div>
+                    ${h.proof ? `<div style="font-size: 11px; color: #667eea; margin-bottom: 4px;">Proof: ${escapeHTML(h.proof)}</div>` : ''}
+                    <div class="history-verdict">"${escapeHTML(h.verdict)}"</div>
                 `;
                 list.appendChild(div);
             });
@@ -2882,21 +2929,23 @@
                 changeSoundscape(sel);
                 playSuccess();
 
+                if (timerInterval) clearInterval(timerInterval);
                 timerInterval = setInterval(() => {
                     if (timerSeconds > 0) {
                         timerSeconds--;
                         updateTimerDisplay();
                     } else {
                         clearInterval(timerInterval);
+                        timerInterval = null;
                         timerRunning = false;
                         btn.innerHTML = 'Start Focus Session ⏱️';
                         stopSoundscape();
                         playSuccess();
                         triggerConfetti();
                         
-                        var prevMins = parseInt(localStorage.getItem('daily_focus_mins') || '0');
+                        var prevMins = parseInt(safeStorage.get('daily_focus_mins', '0'));
                         var newMins = prevMins + currentPreset;
-                        localStorage.setItem('daily_focus_mins', newMins.toString());
+                        safeStorage.set('daily_focus_mins', newMins.toString());
 
                         showToast(`Deep Focus Complete! +${currentPreset}m logged today.`, 'success');
                         if (window.posthog) {
@@ -3150,7 +3199,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=16').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=17').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
