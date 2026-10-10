@@ -2181,13 +2181,7 @@
         }
 
         function checkReviewTrigger() {
-            var streak = parseInt(localStorage.getItem('streak') || '0');
-            var alreadyReviewed = localStorage.getItem('focus_reviewed') === 'true';
-            var lastPrompt = parseInt(localStorage.getItem('focus_review_prompted') || '0');
-            var threeDaysPassed = (Date.now() - lastPrompt) > (3 * 24 * 60 * 60 * 1000);
-            if (streak >= 3 && !alreadyReviewed && (!lastPrompt || threeDaysPassed)) {
-                setTimeout(openReviewModal, 1800);
-            }
+            // Disabled automatic popup to prevent user interruption
         }
 
         // Daily Auto-Roll
@@ -2426,7 +2420,6 @@
             renderGoals(goals);
             renderWeekStrip();
             checkInstalledState();
-            checkReviewTrigger();
         }
 
         function renderGoals(goals) {
@@ -3157,16 +3150,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=15').then(reg => {
-                    reg.update();
-                }).catch(() => {});
-                var refreshing = false;
-                navigator.serviceWorker.addEventListener('controllerchange', () => {
-                    if (!refreshing) {
-                        refreshing = true;
-                        window.location.reload();
-                    }
-                });
+                navigator.serviceWorker.register('./sw.js?v=16').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
