@@ -1476,6 +1476,7 @@
             <button class="btn-primary" id="nativeInstallBtn" onclick="triggerNativeInstall()">Install App Now 📲</button>
             <button class="btn-secondary" onclick="closeInstallModal()">Close</button>
             <button class="btn-secondary" style="font-size: 12px; color: var(--text-muted); margin-top: 8px; width: 100%; border-style: dashed;" onclick="markAsInstalled()">Already installed? Hide install icon ✔️</button>
+            <div style="margin-top: 14px; font-size: 12px;"><a href="privacy.html" target="_blank" style="color: var(--text-muted); text-decoration: underline;">Privacy Policy</a></div>
         </div>
     </div>
 
@@ -1529,6 +1530,20 @@
             </div>
 
             <button class="btn-primary" style="margin-top: 16px;" onclick="toggleShortcutsModal()">Got it ✨</button>
+        </div>
+    </div>
+
+    <!-- MODAL: REVIEW & FEEDBACK -->
+    <div class="modal-overlay" id="reviewModal" onclick="if(event.target === this) closeReviewModal()">
+        <div class="modal-card" style="text-align: center;">
+            <div style="font-size: 38px; margin-bottom: 8px;">⭐</div>
+            <div class="label" style="justify-content: center;"><span class="label-dot"></span> Community Love</div>
+            <h1>Enjoying FocusPact?</h1>
+            <p style="margin-bottom: 18px;">Your review helps fellow students, developers, and creators overcome doomscrolling and build iron discipline.</p>
+
+            <button class="btn-primary" onclick="submitReviewAction()">Rate 5 Stars ⭐</button>
+            <button class="btn-secondary" onclick="shareOrCopyCard(); closeReviewModal();">Share with a Friend 🚀</button>
+            <button class="btn-secondary" style="font-size: 12px; color: var(--text-muted); border: none; margin-top: 8px;" onclick="closeReviewModal()">Maybe Later</button>
         </div>
     </div>
 
@@ -1663,6 +1678,14 @@
 
                     <button class="btn-primary" style="margin-top: 14px;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
                     <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
+                    
+                    <div style="text-align: center; margin-top: 18px; font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 12px; align-items: center;">
+                        <a href="privacy.html" target="_blank" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
+                        <span>•</span>
+                        <a href="javascript:void(0)" onclick="openReviewModal()" style="color: #667eea; text-decoration: none; font-weight: 600;">Rate App ⭐</a>
+                        <span>•</span>
+                        <span>FocusPact v1.0</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2131,6 +2154,42 @@
             }
         }
 
+        function openReviewModal() {
+            var modal = document.getElementById('reviewModal');
+            if (modal) {
+                modal.classList.add('active');
+                playClick();
+            }
+        }
+
+        function closeReviewModal() {
+            var modal = document.getElementById('reviewModal');
+            if (modal) {
+                modal.classList.remove('active');
+                playClick();
+            }
+            localStorage.setItem('focus_review_prompted', Date.now().toString());
+        }
+
+        function submitReviewAction() {
+            localStorage.setItem('focus_reviewed', 'true');
+            closeReviewModal();
+            showToast('Thank you for supporting FocusPact! ⭐', 'success');
+            if (window.posthog) posthog.capture('review_prompt_accepted');
+            var playStoreUrl = 'https://play.google.com/store/apps/details?id=app.netlify.focusjail.twa';
+            window.open(playStoreUrl, '_blank');
+        }
+
+        function checkReviewTrigger() {
+            var streak = parseInt(localStorage.getItem('streak') || '0');
+            var alreadyReviewed = localStorage.getItem('focus_reviewed') === 'true';
+            var lastPrompt = parseInt(localStorage.getItem('focus_review_prompted') || '0');
+            var threeDaysPassed = (Date.now() - lastPrompt) > (3 * 24 * 60 * 60 * 1000);
+            if (streak >= 3 && !alreadyReviewed && (!lastPrompt || threeDaysPassed)) {
+                setTimeout(openReviewModal, 1800);
+            }
+        }
+
         // Daily Auto-Roll
         function checkDailyAutoRoll() {
             var todayStr = new Date().toDateString();
@@ -2367,6 +2426,7 @@
             renderGoals(goals);
             renderWeekStrip();
             checkInstalledState();
+            checkReviewTrigger();
         }
 
         function renderGoals(goals) {
@@ -3011,6 +3071,11 @@
                     closeInstallModal();
                     return;
                 }
+                var revModal = document.getElementById('reviewModal');
+                if (revModal && revModal.classList.contains('active')) {
+                    closeReviewModal();
+                    return;
+                }
                 var modal = document.getElementById('shortcutsModal');
                 if (modal && modal.classList.contains('active')) {
                     toggleShortcutsModal();
@@ -3092,7 +3157,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=14').then(reg => {
+                navigator.serviceWorker.register('./sw.js?v=15').then(reg => {
                     reg.update();
                 }).catch(() => {});
                 var refreshing = false;

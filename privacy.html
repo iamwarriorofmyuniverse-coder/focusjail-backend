@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Privacy Policy - FocusPact</title>
+    <link rel="icon" type="image/png" href="icon-192.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="theme-color" content="#667eea" />
+    <meta name="description" content="Privacy Policy for FocusPact - Daily Commitments & Intelligent Accountability" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --grad: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            --primary: #667eea;
+            --accent: #f093fb;
+            --success: #10b981;
+            --bg: #090a10;
+            --surface: rgba(18, 20, 30, 0.85);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-sub: #cbd5e1;
+            --text-muted: #64748b;
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.95);
+            --border: rgba(0, 0, 0, 0.08);
+            --text-main: #0f172a;
+            --text-sub: #334155;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            padding: 40px 20px 80px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 760px;
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 44px 36px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .effective-date {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            color: var(--text-main);
+            margin: 32px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        p, li {
+            color: var(--text-sub);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight-box {
+            background: rgba(102, 126, 234, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.25);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--grad);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 36px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 12px 60px; }
+            .container { padding: 28px 20px; border-radius: 18px; }
+            h1 { font-size: 26px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="icon-192.png" alt="FocusPact Logo" class="logo" />
+            <div>
+                <h1>Privacy Policy</h1>
+                <div class="effective-date">Last Updated: October 10, 2026 • FocusPact</div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>🔒 Privacy First Commitment:</strong> FocusPact is designed with an on-device architecture. Your daily commitments, partner details, and reflections stay locally on your device in your browser's private storage. We do not sell your personal data.
+        </div>
+
+        <h2>1. Information We Collect</h2>
+        <p>FocusPact operates primarily as a client-side application. The types of data processed include:</p>
+        <ul>
+            <li><strong>User-Provided Data:</strong> Your name or pseudonym, daily goals (commitments), chosen coaching tone, reflection notes, and accountability partner contact details (name, phone number, or email). All of this information is saved locally on your device via <code>localStorage</code>.</li>
+            <li><strong>Usage & Performance Metrics:</strong> We may use privacy-preserving, aggregated analytics (such as PostHog) to understand general product usage (e.g., number of sessions started, features used). These telemetry records are pseudonymized and contain no personal goal contents.</li>
+            <li><strong>Device & Technical Information:</strong> Standard technical information such as browser type, operating system, and display mode (standalone PWA vs. browser) is used strictly to ensure responsive UI rendering.</li>
+        </ul>
+
+        <h2>2. How Your Data Is Stored & Used</h2>
+        <p>Your information is used solely to provide and improve the FocusPact experience:</p>
+        <ul>
+            <li>To display your streaks, commitments, and history on your dashboard.</li>
+            <li>To generate milestone achievement cards and coaching feedback.</li>
+            <li>To provide offline availability via Service Workers and local caching.</li>
+        </ul>
+        <p>We do not store your private daily tasks on external centralized servers, and we do not profile users for third-party advertising.</p>
+
+        <h2>3. Accountability Partner Feature ("Dead-Man's Switch")</h2>
+        <p>FocusPact allows you to specify an accountability partner contact. When generating reports or alerts, communications are initiated from your device (e.g., via direct WhatsApp share, system share dialog, or SMS). We do not scrape, harvest, or market to your partner's contact details.</p>
+
+        <h2>4. Data Retention & Deletion</h2>
+        <p>Since your data is stored locally on your device:</p>
+        <ul>
+            <li>You can permanently wipe all stored goals, streak records, and partner information at any time by clearing your browser's site data/cookies for FocusPact, or by resetting the app in settings.</li>
+            <li>Uninstalling the app removes all associated cached assets.</li>
+        </ul>
+
+        <h2>5. Children’s Privacy</h2>
+        <p>FocusPact does not knowingly collect personally identifiable information from children under the age of 13. If you believe a child has provided us with personal information, please contact us to request removal.</p>
+
+        <h2>6. Third-Party Services</h2>
+        <p>FocusPact is hosted on Netlify and utilizes Google Fonts. These services process technical network requests (IP addresses, user-agent headers) strictly as necessary to deliver web assets in accordance with their respective privacy policies.</p>
+
+        <h2>7. Changes to This Privacy Policy</h2>
+        <p>We may update this Privacy Policy from time to time. Any revisions will be reflected on this page with an updated "Last Updated" date.</p>
+
+        <h2>8. Contact Us</h2>
+        <p>If you have any questions or feedback regarding this Privacy Policy, you can reach out via:</p>
+        <ul>
+            <li><strong>Developer:</strong> FocusPact Open Team</li>
+            <li><strong>Website:</strong> <a href="https://focusjail.netlify.app" style="color: var(--primary);">focusjail.netlify.app</a></li>
+            <li><strong>Repository & Issues:</strong> <a href="https://github.com/iamwarriorofmyuniverse-coder/focusjail-backend" style="color: var(--primary);">GitHub Project Issues</a></li>
+        </ul>
+
+        <a href="./" class="back-btn">← Back to FocusPact</a>
+    </div>
+</body>
+
+</html>
