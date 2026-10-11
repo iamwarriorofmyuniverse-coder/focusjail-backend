@@ -2215,12 +2215,21 @@
                 <button class="preset-btn" onclick="promptCustomTimer()">Custom ⚙️</button>
             </div>
 
-            <!-- Focus Soundscape Selector -->
+            <!-- Focus Soundscape Selector & Volume Slider -->
             <select class="soundscape-select" id="soundscapeSelect" onchange="changeSoundscape(this.value)">
                 <option value="none">🔇 Silent Focus</option>
-                <option value="brown">🌊 Calming Brown Noise (Deep Concentration)</option>
-                <option value="rain">🌧️ Soft Rain & Ambient Synth</option>
+                <option value="alpha" selected>🧠 10Hz Alpha Waves (Deep Flow & Neuro-Focus)</option>
+                <option value="rain">🌧️ Atmospheric Gentle Rain (Organic Masking)</option>
+                <option value="brown">🌊 Warm Brown Noise (Deep Concentration)</option>
+                <option value="campfire">🔥 Cozy Hearth & Crackling Ember</option>
             </select>
+
+            <div id="soundscapeVolWrap" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px auto 10px;">
+                <span style="font-size: 13px;">🔉</span>
+                <input type="range" id="soundscapeVolume" min="0" max="100" value="75" oninput="setSoundscapeVolume(this.value)" style="width: 130px; accent-color: var(--primary); cursor: pointer;" title="Soundscape Volume" />
+                <span style="font-size: 13px;">🔊</span>
+                <span id="soundscapeVolLabel" style="font-size: 11px; color: var(--text-muted); font-weight: 600; min-width: 28px;">75%</span>
+            </div>
 
             <div class="timer-display" id="timerTime">25:00</div>
             
@@ -2388,7 +2397,10 @@
         var timerSeconds = 25 * 60;
         var currentPreset = 25;
         var timerRunning = false;
-        var activeSoundscapeNode = null;
+        var activeSoundscapeNodes = [];
+        var soundscapeMasterGain = null;
+        var soundscapeVolume = 0.75;
+        var activeSoundscapeInterval = null;
         var audioCtx = null;
         var deferredPrompt = null;
 
@@ -2724,7 +2736,21 @@
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
+            if (!soundscapeMasterGain) {
+                soundscapeMasterGain = audioCtx.createGain();
+                soundscapeMasterGain.gain.setValueAtTime(soundscapeVolume, audioCtx.currentTime);
+                soundscapeMasterGain.connect(audioCtx.destination);
+            }
             if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function setSoundscapeVolume(val) {
+            soundscapeVolume = Math.max(0, Math.min(1, val / 100));
+            var label = document.getElementById('soundscapeVolLabel');
+            if (label) label.textContent = Math.round(val) + '%';
+            if (soundscapeMasterGain && audioCtx) {
+                soundscapeMasterGain.gain.setValueAtTime(soundscapeVolume, audioCtx.currentTime);
+            }
         }
 
         function playTone(freq, type, duration, vol = 0.1) {
@@ -2758,16 +2784,28 @@
                 btn.innerHTML = soundEnabled ? '🔊' : '🔇';
                 btn.title = soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted';
             }
+            if (!soundEnabled) {
+                stopSoundscape();
+            } else if (timerRunning) {
+                var sel = document.getElementById('soundscapeSelect');
+                if (sel) changeSoundscape(sel.value);
+            }
             showToast(soundEnabled ? 'Audio Effects On' : 'Audio Effects Muted');
         }
 
         function stopSoundscape() {
-            if (activeSoundscapeNode) {
-                try {
-                    activeSoundscapeNode.stop();
-                    activeSoundscapeNode.disconnect();
-                } catch(e) {}
-                activeSoundscapeNode = null;
+            if (activeSoundscapeNodes && activeSoundscapeNodes.length > 0) {
+                activeSoundscapeNodes.forEach(function(node) {
+                    try {
+                        if (node.stop) node.stop();
+                        if (node.disconnect) node.disconnect();
+                    } catch(e) {}
+                });
+                activeSoundscapeNodes = [];
+            }
+            if (activeSoundscapeInterval) {
+                clearInterval(activeSoundscapeInterval);
+                activeSoundscapeInterval = null;
             }
         }
 
@@ -2776,40 +2814,190 @@
             if (type === 'none' || !soundEnabled) return;
             initAudio();
 
-            if (type === 'brown') {
-                var bufferSize = 2 * audioCtx.sampleRate;
-                var noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                var output = noiseBuffer.getChannelData(0);
-                var lastOut = 0.0;
-                for (var i = 0; i < bufferSize; i++) {
-                    var white = Math.random() * 2 - 1;
-                    output[i] = (lastOut + (0.02 * white)) / 1.02;
-                    lastOut = output[i];
-                    output[i] *= 3.5;
+            try {
+                if (type === 'alpha') {
+                    // 10Hz Binaural Alpha Waves + Warm Ambient Pad
+                    var oscL = audioCtx.createOscillator();
+                    var oscR = audioCtx.createOscillator();
+                    oscL.type = 'sine';
+                    oscR.type = 'sine';
+                    oscL.frequency.value = 216; // A3 base
+                    oscR.frequency.value = 226; // +10Hz Alpha beat difference
+
+                    var gainBinaural = audioCtx.createGain();
+                    gainBinaural.gain.value = 0.38;
+
+                    if (audioCtx.createStereoPanner) {
+                        var pannerL = audioCtx.createStereoPanner();
+                        pannerL.pan.value = -0.8;
+                        var pannerR = audioCtx.createStereoPanner();
+                        pannerR.pan.value = 0.8;
+                        oscL.connect(pannerL);
+                        pannerL.connect(gainBinaural);
+                        oscR.connect(pannerR);
+                        pannerR.connect(gainBinaural);
+                    } else {
+                        oscL.connect(gainBinaural);
+                        oscR.connect(gainBinaural);
+                    }
+                    gainBinaural.connect(soundscapeMasterGain);
+
+                    // Warm harmonic sub-drone
+                    var padRoot = audioCtx.createOscillator();
+                    padRoot.type = 'triangle';
+                    padRoot.frequency.value = 108; // A2 deep foundation
+
+                    var padHarmonic = audioCtx.createOscillator();
+                    padHarmonic.type = 'sine';
+                    padHarmonic.frequency.value = 324; // E4 harmonic fifth
+
+                    var padFilter = audioCtx.createBiquadFilter();
+                    padFilter.type = 'lowpass';
+                    padFilter.frequency.value = 380;
+
+                    var padGain = audioCtx.createGain();
+                    padGain.gain.value = 0.28;
+
+                    padRoot.connect(padFilter);
+                    padHarmonic.connect(padFilter);
+                    padFilter.connect(padGain);
+                    padGain.connect(soundscapeMasterGain);
+
+                    // Gentle breathing LFO (0.07 Hz swell)
+                    var lfo = audioCtx.createOscillator();
+                    lfo.frequency.value = 0.07;
+                    var lfoGain = audioCtx.createGain();
+                    lfoGain.gain.value = 0.08;
+                    lfo.connect(lfoGain);
+                    lfoGain.connect(padGain.gain);
+
+                    oscL.start();
+                    oscR.start();
+                    padRoot.start();
+                    padHarmonic.start();
+                    lfo.start();
+
+                    activeSoundscapeNodes = [oscL, oscR, padRoot, padHarmonic, lfo, gainBinaural, padGain, lfoGain];
+
+                } else if (type === 'rain') {
+                    // Atmospheric Rain with Organic Patter
+                    var bufferSize = 2 * audioCtx.sampleRate;
+                    var noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    var output = noiseBuffer.getChannelData(0);
+                    var lastOut = 0.0;
+                    for (var i = 0; i < bufferSize; i++) {
+                        var white = Math.random() * 2 - 1;
+                        output[i] = (lastOut + (0.05 * white)) / 1.05;
+                        lastOut = output[i];
+                        output[i] *= 3.0;
+                    }
+
+                    var rainNoise = audioCtx.createBufferSource();
+                    rainNoise.buffer = noiseBuffer;
+                    rainNoise.loop = true;
+
+                    var filterHigh = audioCtx.createBiquadFilter();
+                    filterHigh.type = 'bandpass';
+                    filterHigh.frequency.value = 1200;
+                    filterHigh.Q.value = 0.7;
+
+                    var filterLow = audioCtx.createBiquadFilter();
+                    filterLow.type = 'lowpass';
+                    filterLow.frequency.value = 850;
+
+                    var rainGain = audioCtx.createGain();
+                    rainGain.gain.value = 0.44; // Rich and fully audible
+
+                    rainNoise.connect(filterHigh);
+                    filterHigh.connect(rainGain);
+                    rainNoise.connect(filterLow);
+                    filterLow.connect(rainGain);
+                    rainGain.connect(soundscapeMasterGain);
+
+                    rainNoise.start();
+                    activeSoundscapeNodes = [rainNoise, filterHigh, filterLow, rainGain];
+
+                } else if (type === 'brown') {
+                    // Deep Warm Brown Noise (Waterfall / Deep Work Masking)
+                    var bufferSize = 2 * audioCtx.sampleRate;
+                    var noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    var output = noiseBuffer.getChannelData(0);
+                    var lastOut = 0.0;
+                    for (var i = 0; i < bufferSize; i++) {
+                        var white = Math.random() * 2 - 1;
+                        output[i] = (lastOut + (0.02 * white)) / 1.02;
+                        lastOut = output[i];
+                        output[i] *= 4.2;
+                    }
+                    var noise = audioCtx.createBufferSource();
+                    noise.buffer = noiseBuffer;
+                    noise.loop = true;
+
+                    var filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 420;
+
+                    var gain = audioCtx.createGain();
+                    gain.gain.value = 0.48; // Boosted loudness
+
+                    noise.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(soundscapeMasterGain);
+                    noise.start();
+
+                    activeSoundscapeNodes = [noise, filter, gain];
+
+                } else if (type === 'campfire') {
+                    // Cozy Fireplace / Hearth (Low rumble + random popping ember crackles)
+                    var bufferSize = 2 * audioCtx.sampleRate;
+                    var noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    var output = noiseBuffer.getChannelData(0);
+                    var lastOut = 0.0;
+                    for (var i = 0; i < bufferSize; i++) {
+                        var white = Math.random() * 2 - 1;
+                        output[i] = (lastOut + (0.02 * white)) / 1.02;
+                        lastOut = output[i];
+                        output[i] *= 3.5;
+                    }
+                    var baseNoise = audioCtx.createBufferSource();
+                    baseNoise.buffer = noiseBuffer;
+                    baseNoise.loop = true;
+
+                    var filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 260;
+
+                    var fireGain = audioCtx.createGain();
+                    fireGain.gain.value = 0.38;
+
+                    baseNoise.connect(filter);
+                    filter.connect(fireGain);
+                    fireGain.connect(soundscapeMasterGain);
+                    baseNoise.start();
+
+                    activeSoundscapeNodes = [baseNoise, filter, fireGain];
+
+                    // Realistic crackle pop generator
+                    activeSoundscapeInterval = setInterval(function() {
+                        if (!audioCtx || audioCtx.state !== 'running' || !soundEnabled) return;
+                        try {
+                            if (Math.random() > 0.35) {
+                                var popOsc = audioCtx.createOscillator();
+                                var popGain = audioCtx.createGain();
+                                popOsc.type = 'square';
+                                popOsc.frequency.value = 800 + Math.random() * 1400;
+                                popGain.gain.setValueAtTime(0.05 + Math.random() * 0.07, audioCtx.currentTime);
+                                popGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+                                popOsc.connect(popGain);
+                                popGain.connect(soundscapeMasterGain);
+                                popOsc.start();
+                                popOsc.stop(audioCtx.currentTime + 0.05);
+                            }
+                        } catch(e) {}
+                    }, 130);
                 }
-                var noise = audioCtx.createBufferSource();
-                noise.buffer = noiseBuffer;
-                noise.loop = true;
-                var filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.value = 350;
-                var gain = audioCtx.createGain();
-                gain.gain.value = 0.14;
-                noise.connect(filter);
-                filter.connect(gain);
-                gain.connect(audioCtx.destination);
-                noise.start();
-                activeSoundscapeNode = noise;
-            } else if (type === 'rain') {
-                var osc = audioCtx.createOscillator();
-                var gain = audioCtx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.value = 110;
-                gain.gain.value = 0.05;
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                activeSoundscapeNode = osc;
+            } catch (err) {
+                console.error("Soundscape error:", err);
             }
         }
 
@@ -3902,7 +4090,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=22').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=23').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
