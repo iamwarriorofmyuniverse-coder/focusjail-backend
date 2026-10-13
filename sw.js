@@ -1,5 +1,5 @@
 // FocusPact Service Worker
-const CACHE_NAME = 'focuspact-v26';
+const CACHE_NAME = 'focuspact-v27';
 const ASSETS = [
   './',
   './index.html',
@@ -26,17 +26,33 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
+// Stale-While-Revalidate: Return instant local cached assets (0ms) while revalidating in background
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
-  // Network first with instant cache update, cache fallback for offline
+
+  const url = new URL(e.request.url);
+
+  // Third-party requests (fonts, analytics, external APIs): pass through or network-first
+  if (url.origin !== self.location.origin) {
+    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+    return;
+  }
+
+  // Core application navigation and assets: serve from cache instantly, update silently in background
   e.respondWith(
-    fetch(e.request).then((networkResponse) => {
-      if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
-        const clone = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
-      }
-      return networkResponse;
-    }).catch(() => caches.match(e.request))
+    caches.match(e.request).then((cachedResponse) => {
+      const fetchPromise = fetch(e.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+          }
+          return networkResponse;
+        })
+        .catch(() => null);
+
+      return cachedResponse || fetchPromise;
+    })
   );
 });
 
