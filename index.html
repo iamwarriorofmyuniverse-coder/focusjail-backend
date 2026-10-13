@@ -67,9 +67,6 @@
     </script>
 
     <style>
-        /* Instant Zero-Flicker Screen Display for Returning Users */
-        html.has-user #screen1 { display: none !important; }
-        html.has-user #screen4 { display: flex !important; }
 
         /* Instant PWA Installed Hide Rules */
         @media all and (display-mode: standalone), all and (display-mode: window-controls-overlay), all and (display-mode: minimal-ui), all and (display-mode: fullscreen) {
@@ -668,6 +665,7 @@
             display: none;
             width: 100%;
             max-width: 460px;
+            margin: 0 auto;
             position: relative;
             z-index: 10;
         }
@@ -1790,6 +1788,10 @@
             gap: 14px;
         }
 
+        .dashboard-side-col > * {
+            margin-bottom: 0 !important;
+        }
+
         /* Laptop & Desktop (>= 860px) */
         @media screen and (min-width: 860px) {
             body {
@@ -1797,8 +1799,20 @@
             }
 
             .screen {
-                max-width: 980px;
+                max-width: 520px;
                 width: 100%;
+                margin: 0 auto;
+            }
+
+            #screen4,
+            #screenSquad,
+            #screenAnalytics {
+                max-width: 980px;
+            }
+
+            #screenCard,
+            #screen7 {
+                max-width: 680px;
             }
 
             .desktop-only {
@@ -1849,8 +1863,8 @@
                 gap: 16px;
             }
 
-            .dashboard-side-col .streak-card {
-                margin-bottom: 0;
+            .dashboard-side-col > * {
+                margin-bottom: 0 !important;
             }
 
             .card {
@@ -1872,6 +1886,7 @@
             .screen {
                 max-width: 480px;
                 width: 100%;
+                margin: 0 auto;
             }
 
             .modal-card {
@@ -2179,7 +2194,7 @@
     </div>
 
     <!-- SCREEN 1: WELCOME & ONBOARDING -->
-    <div id="screen1" class="screen active">
+    <div id="screen1" class="screen">
         <div class="card">
             <div class="hero-orb-wrap">
                 <img src="icon-192.png" alt="FocusPact Hologram Icon" class="hero-app-icon" />
@@ -2641,6 +2656,21 @@
             <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
         </div>
     </div>
+
+    <!-- Instant Zero-Flicker Screen Activation (Synchronous before first paint) -->
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('name')) {
+                    var s4 = document.getElementById('screen4');
+                    if (s4) s4.classList.add('active');
+                } else {
+                    var s1 = document.getElementById('screen1');
+                    if (s1) s1.classList.add('active');
+                }
+            } catch (e) {}
+        })();
+    </script>
 
     <!-- Confetti Physics Engine -->
     <script>
@@ -4608,7 +4638,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=27').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=28').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
