@@ -115,6 +115,10 @@
             --success: #10b981;
             --danger: #ef4444;
             --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --btn-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            --btn-shadow-hover: 0 6px 28px rgba(102, 126, 234, 0.55);
+            --dot-glow: #f093fb;
+            --focus-ring: rgba(102, 126, 234, 0.2);
         }
 
         /* Dark Theme */
@@ -144,6 +148,10 @@
             --squad-bg: rgba(255, 255, 255, 0.03);
             --kbd-bg: rgba(255, 255, 255, 0.08);
             --kbd-border: rgba(255, 255, 255, 0.14);
+            --btn-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            --btn-shadow-hover: 0 6px 28px rgba(102, 126, 234, 0.55);
+            --dot-glow: #f093fb;
+            --focus-ring: rgba(102, 126, 234, 0.25);
         }
 
         /* Light Theme */
@@ -173,6 +181,10 @@
             --squad-bg: rgba(0, 0, 0, 0.03);
             --kbd-bg: rgba(0, 0, 0, 0.06);
             --kbd-border: rgba(0, 0, 0, 0.12);
+            --btn-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            --btn-shadow-hover: 0 6px 28px rgba(102, 126, 234, 0.45);
+            --dot-glow: #667eea;
+            --focus-ring: rgba(102, 126, 234, 0.2);
         }
 
         /* OLED Pure Black Theme (0% Light, Battery Saver, Zero Glare) */
@@ -202,35 +214,48 @@
             --squad-bg: rgba(255, 255, 255, 0.03);
             --kbd-bg: #18181b;
             --kbd-border: rgba(255, 255, 255, 0.18);
+            --grad: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            --primary: #3b82f6;
+            --btn-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            --btn-shadow-hover: 0 6px 28px rgba(37, 99, 235, 0.55);
+            --dot-glow: #3b82f6;
+            --focus-ring: rgba(59, 130, 246, 0.3);
         }
 
-        /* Warm Paper (E-Ink) Theme (Sepia, Bookish, Anti-Eye-Strain) */
+        /* Warm Editorial (Kyoto Oat & Amber) Theme (Cashmere, Espresso Ink, Golden Hour Glow) */
         html[data-theme="paper"] {
-            --bg: #f5efe4;
-            --surface: rgba(252, 249, 242, 0.94);
-            --surface-hover: rgba(247, 242, 233, 0.98);
-            --border: rgba(87, 75, 62, 0.14);
-            --border-hover: rgba(87, 75, 62, 0.26);
-            --border-focus: #b45309;
-            --text-main: #29241e;
-            --text-sub: #5f5446;
-            --text-muted: #8c7e6f;
-            --input-bg: rgba(237, 230, 219, 0.9);
-            --card-shadow: 0 14px 34px rgba(87, 75, 62, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.85);
-            --btn-sec-bg: rgba(87, 75, 62, 0.06);
-            --btn-sec-hover: rgba(87, 75, 62, 0.12);
-            --ambient-top: rgba(217, 119, 6, 0.07);
-            --ambient-bottom: rgba(180, 83, 9, 0.04);
-            --verdict-bg: rgba(244, 237, 226, 0.95);
-            --verdict-text: #29241e;
-            --toggle-bg: rgba(87, 75, 62, 0.08);
-            --toast-bg: rgba(252, 249, 242, 0.98);
-            --checkbox-border: rgba(87, 75, 62, 0.28);
-            --chart-bar-bg: rgba(87, 75, 62, 0.08);
-            --tile-empty: rgba(87, 75, 62, 0.08);
-            --squad-bg: rgba(87, 75, 62, 0.04);
-            --kbd-bg: rgba(87, 75, 62, 0.08);
-            --kbd-border: rgba(87, 75, 62, 0.18);
+            --bg: #f8f6f0;
+            --surface: rgba(255, 253, 248, 0.94);
+            --surface-hover: #ffffff;
+            --border: rgba(68, 54, 38, 0.1);
+            --border-hover: rgba(194, 94, 26, 0.35);
+            --border-focus: #c25e1a;
+            --text-main: #1c1917;
+            --text-sub: #574e44;
+            --text-muted: #8c8072;
+            --input-bg: rgba(244, 240, 232, 0.85);
+            --card-shadow: 0 16px 36px rgba(70, 50, 30, 0.06), 0 2px 6px rgba(70, 50, 30, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+            --btn-sec-bg: rgba(90, 70, 48, 0.06);
+            --btn-sec-hover: rgba(90, 70, 48, 0.12);
+            --ambient-top: rgba(245, 158, 11, 0.16);
+            --ambient-bottom: rgba(194, 94, 26, 0.08);
+            --verdict-bg: rgba(255, 253, 248, 0.96);
+            --verdict-text: #1c1917;
+            --toggle-bg: rgba(90, 70, 48, 0.08);
+            --toast-bg: rgba(255, 253, 248, 0.98);
+            --checkbox-border: rgba(194, 94, 26, 0.35);
+            --chart-bar-bg: rgba(194, 94, 26, 0.14);
+            --tile-empty: rgba(90, 70, 48, 0.07);
+            --squad-bg: rgba(90, 70, 48, 0.03);
+            --kbd-bg: rgba(90, 70, 48, 0.07);
+            --kbd-border: rgba(90, 70, 48, 0.18);
+            --grad: linear-gradient(135deg, #c25e1a 0%, #d97706 60%, #f59e0b 100%);
+            --primary: #c25e1a;
+            --accent: #f59e0b;
+            --btn-shadow: 0 4px 20px rgba(194, 94, 26, 0.35);
+            --btn-shadow-hover: 0 6px 28px rgba(194, 94, 26, 0.5);
+            --dot-glow: rgba(245, 158, 11, 0.6);
+            --focus-ring: rgba(194, 94, 26, 0.2);
         }
 
         /* Matcha Zen Theme (Calming Forest & Evergreen, Anxiety Reducer) */
@@ -260,6 +285,12 @@
             --squad-bg: rgba(52, 211, 153, 0.04);
             --kbd-bg: rgba(52, 211, 153, 0.1);
             --kbd-border: rgba(52, 211, 153, 0.2);
+            --grad: linear-gradient(135deg, #059669 0%, #10b981 60%, #34d399 100%);
+            --primary: #10b981;
+            --btn-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+            --btn-shadow-hover: 0 6px 28px rgba(16, 185, 129, 0.5);
+            --dot-glow: #10b981;
+            --focus-ring: rgba(16, 185, 129, 0.2);
         }
 
         /* Neon Synthwave Theme (Cyberpunk Violet, Electric Pink & Cyan) */
@@ -289,6 +320,12 @@
             --squad-bg: rgba(244, 63, 94, 0.04);
             --kbd-bg: rgba(244, 63, 94, 0.12);
             --kbd-border: rgba(244, 63, 94, 0.25);
+            --grad: linear-gradient(135deg, #f43f5e 0%, #d946ef 60%, #a855f7 100%);
+            --primary: #f43f5e;
+            --btn-shadow: 0 4px 20px rgba(244, 63, 94, 0.4);
+            --btn-shadow-hover: 0 6px 28px rgba(244, 63, 94, 0.55);
+            --dot-glow: #f43f5e;
+            --focus-ring: rgba(244, 63, 94, 0.25);
         }
 
         * {
@@ -329,7 +366,8 @@
             scrollbar-color: rgba(0, 0, 0, 0.16) transparent;
         }
         html[data-theme="oled"] ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); }
-        html[data-theme="paper"] ::-webkit-scrollbar-thumb { background: rgba(87, 75, 62, 0.2); }
+        html[data-theme="paper"] * { scrollbar-color: rgba(194, 94, 26, 0.25) transparent; }
+        html[data-theme="paper"] ::-webkit-scrollbar-thumb { background: rgba(194, 94, 26, 0.25); }
         html[data-theme="matcha"] ::-webkit-scrollbar-thumb { background: rgba(52, 211, 153, 0.2); }
         html[data-theme="cyber"] ::-webkit-scrollbar-thumb { background: rgba(244, 63, 94, 0.25); }
 
@@ -339,6 +377,7 @@
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 10px;
             margin: 14px 0 16px;
+            touch-action: pan-y;
         }
         .theme-card {
             background: var(--btn-sec-bg);
@@ -351,6 +390,7 @@
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
             -webkit-user-select: none;
+            touch-action: pan-y;
         }
         .theme-card:hover {
             transform: translateY(-2px);
@@ -655,7 +695,7 @@
             font-weight: 700;
             letter-spacing: 1.8px;
             text-transform: uppercase;
-            color: #667eea;
+            color: var(--primary, #667eea);
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -667,7 +707,7 @@
             height: 7px;
             border-radius: 50%;
             background: var(--grad);
-            box-shadow: 0 0 8px #f093fb;
+            box-shadow: 0 0 8px var(--dot-glow, #f093fb);
         }
 
         h1 {
@@ -704,7 +744,7 @@
 
         input:focus, textarea:focus, select:focus {
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 0 0 3px var(--focus-ring, rgba(102, 126, 234, 0.2));
         }
 
         input::placeholder, textarea::placeholder {
@@ -725,7 +765,7 @@
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: var(--btn-shadow, 0 4px 20px rgba(102, 126, 234, 0.4));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -734,7 +774,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 28px rgba(102, 126, 234, 0.55);
+            box-shadow: var(--btn-shadow-hover, 0 6px 28px rgba(102, 126, 234, 0.55));
         }
 
         .btn-primary:active {
@@ -1627,30 +1667,73 @@
             margin-bottom: 18px;
         }
 
-        /* Modal Overlay */
+        /* Modal Overlay & Responsive Scrollable Card */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.72);
             backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(28px + env(safe-area-inset-bottom, 0px));
         }
         .modal-overlay.active {
             display: flex;
+            align-items: center;
+            justify-content: center;
             animation: screenFadeIn 0.25s ease;
         }
         .modal-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 28px;
+            padding: 28px 24px;
             max-width: 520px;
             width: 100%;
+            max-height: calc(88vh);
+            max-height: calc(88dvh);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
             box-shadow: var(--card-shadow);
+            margin: auto;
+            position: relative;
+            touch-action: pan-y;
+        }
+        .modal-card::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-card::-webkit-scrollbar-thumb {
+            background: var(--border-hover);
+            border-radius: 4px;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        .modal-close-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-main);
+            border-color: var(--border-hover);
+            transform: scale(1.05);
         }
         .shortcut-row {
             display: flex;
@@ -1779,6 +1862,12 @@
                 width: 100%;
             }
 
+            .modal-card {
+                padding: 22px 16px;
+                border-radius: 20px;
+                max-height: calc(90dvh - 20px);
+            }
+
             .dashboard-primary-col,
             .dashboard-side-col {
                 width: 100%;
@@ -1879,6 +1968,7 @@
     <!-- MODAL: KEYBOARD & TOUCHPAD SHORTCUTS -->
     <div class="modal-overlay" id="shortcutsModal" onclick="if(event.target === this) toggleShortcutsModal()">
         <div class="modal-card">
+            <button class="modal-close-btn" onclick="toggleShortcutsModal()" title="Close Shortcuts" aria-label="Close">✕</button>
             <div class="label"><span class="label-dot"></span> Device & Controls Guide</div>
             <h1>Productivity Shortcuts</h1>
             <p style="margin-bottom: 16px;">Fast controls tailored for Mobile, Laptop, and PC workflows.</p>
@@ -1946,6 +2036,7 @@
     <!-- MODAL: THEME & AESTHETIC STUDIO -->
     <div class="modal-overlay" id="themeModal" onclick="if(event.target === this) closeThemeModal()">
         <div class="modal-card" style="max-width: 480px;">
+            <button class="modal-close-btn" onclick="closeThemeModal()" title="Close Theme Studio" aria-label="Close">✕</button>
             <div class="label"><span class="label-dot"></span> Visual Atmosphere</div>
             <h1>Theme & Aesthetic Studio</h1>
             <p style="margin-bottom: 14px; font-size: 13px;">Personalize your focus environment for day, night, or deep study.</p>
@@ -1960,7 +2051,7 @@
                         <span class="theme-color-dot" style="background: #667eea;"></span>
                     </div>
                     <div class="theme-card-title">🌌 Cyber Midnight</div>
-                    <div class="theme-card-sub">Default cosmic dark with indigo glow</div>
+                    <div class="theme-card-sub">Cosmic obsidian with indigo-violet glow</div>
                 </div>
 
                 <!-- Theme 2: Studio Light -->
@@ -1987,16 +2078,16 @@
                     <div class="theme-card-sub">True black, battery saver, zero glare</div>
                 </div>
 
-                <!-- Theme 4: Warm Paper E-Ink -->
+                <!-- Theme 4: Warm Editorial (Kyoto Oat & Amber) -->
                 <div class="theme-card" id="themeCard-paper" onclick="selectTheme('paper')">
                     <span class="theme-active-tag">Active</span>
                     <div class="theme-preview-bubble">
-                        <span class="theme-color-dot" style="background: #f5efe4;"></span>
-                        <span class="theme-color-dot" style="background: #fcf9f2; border-color: #d1c7b7;"></span>
-                        <span class="theme-color-dot" style="background: #b45309;"></span>
+                        <span class="theme-color-dot" style="background: #f8f6f0;"></span>
+                        <span class="theme-color-dot" style="background: #ffffff; border-color: rgba(68, 54, 38, 0.25);"></span>
+                        <span class="theme-color-dot" style="background: #c25e1a;"></span>
                     </div>
-                    <div class="theme-card-title">📜 Warm Paper (E-Ink)</div>
-                    <div class="theme-card-sub">Sepia tone, book-like, anti-eye-fatigue</div>
+                    <div class="theme-card-title">📜 Warm Editorial</div>
+                    <div class="theme-card-sub">Cashmere oat, espresso ink & amber glow</div>
                 </div>
 
                 <!-- Theme 5: Matcha Zen -->
@@ -2035,6 +2126,7 @@
     <!-- MODAL: DATA VAULT & SYNC -->
     <div class="modal-overlay" id="syncModal" onclick="if(event.target === this) closeSyncModal()">
         <div class="modal-card" style="max-width: 480px; text-align: center;">
+            <button class="modal-close-btn" onclick="closeSyncModal()" title="Close Data Vault" aria-label="Close">✕</button>
             <div style="font-size: 34px; margin-bottom: 6px;">🛡️</div>
             <div class="label" style="justify-content: center;"><span class="label-dot"></span> Backup & Cloud Vault</div>
             <h1>Data Vault & Sync</h1>
@@ -2795,7 +2887,7 @@
             dark: { name: 'Cyber Midnight', emoji: '🌌', color: '#090a10' },
             light: { name: 'Studio Light', emoji: '☀️', color: '#f5f7fb' },
             oled: { name: 'OLED Pure Black', emoji: '🖤', color: '#000000' },
-            paper: { name: 'Warm Paper (E-Ink)', emoji: '📜', color: '#f5efe4' },
+            paper: { name: 'Warm Editorial', emoji: '📜', color: '#f8f6f0' },
             matcha: { name: 'Matcha Zen', emoji: '🍵', color: '#091410' },
             cyber: { name: 'Neon Synthwave', emoji: '⚡', color: '#080214' }
         };
@@ -2846,13 +2938,18 @@
             if (modal) {
                 updateThemeCardsActiveState();
                 modal.classList.add('active');
+                var card = modal.querySelector('.modal-card');
+                if (card) card.scrollTop = 0;
                 playClick();
             }
         }
 
         function closeThemeModal() {
             var modal = document.getElementById('themeModal');
-            if (modal) modal.classList.remove('active');
+            if (modal) {
+                modal.classList.remove('active');
+                playClick();
+            }
         }
 
         function selectTheme(theme) {
@@ -4255,7 +4352,7 @@
                 dark: '#090a10',
                 light: '#ffffff',
                 oled: '#000000',
-                paper: '#f5efe4',
+                paper: '#f8f6f0',
                 matcha: '#091410',
                 cyber: '#080214'
             };
@@ -4263,7 +4360,7 @@
                 dark: '#12141e',
                 light: '#f8fafc',
                 oled: '#0d0d0d',
-                paper: '#fcf9f2',
+                paper: '#ffffff',
                 matcha: '#0f1c17',
                 cyber: '#140924'
             };
@@ -4271,7 +4368,7 @@
                 dark: '#0a0b12',
                 light: '#ffffff',
                 oled: '#050505',
-                paper: '#f5efe4',
+                paper: '#f3eee5',
                 matcha: '#091410',
                 cyber: '#0c0418'
             };
@@ -4398,6 +4495,16 @@
 
             // Escape key always works
             if (e.key === 'Escape') {
+                var thModal = document.getElementById('themeModal');
+                if (thModal && thModal.classList.contains('active')) {
+                    closeThemeModal();
+                    return;
+                }
+                var syModal = document.getElementById('syncModal');
+                if (syModal && syModal.classList.contains('active')) {
+                    closeSyncModal();
+                    return;
+                }
                 var instModal = document.getElementById('installModal');
                 if (instModal && instModal.classList.contains('active')) {
                     closeInstallModal();
@@ -4489,7 +4596,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=25').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=26').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
