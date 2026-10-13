@@ -43,14 +43,18 @@
                 document.documentElement.classList.add('pwa-installed');
             }
 
-            var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || (window.innerWidth < 860);
-            if (isTouch) {
-                document.documentElement.classList.add('touch-device');
-                document.documentElement.classList.remove('desktop-device');
-            } else {
-                document.documentElement.classList.add('desktop-device');
-                document.documentElement.classList.remove('touch-device');
+            function updateDeviceMode() {
+                var isMobile = (window.innerWidth < 860);
+                if (isMobile) {
+                    document.documentElement.classList.add('touch-device');
+                    document.documentElement.classList.remove('desktop-device');
+                } else {
+                    document.documentElement.classList.add('desktop-device');
+                    document.documentElement.classList.remove('touch-device');
+                }
             }
+            updateDeviceMode();
+            window.addEventListener('resize', updateDeviceMode);
         })();
     </script>
 
@@ -297,7 +301,6 @@
         /* Touchpad / Laptop Ergonomics & Momentum Scrolling */
         html, body {
             overscroll-behavior-x: none;
-            scroll-behavior: smooth;
         }
 
         /* Custom Sleek Scrollbar */
@@ -1676,26 +1679,47 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
-        /* Laptop & Touchpad Responsive Layout Engine (>= 860px AND fine pointer) */
-        @media screen and (min-width: 860px) and (hover: hover) and (pointer: fine) {
-            .screen {
-                max-width: 960px;
+        /* Base Dashboard Layout (Mobile Default: Single Column Stack with Clean Spacing) */
+        .laptop-grid-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .dashboard-primary-col,
+        .dashboard-side-col {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* Laptop & Desktop (>= 860px) */
+        @media screen and (min-width: 860px) {
+            body {
+                padding: 88px 24px 60px;
             }
 
-            html:not(.touch-device) .desktop-only {
+            .screen {
+                max-width: 980px;
+                width: 100%;
+            }
+
+            .desktop-only {
                 display: inline-flex !important;
             }
 
-            html:not(.touch-device) .mobile-only {
+            .mobile-only {
                 display: none !important;
             }
 
-            html:not(.touch-device) .kbd-badge,
-            html:not(.touch-device) .goal-num-badge {
+            .kbd-badge,
+            .goal-num-badge {
                 display: inline-flex !important;
             }
 
-            html:not(.touch-device) .btn-primary .kbd-badge {
+            .btn-primary .kbd-badge {
                 display: inline-flex !important;
                 background: rgba(255, 255, 255, 0.22);
                 border-color: rgba(255, 255, 255, 0.38);
@@ -1703,7 +1727,7 @@
                 font-weight: 700;
             }
 
-            html:not(.touch-device) .btn-secondary:hover .kbd-badge {
+            .btn-secondary:hover .kbd-badge {
                 color: var(--text-main);
                 border-color: var(--border-hover);
             }
@@ -1718,10 +1742,20 @@
 
             .laptop-grid-dashboard {
                 display: grid;
-                grid-template-columns: minmax(0, 1.25fr) 360px;
-                gap: 20px;
+                grid-template-columns: minmax(0, 1.35fr) 350px;
+                gap: 24px;
                 width: 100%;
                 align-items: start;
+            }
+
+            .dashboard-primary-col,
+            .dashboard-side-col {
+                width: 100%;
+                gap: 16px;
+            }
+
+            .dashboard-side-col .streak-card {
+                margin-bottom: 0;
             }
 
             .card {
@@ -1734,21 +1768,27 @@
             }
         }
 
-        /* Mobile & Touch Devices (< 860px OR coarse pointer OR touch device) */
-        @media screen and (max-width: 859px), screen and (pointer: coarse), screen and (hover: none) {
+        /* Mobile & Tablet (< 860px) */
+        @media screen and (max-width: 859px) {
             body {
-                padding: calc(68px + env(safe-area-inset-top, 0px)) 14px calc(36px + env(safe-area-inset-bottom, 0px));
-                -webkit-user-select: none;
-                user-select: none;
+                padding: calc(64px + env(safe-area-inset-top, 0px)) 12px calc(40px + env(safe-area-inset-bottom, 0px));
             }
-            input, textarea {
-                -webkit-user-select: text;
-                user-select: text;
+
+            .screen {
+                max-width: 480px;
+                width: 100%;
+            }
+
+            .dashboard-primary-col,
+            .dashboard-side-col {
+                width: 100%;
+                gap: 14px;
+            }
+
+            input, textarea, select {
                 font-size: 16px !important;
             }
-            select {
-                font-size: 16px !important;
-            }
+
             .top-nav {
                 top: calc(10px + env(safe-area-inset-top, 0px));
                 right: 10px;
@@ -1759,9 +1799,11 @@
                 scrollbar-width: none;
                 -webkit-overflow-scrolling: touch;
             }
+
             .top-nav::-webkit-scrollbar {
                 display: none;
             }
+
             .icon-btn {
                 min-width: 36px;
                 height: 36px;
@@ -1769,16 +1811,19 @@
                 padding: 0 6px;
                 border-radius: 12px;
             }
+
             .kbd-badge,
             .desktop-only,
             .shortcut-badge,
             .goal-num-badge {
                 display: none !important;
             }
+
             .mobile-only {
                 display: block !important;
             }
-            .btn-primary:active, .btn-secondary:active, .preset-btn:active, .dispatch-btn:active, .goal-item:active, .soundscape-pill:active, .bento-box:active {
+
+            .btn-primary:active, .btn-secondary:active, .preset-btn:active, .dispatch-btn:active, .soundscape-pill:active {
                 transform: scale(0.97);
             }
         }
@@ -2167,14 +2212,6 @@
                         </div>
                     </div>
 
-                    <!-- Footer Meta Links -->
-                    <div style="text-align: center; margin-top: 20px; font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 12px; align-items: center;">
-                        <a href="privacy.html" target="_blank" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
-                        <span>•</span>
-                        <a href="javascript:void(0)" onclick="openReviewModal()" style="color: #667eea; text-decoration: none; font-weight: 600;">Rate App ⭐</a>
-                        <span>•</span>
-                        <span>FocusPact v1.0</span>
-                    </div>
                 </div>
             </div>
 
@@ -2209,32 +2246,35 @@
                 <!-- 7-Day History Strip -->
                 <div class="week-strip" id="weekStrip"></div>
 
-                <!-- Sleek Quick Tools Hub (Compact 2-Column Bento Grid) -->
-                <div class="quick-tools-grid">
-                    <button class="quick-tool-btn" onclick="playClick(); goTo('screenTimer')" title="Deep Work Focus Session [F]">
-                        <span class="quick-tool-icon">⏱️</span>
-                        <span class="quick-tool-title">Focus Mode</span>
-                    </button>
-                    <button class="quick-tool-btn" onclick="playClick(); goTo('screenSquad')" title="Squad Pacts & Leaderboard [S]">
-                        <span class="quick-tool-icon">👥</span>
-                        <span class="quick-tool-title">Squad Pacts</span>
-                    </button>
-                    <button class="quick-tool-btn" onclick="playClick(); goTo('screenAnalytics')" title="Growth & Focus Graphs [A]">
-                        <span class="quick-tool-icon">📈</span>
-                        <span class="quick-tool-title">Analytics</span>
-                    </button>
-                    <button class="quick-tool-btn" onclick="playClick(); openCardScreen()" title="Milestone Achievement Card [C]">
-                        <span class="quick-tool-icon">📋</span>
-                        <span class="quick-tool-title">Share Card</span>
-                    </button>
-                    <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Atmosphere Studio [T]">
-                        <span class="quick-tool-icon">🎨</span>
-                        <span class="quick-tool-title">Themes</span>
-                    </button>
-                    <button class="quick-tool-btn" onclick="playClick(); openSyncModal()" title="Data Vault & Cross-Device Sync">
-                        <span class="quick-tool-icon">💾</span>
-                        <span class="quick-tool-title">Data Vault</span>
-                    </button>
+                <!-- Sleek Quick Tools Hub Card -->
+                <div class="card" style="padding: 18px 20px; margin-bottom: 0;">
+                    <div class="label" style="margin-bottom: 12px;"><span class="label-dot"></span> Quick Tools</div>
+                    <div class="quick-tools-grid" style="margin-bottom: 0;">
+                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenTimer')" title="Deep Work Focus Session [F]">
+                            <span class="quick-tool-icon">⏱️</span>
+                            <span class="quick-tool-title">Focus Mode</span>
+                        </button>
+                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenSquad')" title="Squad Pacts & Leaderboard [S]">
+                            <span class="quick-tool-icon">👥</span>
+                            <span class="quick-tool-title">Squad Pacts</span>
+                        </button>
+                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenAnalytics')" title="Growth & Focus Graphs [A]">
+                            <span class="quick-tool-icon">📈</span>
+                            <span class="quick-tool-title">Analytics</span>
+                        </button>
+                        <button class="quick-tool-btn" onclick="playClick(); openCardScreen()" title="Milestone Achievement Card [C]">
+                            <span class="quick-tool-icon">📋</span>
+                            <span class="quick-tool-title">Share Card</span>
+                        </button>
+                        <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Atmosphere Studio [T]">
+                            <span class="quick-tool-icon">🎨</span>
+                            <span class="quick-tool-title">Themes</span>
+                        </button>
+                        <button class="quick-tool-btn" onclick="playClick(); openSyncModal()" title="Data Vault & Cross-Device Sync">
+                            <span class="quick-tool-icon">💾</span>
+                            <span class="quick-tool-title">Data Vault</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Install App Teaser Banner -->
@@ -2249,6 +2289,15 @@
                     <button class="install-badge-btn">Install</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Footer Meta Links at very bottom of screen -->
+        <div style="text-align: center; margin-top: 24px; margin-bottom: 12px; font-size: 12px; color: var(--text-muted); display: flex; justify-content: center; gap: 14px; align-items: center; width: 100%;">
+            <a href="privacy.html" target="_blank" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
+            <span>•</span>
+            <a href="javascript:void(0)" onclick="openReviewModal()" style="color: #667eea; text-decoration: none; font-weight: 600;">Rate App ⭐</a>
+            <span>•</span>
+            <span>FocusPact v1.0</span>
         </div>
     </div>
 
@@ -4440,7 +4489,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=24').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=25').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
