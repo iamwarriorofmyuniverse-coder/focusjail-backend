@@ -1217,6 +1217,142 @@
             transform: scale(1.15);
         }
 
+        /* Goal Header & Live Progress Engine */
+        .goals-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+            gap: 12px;
+        }
+
+        .inline-edit-badge {
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .inline-edit-badge:hover {
+            border-color: #667eea;
+            background: var(--btn-sec-hover);
+            transform: translateY(-1px);
+        }
+
+        .goals-progress-wrap {
+            margin-bottom: 16px;
+        }
+
+        .goals-progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .goals-progress-track {
+            width: 100%;
+            height: 6px;
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .goals-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--grad);
+            border-radius: 20px;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Inline Goal Setter Inputs */
+        .inline-goal-input-box {
+            position: relative;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .inline-goal-num {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            font-weight: 800;
+            color: #667eea;
+            pointer-events: none;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .inline-goal-input {
+            padding-left: 36px !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* Compact Quick Tools Hub (Bento Grid) */
+        .quick-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .quick-tool-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+            text-align: left;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .quick-tool-btn:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .quick-tool-icon {
+            font-size: 18px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .quick-tool-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         /* 7-Day Consistency Strip */
         .week-strip {
             display: flex;
@@ -1582,7 +1718,7 @@
 
             .laptop-grid-dashboard {
                 display: grid;
-                grid-template-columns: 380px 1fr;
+                grid-template-columns: minmax(0, 1.25fr) 360px;
                 gap: 20px;
                 width: 100%;
                 align-items: start;
@@ -1958,11 +2094,92 @@
         </div>
     </div>
 
-    <!-- SCREEN 4: HOME DASHBOARD (ADAPTIVE LAPTOP GRID) -->
+    <!-- SCREEN 4: HOME DASHBOARD (ADAPTIVE LAPTOP GRID & ZERO-SCROLL MOBILE) -->
     <div id="screen4" class="screen">
         <div class="laptop-grid-dashboard">
-            <!-- Left Side / Stats & Deck -->
-            <div>
+            <!-- PRIMARY / HERO COLUMN: Today's Commitments (Instantly Visible & Top Priority!) -->
+            <div class="dashboard-primary-col">
+                <div class="card" id="todayCommitmentsCard">
+                    <!-- Card Header Row with Quick Edit Toggle -->
+                    <div class="goals-header-row">
+                        <div>
+                            <div class="label"><span class="label-dot"></span> Today's Commitments</div>
+                            <h1 id="welcomeName" style="margin-bottom: 2px;">Good day.</h1>
+                        </div>
+                        <button class="inline-edit-badge" id="goalsEditToggleBtn" onclick="toggleInlineGoalEdit()" title="Quick Edit Today's Commitments">✏️ Edit Goals</button>
+                    </div>
+
+                    <!-- Progress Bar & Indicator -->
+                    <div class="goals-progress-wrap">
+                        <div class="goals-progress-meta">
+                            <span id="goalsProgressLabel">⚡ 3 Non-Negotiables for Today</span>
+                            <span id="goalsProgressText">0 of 3 Completed (0%)</span>
+                        </div>
+                        <div class="goals-progress-track">
+                            <div class="goals-progress-bar" id="goalsProgressBar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- MODE A: ACTIVE CHECKLIST VIEW -->
+                    <div id="goalsViewMode">
+                        <div id="goalsList"></div>
+
+                        <!-- Empty State Notice (If No Goals Set) -->
+                        <div id="goalsEmptyState" style="display: none; text-align: center; padding: 18px 12px; background: var(--btn-sec-bg); border: 1px dashed var(--border); border-radius: 16px; margin-bottom: 14px;">
+                            <div style="font-size: 26px; margin-bottom: 6px;">🎯</div>
+                            <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">No Commitments Set for Today</div>
+                            <div style="font-size: 12px; color: var(--text-muted); margin: 4px 0 12px;">Define your 3 non-negotiable priorities to lock in unstoppable focus.</div>
+                            <button class="btn-primary" style="margin-top: 0; padding: 10px 18px;" onclick="openInlineGoalEdit()">Set Today's 3 Goals ⚡</button>
+                        </div>
+
+                        <!-- Primary Direct Action Launcher -->
+                        <div style="display: flex; gap: 8px; margin-top: 14px;">
+                            <button class="btn-primary" style="margin-top: 0; flex: 1.2;" onclick="playClick(); goTo('screenTimer')">Start Deep Focus ⏱️</button>
+                            <button class="btn-secondary" style="margin-top: 0; flex: 1;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
+                        </div>
+                    </div>
+
+                    <!-- MODE B: INLINE INSTANT GOAL SETTER / EDITOR -->
+                    <div id="goalsEditMode" style="display: none;">
+                        <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> Fill Today's 3 Goals</div>
+                        <p style="font-size: 13px; margin-bottom: 14px; color: var(--text-sub);">What 3 non-negotiables will move the needle for you today?</p>
+                        
+                        <div class="inline-goal-input-box">
+                            <span class="inline-goal-num">1.</span>
+                            <input id="inlineGoal1" class="inline-goal-input" type="text" placeholder="First priority (be specific)" />
+                        </div>
+                        <div class="inline-goal-input-box">
+                            <span class="inline-goal-num">2.</span>
+                            <input id="inlineGoal2" class="inline-goal-input" type="text" placeholder="Second priority (be specific)" />
+                        </div>
+                        <div class="inline-goal-input-box">
+                            <span class="inline-goal-num">3.</span>
+                            <input id="inlineGoal3" class="inline-goal-input" type="text" placeholder="Third priority (be specific)" />
+                        </div>
+
+                        <button class="btn-primary" style="margin-top: 8px;" onclick="saveInlineGoals()">Lock Commitments 🎯</button>
+                        <div style="display: flex; gap: 8px; margin-top: 8px;">
+                            <button class="btn-secondary" style="margin-top: 0; flex: 1;" onclick="cancelInlineEditGoals()">Cancel</button>
+                            <button class="btn-secondary" style="margin-top: 0; flex: 1.2;" onclick="reusePreviousGoals()" title="Auto-fill yesterday's 3 goals">🔄 Yesterday's Goals</button>
+                        </div>
+                        <div style="text-align: center; margin-top: 14px; font-size: 11px; color: var(--text-muted);">
+                            <a href="javascript:void(0)" onclick="openEditGoals()" style="color: var(--text-muted); text-decoration: underline;">Change partner or coach settings ⚙️</a>
+                        </div>
+                    </div>
+
+                    <!-- Footer Meta Links -->
+                    <div style="text-align: center; margin-top: 20px; font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 12px; align-items: center;">
+                        <a href="privacy.html" target="_blank" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
+                        <span>•</span>
+                        <a href="javascript:void(0)" onclick="openReviewModal()" style="color: #667eea; text-decoration: none; font-weight: 600;">Rate App ⭐</a>
+                        <span>•</span>
+                        <span>FocusPact v1.0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECONDARY / SIDEBAR COLUMN: Streak, Bento Metrics, Quick Tools -->
+            <div class="dashboard-side-col">
                 <!-- Main Streak Card -->
                 <div class="streak-card">
                     <div class="streak-number" id="streakCount">0</div>
@@ -1992,6 +2209,34 @@
                 <!-- 7-Day History Strip -->
                 <div class="week-strip" id="weekStrip"></div>
 
+                <!-- Sleek Quick Tools Hub (Compact 2-Column Bento Grid) -->
+                <div class="quick-tools-grid">
+                    <button class="quick-tool-btn" onclick="playClick(); goTo('screenTimer')" title="Deep Work Focus Session [F]">
+                        <span class="quick-tool-icon">⏱️</span>
+                        <span class="quick-tool-title">Focus Mode</span>
+                    </button>
+                    <button class="quick-tool-btn" onclick="playClick(); goTo('screenSquad')" title="Squad Pacts & Leaderboard [S]">
+                        <span class="quick-tool-icon">👥</span>
+                        <span class="quick-tool-title">Squad Pacts</span>
+                    </button>
+                    <button class="quick-tool-btn" onclick="playClick(); goTo('screenAnalytics')" title="Growth & Focus Graphs [A]">
+                        <span class="quick-tool-icon">📈</span>
+                        <span class="quick-tool-title">Analytics</span>
+                    </button>
+                    <button class="quick-tool-btn" onclick="playClick(); openCardScreen()" title="Milestone Achievement Card [C]">
+                        <span class="quick-tool-icon">📋</span>
+                        <span class="quick-tool-title">Share Card</span>
+                    </button>
+                    <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Atmosphere Studio [T]">
+                        <span class="quick-tool-icon">🎨</span>
+                        <span class="quick-tool-title">Themes</span>
+                    </button>
+                    <button class="quick-tool-btn" onclick="playClick(); openSyncModal()" title="Data Vault & Cross-Device Sync">
+                        <span class="quick-tool-icon">💾</span>
+                        <span class="quick-tool-title">Data Vault</span>
+                    </button>
+                </div>
+
                 <!-- Install App Teaser Banner -->
                 <div class="install-banner" id="installBanner" onclick="openInstallModal()" title="Add FocusPact to your Home Screen">
                     <div class="install-banner-left">
@@ -2002,38 +2247,6 @@
                         </div>
                     </div>
                     <button class="install-badge-btn">Install</button>
-                </div>
-
-                <!-- Quick Action Hub -->
-                <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
-                    <button class="btn-secondary" style="margin-top: 0;" onclick="playClick(); goTo('screenTimer')">Start Deep Focus Session ⏱️</button>
-                    <button class="btn-secondary" onclick="playClick(); goTo('screenSquad')">Squad Pacts & Leaderboard 👥</button>
-                    <button class="btn-secondary" onclick="playClick(); goTo('screenAnalytics')">View Development Graphs 📈</button>
-                    <button class="btn-secondary" onclick="playClick(); openCardScreen()">Milestone Achievement Card 📋</button>
-                    <button class="btn-secondary" onclick="playClick(); openThemeModal()">Theme & Atmosphere Studio 🎨</button>
-                    <button class="btn-secondary" onclick="playClick(); openSyncModal()">Data Vault & Cross-Device Sync 💾</button>
-                </div>
-            </div>
-
-            <!-- Right Side / Today's Commitments & Evening Launcher -->
-            <div>
-                <div class="card">
-                    <div class="label"><span class="label-dot"></span> Today's Commitments</div>
-                    <h1 id="welcomeName">Good morning.</h1>
-                    <p style="font-size: 13px; margin-bottom: 14px;">Tap or click commitments as you complete them:</p>
-                    
-                    <div id="goalsList"></div>
-
-                    <button class="btn-primary" style="margin-top: 14px;" onclick="playClick(); goTo('screen5')">Evening Check-In 🌙</button>
-                    <button class="btn-secondary" onclick="openEditGoals()">Edit Commitments & Partner ✏️</button>
-                    
-                    <div style="text-align: center; margin-top: 18px; font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 12px; align-items: center;">
-                        <a href="privacy.html" target="_blank" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a>
-                        <span>•</span>
-                        <a href="javascript:void(0)" onclick="openReviewModal()" style="color: #667eea; text-decoration: none; font-weight: 600;">Rate App ⭐</a>
-                        <span>•</span>
-                        <span>FocusPact v1.0</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -3055,7 +3268,11 @@
             var shields = parseInt(localStorage.getItem('streak_shields') || '1');
             var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
 
-            document.getElementById('welcomeName').textContent = `Good day, ${name}.`;
+            var nowHour = new Date().getHours();
+            var greeting = nowHour < 12 ? 'Good morning' : (nowHour < 17 ? 'Good afternoon' : 'Good evening');
+            var welcomeEl = document.getElementById('welcomeName');
+            if (welcomeEl) welcomeEl.textContent = `${greeting}, ${name}.`;
+
             document.getElementById('streakCount').textContent = streak;
 
             var rank = getInmateRank(streak);
@@ -3079,7 +3296,38 @@
 
         function renderGoals(goals) {
             var container = document.getElementById('goalsList');
+            var progressText = document.getElementById('goalsProgressText');
+            var progressBar = document.getElementById('goalsProgressBar');
+            var emptyState = document.getElementById('goalsEmptyState');
+            var editMode = document.getElementById('goalsEditMode');
+            var editToggleBtn = document.getElementById('goalsEditToggleBtn');
+
+            if (!container) return;
             container.innerHTML = '';
+
+            if (!goals || goals.length === 0) {
+                if (progressText) progressText.textContent = '0 of 3 Completed (0%)';
+                if (progressBar) progressBar.style.width = '0%';
+                if (emptyState) emptyState.style.display = 'block';
+                if (editToggleBtn) editToggleBtn.innerHTML = '⚡ Set Goals';
+                openInlineGoalEdit();
+                return;
+            }
+
+            if (emptyState) emptyState.style.display = 'none';
+            if (editToggleBtn && editMode && editMode.style.display !== 'block') {
+                editToggleBtn.innerHTML = '✏️ Edit Goals';
+            }
+
+            var doneCount = goals.filter(g => g.done).length;
+            var pct = Math.round((doneCount / goals.length) * 100);
+
+            if (progressText) {
+                progressText.textContent = `${doneCount} of ${goals.length} Completed (${pct}%)`;
+            }
+            if (progressBar) {
+                progressBar.style.width = pct + '%';
+            }
 
             goals.forEach((g, idx) => {
                 var item = document.createElement('div');
@@ -3112,6 +3360,108 @@
                 item.appendChild(editBtn);
                 container.appendChild(item);
             });
+        }
+
+        function toggleInlineGoalEdit() {
+            var editMode = document.getElementById('goalsEditMode');
+            if (editMode && editMode.style.display === 'block') {
+                cancelInlineEditGoals();
+            } else {
+                openInlineGoalEdit();
+            }
+        }
+
+        function openInlineGoalEdit() {
+            var viewMode = document.getElementById('goalsViewMode');
+            var editMode = document.getElementById('goalsEditMode');
+            if (!viewMode || !editMode) return;
+
+            var rawGoals = localStorage.getItem('goals');
+            var goals = rawGoals ? JSON.parse(rawGoals) : [];
+
+            var g1 = document.getElementById('inlineGoal1');
+            var g2 = document.getElementById('inlineGoal2');
+            var g3 = document.getElementById('inlineGoal3');
+
+            if (g1) g1.value = (goals[0] && goals[0].text) ? goals[0].text : '';
+            if (g2) g2.value = (goals[1] && goals[1].text) ? goals[1].text : '';
+            if (g3) g3.value = (goals[2] && goals[2].text) ? goals[2].text : '';
+
+            viewMode.style.display = 'none';
+            editMode.style.display = 'block';
+
+            var editToggleBtn = document.getElementById('goalsEditToggleBtn');
+            if (editToggleBtn) editToggleBtn.innerHTML = '✕ Close';
+
+            if (g1) setTimeout(() => g1.focus(), 60);
+        }
+
+        function cancelInlineEditGoals() {
+            var viewMode = document.getElementById('goalsViewMode');
+            var editMode = document.getElementById('goalsEditMode');
+            if (!viewMode || !editMode) return;
+
+            editMode.style.display = 'none';
+            viewMode.style.display = 'block';
+
+            var rawGoals = localStorage.getItem('goals');
+            var goals = rawGoals ? JSON.parse(rawGoals) : [];
+            var editToggleBtn = document.getElementById('goalsEditToggleBtn');
+            if (editToggleBtn) {
+                editToggleBtn.innerHTML = (goals.length > 0) ? '✏️ Edit Goals' : '⚡ Set Goals';
+            }
+        }
+
+        function saveInlineGoals() {
+            var g1 = (document.getElementById('inlineGoal1').value || '').trim();
+            var g2 = (document.getElementById('inlineGoal2').value || '').trim();
+            var g3 = (document.getElementById('inlineGoal3').value || '').trim();
+
+            if (!g1 || !g2 || !g3) {
+                showToast('Please fill in all 3 commitments to lock in focus.', 'info');
+                return;
+            }
+
+            var existingGoals = safeStorage.getJSON('goals', []);
+            if (existingGoals.length > 0) {
+                safeStorage.setJSON('focus_previous_goals', existingGoals);
+            }
+
+            var newGoals = [
+                { text: g1, done: false },
+                { text: g2, done: false },
+                { text: g3, done: false }
+            ];
+
+            safeStorage.setJSON('goals', newGoals);
+            safeStorage.setJSON('focus_previous_goals', newGoals);
+            safeStorage.set('last_active_date', new Date().toDateString());
+
+            playSuccess();
+            showToast('3 Commitments locked for today! 🎯', 'success');
+
+            if (window.posthog) {
+                posthog.capture('goals_saved_inline', { count: 3 });
+            }
+
+            cancelInlineEditGoals();
+            loadHome();
+        }
+
+        function reusePreviousGoals() {
+            var prev = safeStorage.getJSON('focus_previous_goals', []);
+            if (!prev || prev.length < 3) {
+                prev = safeStorage.getJSON('goals', []);
+            }
+            if (prev && prev.length >= 3) {
+                document.getElementById('inlineGoal1').value = prev[0].text;
+                document.getElementById('inlineGoal2').value = prev[1].text;
+                document.getElementById('inlineGoal3').value = prev[2].text;
+                playClick();
+                showToast('Yesterday’s goals restored! Tap Save to lock in. 🎯', 'info');
+            } else {
+                showToast('No previous goals found to reuse.', 'info');
+            }
         }
 
         function quickEditGoal(idx) {
@@ -4090,7 +4440,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=23').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=24').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
