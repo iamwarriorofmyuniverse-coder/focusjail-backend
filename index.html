@@ -2884,6 +2884,9 @@
             var modal = document.getElementById('installModal');
             if (modal) {
                 modal.classList.add('active');
+                if (window.history && window.history.pushState) {
+                    history.pushState({ modal: 'installModal' }, '', '#installModal');
+                }
                 playClick();
                 if (window.posthog) {
                     posthog.capture('install_modal_opened');
@@ -2891,11 +2894,14 @@
             }
         }
 
-        function closeInstallModal() {
+        function closeInstallModal(fromHistory) {
             var modal = document.getElementById('installModal');
-            if (modal) {
+            if (modal && modal.classList.contains('active')) {
                 modal.classList.remove('active');
                 playClick();
+                if (!fromHistory && window.history && history.state && history.state.modal === 'installModal') {
+                    history.back();
+                }
             }
         }
 
@@ -2980,17 +2986,23 @@
             if (modal) {
                 updateThemeCardsActiveState();
                 modal.classList.add('active');
+                if (window.history && window.history.pushState) {
+                    history.pushState({ modal: 'themeModal' }, '', '#themeModal');
+                }
                 var card = modal.querySelector('.modal-card');
                 if (card) card.scrollTop = 0;
                 playClick();
             }
         }
 
-        function closeThemeModal() {
+        function closeThemeModal(fromHistory) {
             var modal = document.getElementById('themeModal');
-            if (modal) {
+            if (modal && modal.classList.contains('active')) {
                 modal.classList.remove('active');
                 playClick();
+                if (!fromHistory && window.history && history.state && history.state.modal === 'themeModal') {
+                    history.back();
+                }
             }
         }
 
@@ -3013,11 +3025,17 @@
             }
         }
 
-        function toggleShortcutsModal() {
+        function toggleShortcutsModal(fromHistory) {
             var modal = document.getElementById('shortcutsModal');
             if (modal) {
+                var willOpen = !modal.classList.contains('active');
                 modal.classList.toggle('active');
                 playClick();
+                if (willOpen && window.history && window.history.pushState) {
+                    history.pushState({ modal: 'shortcutsModal' }, '', '#shortcutsModal');
+                } else if (!willOpen && !fromHistory && window.history && history.state && history.state.modal === 'shortcutsModal') {
+                    history.back();
+                }
             }
         }
 
@@ -3025,15 +3043,21 @@
             var modal = document.getElementById('reviewModal');
             if (modal) {
                 modal.classList.add('active');
+                if (window.history && window.history.pushState) {
+                    history.pushState({ modal: 'reviewModal' }, '', '#reviewModal');
+                }
                 playClick();
             }
         }
 
-        function closeReviewModal() {
+        function closeReviewModal(fromHistory) {
             var modal = document.getElementById('reviewModal');
-            if (modal) {
+            if (modal && modal.classList.contains('active')) {
                 modal.classList.remove('active');
                 playClick();
+                if (!fromHistory && window.history && history.state && history.state.modal === 'reviewModal') {
+                    history.back();
+                }
             }
             localStorage.setItem('focus_review_prompted', Date.now().toString());
         }
@@ -3673,6 +3697,7 @@
             if (!goals[idx]) return;
             goals[idx].done = !goals[idx].done;
             localStorage.setItem('goals', JSON.stringify(goals));
+            lastToggledGoalIdx = idx;
 
             if (goals[idx].done) {
                 playSuccess();
@@ -3920,7 +3945,12 @@
             goTo('screen2');
         }
 
-        function goTo(screenId) {
+        var lastBackTime = 0;
+        var lastToggledGoalIdx = null;
+
+        function goTo(screenId, pushHistory) {
+            if (pushHistory === undefined) pushHistory = true;
+
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             var target = document.getElementById(screenId);
             if (target) target.classList.add('active');
@@ -3930,6 +3960,18 @@
             if (screenId === 'screen4') loadHome();
             if (screenId === 'screenAnalytics') renderAnalyticsScreen();
             if (screenId === 'screenCard') drawAchievementCard();
+
+            // Push navigation state to browser history stack so Android Back / swipe back / undo navigation
+            // returns to Dashboard instead of closing the entire app!
+            if (pushHistory && window.history && window.history.pushState) {
+                if (screenId !== 'screen4' && screenId !== 'screen1') {
+                    history.pushState({ screen: screenId }, '', '#' + screenId);
+                } else if (screenId === 'screen4') {
+                    if (location.hash && location.hash !== '#dashboard') {
+                        history.replaceState({ screen: 'screen4' }, '', window.location.pathname);
+                    }
+                }
+            }
         }
 
         // Analytics Engine
@@ -4230,13 +4272,22 @@
             var modal = document.getElementById('syncModal');
             if (modal) {
                 modal.classList.add('active');
+                if (window.history && window.history.pushState) {
+                    history.pushState({ modal: 'syncModal' }, '', '#syncModal');
+                }
                 playClick();
             }
         }
 
-        function closeSyncModal() {
+        function closeSyncModal(fromHistory) {
             var modal = document.getElementById('syncModal');
-            if (modal) modal.classList.remove('active');
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                playClick();
+                if (!fromHistory && window.history && history.state && history.state.modal === 'syncModal') {
+                    history.back();
+                }
+            }
         }
 
         function getFullVaultData() {
@@ -4535,8 +4586,9 @@
             var tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
             var isInput = tag === 'input' || tag === 'textarea' || tag === 'select';
 
-            // Escape key always works
-            if (e.key === 'Escape') {
+            // Escape key or Backspace outside inputs safely returns to dashboard / closes modals
+            if (e.key === 'Escape' || (e.key === 'Backspace' && !isInput)) {
+                if (e.key === 'Backspace') e.preventDefault();
                 var thModal = document.getElementById('themeModal');
                 if (thModal && thModal.classList.contains('active')) {
                     closeThemeModal();
@@ -4572,6 +4624,19 @@
             if (isInput) return; // Don't intercept typing in forms
 
             var key = e.key.toLowerCase();
+
+            // Keyboard Undo (Ctrl+Z / Cmd+Z)
+            if ((e.ctrlKey || e.metaKey) && key === 'z') {
+                e.preventDefault();
+                if (lastToggledGoalIdx !== null) {
+                    toggleGoal(lastToggledGoalIdx);
+                    lastToggledGoalIdx = null;
+                    showToast('Goal action undone ↶', 'info');
+                } else {
+                    showToast('Nothing to undo', 'info');
+                }
+                return;
+            }
 
             if (key === 'i') {
                 e.preventDefault();
@@ -4633,16 +4698,51 @@
             }
         });
 
+        // Global PWA Back / Swipe Gesture ("Undo") Navigation Handler
+        window.addEventListener('popstate', function(e) {
+            // 1. If any modal is open, close it and prevent leaving the app
+            var openModal = document.querySelector('.modal-overlay.active');
+            if (openModal) {
+                openModal.classList.remove('active');
+                return;
+            }
+
+            // 2. If user is in a sub-screen, return to Dashboard
+            var activeScreen = document.querySelector('.screen.active');
+            if (activeScreen && activeScreen.id !== 'screen4' && activeScreen.id !== 'screen1') {
+                goTo('screen4', false);
+                return;
+            }
+
+            // 3. If on Dashboard, protect against accidental swipe exit
+            if (activeScreen && activeScreen.id === 'screen4') {
+                var now = Date.now();
+                if (now - lastBackTime < 2000) {
+                    // Double back tapped within 2 seconds -> Allow graceful exit
+                    window.history.back();
+                } else {
+                    lastBackTime = now;
+                    if (window.history && window.history.pushState) {
+                        history.pushState({ screen: 'screen4' }, '', window.location.pathname);
+                    }
+                    showToast('Press back again to exit FocusPact', 'info');
+                }
+            }
+        });
+
         function initApp() {
             initTheme();
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=28').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=29').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
-                goTo('screen4');
+                goTo('screen4', false);
+                if (window.history && window.history.replaceState) {
+                    history.replaceState({ screen: 'screen4' }, '', window.location.pathname);
+                }
             }
         }
 
