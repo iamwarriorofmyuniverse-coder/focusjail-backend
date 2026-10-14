@@ -1668,13 +1668,51 @@
         .history-status.shielded { color: #f59e0b; }
         .history-verdict { font-size: 13px; color: var(--text-sub); line-height: 1.5; }
 
-        /* Achievement Canvas */
+        /* Achievement Canvas & Unique Card Personalizer */
+        .card-style-picker {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 4px auto 16px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .card-style-pill {
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .card-style-pill:hover {
+            border-color: var(--border-hover);
+            color: var(--text-main);
+            background: var(--surface-hover);
+            transform: translateY(-1px);
+        }
+
+        .card-style-pill.active {
+            background: var(--surface);
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        }
+
         #achievementCanvas {
             width: 100%;
-            max-width: 360px;
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-width: 380px;
+            border-radius: 22px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
             margin-bottom: 18px;
+            display: block;
         }
 
         /* Modal Overlay & Responsive Scrollable Card */
@@ -2635,10 +2673,18 @@
         <div class="card">
             <div class="label"><span class="label-dot"></span> Daily Progress</div>
             <h1>Achievement Card</h1>
-            <p>Celebrate your consistency. Save or share your daily milestone.</p>
+            <p>Celebrate your consistency with your personalized discipline pass.</p>
+
+            <!-- Card Style Personalizer Pills -->
+            <div class="card-style-picker">
+                <button class="card-style-pill active" onclick="setCardStyle('auto')" id="styleBtn-auto">✨ Unique DNA</button>
+                <button class="card-style-pill" onclick="setCardStyle('gold')" id="styleBtn-gold">👑 Sovereign Gold</button>
+                <button class="card-style-pill" onclick="setCardStyle('cyber')" id="styleBtn-cyber">🌌 Cyberpunk</button>
+                <button class="card-style-pill" onclick="setCardStyle('kyoto')" id="styleBtn-kyoto">🍵 Kyoto Paper</button>
+            </div>
 
             <div style="display: flex; justify-content: center; width: 100%;">
-                <canvas id="achievementCanvas" width="700" height="850"></canvas>
+                <canvas id="achievementCanvas" width="700" height="960"></canvas>
             </div>
 
             <button class="btn-primary" onclick="shareOrCopyCard()">Share or Save Card 🚀</button>
@@ -4425,96 +4471,507 @@
             }
         }
 
-        // Milestone Achievement Card Generator
+        // Milestone Achievement Card Generator & Unique Personal DNA Engine
+        var currentCardStyle = 'auto';
+
+        function setCardStyle(style) {
+            currentCardStyle = style;
+            document.querySelectorAll('.card-style-pill').forEach(btn => {
+                btn.classList.toggle('active', btn.id === 'styleBtn-' + style);
+            });
+            playClick();
+            drawAchievementCard();
+        }
+
         function openCardScreen() {
             goTo('screenCard');
             drawAchievementCard();
         }
 
+        function getNameSeed(name) {
+            var str = (name || 'User').trim().toLowerCase();
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0;
+            }
+            return Math.abs(hash);
+        }
+
+        function drawRoundRectPath(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
         function drawAchievementCard() {
             var canvas = document.getElementById('achievementCanvas');
+            if (!canvas) return;
             var ctx = canvas.getContext('2d');
             var name = safeStorage.get('name', 'User');
-            var streak = safeStorage.get('streak', '0');
-            var rank = getInmateRank(parseInt(streak));
-            var verdict = safeStorage.get('latestVerdict', 'Consistent daily action leads to extraordinary results.');
-            var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-            var isLight = currentTheme === 'light' || currentTheme === 'paper';
+            var streak = parseInt(safeStorage.get('streak', '0'));
+            var shields = parseInt(safeStorage.get('streak_shields', '1'));
+            var dailyFocus = parseInt(safeStorage.get('daily_focus_mins', '0'));
+            var rawGoals = safeStorage.getJSON('goals', []);
+            var rank = getInmateRank(streak);
+            var verdict = safeStorage.get('latestVerdict', 'Consistent daily action under extreme focus leads to undeniable mastery.');
 
-            var bgMap = {
-                dark: '#090a10',
-                light: '#ffffff',
-                oled: '#000000',
-                paper: '#f8f6f0',
-                matcha: '#091410',
-                cyber: '#080214'
-            };
-            var surfaceMap = {
-                dark: '#12141e',
-                light: '#f8fafc',
-                oled: '#0d0d0d',
-                paper: '#ffffff',
-                matcha: '#0f1c17',
-                cyber: '#140924'
-            };
-            var innerBoxMap = {
-                dark: '#0a0b12',
-                light: '#ffffff',
-                oled: '#050505',
-                paper: '#f3eee5',
-                matcha: '#091410',
-                cyber: '#0c0418'
-            };
+            var seed = getNameSeed(name);
+            var archetypes = [
+                "THE RELENTLESS ARCHITECT",
+                "THE DEEP WORK SOVEREIGN",
+                "THE 5 AM VANGUARD",
+                "THE UNSTOPPABLE EXECUTOR",
+                "THE CONSISTENCY TITAN",
+                "THE FOCUS MONOLITH",
+                "THE SILENT STRATEGIST",
+                "THE IRON DISCIPLINE ALCHEMIST"
+            ];
+            var userArchetype = archetypes[(seed + streak) % archetypes.length];
+            var serialCode = 'PACT-' + ((seed % 8999) + 1000) + '-' + (name.slice(0, 2).toUpperCase() || 'FP') + (streak > 0 ? streak : '7');
 
-            ctx.fillStyle = bgMap[currentTheme] || '#090a10';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            var uniquePalettes = [
+                {
+                    name: 'Cyber Amethyst',
+                    bg: '#090514',
+                    surface: '#120b24',
+                    border: 'rgba(168, 85, 247, 0.28)',
+                    accent: '#c084fc',
+                    gradStart: '#a855f7',
+                    gradEnd: '#06b6d4',
+                    glow: 'rgba(168, 85, 247, 0.22)',
+                    textMain: '#ffffff',
+                    textSub: '#d8b4fe',
+                    pillBg: 'rgba(168, 85, 247, 0.12)',
+                    isLight: false
+                },
+                {
+                    name: 'Sovereign Amber',
+                    bg: '#0e0803',
+                    surface: '#1a1007',
+                    border: 'rgba(245, 158, 11, 0.3)',
+                    accent: '#fbbf24',
+                    gradStart: '#f59e0b',
+                    gradEnd: '#ea580c',
+                    glow: 'rgba(245, 158, 11, 0.2)',
+                    textMain: '#ffffff',
+                    textSub: '#fde68a',
+                    pillBg: 'rgba(245, 158, 11, 0.12)',
+                    isLight: false
+                },
+                {
+                    name: 'Emerald Vanguard',
+                    bg: '#04120a',
+                    surface: '#081f12',
+                    border: 'rgba(16, 185, 129, 0.3)',
+                    accent: '#34d399',
+                    gradStart: '#10b981',
+                    gradEnd: '#06b6d4',
+                    glow: 'rgba(16, 185, 129, 0.2)',
+                    textMain: '#ffffff',
+                    textSub: '#a7f3d0',
+                    pillBg: 'rgba(16, 185, 129, 0.12)',
+                    isLight: false
+                },
+                {
+                    name: 'Neon Rose',
+                    bg: '#14030a',
+                    surface: '#220813',
+                    border: 'rgba(244, 63, 94, 0.3)',
+                    accent: '#fb7185',
+                    gradStart: '#f43f5e',
+                    gradEnd: '#d946ef',
+                    glow: 'rgba(244, 63, 94, 0.22)',
+                    textMain: '#ffffff',
+                    textSub: '#fecdd3',
+                    pillBg: 'rgba(244, 63, 94, 0.12)',
+                    isLight: false
+                },
+                {
+                    name: 'Solar Gold',
+                    bg: '#0b0903',
+                    surface: '#181406',
+                    border: 'rgba(234, 179, 8, 0.32)',
+                    accent: '#facc15',
+                    gradStart: '#eab308',
+                    gradEnd: '#f97316',
+                    glow: 'rgba(234, 179, 8, 0.2)',
+                    textMain: '#ffffff',
+                    textSub: '#fef08a',
+                    pillBg: 'rgba(234, 179, 8, 0.12)',
+                    isLight: false
+                },
+                {
+                    name: 'Oceanic Indigo',
+                    bg: '#040816',
+                    surface: '#09122c',
+                    border: 'rgba(59, 130, 246, 0.3)',
+                    accent: '#60a5fa',
+                    gradStart: '#3b82f6',
+                    gradEnd: '#8b5cf6',
+                    glow: 'rgba(59, 130, 246, 0.2)',
+                    textMain: '#ffffff',
+                    textSub: '#bfdbfe',
+                    pillBg: 'rgba(59, 130, 246, 0.12)',
+                    isLight: false
+                },
+                {
+                    name: 'Kyoto Terracotta',
+                    bg: '#0d0c0a',
+                    surface: '#191714',
+                    border: 'rgba(194, 94, 26, 0.32)',
+                    accent: '#ea580c',
+                    gradStart: '#ea580c',
+                    gradEnd: '#d97706',
+                    glow: 'rgba(194, 94, 26, 0.2)',
+                    textMain: '#fdfbf7',
+                    textSub: '#fed7aa',
+                    pillBg: 'rgba(234, 88, 12, 0.12)',
+                    isLight: false
+                },
+                {
+                    name: 'Titanium Frost',
+                    bg: '#050c13',
+                    surface: '#0b1924',
+                    border: 'rgba(6, 182, 212, 0.3)',
+                    accent: '#22d3ee',
+                    gradStart: '#06b6d4',
+                    gradEnd: '#3b82f6',
+                    glow: 'rgba(6, 182, 212, 0.2)',
+                    textMain: '#ffffff',
+                    textSub: '#cffafe',
+                    pillBg: 'rgba(6, 182, 212, 0.12)',
+                    isLight: false
+                }
+            ];
 
-            var grad = ctx.createLinearGradient(0, 0, canvas.width, 180);
-            grad.addColorStop(0, '#667eea');
-            grad.addColorStop(1, '#f093fb');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, canvas.width, 10);
+            var palette = uniquePalettes[seed % uniquePalettes.length];
 
-            ctx.fillStyle = isLight ? '#0f172a' : '#f8fafc';
-            ctx.font = 'bold 28px "Syne", sans-serif';
+            if (currentCardStyle === 'gold') {
+                palette = {
+                    name: 'Sovereign Gold',
+                    bg: '#070604',
+                    surface: '#131109',
+                    border: 'rgba(234, 179, 8, 0.45)',
+                    accent: '#facc15',
+                    gradStart: '#d97706',
+                    gradEnd: '#fde047',
+                    glow: 'rgba(234, 179, 8, 0.25)',
+                    textMain: '#ffffff',
+                    textSub: '#fef08a',
+                    pillBg: 'rgba(234, 179, 8, 0.14)',
+                    isLight: false
+                };
+            } else if (currentCardStyle === 'cyber') {
+                palette = {
+                    name: 'Cyberpunk Neon',
+                    bg: '#070112',
+                    surface: '#130528',
+                    border: 'rgba(244, 63, 94, 0.45)',
+                    accent: '#22d3ee',
+                    gradStart: '#f43f5e',
+                    gradEnd: '#06b6d4',
+                    glow: 'rgba(244, 63, 94, 0.3)',
+                    textMain: '#ffffff',
+                    textSub: '#f0abfc',
+                    pillBg: 'rgba(244, 63, 94, 0.15)',
+                    isLight: false
+                };
+            } else if (currentCardStyle === 'kyoto') {
+                palette = {
+                    name: 'Kyoto Editorial',
+                    bg: '#f8f6f0',
+                    surface: '#ffffff',
+                    border: 'rgba(68, 54, 38, 0.18)',
+                    accent: '#c25e1a',
+                    gradStart: '#c25e1a',
+                    gradEnd: '#d97706',
+                    glow: 'rgba(194, 94, 26, 0.14)',
+                    textMain: '#1c1917',
+                    textSub: '#574e44',
+                    pillBg: 'rgba(194, 94, 26, 0.08)',
+                    isLight: true
+                };
+            }
+
+            // Clear & set canvas base
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Card Base with rounded border
+            drawRoundRectPath(ctx, 0, 0, canvas.width, canvas.height, 28);
+            ctx.fillStyle = palette.bg;
+            ctx.fill();
+
+            // Atmospheric Radial Glow
+            var radial = ctx.createRadialGradient(350, 190, 20, 350, 190, 280);
+            radial.addColorStop(0, palette.glow);
+            radial.addColorStop(1, 'transparent');
+            ctx.fillStyle = radial;
+            ctx.fillRect(0, 0, canvas.width, 500);
+
+            // Dot Matrix Coordinate Grid for Authenticated Pass Aesthetic
+            ctx.fillStyle = palette.isLight ? 'rgba(70, 50, 30, 0.04)' : 'rgba(255, 255, 255, 0.035)';
+            for (var dx = 36; dx <= 664; dx += 28) {
+                for (var dy = 36; dy <= 924; dy += 28) {
+                    ctx.beginPath();
+                    ctx.arc(dx, dy, 1.2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Top Gradient Strip
+            var topGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            topGrad.addColorStop(0, palette.gradStart);
+            topGrad.addColorStop(1, palette.gradEnd);
+            ctx.fillStyle = topGrad;
+            ctx.fillRect(0, 0, canvas.width, 6);
+
+            // Outer Card Border
+            drawRoundRectPath(ctx, 1, 1, canvas.width - 2, canvas.height - 2, 28);
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Header Row (Pill & Serial)
+            drawRoundRectPath(ctx, 45, 36, 260, 32, 16);
+            ctx.fillStyle = palette.pillBg;
+            ctx.fill();
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = palette.accent;
+            ctx.font = '700 11px "DM Sans", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('⚡ FOCUSPACT VERIFIED PASS', 60, 56);
+
+            // Right Serial Number
+            ctx.fillStyle = palette.accent;
+            ctx.font = '700 12px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText('#' + serialCode, 655, 56);
+
+            // Hero Monogram Avatar (x: 350, y: 140, r: 40)
+            var avatarGrad = ctx.createLinearGradient(310, 100, 390, 180);
+            avatarGrad.addColorStop(0, palette.gradStart);
+            avatarGrad.addColorStop(1, palette.gradEnd);
+
+            ctx.beginPath();
+            ctx.arc(350, 140, 40, 0, Math.PI * 2);
+            ctx.fillStyle = avatarGrad;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Monogram Initial
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '800 34px "Syne", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('FOCUSPACT MILESTONE', 350, 75);
+            ctx.fillText((name.charAt(0) || 'U').toUpperCase(), 350, 152);
 
-            ctx.fillStyle = '#667eea';
-            ctx.font = '600 15px "DM Sans", sans-serif';
-            ctx.fillText('DAILY COMMITMENTS & ACCOUNTABILITY', 350, 110);
-
-            ctx.fillStyle = surfaceMap[currentTheme] || '#12141e';
-            ctx.fillRect(60, 145, 580, 615);
-            ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(60, 145, 580, 615);
-
-            ctx.fillStyle = isLight ? '#0f172a' : '#ffffff';
+            // User Name
+            ctx.fillStyle = palette.textMain;
             ctx.font = 'bold 36px "Syne", sans-serif';
-            ctx.fillText(name, 350, 225);
+            ctx.textAlign = 'center';
+            ctx.fillText(name, 350, 218);
 
+            // Archetype Pill
+            var archText = '⚡ ' + userArchetype;
+            ctx.font = '700 11px "DM Sans", sans-serif';
+            var archWidth = ctx.measureText(archText).width + 28;
+            var archX = 350 - (archWidth / 2);
+            drawRoundRectPath(ctx, archX, 236, archWidth, 26, 13);
+            ctx.fillStyle = palette.pillBg;
+            ctx.fill();
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = palette.accent;
+            ctx.textAlign = 'center';
+            ctx.fillText(archText, 350, 253);
+
+            // Bento Metrics Row (y: 282, h: 80)
+            var bentoY = 282;
+            var bentoH = 80;
+
+            // Box 1: Streak
+            drawRoundRectPath(ctx, 45, bentoY, 192, bentoH, 16);
+            ctx.fillStyle = palette.surface;
+            ctx.fill();
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = palette.textSub;
+            ctx.font = '700 10px "DM Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('STREAK RECORD', 141, bentoY + 26);
+            ctx.fillStyle = palette.isLight ? '#c25e1a' : '#f59e0b';
+            ctx.font = '800 20px "Syne", sans-serif';
+            ctx.fillText(`🔥 ${streak} DAYS`, 141, bentoY + 54);
+
+            // Box 2: Focus Logged
+            drawRoundRectPath(ctx, 254, bentoY, 192, bentoH, 16);
+            ctx.fillStyle = palette.surface;
+            ctx.fill();
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = palette.textSub;
+            ctx.font = '700 10px "DM Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('DEEP FOCUS TIME', 350, bentoY + 26);
+            ctx.fillStyle = palette.accent;
+            ctx.font = '800 20px "Syne", sans-serif';
+            ctx.fillText(`⏱️ ${dailyFocus || 45}m`, 350, bentoY + 54);
+
+            // Box 3: Discipline Rank
+            drawRoundRectPath(ctx, 463, bentoY, 192, bentoH, 16);
+            ctx.fillStyle = palette.surface;
+            ctx.fill();
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = palette.textSub;
+            ctx.font = '700 10px "DM Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('DISCIPLINE RANK', 559, bentoY + 26);
             ctx.fillStyle = '#10b981';
-            ctx.font = 'bold 20px "DM Sans", sans-serif';
-            ctx.fillText(`🔥 ${streak} DAY STREAK  •  ${rank}`, 350, 275);
+            ctx.font = '800 18px "Syne", sans-serif';
+            ctx.fillText(rank, 559, bentoY + 54);
 
-            ctx.fillStyle = innerBoxMap[currentTheme] || '#0a0b12';
-            ctx.fillRect(90, 335, 520, 275);
-            ctx.strokeStyle = 'rgba(102, 126, 234, 0.3)';
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(90, 335, 520, 275);
+            // Commitments Header Row (y: 395)
+            ctx.fillStyle = palette.accent;
+            ctx.font = '700 11px "DM Sans", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText("TODAY'S LOCKED COMMITMENTS", 48, 395);
 
-            ctx.fillStyle = '#667eea';
-            ctx.font = '700 13px "DM Sans", sans-serif';
-            ctx.fillText('DAILY COACH REFLECTION', 350, 380);
+            var completedCount = rawGoals.filter(g => g.done).length;
+            ctx.fillStyle = '#10b981';
+            ctx.font = '700 11px "DM Sans", sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(`${completedCount} of 3 COMPLETED ✓`, 652, 395);
 
-            ctx.fillStyle = isLight ? '#334155' : '#f1f5f9';
-            ctx.font = 'italic 17px "DM Sans", sans-serif';
-            wrapText(ctx, `"${verdict}"`, 350, 435, 460, 26);
+            // 3 Goal Capsules (y: 412, 472, 532)
+            var displayGoals = [
+                (rawGoals[0] && rawGoals[0].text) ? rawGoals[0].text : 'Execute core daily priority without delay',
+                (rawGoals[1] && rawGoals[1].text) ? rawGoals[1].text : 'Complete 90-min deep work session',
+                (rawGoals[2] && rawGoals[2].text) ? rawGoals[2].text : 'Evening discipline report & review'
+            ];
+            var displayDone = [
+                rawGoals[0] ? rawGoals[0].done : true,
+                rawGoals[1] ? rawGoals[1].done : true,
+                rawGoals[2] ? rawGoals[2].done : true
+            ];
 
-            ctx.fillStyle = isLight ? '#94a3b8' : '#64748b';
-            ctx.font = '14px "DM Sans", sans-serif';
-            ctx.fillText('focusjail.netlify.app', 350, 800);
+            for (var i = 0; i < 3; i++) {
+                var capY = 412 + (i * 60);
+                drawRoundRectPath(ctx, 45, capY, 610, 50, 14);
+                ctx.fillStyle = palette.surface;
+                ctx.fill();
+                ctx.strokeStyle = palette.border;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Check circle
+                ctx.beginPath();
+                ctx.arc(72, capY + 25, 12, 0, Math.PI * 2);
+                ctx.fillStyle = displayDone[i] ? '#10b981' : (palette.isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)');
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '700 12px "DM Sans", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(displayDone[i] ? '✓' : '•', 72, capY + 29);
+
+                // Goal Text (Truncate if too long)
+                ctx.fillStyle = palette.textMain;
+                ctx.font = '600 14px "DM Sans", sans-serif';
+                ctx.textAlign = 'left';
+                var goalTxt = displayGoals[i];
+                if (ctx.measureText(goalTxt).width > 440) {
+                    while (ctx.measureText(goalTxt + '...').width > 440 && goalTxt.length > 0) {
+                        goalTxt = goalTxt.slice(0, -1);
+                    }
+                    goalTxt += '...';
+                }
+                ctx.fillText(goalTxt, 98, capY + 30);
+
+                // Badge Tag
+                ctx.fillStyle = displayDone[i] ? '#10b981' : palette.textSub;
+                ctx.font = '700 10px "JetBrains Mono", monospace';
+                ctx.textAlign = 'right';
+                ctx.fillText(displayDone[i] ? 'LOCKED ✓' : 'PENDING', 635, capY + 30);
+            }
+
+            // Coach Reflection Card (y: 606, h: 224)
+            var refY = 606;
+            var refH = 224;
+            drawRoundRectPath(ctx, 45, refY, 610, refH, 18);
+            ctx.fillStyle = palette.surface;
+            ctx.fill();
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Decorative Giant Quote
+            ctx.fillStyle = palette.isLight ? 'rgba(70, 50, 30, 0.08)' : 'rgba(255, 255, 255, 0.06)';
+            ctx.font = 'bold 72px "Syne", serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('“', 65, refY + 68);
+
+            // Coach Decree Title
+            ctx.fillStyle = palette.accent;
+            ctx.font = '700 11px "DM Sans", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('DAILY COACH REFLECTION', 72, refY + 32);
+
+            // Verdict Quote Body
+            ctx.fillStyle = palette.textSub;
+            ctx.font = 'italic 16px "DM Sans", sans-serif';
+            wrapText(ctx, `"${verdict}"`, 72, refY + 70, 550, 26);
+
+            // Protocol Sign-off
+            ctx.fillStyle = palette.accent;
+            ctx.font = '700 10px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText('— FOCUSPACT DISCIPLINE PROTOCOL', 630, refY + refH - 20);
+
+            // Footer Section (y: 856)
+            ctx.strokeStyle = palette.border;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(45, 856);
+            ctx.lineTo(655, 856);
+            ctx.stroke();
+
+            var todayDate = new Date();
+            var months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            var dateStr = `${todayDate.getDate()} ${months[todayDate.getMonth()]} ${todayDate.getFullYear()}`;
+
+            ctx.fillStyle = palette.textSub;
+            ctx.font = '700 11px "JetBrains Mono", monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText('focusjail.netlify.app', 48, 888);
+
+            ctx.textAlign = 'center';
+            ctx.fillText(`ISSUED: ${dateStr}`, 350, 888);
+
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#10b981';
+            ctx.fillText('AUTHENTICATED RECORD ✓', 652, 888);
         }
 
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -4735,7 +5192,7 @@
             checkInstalledState();
             checkDailyAutoRoll();
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=29').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=30').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
