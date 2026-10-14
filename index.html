@@ -738,7 +738,7 @@
         }
 
         /* Inputs */
-        input, textarea, select {
+        input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]), textarea, select {
             width: 100%;
             border: 1px solid var(--border);
             border-radius: 14px;
@@ -752,13 +752,107 @@
             transition: all 0.2s ease;
         }
 
-        input:focus, textarea:focus, select:focus {
+        input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus, textarea:focus, select:focus {
             border-color: var(--border-focus);
             box-shadow: 0 0 0 3px var(--focus-ring, rgba(102, 126, 234, 0.2));
         }
 
-        input::placeholder, textarea::placeholder {
+        input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"])::placeholder, textarea::placeholder {
             color: var(--text-muted);
+        }
+
+        /* Responsive & Sleek Range Slider (Focus Soundscape Volume) */
+        .soundscape-vol-capsule {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 6px auto 14px;
+            padding: 7px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            width: fit-content;
+            max-width: 92%;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .vol-step-btn {
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            opacity: 0.85;
+            display: flex;
+            align-items: center;
+        }
+
+        .vol-step-btn:hover {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 130px;
+            height: 6px;
+            border-radius: 999px;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: rgba(255, 255, 255, 0.18);
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        [data-theme="light"] input[type="range"],
+        [data-theme="warm-paper"] input[type="range"] {
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        /* Chrome, Edge, Safari Thumb */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input[type="range"]:hover::-webkit-slider-thumb {
+            transform: scale(1.15);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        input[type="range"]:active::-webkit-slider-thumb {
+            transform: scale(1.25);
+        }
+
+        /* Firefox Thumb & Track */
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-progress {
+            background: var(--primary);
+            border-radius: 999px;
+            height: 6px;
         }
 
         /* Buttons */
@@ -1939,7 +2033,7 @@
                 gap: 14px;
             }
 
-            input, textarea, select {
+            input:not([type="range"]), textarea, select {
                 font-size: 16px !important;
             }
 
@@ -2643,11 +2737,11 @@
                 <option value="campfire">🔥 Cozy Hearth & Crackling Ember</option>
             </select>
 
-            <div id="soundscapeVolWrap" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px auto 10px;">
-                <span style="font-size: 13px;">🔉</span>
-                <input type="range" id="soundscapeVolume" min="0" max="100" value="75" oninput="setSoundscapeVolume(this.value)" style="width: 130px; accent-color: var(--primary); cursor: pointer;" title="Soundscape Volume" />
-                <span style="font-size: 13px;">🔊</span>
-                <span id="soundscapeVolLabel" style="font-size: 11px; color: var(--text-muted); font-weight: 600; min-width: 28px;">75%</span>
+            <div id="soundscapeVolWrap" class="soundscape-vol-capsule">
+                <span class="vol-step-btn" onclick="setSoundscapeVolume(0)" title="Mute (0%)">🔉</span>
+                <input type="range" id="soundscapeVolume" min="0" max="100" value="75" oninput="setSoundscapeVolume(this.value)" title="Soundscape Volume" />
+                <span class="vol-step-btn" onclick="setSoundscapeVolume(100)" title="Max Volume (100%)">🔊</span>
+                <span id="soundscapeVolLabel" style="font-size: 12px; color: var(--text-main); font-weight: 700; min-width: 40px; text-align: right; font-family: 'JetBrains Mono', monospace;">75%</span>
             </div>
 
             <div class="timer-display" id="timerTime">25:00</div>
@@ -2841,7 +2935,7 @@
         var timerRunning = false;
         var activeSoundscapeNodes = [];
         var soundscapeMasterGain = null;
-        var soundscapeVolume = 0.75;
+        var soundscapeVolume = parseFloat(localStorage.getItem('focuspact_soundscape_vol') || '0.75');
         var activeSoundscapeInterval = null;
         var audioCtx = null;
         var deferredPrompt = null;
@@ -3012,6 +3106,7 @@
             }
 
             updateThemeCardsActiveState();
+            updateVolumeTrack();
 
             if (notify) {
                 showToast(info.name + ' Activated ' + info.emoji, 'success');
@@ -3215,10 +3310,32 @@
             if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
+        function updateVolumeTrack(val) {
+            var slider = document.getElementById('soundscapeVolume');
+            if (!slider) return;
+            var currentVal = (val !== undefined && val !== null) ? Number(val) : (slider.value ? Number(slider.value) : 75);
+            var isLight = document.documentElement.getAttribute('data-theme') === 'light' || document.documentElement.getAttribute('data-theme') === 'warm-paper';
+            var emptyTrack = isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.18)';
+            slider.style.background = `linear-gradient(to right, var(--primary) 0%, var(--primary) ${currentVal}%, ${emptyTrack} ${currentVal}%, ${emptyTrack} 100%)`;
+        }
+
         function setSoundscapeVolume(val) {
-            soundscapeVolume = Math.max(0, Math.min(1, val / 100));
+            var num = Number(val);
+            if (isNaN(num)) num = 75;
+            num = Math.max(0, Math.min(100, Math.round(num)));
+            soundscapeVolume = num / 100;
+            try {
+                localStorage.setItem('focuspact_soundscape_vol', (num / 100).toString());
+            } catch (e) {}
+
+            var slider = document.getElementById('soundscapeVolume');
+            if (slider && Number(slider.value) !== num) slider.value = num;
+
             var label = document.getElementById('soundscapeVolLabel');
-            if (label) label.textContent = Math.round(val) + '%';
+            if (label) label.textContent = num + '%';
+
+            updateVolumeTrack(num);
+
             if (soundscapeMasterGain && audioCtx) {
                 soundscapeMasterGain.gain.setValueAtTime(soundscapeVolume, audioCtx.currentTime);
             }
@@ -5191,8 +5308,11 @@
             initTheme();
             checkInstalledState();
             checkDailyAutoRoll();
+            try {
+                setSoundscapeVolume(soundscapeVolume * 100);
+            } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=30').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=31').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
