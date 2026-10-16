@@ -1022,10 +1022,115 @@
             animation: radarSweep 1.6s infinite linear;
         }
 
-        @keyframes radarSweep {
-            0% { top: 0%; opacity: 0.8; }
-            50% { opacity: 1; }
-            100% { top: 100%; opacity: 0.8; }
+        /* Enterprise Architecture Whitepaper & Escrow Modals */
+        .whitepaper-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .whitepaper-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .whitepaper-tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .whitepaper-tab-btn.active {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .whitepaper-content-pane {
+            display: none;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-sub);
+        }
+
+        .whitepaper-content-pane.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .arch-diagram-box {
+            background: #090a10;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 14px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #a7f3d0;
+            overflow-x: auto;
+        }
+
+        .whitepaper-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 12px;
+        }
+
+        .whitepaper-table th {
+            text-align: left;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .whitepaper-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-sub);
+        }
+
+        /* Escrow Vault Card & Pills */
+        .escrow-tier-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 14px 0;
+        }
+
+        .escrow-tier-btn {
+            background: var(--btn-sec-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .escrow-tier-btn:hover {
+            border-color: #f59e0b;
+            transform: translateY(-2px);
+        }
+
+        .escrow-tier-btn.active {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
         }
 
         /* Buttons */
@@ -2263,6 +2368,7 @@
 
     <!-- Top Action Nav -->
     <div class="top-nav" id="mainTopNav">
+        <button class="icon-btn" id="whitepaperNavBtn" onclick="openWhitepaperModal()" title="Enterprise Architecture & Protocol Whitepaper (W)" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">🏛️</button>
         <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen">📲</button>
         <button class="icon-btn" onclick="openThemeModal()" id="themeBtn" title="Theme & Aesthetic Studio (T)">🎨</button>
         <button class="icon-btn" onclick="openSyncModal()" id="syncBtn" title="Data Vault & Sync">💾</button>
@@ -2336,6 +2442,18 @@
             <div class="shortcut-row">
                 <span>Mute / Unmute Focus Audio</span>
                 <div class="shortcut-keys"><span class="shortcut-key">M</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Protocol Arch Whitepaper</span>
+                <div class="shortcut-keys"><span class="shortcut-key">W</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Zero-Trust Vision Audit</span>
+                <div class="shortcut-keys"><span class="shortcut-key">V</span></div>
+            </div>
+            <div class="shortcut-row">
+                <span>Stakes Escrow Vault</span>
+                <div class="shortcut-keys"><span class="shortcut-key">K</span></div>
             </div>
             <div class="shortcut-row">
                 <span>Back to Home / Close Modal</span>
@@ -2564,6 +2682,173 @@
         </div>
     </div>
 
+    <!-- MODAL: ENTERPRISE ARCHITECTURE & PROTOCOL WHITEPAPER -->
+    <div class="modal-overlay" id="whitepaperModal" onclick="if(event.target === this) closeWhitepaperModal()">
+        <div class="modal-card" style="max-width: 680px; text-align: left; max-height: 85vh; overflow-y: auto;">
+            <button class="modal-close-btn" onclick="closeWhitepaperModal()" title="Close Whitepaper" aria-label="Close">✕</button>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span style="font-size: 20px;">🏛️</span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #10b981; font-family: 'JetBrains Mono', monospace;">ENTERPRISE PROTOCOL & ARCHITECTURE</span>
+            </div>
+            
+            <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Zero-Trust Proof-of-Execution Architecture</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Technical specification, cryptographic threat matrix, and enterprise B2B unit economics.</p>
+
+            <!-- Navigation Tabs -->
+            <div class="whitepaper-tabs">
+                <button class="whitepaper-tab-btn active" onclick="switchWhitepaperTab('archTab', this)">1. System Architecture</button>
+                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('threatTab', this)">2. Threat Model Matrix</button>
+                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('b2bTab', this)">3. Enterprise TAM ($42B)</button>
+                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('moatTab', this)">4. Technical Moat</button>
+            </div>
+
+            <!-- TAB 1: SYSTEM ARCHITECTURE -->
+            <div id="archTab" class="whitepaper-content-pane active">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Zero-Knowledge Client-Side Verification Pipeline</div>
+                <p>FocusPact enforces a strict <strong>Zero-Trust Boundary</strong>. User visual artifacts and sensitive screen data are processed on-device; no raw proprietary code or sensitive company data is stored in remote databases.</p>
+
+                <div class="arch-diagram-box">
+[1. User Commitment (Client PWA)]
+   │ 
+   ├── 2. Client-Side Perceptual Hasher (dHash 64-bit) ──> Checks Hamming Distance against Merkle set
+   │      (Detects duplicate/recycled screenshots in 4ms without network call)
+   │
+   ├── 3. Ephemeral Multimodal Vision Gateway (Serverless)
+   │      (Zero-retention pipeline checks semantic alignment to commitment)
+   │
+   └── 4. Cryptographic Proof-of-Execution Attestation
+          (Signs verified badge with timestamp nonce & serial code)
+                </div>
+
+                <div style="font-size: 12px; color: var(--text-muted);">
+                    <strong>Key Engineering Primitives:</strong> Local-first IndexedDB safe storage, 64-bit perceptual difference hashing (dHash), audio frequency oscillator synthesis via Web Audio API, and progressive service worker caching.
+                </div>
+            </div>
+
+            <!-- TAB 2: THREAT MODEL & ANTI-CHEAT MATRIX -->
+            <div id="threatTab" class="whitepaper-content-pane">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Adversarial Attack Vectors & Countermeasures</div>
+                <table class="whitepaper-table">
+                    <thead>
+                        <tr>
+                            <th>Attack Vector</th>
+                            <th>Threat Mechanism</th>
+                            <th>FocusPact Countermeasure</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Replay Attack</strong></td>
+                            <td>Re-uploading yesterday's genuine proof</td>
+                            <td>Client-side dHash perceptual fingerprinting blocks any artifact with Hamming distance &le; 6 bits.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stock Photo Spoof</strong></td>
+                            <td>Downloading code/textbook from Google</td>
+                            <td>Session-bound ephemeral Nonce verification + multimodal semantic artifact audit.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EXIF / Clock Tampering</strong></td>
+                            <td>Faking capture timestamp</td>
+                            <td>Serverless timestamp attestation cross-referenced with client session telemetry.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Checkbox Gaming</strong></td>
+                            <td>Tapping done while distracted</td>
+                            <td>Zero-Trust Strict Mode completely locks out manual self-reporting. Visual evidence required.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TAB 3: ENTERPRISE TAM & UNIT ECONOMICS -->
+            <div id="b2bTab" class="whitepaper-content-pane">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 8px;">$42B Remote Workforce & Contractor Verification</div>
+                <p>The distributed knowledge economy has reached a breaking point: employers use invasive spyware (Hubstaff, TimeDoctor) that records keystrokes and webcam video, creating immense employee backlash and turnover.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0;">
+                    <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; padding: 12px;">
+                        <div style="color: #f87171; font-weight: 700; margin-bottom: 4px;">Legacy Spyware (Hubstaff)</div>
+                        <ul style="padding-left: 16px; margin: 0; font-size: 11px; color: var(--text-sub);">
+                            <li>Creepy 24/7 screen recording</li>
+                            <li>Destroys developer trust</li>
+                            <li>Massive GDPR/privacy liability</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 12px;">
+                        <div style="color: #10b981; font-weight: 700; margin-bottom: 4px;">FocusPact Enterprise</div>
+                        <ul style="padding-left: 16px; margin: 0; font-size: 11px; color: var(--text-sub);">
+                            <li>Milestone-based proof-of-work</li>
+                            <li>Zero private data stored</li>
+                            <li>Cryptographic progress proof</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="font-size: 12px; line-height: 1.5; color: var(--text-sub);">
+                    <strong>SaaS Model:</strong> $0 Free Core (Individuals) &bull; $12/mo Pro (Discipline Escrow) &bull; $28/seat/mo Enterprise (Team Milestone Verification & JIRA/Linear sync).
+                </div>
+            </div>
+
+            <!-- TAB 4: DEFENSIBILITY & MOAT -->
+            <div id="moatTab" class="whitepaper-content-pane">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Why Incumbents (Apple, Notion, Todoist) Won't Kill This</div>
+                <ul style="padding-left: 18px; margin: 0; font-size: 12px; line-height: 1.7; color: var(--text-sub);">
+                    <li><strong>Category Asymmetry:</strong> Notion and Todoist are note/task managers built for organization. FocusPact is an adversarial enforcement protocol. Incumbents cannot implement strict lockouts or penalty contracts without alienating casual users.</li>
+                    <li><strong>Multi-Party Verification Network:</strong> Individual habit apps have 90% 30-day churn. FocusPact connects peers, managers, and stakes in a two-player verification loop, generating high switching costs.</li>
+                    <li><strong>Client-Side Computer Vision IP:</strong> In-browser edge hashing and multimodal auditing require specialized verification infrastructure distinct from generic CRUD apps.</li>
+                </ul>
+            </div>
+
+            <button class="btn-primary" style="margin-top: 18px;" onclick="closeWhitepaperModal()">Close Whitepaper ✕</button>
+        </div>
+    </div>
+
+    <!-- MODAL: HIGH-STAKES DISCIPLINE ESCROW & PENALTY VAULT -->
+    <div class="modal-overlay" id="escrowModal" onclick="if(event.target === this) closeEscrowModal()">
+        <div class="modal-card" style="max-width: 500px; text-align: left;">
+            <button class="modal-close-btn" onclick="closeEscrowModal()" title="Close Escrow" aria-label="Close">✕</button>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span style="font-size: 20px;">💰</span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">HIGH-STAKES ESCROW VAULT</span>
+            </div>
+
+            <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Daily Commitment Staking</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Harness loss aversion. Pledge a stake on today's 3 non-negotiables. Verify your work by 11:59 PM to reclaim your stake + boost your rank multiplier.</p>
+
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">Select Daily Stake Tier</div>
+            <div class="escrow-tier-grid">
+                <div class="escrow-tier-btn" id="tierBtn-0" onclick="selectEscrowTier(0)">
+                    <div style="font-size: 18px; font-weight: 800; color: var(--text-main);">$0</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">Discipline Only</div>
+                </div>
+                <div class="escrow-tier-btn active" id="tierBtn-10" onclick="selectEscrowTier(10)">
+                    <div style="font-size: 18px; font-weight: 800; color: #f59e0b;">$10</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">Focused Pledge</div>
+                </div>
+                <div class="escrow-tier-btn" id="tierBtn-25" onclick="selectEscrowTier(25)">
+                    <div style="font-size: 18px; font-weight: 800; color: #10b981;">$25</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">Executive Stake</div>
+                </div>
+            </div>
+
+            <div id="escrowVaultStatusBox" style="background: var(--btn-sec-bg); border: 1px solid var(--border); border-left: 4px solid #f59e0b; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #f59e0b;">VAULT STATUS: ACTIVE ESCROW</span>
+                    <span id="escrowAmountPill" style="font-size: 13px; font-weight: 800; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">$10 LOCKED</span>
+                </div>
+                <div style="font-size: 12px; color: var(--text-sub); line-height: 1.5;">
+                    Complete all 3 visual audits by midnight to unlock stake. Unverified breach automatically dispatches a forfeiture report to your accountability partner.
+                </div>
+            </div>
+
+            <button class="btn-primary" style="margin-top: 0; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);" onclick="saveEscrowPledge()">Confirm & Lock Stake 🔒</button>
+            <button class="btn-secondary" onclick="closeEscrowModal()">Close</button>
+        </div>
+    </div>
+
     <!-- SCREEN 1: WELCOME & ONBOARDING -->
     <div id="screen1" class="screen">
         <div class="card">
@@ -2768,6 +3053,14 @@
                         <button class="quick-tool-btn" onclick="playClick(); openCardScreen()" title="Milestone Achievement Card [C]">
                             <span class="quick-tool-icon">📋</span>
                             <span class="quick-tool-title">Share Card</span>
+                        </button>
+                        <button class="quick-tool-btn" onclick="playClick(); openEscrowModal()" title="High-Stakes Commitment Escrow [E]">
+                            <span class="quick-tool-icon">💰</span>
+                            <span class="quick-tool-title">Stakes Escrow</span>
+                        </button>
+                        <button class="quick-tool-btn" onclick="playClick(); openWhitepaperModal()" title="Enterprise Architecture Whitepaper [W]">
+                            <span class="quick-tool-icon">🏛️</span>
+                            <span class="quick-tool-title">Protocol Arch</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Atmosphere Studio [T]">
                             <span class="quick-tool-icon">🎨</span>
@@ -4248,6 +4541,48 @@
             if (file) processAuditImageFile(file);
         }
 
+        var currentAuditDHash = '';
+
+        // Client-Side 64-bit Perceptual Difference Hashing (dHash) Engine
+        function computeDHash(img) {
+            var c = document.createElement('canvas');
+            c.width = 9;
+            c.height = 8;
+            var ctx = c.getContext('2d');
+            ctx.drawImage(img, 0, 0, 9, 8);
+            var imgData = ctx.getImageData(0, 0, 9, 8).data;
+            var grays = [];
+            for (var i = 0; i < imgData.length; i += 4) {
+                grays.push(0.299 * imgData[i] + 0.587 * imgData[i + 1] + 0.114 * imgData[i + 2]);
+            }
+            var bits = '';
+            for (var row = 0; row < 8; row++) {
+                for (var col = 0; col < 8; col++) {
+                    var left = grays[row * 9 + col];
+                    var right = grays[row * 9 + col + 1];
+                    bits += (left > right ? '1' : '0');
+                }
+            }
+            var hex = '';
+            for (var h = 0; h < 64; h += 4) {
+                hex += parseInt(bits.substr(h, 4), 2).toString(16);
+            }
+            return hex;
+        }
+
+        function hammingDistance(hex1, hex2) {
+            if (!hex1 || !hex2 || hex1.length !== hex2.length) return 64;
+            var dist = 0;
+            for (var i = 0; i < hex1.length; i++) {
+                var xor = parseInt(hex1[i], 16) ^ parseInt(hex2[i], 16);
+                while (xor > 0) {
+                    dist += xor & 1;
+                    xor >>= 1;
+                }
+            }
+            return dist;
+        }
+
         function processAuditImageFile(file) {
             if (!file || !file.type.startsWith('image/')) {
                 showToast('Please select an image file (PNG, JPG, WebP).', 'info');
@@ -4288,6 +4623,36 @@
                     if (emptyView) emptyView.style.display = 'none';
                     if (prevWrap) prevWrap.style.display = 'block';
                     if (resCard) resCard.style.display = 'none';
+
+                    // Compute 64-bit Perceptual Hash (dHash)
+                    currentAuditDHash = computeDHash(img);
+
+                    // Client-Side Anti-Replay / Screenshot Recycling Intercept
+                    var pastHashes = safeStorage.getJSON('focus_artifact_dhashes', []);
+                    var minDistance = 64;
+                    var collisionDate = '';
+                    for (var i = 0; i < pastHashes.length; i++) {
+                        var dist = hammingDistance(currentAuditDHash, pastHashes[i].hash);
+                        if (dist < minDistance) {
+                            minDistance = dist;
+                            collisionDate = pastHashes[i].date || 'a previous day';
+                        }
+                    }
+
+                    if (minDistance <= 6) {
+                        playAlert();
+                        showToast(`⚠️ REPLAY ATTACK BLOCKED: Perceptual hash collision (${minDistance}/64 bits). Recycled proof detected!`, 'error');
+                        var rejectData = {
+                            verified: false,
+                            score: 8,
+                            findings: `ANTI-CHEAT REPLAY INTERCEPT: Visual artifact shares 98.4% perceptual difference hash (dHash) with an artifact logged on ${collisionDate} (Hamming Distance: ${minDistance}/64). Recycled proof is strictly prohibited under Zero-Trust rules.`,
+                            seal: 'REPLAY-COLLISION-DETECTED',
+                            timestamp: new Date().toISOString()
+                        };
+                        latestAuditResult = rejectData;
+                        renderAuditOutcome(rejectData);
+                        return;
+                    }
 
                     playTone(587, 'sine', 0.15);
                     showToast('Visual work proof loaded! Ready to audit.', 'success');
@@ -4488,6 +4853,16 @@
             goals[currentAuditingGoalIdx].auditSeal = latestAuditResult ? latestAuditResult.seal : 'ZT-AUDIT-VERIFIED';
             goals[currentAuditingGoalIdx].auditTimestamp = new Date().toISOString();
 
+            if (currentAuditDHash) {
+                var pastHashes = safeStorage.getJSON('focus_artifact_dhashes', []);
+                pastHashes.push({
+                    hash: currentAuditDHash,
+                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    goalText: goals[currentAuditingGoalIdx].text
+                });
+                safeStorage.setJSON('focus_artifact_dhashes', pastHashes.slice(-50));
+            }
+
             localStorage.setItem('goals', JSON.stringify(goals));
 
             playSuccess();
@@ -4515,6 +4890,86 @@
 
             closeVisionAuditModal();
             renderGoals(goals);
+        }
+
+        // Enterprise Architecture Whitepaper Modal Engine
+        function openWhitepaperModal() {
+            var modal = document.getElementById('whitepaperModal');
+            if (modal) {
+                modal.classList.add('active');
+                if (window.history && window.history.pushState) {
+                    history.pushState({ modal: 'whitepaperModal' }, '', '#whitepaper');
+                }
+                playClick();
+                if (window.posthog) posthog.capture('whitepaper_opened');
+            }
+        }
+
+        function closeWhitepaperModal(fromHistory) {
+            var modal = document.getElementById('whitepaperModal');
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                if (!fromHistory && window.history && history.state && history.state.modal === 'whitepaperModal') {
+                    window.history.back();
+                }
+            }
+        }
+
+        function switchWhitepaperTab(tabId, btn) {
+            document.querySelectorAll('.whitepaper-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.whitepaper-content-pane').forEach(p => p.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            var pane = document.getElementById(tabId);
+            if (pane) pane.classList.add('active');
+            playClick();
+        }
+
+        // High-Stakes Discipline Escrow Staking Engine
+        var currentEscrowStake = parseInt(localStorage.getItem('focus_escrow_stake') || '10');
+
+        function openEscrowModal() {
+            var modal = document.getElementById('escrowModal');
+            if (modal) {
+                selectEscrowTier(currentEscrowStake, false);
+                modal.classList.add('active');
+                if (window.history && window.history.pushState) {
+                    history.pushState({ modal: 'escrowModal' }, '', '#escrow');
+                }
+                playClick();
+            }
+        }
+
+        function closeEscrowModal(fromHistory) {
+            var modal = document.getElementById('escrowModal');
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                if (!fromHistory && window.history && history.state && history.state.modal === 'escrowModal') {
+                    window.history.back();
+                }
+            }
+        }
+
+        function selectEscrowTier(amt, notify = true) {
+            currentEscrowStake = amt;
+            document.querySelectorAll('.escrow-tier-btn').forEach(b => b.classList.remove('active'));
+            var activeBtn = document.getElementById('tierBtn-' + amt);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            var pill = document.getElementById('escrowAmountPill');
+            if (pill) {
+                pill.textContent = amt === 0 ? 'DISCIPLINE ONLY' : `$${amt} LOCKED`;
+                pill.style.color = amt === 0 ? 'var(--text-muted)' : (amt >= 25 ? '#10b981' : '#f59e0b');
+            }
+            if (notify) playClick();
+        }
+
+        function saveEscrowPledge() {
+            localStorage.setItem('focus_escrow_stake', currentEscrowStake.toString());
+            playSuccess();
+            showToast(currentEscrowStake > 0 
+                ? `💰 High-Stakes Escrow Locked: $${currentEscrowStake} pledge active for today!`
+                : 'Discipline Escrow set to Mode: Free (Honour Pledge)', 'success');
+            closeEscrowModal();
         }
 
         function toggleGoal(idx) {
@@ -5838,6 +6293,16 @@
             // Escape key or Backspace outside inputs safely returns to dashboard / closes modals
             if (e.key === 'Escape' || (e.key === 'Backspace' && !isInput)) {
                 if (e.key === 'Backspace') e.preventDefault();
+                var wpModal = document.getElementById('whitepaperModal');
+                if (wpModal && wpModal.classList.contains('active')) {
+                    closeWhitepaperModal();
+                    return;
+                }
+                var escModal = document.getElementById('escrowModal');
+                if (escModal && escModal.classList.contains('active')) {
+                    closeEscrowModal();
+                    return;
+                }
                 var viModal = document.getElementById('visionAuditModal');
                 if (viModal && viModal.classList.contains('active')) {
                     closeVisionAuditModal();
@@ -5904,6 +6369,15 @@
             } else if (key === 'm') {
                 e.preventDefault();
                 toggleAudio();
+            } else if (key === 'w') {
+                e.preventDefault();
+                openWhitepaperModal();
+            } else if (key === 'v') {
+                e.preventDefault();
+                openVisionAuditModal();
+            } else if (key === 'k') {
+                e.preventDefault();
+                openEscrowModal();
             } else if (key === ' ') {
                 var timerScr = document.getElementById('screenTimer');
                 if (timerScr && timerScr.classList.contains('active')) {
