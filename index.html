@@ -1818,18 +1818,20 @@
         .quick-tool-btn {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px 14px;
+            border-radius: 12px;
+            padding: 9px 10px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 7px;
             cursor: pointer;
             color: var(--text-main);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             text-align: left;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            min-width: 0;
+            overflow: hidden;
         }
 
         .quick-tool-btn:hover {
@@ -1840,18 +1842,20 @@
         }
 
         .quick-tool-icon {
-            font-size: 18px;
+            font-size: 16px;
             line-height: 1;
             flex-shrink: 0;
         }
 
         .quick-tool-title {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             color: var(--text-main);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            min-width: 0;
+            flex: 1;
         }
 
         /* 7-Day Consistency Strip */
@@ -3159,36 +3163,36 @@
                     <div class="label" style="margin-bottom: 12px;"><span class="label-dot"></span> TOOLS & INTEGRATIONS</div>
                     <div class="quick-tools-grid" style="margin-bottom: 0;">
                         <button class="quick-tool-btn" onclick="playClick(); goTo('screenTimer')" title="Focus Timer [F]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 6px; background:rgba(16,185,129,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25);">FCS</span>
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 5px; background:rgba(16,185,129,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25); flex-shrink:0;">FCS</span>
                             <span class="quick-tool-title">Focus Timer</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); goTo('screenSquad')" title="Squad Pacts [S]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#3b82f6; padding:2px 6px; background:rgba(59,130,246,0.12); border-radius:4px; border:1px solid rgba(59,130,246,0.25);">NET</span>
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#3b82f6; padding:2px 5px; background:rgba(59,130,246,0.12); border-radius:4px; border:1px solid rgba(59,130,246,0.25); flex-shrink:0;">NET</span>
                             <span class="quick-tool-title">Squad Pacts</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); goTo('screenAnalytics')" title="Analytics Dashboard [A]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#a855f7; padding:2px 6px; background:rgba(168,85,247,0.12); border-radius:4px; border:1px solid rgba(168,85,247,0.25);">TEL</span>
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#a855f7; padding:2px 5px; background:rgba(168,85,247,0.12); border-radius:4px; border:1px solid rgba(168,85,247,0.25); flex-shrink:0;">TEL</span>
                             <span class="quick-tool-title">Analytics</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); openCardScreen()" title="Share Achievement Card [C]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#ec4899; padding:2px 6px; background:rgba(236,72,153,0.12); border-radius:4px; border:1px solid rgba(236,72,153,0.25);">EXP</span>
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#ec4899; padding:2px 5px; background:rgba(236,72,153,0.12); border-radius:4px; border:1px solid rgba(236,72,153,0.25); flex-shrink:0;">EXP</span>
                             <span class="quick-tool-title">Share Card</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); openEscrowModal()" title="Commitment Stakes [E]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#f59e0b; padding:2px 6px; background:rgba(245,158,11,0.12); border-radius:4px; border:1px solid rgba(245,158,11,0.25);">ESC</span>
-                            <span class="quick-tool-title">Stakes Escrow</span>
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#f59e0b; padding:2px 5px; background:rgba(245,158,11,0.12); border-radius:4px; border:1px solid rgba(245,158,11,0.25); flex-shrink:0;">ESC</span>
+                            <span class="quick-tool-title">Stakes</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openWhitepaperModal()" title="Technical Architecture Specs [W]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 6px; background:rgba(16,185,129,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25);">ARC</span>
-                            <span class="quick-tool-title">Architecture Specs</span>
+                        <button class="quick-tool-btn" onclick="playClick(); openWhitepaperModal()" title="Technical Architecture & Threat Model [W]">
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 5px; background:rgba(168,85,247,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25); flex-shrink:0;">ARC</span>
+                            <span class="quick-tool-title">Whitepaper</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Display Settings [T]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#06b6d4; padding:2px 6px; background:rgba(6,182,212,0.12); border-radius:4px; border:1px solid rgba(6,182,212,0.25);">UI</span>
-                            <span class="quick-tool-title">Display & Theme</span>
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#06b6d4; padding:2px 5px; background:rgba(6,182,212,0.12); border-radius:4px; border:1px solid rgba(6,182,212,0.25); flex-shrink:0;">UI</span>
+                            <span class="quick-tool-title">Themes</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); openSyncModal()" title="Data Cloud Sync">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#64748b; padding:2px 6px; background:rgba(100,116,139,0.12); border-radius:4px; border:1px solid rgba(100,116,139,0.25);">SEC</span>
-                            <span class="quick-tool-title">Cloud Backup</span>
+                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#64748b; padding:2px 5px; background:rgba(100,116,139,0.12); border-radius:4px; border:1px solid rgba(100,116,139,0.25); flex-shrink:0;">SEC</span>
+                            <span class="quick-tool-title">Cloud Sync</span>
                         </button>
                     </div>
                 </div>
@@ -6632,7 +6636,7 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=35').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=36').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
