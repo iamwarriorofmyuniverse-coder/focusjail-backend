@@ -1340,9 +1340,9 @@
         .dispatch-btn.wa { border-color: rgba(37, 211, 102, 0.4); color: #25d366; }
         .dispatch-btn.sms { border-color: rgba(79, 172, 254, 0.4); color: #4facfe; }
 
-        /* Streak Card: Precision Obsidian Glass Monolith */
+        /* Streak Card: Dynamic Theme-Adaptive Card */
         .streak-card {
-            background: rgba(14, 17, 24, 0.95);
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 24px 20px;
@@ -1351,8 +1351,9 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            transition: transform 0.25s ease, border-color 0.25s ease;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(24px);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .streak-card::before {
@@ -1372,7 +1373,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 54px;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--text-main);
             line-height: 1;
             letter-spacing: -2px;
         }
@@ -6639,7 +6640,7 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=37').then((reg) => {
+                navigator.serviceWorker.register('./sw.js?v=38').then((reg) => {
                     reg.update();
                 }).catch(() => {});
             }
