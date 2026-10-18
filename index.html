@@ -2660,22 +2660,22 @@
             <button class="modal-close-btn" onclick="closeVisionAuditModal()" title="Close Audit" aria-label="Close">✕</button>
 
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #10b981; font-family: 'JetBrains Mono', monospace;">[ZERO-TRUST PROOF AUDITOR]</span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #10b981; font-family: 'JetBrains Mono', monospace;">[AUTOMATED PROOF AUDITOR]</span>
             </div>
             
-            <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Autonomous Milestone Verification</h2>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Cryptographic multimodal audit. Submit visual execution artifacts to seal proof-of-work credit.</p>
+            <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Milestone Visual Verification</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Client-side perceptual hashing and multimodal AI audit. Upload work artifacts to verify completion.</p>
 
             <!-- Target Goal Card -->
             <div id="auditTargetGoalBox" style="background: var(--btn-sec-bg); border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;">
-                <div style="font-size: 10px; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace;">TARGET DIRECTIVE #<span id="auditGoalNum">1</span></div>
+                <div style="font-size: 10px; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace;">TARGET MILESTONE #<span id="auditGoalNum">1</span></div>
                 <div id="auditGoalText" style="font-size: 14px; font-weight: 600; color: var(--text-main);">Execution priority...</div>
             </div>
 
             <!-- Upload & Capture Dropzone -->
             <div id="auditDropzone" class="audit-dropzone" onclick="document.getElementById('auditFileInput').click()">
                 <div id="dropzoneEmptyView">
-                    <div style="font-size: 11px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #10b981; margin-bottom: 6px;">[INPUT ARTIFACT // 64-BIT dHASH]</div>
+                    <div style="font-size: 11px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #10b981; margin-bottom: 6px;">[UPLOAD ARTIFACT // 64-BIT dHASH]</div>
                     <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Drop Screenshot, Code Diff, or Rendered Artifact</div>
                     <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Click to browse, or press <kbd style="background: rgba(255,255,255,0.1); padding: 2px 5px; border-radius: 4px; font-family: monospace;">Ctrl+V</kbd> to paste</div>
                 </div>
@@ -2709,12 +2709,12 @@
             </div>
 
             <!-- Action Controls -->
-            <button class="btn-primary" id="runAuditBtn" style="margin-top: 0;" onclick="executeVisionAudit()">Execute Multimodal Audit</button>
-            <button class="btn-primary" id="confirmAuditBtn" style="display: none; margin-top: 0; background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="approveAuditGoal()">Seal Verified Milestone</button>
+            <button class="btn-primary" id="runAuditBtn" style="margin-top: 0;" onclick="executeVisionAudit()">Run Automated Audit</button>
+            <button class="btn-primary" id="confirmAuditBtn" style="display: none; margin-top: 0; background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="approveAuditGoal()">Confirm Milestone Completion</button>
 
             <!-- Emergency / Self-Report Bypass Link -->
             <div style="text-align: center; margin-top: 12px;">
-                <a href="javascript:void(0)" onclick="emergencySelfReportBypass()" style="font-size: 11px; color: var(--text-muted); text-decoration: underline;">Bypass audit (Log as unverified self-report)</a>
+                <a href="javascript:void(0)" onclick="emergencySelfReportBypass()" style="font-size: 11px; color: var(--text-muted); text-decoration: underline;">Skip visual audit (Log as self-reported)</a>
             </div>
         </div>
     </div>
@@ -2725,12 +2725,11 @@
             <button class="modal-close-btn" onclick="closeWhitepaperModal()" title="Close Whitepaper" aria-label="Close">✕</button>
 
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span style="font-size: 20px;">🏛️</span>
-                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #10b981; font-family: 'JetBrains Mono', monospace;">ENTERPRISE PROTOCOL & ARCHITECTURE</span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #10b981; font-family: 'JetBrains Mono', monospace;">[TECHNICAL SPECIFICATION & WHITEPAPER]</span>
             </div>
             
-            <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Zero-Trust Proof-of-Execution Architecture</h2>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Technical specification, cryptographic threat matrix, and enterprise B2B unit economics.</p>
+            <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Proof-of-Execution Architecture</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Technical specification, anti-spoofing threat matrix, and enterprise B2B unit economics.</p>
 
             <!-- Navigation Tabs -->
             <div class="whitepaper-tabs">
@@ -2848,11 +2847,11 @@
             <button class="modal-close-btn" onclick="closeEscrowModal()" title="Close Escrow" aria-label="Close">✕</button>
 
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">[COMMITMENT ESCROW VAULT]</span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">[COMMITMENT STAKES VAULT]</span>
             </div>
 
             <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Daily Commitment Staking</h2>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Harness loss aversion. Pledge collateral on today's 3 non-negotiables. Verify your work by 23:59 UTC to reclaim collateral and advance operator status.</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Harness loss aversion. Put a financial stake on today's 3 key deliverables. Complete your commitments by midnight to reclaim your stake and build your streak.</p>
 
             <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; font-family: 'JetBrains Mono', monospace;">Select Daily Stake Tier</div>
             <div class="escrow-tier-grid">
@@ -2872,15 +2871,15 @@
 
             <div id="escrowVaultStatusBox" style="background: var(--btn-sec-bg); border: 1px solid var(--border); border-left: 4px solid #f59e0b; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">VAULT STATUS: ACTIVE ESCROW</span>
+                    <span style="font-size: 11px; font-weight: 700; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">STAKE STATUS: ACTIVE</span>
                     <span id="escrowAmountPill" style="font-size: 13px; font-weight: 800; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">$10 LOCKED</span>
                 </div>
                 <div style="font-size: 12px; color: var(--text-sub); line-height: 1.5;">
-                    Verify all 3 directives via visual audit by midnight to unlock collateral. Unverified breach automatically dispatches a forfeiture report to your escalation witness.
+                    Complete your deliverables by midnight to keep your stake. Missed commitments trigger an accountability report to your partner.
                 </div>
             </div>
 
-            <button class="btn-primary" style="margin-top: 0;" onclick="saveEscrowPledge()">Authorize Escrow Pledge</button>
+            <button class="btn-primary" style="margin-top: 0;" onclick="saveEscrowPledge()">Confirm Stake Pledge</button>
             <button class="btn-secondary" onclick="closeEscrowModal()">Close</button>
         </div>
     </div>
@@ -2892,69 +2891,69 @@
                 <img src="icon-192.png" alt="FocusPact Hologram Icon" class="hero-app-icon" />
             </div>
 
-            <div class="label" style="justify-content: center;"><span class="label-dot"></span> FOCUSPACT PROTOCOL // ZK-ENGINE</div>
-            <h1 style="text-align: center; font-size: 24px; letter-spacing: -0.5px;">Autonomous Proof-of-Execution.</h1>
+            <div class="label" style="justify-content: center;"><span class="label-dot"></span> FOCUSPACT // ZERO-TRUST EXECUTION ENGINE</div>
+            <h1 style="text-align: center; font-size: 24px; letter-spacing: -0.5px;">Proof-of-Execution for High-Performers.</h1>
             <p style="text-align: center; font-size: 13px; line-height: 1.6; color: var(--text-sub); margin-bottom: 22px;">
-                Verifiable daily milestone execution backed by client-side perceptual gradient hashing (<code style="font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px;">dHash</code>) and multimodal vision audits. Zero surveillance. Mathematical integrity.
+                Verifiable daily milestone execution backed by client-side perceptual gradient hashing (<code style="font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px;">dHash</code>) and multimodal visual audits. Zero surveillance. Objective accountability.
             </p>
-            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Initialize Workspace</button>
-            <button class="btn-secondary" onclick="openWhitepaperModal()" style="margin-top: 10px;">Inspect Architecture Whitepaper</button>
+            <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started</button>
+            <button class="btn-secondary" onclick="openWhitepaperModal()" style="margin-top: 10px;">Technical Architecture Whitepaper</button>
         </div>
     </div>
 
-    <!-- SCREEN 2: DEFINE DIRECTIVES & ESCALATION WITNESS -->
+    <!-- SCREEN 2: DEFINE MILESTONES & ACCOUNTABILITY PARTNER -->
     <div id="screen2" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> DAILY DIRECTIVE CONTRACT</div>
-            <h1>Define Priority Directives.</h1>
-            <p>Establish today's 3 non-negotiable execution milestones. Each directive is verifiable via visual proof audit.</p>
+            <div class="label"><span class="label-dot"></span> DAILY COMMITMENT CONTRACT</div>
+            <h1>Define Today's Commitments.</h1>
+            <p>Set 3 non-negotiable deliverables for today. Each milestone is verifiable with visual work artifacts or check-in.</p>
             
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace;">Operator Identifier</div>
-            <input id="name" type="text" placeholder="Operator Name (e.g. Alex Rivera)" />
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace;">Your Name or Handle</div>
+            <input id="name" type="text" placeholder="e.g. Alex Rivera" />
             
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 10px 0 6px; font-family: 'JetBrains Mono', monospace;">Priority Milestone Directives</div>
-            <input id="goal1" type="text" placeholder="Directive Alpha (Primary Milestone)" />
-            <input id="goal2" type="text" placeholder="Directive Beta (Secondary Milestone)" />
-            <input id="goal3" type="text" placeholder="Directive Gamma (Tertiary Milestone)" />
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 10px 0 6px; font-family: 'JetBrains Mono', monospace;">Today's 3 Key Deliverables</div>
+            <input id="goal1" type="text" placeholder="Deliverable 1: Core Target (e.g. Ship auth endpoint)" />
+            <input id="goal2" type="text" placeholder="Deliverable 2: Secondary Focus (e.g. 45m deep work)" />
+            <input id="goal3" type="text" placeholder="Deliverable 3: Habit Anchor (e.g. 5km run or reading)" />
             
             <div style="margin-top: 14px; margin-bottom: 8px;">
-                <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> Escalation Witness (Peer Auditor)</div>
+                <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> Accountability Partner (Optional)</div>
                 <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;">
-                    Designated peer or team lead who receives cryptographic verification dispatch if directives remain unverified by midnight.
+                    A teammate, coach, or peer who receives your daily completion report if deliverables remain unverified by midnight.
                 </div>
-                <input id="partnerName" type="text" placeholder="Witness Name (Team Lead or Peer)" />
-                <input id="partnerContact" type="text" placeholder="Witness Email, Phone, or WhatsApp" />
+                <input id="partnerName" type="text" placeholder="Partner Name (e.g. Marcus)" />
+                <input id="partnerContact" type="text" placeholder="Partner Phone, WhatsApp, or Email" />
             </div>
 
-            <button class="btn-primary" onclick="saveGoals()">Seal Directives & Proceed</button>
+            <button class="btn-primary" onclick="saveGoals()">Save Commitments & Continue</button>
         </div>
     </div>
 
-    <!-- SCREEN 2B: VERIFICATION RIGOR PROTOCOL -->
+    <!-- SCREEN 2B: VERIFICATION RIGOR MODE -->
     <div id="screen2b" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> VERIFICATION RIGOR // AUDIT PROTOCOL</div>
-            <h1>Select Verification Rigor.</h1>
-            <p>Calibrate the autonomous audit engine's proof threshold and evidence stringency.</p>
+            <div class="label"><span class="label-dot"></span> VERIFICATION RIGOR // AUDIT MODE</div>
+            <h1>Choose Verification Level.</h1>
+            <p>Select how strictly your daily work artifacts are audited.</p>
             <div class="tone-btn tone-brutal" onclick="setTone('brutal')">
                 <div class="tone-rigor-badge">STRICT_AUDIT</div>
                 <div>
-                    <div class="tone-title">Strict Autonomous Audit</div>
-                    <div class="tone-desc">Mandatory client-side visual proof for all directives. 0ms tolerance, dHash duplicate blocking.</div>
+                    <div class="tone-title">Strict Visual Verification</div>
+                    <div class="tone-desc">Mandatory client-side visual proof for all deliverables. Automated dHash duplicate blocking.</div>
                 </div>
             </div>
             <div class="tone-btn tone-firm" onclick="setTone('firm')">
                 <div class="tone-rigor-badge">STANDARD</div>
                 <div>
-                    <div class="tone-title">Standard Milestone Verification</div>
-                    <div class="tone-desc">Dual-factor milestone verification backed by peer squad consensus and visual telemetry.</div>
+                    <div class="tone-title">Standard Verification</div>
+                    <div class="tone-desc">Visual proof is recommended and scored, with flexible self-reporting for offline tasks.</div>
                 </div>
             </div>
             <div class="tone-btn tone-gentle" onclick="setTone('gentle')">
                 <div class="tone-rigor-badge">ADVISORY</div>
                 <div>
-                    <div class="tone-title">Advisory Protocol</div>
-                    <div class="tone-desc">Self-governed milestone execution with optional cryptographic hash proof sealing.</div>
+                    <div class="tone-title">Light Touch (Advisory)</div>
+                    <div class="tone-desc">Self-guided execution tracking with daily reflection and AI progress feedback.</div>
                 </div>
             </div>
         </div>
@@ -2969,17 +2968,17 @@
                     <!-- Card Header Row with Quick Edit Toggle -->
                     <div class="goals-header-row">
                         <div>
-                            <div class="label"><span class="label-dot"></span> DAILY EXECUTION DIRECTIVES</div>
-                            <h1 id="welcomeName" style="margin-bottom: 2px;">Operator Session</h1>
+                            <div class="label"><span class="label-dot"></span> DAILY COMMITMENTS</div>
+                            <h1 id="welcomeName" style="margin-bottom: 2px;">Today's Milestones</h1>
                         </div>
-                        <button class="inline-edit-badge" id="goalsEditToggleBtn" onclick="toggleInlineGoalEdit()" title="Edit Today's Directives">Edit Directives</button>
+                        <button class="inline-edit-badge" id="goalsEditToggleBtn" onclick="toggleInlineGoalEdit()" title="Edit Today's Commitments">Edit Commitments</button>
                     </div>
 
                     <!-- Progress Bar & Indicator -->
                     <div class="goals-progress-wrap">
                         <div class="goals-progress-meta">
-                            <span id="goalsProgressLabel">3 Verified Execution Contracts</span>
-                            <span id="goalsProgressText">0 of 3 Verified (0%)</span>
+                            <span id="goalsProgressLabel">3 Daily Commitments</span>
+                            <span id="goalsProgressText">0 of 3 Completed (0%)</span>
                         </div>
                         <div class="goals-progress-track">
                             <div class="goals-progress-bar" id="goalsProgressBar" style="width: 0%;"></div>
@@ -2991,7 +2990,7 @@
                         <!-- Zero-Trust AI Vision Work-Proof Enforcement Bar -->
                         <div class="zero-trust-header-bar">
                             <div style="display: flex; align-items: center; gap: 7px;">
-                                <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.8px; color: #10b981; font-family: 'JetBrains Mono', monospace;">PROOF-OF-EXECUTION:</span>
+                                <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.8px; color: #10b981; font-family: 'JetBrains Mono', monospace;">VERIFICATION:</span>
                                 <span id="zeroTrustStatusBadge" class="zero-trust-mode-pill">STRICT AUDIT</span>
                             </div>
                             <label class="zt-switch" title="Toggle Zero-Trust Visual Proof Enforcement">
@@ -3004,44 +3003,44 @@
 
                         <!-- Empty State Notice (If No Goals Set) -->
                         <div id="goalsEmptyState" style="display: none; text-align: center; padding: 22px 14px; background: var(--btn-sec-bg); border: 1px dashed var(--border); border-radius: 16px; margin-bottom: 14px;">
-                            <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;">[STATUS: NO ACTIVE DIRECTIVES]</div>
-                            <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">No Execution Contracts Sealed for Today</div>
-                            <div style="font-size: 12px; color: var(--text-muted); margin: 4px 0 14px;">Establish your 3 priority milestones to begin autonomous verification.</div>
-                            <button class="btn-primary" style="margin-top: 0; padding: 10px 18px;" onclick="openInlineGoalEdit()">Seal Today's Directives</button>
+                            <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 6px;">[NO ACTIVE COMMITMENTS]</div>
+                            <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">No Deliverables Set for Today</div>
+                            <div style="font-size: 12px; color: var(--text-muted); margin: 4px 0 14px;">Set your 3 priority milestones to begin tracking and verification.</div>
+                            <button class="btn-primary" style="margin-top: 0; padding: 10px 18px;" onclick="openInlineGoalEdit()">Set Today's Commitments</button>
                         </div>
 
                         <!-- Primary Direct Action Launcher -->
                         <div style="display: flex; gap: 8px; margin-top: 14px;">
-                            <button class="btn-primary" style="margin-top: 0; flex: 1.2;" onclick="playClick(); goTo('screenTimer')">Focus Terminal</button>
-                            <button class="btn-secondary" style="margin-top: 0; flex: 1;" onclick="playClick(); goTo('screen5')">Milestone Audit</button>
+                            <button class="btn-primary" style="margin-top: 0; flex: 1.2;" onclick="playClick(); goTo('screenTimer')">Focus Timer</button>
+                            <button class="btn-secondary" style="margin-top: 0; flex: 1;" onclick="playClick(); goTo('screen5')">Daily Check-in</button>
                         </div>
                     </div>
 
                     <!-- MODE B: INLINE INSTANT GOAL SETTER / EDITOR -->
                     <div id="goalsEditMode" style="display: none;">
-                        <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> SEAL DIRECTIVES CONTRACT</div>
-                        <p style="font-size: 13px; margin-bottom: 14px; color: var(--text-sub);">Define the three critical deliverables to verify during today's session.</p>
+                        <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> SET TODAY'S COMMITMENTS</div>
+                        <p style="font-size: 13px; margin-bottom: 14px; color: var(--text-sub);">Define the three critical deliverables to achieve during today's session.</p>
                         
                         <div class="inline-goal-input-box">
                             <span class="inline-goal-num">1.</span>
-                            <input id="inlineGoal1" class="inline-goal-input" type="text" placeholder="Directive Alpha (Primary milestone)" />
+                            <input id="inlineGoal1" class="inline-goal-input" type="text" placeholder="Deliverable 1 (Primary milestone)" />
                         </div>
                         <div class="inline-goal-input-box">
                             <span class="inline-goal-num">2.</span>
-                            <input id="inlineGoal2" class="inline-goal-input" type="text" placeholder="Directive Beta (Secondary milestone)" />
+                            <input id="inlineGoal2" class="inline-goal-input" type="text" placeholder="Deliverable 2 (Secondary focus)" />
                         </div>
                         <div class="inline-goal-input-box">
                             <span class="inline-goal-num">3.</span>
-                            <input id="inlineGoal3" class="inline-goal-input" type="text" placeholder="Directive Gamma (Tertiary milestone)" />
+                            <input id="inlineGoal3" class="inline-goal-input" type="text" placeholder="Deliverable 3 (Habit anchor)" />
                         </div>
 
-                        <button class="btn-primary" style="margin-top: 8px;" onclick="saveInlineGoals()">Seal Directives</button>
+                        <button class="btn-primary" style="margin-top: 8px;" onclick="saveInlineGoals()">Save Commitments</button>
                         <div style="display: flex; gap: 8px; margin-top: 8px;">
                             <button class="btn-secondary" style="margin-top: 0; flex: 1;" onclick="cancelInlineEditGoals()">Cancel</button>
-                            <button class="btn-secondary" style="margin-top: 0; flex: 1.2;" onclick="reusePreviousGoals()" title="Auto-fill yesterday's 3 goals">Recall Prior Directives</button>
+                            <button class="btn-secondary" style="margin-top: 0; flex: 1.2;" onclick="reusePreviousGoals()" title="Auto-fill yesterday's 3 goals">Recall Previous</button>
                         </div>
                         <div style="text-align: center; margin-top: 14px; font-size: 11px; color: var(--text-muted);">
-                            <a href="javascript:void(0)" onclick="openEditGoals()" style="color: var(--text-muted); text-decoration: underline;">Configure Witness & Governance Protocol</a>
+                            <a href="javascript:void(0)" onclick="openEditGoals()" style="color: var(--text-muted); text-decoration: underline;">Configure Partner & Settings</a>
                         </div>
                     </div>
 
@@ -3053,25 +3052,25 @@
                 <!-- Main Streak Card -->
                 <div class="streak-card">
                     <div class="streak-number" id="streakCount">0</div>
-                    <div class="streak-label">Consecutive Verified Days</div>
-                    <div class="inmate-badge" id="rankBadge">Provisioned Operator</div>
+                    <div class="streak-label">Consecutive Days Streak</div>
+                    <div class="inmate-badge" id="rankBadge">Active Streak</div>
                 </div>
 
                 <!-- Bento Metrics Row (Focus Time + Shield + Squad) -->
                 <div class="bento-row">
-                    <div class="bento-box" onclick="goTo('screenTimer')" title="Focus Terminal [F]">
+                    <div class="bento-box" onclick="goTo('screenTimer')" title="Focus Timer [F]">
                         <div class="bento-icon"><span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 5px; background:rgba(16,185,129,0.12); border-radius:4px;">LOG</span></div>
                         <div class="bento-title">Focus Logged</div>
                         <div class="bento-val" id="bentoFocusMins">0m today</div>
                     </div>
-                    <div class="bento-box" onclick="showShieldInfo()" title="Discipline Streak Shield">
+                    <div class="bento-box" onclick="showShieldInfo()" title="Streak Shield Protection">
                         <div class="bento-icon"><span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#3b82f6; padding:2px 5px; background:rgba(59,130,246,0.12); border-radius:4px;">SEC</span></div>
                         <div class="bento-title">Streak Shield</div>
                         <div class="bento-val" id="bentoShieldVal">1 Active</div>
                     </div>
-                    <div class="bento-box" onclick="goTo('screenSquad')" title="Squad Consensus Multiplier [S]">
+                    <div class="bento-box" onclick="goTo('screenSquad')" title="Squad Multiplier [S]">
                         <div class="bento-icon"><span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#f59e0b; padding:2px 5px; background:rgba(245,158,11,0.12); border-radius:4px;">NET</span></div>
-                        <div class="bento-title">Consensus Multiplier</div>
+                        <div class="bento-title">Squad Multiplier</div>
                         <div class="bento-val" id="bentoSquadVal">2.5x</div>
                     </div>
                 </div>
@@ -3081,39 +3080,39 @@
 
                 <!-- Sleek Quick Tools Hub Card -->
                 <div class="card" style="padding: 18px 20px; margin-bottom: 0;">
-                    <div class="label" style="margin-bottom: 12px;"><span class="label-dot"></span> PROTOCOL TOOLS & SPECS</div>
+                    <div class="label" style="margin-bottom: 12px;"><span class="label-dot"></span> TOOLS & INTEGRATIONS</div>
                     <div class="quick-tools-grid" style="margin-bottom: 0;">
-                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenTimer')" title="Focus Terminal [F]">
+                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenTimer')" title="Focus Timer [F]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 6px; background:rgba(16,185,129,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25);">FCS</span>
-                            <span class="quick-tool-title">Focus Terminal</span>
+                            <span class="quick-tool-title">Focus Timer</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenSquad')" title="Consensus Squad [S]">
+                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenSquad')" title="Squad Pacts [S]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#3b82f6; padding:2px 6px; background:rgba(59,130,246,0.12); border-radius:4px; border:1px solid rgba(59,130,246,0.25);">NET</span>
-                            <span class="quick-tool-title">Consensus Squad</span>
+                            <span class="quick-tool-title">Squad Pacts</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenAnalytics')" title="Telemetry Analytics [A]">
+                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenAnalytics')" title="Analytics Dashboard [A]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#a855f7; padding:2px 6px; background:rgba(168,85,247,0.12); border-radius:4px; border:1px solid rgba(168,85,247,0.25);">TEL</span>
-                            <span class="quick-tool-title">Telemetry Graphs</span>
+                            <span class="quick-tool-title">Analytics</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openCardScreen()" title="Export Verification Badge [C]">
+                        <button class="quick-tool-btn" onclick="playClick(); openCardScreen()" title="Share Achievement Card [C]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#ec4899; padding:2px 6px; background:rgba(236,72,153,0.12); border-radius:4px; border:1px solid rgba(236,72,153,0.25);">EXP</span>
-                            <span class="quick-tool-title">Export Badge</span>
+                            <span class="quick-tool-title">Share Card</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openEscrowModal()" title="High-Stakes Escrow Vault [E]">
+                        <button class="quick-tool-btn" onclick="playClick(); openEscrowModal()" title="Commitment Stakes [E]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#f59e0b; padding:2px 6px; background:rgba(245,158,11,0.12); border-radius:4px; border:1px solid rgba(245,158,11,0.25);">ESC</span>
                             <span class="quick-tool-title">Stakes Escrow</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openWhitepaperModal()" title="Protocol Architecture Whitepaper [W]">
+                        <button class="quick-tool-btn" onclick="playClick(); openWhitepaperModal()" title="Technical Architecture Specs [W]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 6px; background:rgba(16,185,129,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25);">ARC</span>
                             <span class="quick-tool-title">Architecture Specs</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Display Studio [T]">
+                        <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Display Settings [T]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#06b6d4; padding:2px 6px; background:rgba(6,182,212,0.12); border-radius:4px; border:1px solid rgba(6,182,212,0.25);">UI</span>
-                            <span class="quick-tool-title">Display Studio</span>
+                            <span class="quick-tool-title">Display & Theme</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openSyncModal()" title="Data Vault & Sync">
+                        <button class="quick-tool-btn" onclick="playClick(); openSyncModal()" title="Data Cloud Sync">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#64748b; padding:2px 6px; background:rgba(100,116,139,0.12); border-radius:4px; border:1px solid rgba(100,116,139,0.25);">SEC</span>
-                            <span class="quick-tool-title">Data Vault Sync</span>
+                            <span class="quick-tool-title">Cloud Backup</span>
                         </button>
                     </div>
                 </div>
@@ -3123,8 +3122,8 @@
                     <div class="install-banner-left">
                         <img src="icon-192.png" alt="App Icon" class="install-banner-icon" />
                         <div>
-                            <div class="install-banner-title">FocusPact Native Protocol</div>
-                            <div class="install-banner-sub">PWA Edge Runtime // 0ms Local Cache</div>
+                            <div class="install-banner-title">FocusPact Native Web App</div>
+                            <div class="install-banner-sub">Install for Instant Offline Access (0ms)</div>
                         </div>
                     </div>
                     <button class="install-badge-btn">Install</button>
@@ -3145,63 +3144,63 @@
     <!-- SCREEN 5: EVENING CHECK-IN & AUDIT -->
     <div id="screen5" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> DAILY MILESTONE AUDIT</div>
-            <h1 id="checkinTitle">Execution Compliance Audit</h1>
-            <p id="checkinSub">Verify status of today's three execution directives.</p>
+            <div class="label"><span class="label-dot"></span> DAILY CHECK-IN</div>
+            <h1 id="checkinTitle">Daily Milestone Check-in</h1>
+            <p id="checkinSub">Confirm the completion status of today's 3 deliverables.</p>
 
             <div class="toggle-wrap" onclick="toggleReportStatus()">
                 <div class="toggle-ball" id="toggleBall"></div>
                 <div class="toggle-option active" id="opt-yes">Verified Complete ✓</div>
-                <div class="toggle-option" id="opt-no">Unfulfilled / Breach ✗</div>
+                <div class="toggle-option" id="opt-no">Missed / Incomplete ✗</div>
             </div>
 
             <!-- Proof of Work Input (When Completed) -->
             <div id="proofWrap">
-                <div class="label"><span class="label-dot"></span> PROOF ARTIFACT (URL OR REPO HASH)</div>
+                <div class="label"><span class="label-dot"></span> WORK PROOF ARTIFACT (URL OR LINK)</div>
                 <input id="proofInput" type="text" placeholder="Paste GitHub PR, Figma link, doc URL, or commit hash..." />
             </div>
 
             <!-- Shield Freeze Option Banner (When Missed) -->
             <div class="shield-banner" id="shieldBanner">
-                <span><strong>Emergency Protocol Freeze:</strong> Apply streak protection key for today's session.</span>
-                <button class="shield-toggle-btn" id="shieldBtn" onclick="toggleUseShield()">Activate Key</button>
+                <span><strong>Streak Freeze Protection:</strong> Use your streak shield to protect your streak today.</span>
+                <button class="shield-toggle-btn" id="shieldBtn" onclick="toggleUseShield()">Use Shield</button>
             </div>
 
             <!-- Confession Text Area -->
             <div class="label" id="reflectionLabel"><span class="label-dot"></span> Execution Log & Notes</div>
             <textarea id="excuseInput" rows="3" placeholder="Provide session summary, execution metrics, or blockers..."></textarea>
             
-            <button class="btn-primary" onclick="submitReport()">Submit Audit & Generate Telemetry</button>
+            <button class="btn-primary" onclick="submitReport()">Submit Check-in & Review</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Return to Dashboard</button>
         </div>
     </div>
 
-    <!-- SCREEN 6: AUDIT VERDICT & ESCALATION DISPATCH -->
+    <!-- SCREEN 6: AUDIT VERDICT & PARTNER DISPATCH -->
     <div id="screen6" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> EXECUTION AUDIT ATTESTATION</div>
-            <h1 id="verdictHeadline">Verification Assessment</h1>
+            <div class="label"><span class="label-dot"></span> DAILY VERIFICATION VERDICT</div>
+            <h1 id="verdictHeadline">Daily Progress Verdict</h1>
             
             <div class="verify-pill" id="verifyPill">
-                <span>Zero-Trust Warden: Verified High-Confidence ✓</span>
+                <span>Verification: High-Confidence Verified ✓</span>
             </div>
 
             <div class="verdict-card">
-                <p id="aiResponse">Analyzing session telemetry and preparing cryptographic findings...</p>
+                <p id="aiResponse">Analyzing submitted proof and generating review...</p>
             </div>
 
             <!-- 1-Tap Partner Confession / Victory Dispatcher -->
             <div style="margin-top: 14px; margin-bottom: 8px;">
-                <div class="label"><span class="label-dot"></span> Transmit Verification Record to Witness</div>
+                <div class="label"><span class="label-dot"></span> Send Daily Report to Accountability Partner</div>
                 <div class="dispatch-grid">
                     <button class="dispatch-btn wa" onclick="sendPartnerWhatsApp()">WhatsApp</button>
-                    <button class="dispatch-btn sms" onclick="sendPartnerSMS()">SMS Dispatch</button>
-                    <button class="dispatch-btn" onclick="sendPartnerEmail()">Email Report</button>
-                    <button class="dispatch-btn" onclick="copyPartnerReport()">Copy Payload</button>
+                    <button class="dispatch-btn sms" onclick="sendPartnerSMS()">SMS / Text</button>
+                    <button class="dispatch-btn" onclick="sendPartnerEmail()">Email</button>
+                    <button class="dispatch-btn" onclick="copyPartnerReport()">Copy Report</button>
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="openCardScreen()">Export Verification Badge</button>
+            <button class="btn-primary" onclick="openCardScreen()">Share Achievement Card</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Return to Dashboard</button>
         </div>
     </div>
@@ -3209,22 +3208,22 @@
     <!-- SCREEN: MULTIPLAYER SQUAD PACTS & LEADERBOARD -->
     <div id="screenSquad" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> CONSENSUS NETWORK // SQUAD PROTOCOL</div>
-            <h1>Multi-Operator Consensus</h1>
-            <p>Coordinate execution with your distributed team. Mutual milestone verification unlocks collective multiplier tiers.</p>
+            <div class="label"><span class="label-dot"></span> SQUAD PACTS // TEAM ACCOUNTABILITY</div>
+            <h1>Team Accountability Pacts</h1>
+            <p>Coordinate consistency with your team. Mutual milestone completion unlocks squad multiplier bonuses.</p>
 
             <div class="laptop-grid-2">
                 <div>
                     <div class="squad-card">
-                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; font-family:'JetBrains Mono',monospace;">Consensus Multiplier</div>
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; font-family:'JetBrains Mono',monospace;">Squad Multiplier</div>
                         <div class="squad-multiplier">2.5x</div>
-                        <div style="font-size: 12px; opacity: 0.95; margin-top: 4px;">Distributed Sprint Network • 4 Active Verifiers</div>
+                        <div style="font-size: 12px; opacity: 0.95; margin-top: 4px;">Sprint Cohort • 4 Active Members</div>
                     </div>
-                    <button class="btn-primary" onclick="inviteSquadMember()">Invite Operator to Squad</button>
+                    <button class="btn-primary" onclick="inviteSquadMember()">Invite Teammate to Squad</button>
                 </div>
 
                 <div>
-                    <div class="label"><span class="label-dot"></span> Network Activity Feed</div>
+                    <div class="label"><span class="label-dot"></span> Live Squad Feed</div>
                     <div id="squadMemberList">
                         <div class="squad-member-item">
                             <div style="display: flex; align-items: center;">
@@ -5392,12 +5391,12 @@
         }
 
         function getInmateRank(streak) {
-            if (streak >= 90) return 'Protocol Sovereign // Tier IV';
-            if (streak >= 60) return 'Consensus Architect // Tier III';
-            if (streak >= 30) return 'Senior Verifier // Tier II';
-            if (streak >= 14) return 'Execution Specialist // Tier I';
-            if (streak >= 7) return 'Certified Operator';
-            return 'Provisioned Operator';
+            if (streak >= 90) return 'Legendary Streak (90+ Days)';
+            if (streak >= 60) return 'Unstoppable Momentum (60 Days)';
+            if (streak >= 30) return 'Iron Discipline (30 Days)';
+            if (streak >= 14) return 'Consistent Builder (14 Days)';
+            if (streak >= 7) return 'Active Momentum (7 Days)';
+            return 'Initiating Streak';
         }
         var getOperatorRank = getInmateRank;
 
@@ -6557,7 +6556,7 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=33').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=34').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
