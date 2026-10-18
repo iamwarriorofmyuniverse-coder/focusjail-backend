@@ -1809,7 +1809,7 @@
         /* Compact Quick Tools Hub (Bento Grid) */
         .quick-tools-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 8px;
             margin-bottom: 16px;
             width: 100%;
@@ -1819,18 +1819,20 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 9px 10px;
+            padding: 9px 11px;
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 8px;
             cursor: pointer;
             color: var(--text-main);
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 600;
             text-align: left;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             min-width: 0;
+            width: 100%;
+            box-sizing: border-box;
             overflow: hidden;
         }
 
@@ -2353,8 +2355,8 @@
 
             .laptop-grid-dashboard {
                 display: grid;
-                grid-template-columns: minmax(0, 1.35fr) 350px;
-                gap: 24px;
+                grid-template-columns: minmax(0, 1.25fr) minmax(360px, 380px);
+                gap: 22px;
                 width: 100%;
                 align-items: start;
             }
@@ -2362,6 +2364,7 @@
             .dashboard-primary-col,
             .dashboard-side-col {
                 width: 100%;
+                min-width: 0;
                 gap: 16px;
             }
 
@@ -6636,7 +6639,9 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=36').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=37').then((reg) => {
+                    reg.update();
+                }).catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();

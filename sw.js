@@ -1,5 +1,5 @@
 // FocusPact Service Worker
-const CACHE_NAME = 'focuspact-v36';
+const CACHE_NAME = 'focuspact-v37';
 const ASSETS = [
   './',
   './index.html',
@@ -26,7 +26,6 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// Stale-While-Revalidate: Return instant local cached assets (0ms) while revalidating in background
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
 
@@ -38,7 +37,23 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Core application navigation and assets: serve from cache instantly, update silently in background
+  // HTML Navigation requests (page loads): Network-First to immediately reflect new deploys, fallback to cache offline
+  if (e.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname === '') {
+    e.respondWith(
+      fetch(e.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(e.request).then((res) => res || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Core static assets (images, icons, manifest): Stale-While-Revalidate for 0ms offline rendering
   e.respondWith(
     caches.match(e.request).then((cachedResponse) => {
       const fetchPromise = fetch(e.request)
