@@ -498,7 +498,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 82px 20px 48px;
+            padding: 16px 20px 40px;
             overflow-x: hidden;
             position: relative;
         }
@@ -528,21 +528,82 @@
             z-index: 0;
         }
 
-        /* Top Action Bar (Fixed, elegant floating glass bar with safe margin) */
+        /* Integrated Application Header (Linear / Vercel style) */
+        .app-header {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto 16px auto;
+            position: relative;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 4px;
+        }
+
+        .app-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .app-brand:hover {
+            opacity: 0.85;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .brand-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+            display: inline-block;
+        }
+
+        .brand-mode-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Top Action Bar (Integrated in header, no floating collision) */
         .top-nav {
-            position: fixed;
-            top: 16px;
-            right: 24px;
-            z-index: 100;
             display: flex;
             gap: 6px;
             align-items: center;
             background: var(--surface);
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 40px;
             border: 1px solid var(--border);
             backdrop-filter: blur(24px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
         }
 
         .icon-btn {
@@ -2232,7 +2293,7 @@
         /* Laptop & Desktop (>= 860px) */
         @media screen and (min-width: 860px) {
             body {
-                padding: 88px 24px 60px;
+                padding: 18px 24px 44px;
             }
 
             .screen {
@@ -2305,7 +2366,7 @@
             }
 
             .card {
-                padding: 32px 28px;
+                padding: 26px 24px;
             }
 
             .timer-display {
@@ -2317,7 +2378,16 @@
         /* Mobile & Tablet (< 860px) */
         @media screen and (max-width: 859px) {
             body {
-                padding: calc(64px + env(safe-area-inset-top, 0px)) 12px calc(40px + env(safe-area-inset-bottom, 0px));
+                padding: calc(10px + env(safe-area-inset-top, 0px)) 12px calc(32px + env(safe-area-inset-bottom, 0px));
+            }
+
+            .app-header {
+                max-width: 480px;
+                margin-bottom: 12px;
+            }
+
+            .app-header-inner {
+                padding: 0;
             }
 
             .screen {
@@ -2343,11 +2413,9 @@
             }
 
             .top-nav {
-                top: calc(10px + env(safe-area-inset-top, 0px));
-                right: 10px;
-                padding: 5px 8px;
-                gap: 5px;
-                max-width: calc(100vw - 20px);
+                padding: 3px 6px;
+                gap: 4px;
+                max-width: calc(100vw - 24px);
                 overflow-x: auto;
                 scrollbar-width: none;
                 -webkit-overflow-scrolling: touch;
@@ -2393,27 +2461,35 @@
     <!-- Live Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Top Action Nav (Precision Micro-Icon Bar) -->
-    <div class="top-nav" id="mainTopNav">
-        <button class="icon-btn" id="whitepaperNavBtn" onclick="openWhitepaperModal()" title="Enterprise Architecture & Protocol Whitepaper (W)" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        </button>
-        <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        </button>
-        <button class="icon-btn" onclick="openThemeModal()" id="themeBtn" title="Theme & Display Studio (T)">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 10 10 0 0 0 0-20"/></svg>
-        </button>
-        <button class="icon-btn" onclick="openSyncModal()" id="syncBtn" title="Data Vault & Sync">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </button>
-        <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Sound">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-        </button>
-        <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        </button>
-    </div>
+    <!-- Application Header Bar (Linear-style integrated header) -->
+    <header class="app-header" id="mainAppHeader">
+        <div class="app-header-inner">
+            <div class="app-brand" onclick="goTo('screen4')" title="FocusPact Home">
+                <span class="brand-badge"><span class="brand-dot"></span>FOCUSPACT</span>
+                <span class="brand-mode-tag">ENGINE</span>
+            </div>
+            <div class="top-nav" id="mainTopNav">
+                <button class="icon-btn" id="whitepaperNavBtn" onclick="openWhitepaperModal()" title="Technical Architecture & Threat Model (W)" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </button>
+                <button class="icon-btn" id="installNavBtn" onclick="openInstallModal()" title="Install App to Home Screen">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </button>
+                <button class="icon-btn" onclick="openThemeModal()" id="themeBtn" title="Theme & Display Settings (T)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 10 10 0 0 0 0-20"/></svg>
+                </button>
+                <button class="icon-btn" onclick="openSyncModal()" id="syncBtn" title="Data Cloud Sync">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </button>
+                <button class="icon-btn" onclick="toggleAudio()" id="soundBtn" title="Toggle Soundscapes">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                </button>
+                <button class="icon-btn" onclick="requestNotificationPermission()" id="notifBtn" title="Daily Reminders">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
 
     <!-- MODAL: INSTALL APP TO HOME SCREEN -->
     <div class="modal-overlay" id="installModal" onclick="if(event.target === this) closeInstallModal()">
@@ -6556,7 +6632,7 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=34').catch(() => {});
+                navigator.serviceWorker.register('./sw.js?v=35').catch(() => {});
             }
             if (localStorage.getItem('name')) {
                 loadHome();
