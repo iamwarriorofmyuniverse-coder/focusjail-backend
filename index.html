@@ -1341,6 +1341,7 @@
         .dispatch-btn.sms { border-color: rgba(79, 172, 254, 0.4); color: #4facfe; }
 
         /* Streak Card: Dynamic Theme-Adaptive Card */
+        /* Streak Card: Dynamic Theme-Adaptive Card */
         .streak-card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -1351,22 +1352,24 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-            box-shadow: var(--card-shadow);
+            box-shadow: var(--card-shadow), 0 0 30px rgba(var(--streak-rgb, 16, 185, 129), 0.08);
             backdrop-filter: blur(24px);
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
         }
 
         .streak-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, #10b981 50%, transparent 100%);
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, var(--streak-accent, #10b981) 50%, transparent 100%);
+            transition: background 0.3s ease;
         }
 
         .streak-card:hover {
             transform: translateY(-2px);
-            border-color: rgba(16, 185, 129, 0.35);
+            border-color: rgba(var(--streak-rgb, 16, 185, 129), 0.4);
+            box-shadow: var(--card-shadow), 0 0 36px rgba(var(--streak-rgb, 16, 185, 129), 0.16);
         }
 
         .streak-number {
@@ -1376,6 +1379,7 @@
             color: var(--text-main);
             line-height: 1;
             letter-spacing: -2px;
+            transition: color 0.25s ease;
         }
 
         .streak-label {
@@ -1392,16 +1396,17 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.25);
+            background: rgba(var(--streak-rgb, 16, 185, 129), 0.12);
+            border: 1px solid rgba(var(--streak-rgb, 16, 185, 129), 0.3);
             border-radius: 20px;
             padding: 4px 12px;
             font-size: 11px;
-            color: #10b981;
+            color: var(--streak-accent, #10b981);
             margin-top: 10px;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
             letter-spacing: 0.5px;
+            transition: all 0.3s ease;
         }
 
         /* Bento Metrics Row */
@@ -2687,6 +2692,33 @@
                 </div>
             </div>
 
+            <!-- Streak Card Accent Aura Picker -->
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border);">
+                <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> Streak Card Accent Color</div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Select your streak card laser highlight and badge glow accent:</p>
+                
+                <div class="streak-accent-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-bottom: 14px;">
+                    <button type="button" class="streak-accent-btn" data-color="#10b981" data-rgb="16, 185, 129" onclick="setStreakAccent('#10b981', '16, 185, 129', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block; flex-shrink:0;"></span> Emerald
+                    </button>
+                    <button type="button" class="streak-accent-btn" data-color="#3b82f6" data-rgb="59, 130, 246" onclick="setStreakAccent('#3b82f6', '59, 130, 246', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:#3b82f6; display:inline-block; flex-shrink:0;"></span> Sapphire
+                    </button>
+                    <button type="button" class="streak-accent-btn" data-color="#a855f7" data-rgb="168, 85, 247" onclick="setStreakAccent('#a855f7', '168, 85, 247', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:#a855f7; display:inline-block; flex-shrink:0;"></span> Violet
+                    </button>
+                    <button type="button" class="streak-accent-btn" data-color="#f59e0b" data-rgb="245, 158, 11" onclick="setStreakAccent('#f59e0b', '245, 158, 11', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:#f59e0b; display:inline-block; flex-shrink:0;"></span> Amber
+                    </button>
+                    <button type="button" class="streak-accent-btn" data-color="#f43f5e" data-rgb="244, 63, 94" onclick="setStreakAccent('#f43f5e', '244, 63, 94', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:#f43f5e; display:inline-block; flex-shrink:0;"></span> Crimson
+                    </button>
+                    <button type="button" class="streak-accent-btn" data-color="#06b6d4" data-rgb="6, 182, 212" onclick="setStreakAccent('#06b6d4', '6, 182, 212', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
+                        <span style="width:8px; height:8px; border-radius:50%; background:#06b6d4; display:inline-block; flex-shrink:0;"></span> Cyan
+                    </button>
+                </div>
+            </div>
+
             <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
                 <strong>Hotkey:</strong> Press <span class="shortcut-key" style="display:inline-block; padding: 2px 6px;">T</span> anytime to fast-cycle themes.
             </div>
@@ -3745,13 +3777,48 @@
         // Theme Engine & Aesthetic Studio
         var availableThemes = ['dark', 'light', 'oled', 'paper', 'matcha', 'cyber'];
         var themeDetails = {
-            dark: { name: 'Cyber Midnight', emoji: '🌌', color: '#090a10' },
-            light: { name: 'Studio Light', emoji: '☀️', color: '#f5f7fb' },
-            oled: { name: 'OLED Pure Black', emoji: '🖤', color: '#000000' },
-            paper: { name: 'Warm Editorial', emoji: '📜', color: '#f8f6f0' },
-            matcha: { name: 'Matcha Zen', emoji: '🍵', color: '#091410' },
-            cyber: { name: 'Neon Synthwave', emoji: '⚡', color: '#080214' }
+            dark: { name: 'Cyber Midnight', emoji: '🌌', color: '#090a10', accent: '#10b981', rgb: '16, 185, 129' },
+            light: { name: 'Studio Light', emoji: '☀️', color: '#f5f7fb', accent: '#6366f1', rgb: '99, 102, 241' },
+            oled: { name: 'OLED Pure Black', emoji: '🖤', color: '#000000', accent: '#3b82f6', rgb: '59, 130, 246' },
+            paper: { name: 'Warm Editorial', emoji: '📜', color: '#f8f6f0', accent: '#c25e1a', rgb: '194, 94, 26' },
+            matcha: { name: 'Matcha Zen', emoji: '🍵', color: '#091410', accent: '#10b981', rgb: '16, 185, 129' },
+            cyber: { name: 'Neon Synthwave', emoji: '⚡', color: '#080214', accent: '#f43f5e', rgb: '244, 63, 94' }
         };
+
+        function setStreakAccent(hex, rgb, btnElem) {
+            document.documentElement.style.setProperty('--streak-accent', hex);
+            document.documentElement.style.setProperty('--streak-rgb', rgb);
+            safeStorage.set('focus_streak_accent_hex', hex);
+            safeStorage.set('focus_streak_accent_rgb', rgb);
+            safeStorage.set('focus_streak_accent_override', 'true');
+
+            updateStreakAccentButtons(hex);
+            playClick();
+        }
+
+        function updateStreakAccentButtons(currentHex) {
+            var hex = currentHex || safeStorage.get('focus_streak_accent_hex');
+            document.querySelectorAll('.streak-accent-btn').forEach(function(btn) {
+                if (btn.getAttribute('data-color') === hex) {
+                    btn.style.borderColor = hex;
+                    btn.style.background = 'rgba(' + btn.getAttribute('data-rgb') + ', 0.15)';
+                    btn.style.boxShadow = '0 0 10px rgba(' + btn.getAttribute('data-rgb') + ', 0.3)';
+                } else {
+                    btn.style.borderColor = 'var(--border)';
+                    btn.style.background = 'var(--surface)';
+                    btn.style.boxShadow = 'none';
+                }
+            });
+        }
+
+        function initStreakAccent() {
+            var savedHex = safeStorage.get('focus_streak_accent_hex');
+            var savedRgb = safeStorage.get('focus_streak_accent_rgb');
+            if (savedHex && savedRgb) {
+                document.documentElement.style.setProperty('--streak-accent', savedHex);
+                document.documentElement.style.setProperty('--streak-rgb', savedRgb);
+            }
+        }
 
         function initTheme() {
             var savedTheme = safeStorage.get('focus_theme');
@@ -3759,6 +3826,7 @@
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 savedTheme = prefersDark ? 'dark' : 'light';
             }
+            initStreakAccent();
             applyTheme(savedTheme, false);
         }
 
@@ -3778,7 +3846,17 @@
                 themeColorMeta.setAttribute('content', info.color);
             }
 
+            // Sync streak accent with theme if no manual custom override
+            var userOverride = safeStorage.get('focus_streak_accent_override');
+            if (!userOverride && info.accent) {
+                document.documentElement.style.setProperty('--streak-accent', info.accent);
+                document.documentElement.style.setProperty('--streak-rgb', info.rgb);
+                safeStorage.set('focus_streak_accent_hex', info.accent);
+                safeStorage.set('focus_streak_accent_rgb', info.rgb);
+            }
+
             updateThemeCardsActiveState();
+            updateStreakAccentButtons();
             updateVolumeTrack();
 
             if (notify) {
@@ -3799,6 +3877,7 @@
             var modal = document.getElementById('themeModal');
             if (modal) {
                 updateThemeCardsActiveState();
+                updateStreakAccentButtons();
                 modal.classList.add('active');
                 if (window.history && window.history.pushState) {
                     history.pushState({ modal: 'themeModal' }, '', '#themeModal');
@@ -6640,7 +6719,7 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=38').then((reg) => {
+                navigator.serviceWorker.register('./sw.js?v=39').then((reg) => {
                     reg.update();
                 }).catch(() => {});
             }
