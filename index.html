@@ -128,6 +128,18 @@
             --btn-shadow-hover: 0 4px 16px rgba(255, 255, 255, 0.15);
             --dot-glow: #10b981;
             --focus-ring: rgba(16, 185, 129, 0.25);
+            --streak-card-bg: var(--surface);
+            --streak-card-border: var(--border);
+            --streak-card-shadow: var(--card-shadow);
+            --streak-card-hover-border: rgba(var(--streak-rgb, 16, 185, 129), 0.4);
+            --streak-card-hover-shadow: var(--card-shadow);
+            --streak-card-text: var(--text-main);
+            --streak-card-label: var(--text-muted);
+            --streak-badge-bg: rgba(var(--streak-rgb, 16, 185, 129), 0.12);
+            --streak-badge-border: rgba(var(--streak-rgb, 16, 185, 129), 0.3);
+            --streak-badge-text: var(--streak-accent, #10b981);
+            --streak-accent: #10b981;
+            --streak-rgb: 16, 185, 129;
         }
 
         /* Dark Theme: Titanium Obsidian Precision (Linear / Vercel Grade) */
@@ -1340,11 +1352,10 @@
         .dispatch-btn.wa { border-color: rgba(37, 211, 102, 0.4); color: #25d366; }
         .dispatch-btn.sms { border-color: rgba(79, 172, 254, 0.4); color: #4facfe; }
 
-        /* Streak Card: Dynamic Theme-Adaptive Card */
-        /* Streak Card: Dynamic Theme-Adaptive Card */
+        /* Streak Card: Fully Customizable Theme-Adaptive Rectangle */
         .streak-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--streak-card-bg, var(--surface));
+            border: 1px solid var(--streak-card-border, var(--border));
             border-radius: 20px;
             padding: 24px 20px;
             text-align: center;
@@ -1352,9 +1363,10 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-            box-shadow: var(--card-shadow), 0 0 30px rgba(var(--streak-rgb, 16, 185, 129), 0.08);
+            box-shadow: var(--streak-card-shadow, var(--card-shadow));
             backdrop-filter: blur(24px);
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.35s ease;
+            cursor: pointer;
         }
 
         .streak-card::before {
@@ -1368,40 +1380,46 @@
 
         .streak-card:hover {
             transform: translateY(-2px);
-            border-color: rgba(var(--streak-rgb, 16, 185, 129), 0.4);
-            box-shadow: var(--card-shadow), 0 0 36px rgba(var(--streak-rgb, 16, 185, 129), 0.16);
+            border-color: var(--streak-card-hover-border, rgba(var(--streak-rgb, 16, 185, 129), 0.6));
+            box-shadow: var(--streak-card-hover-shadow, var(--card-shadow));
+        }
+
+        .streak-card:hover .streak-card-edit-hint {
+            opacity: 0.9 !important;
+            transform: scale(1.15);
         }
 
         .streak-number {
             font-family: 'JetBrains Mono', monospace;
             font-size: 54px;
             font-weight: 800;
-            color: var(--text-main);
+            color: var(--streak-card-text, var(--text-main));
             line-height: 1;
             letter-spacing: -2px;
             transition: color 0.25s ease;
         }
 
         .streak-label {
-            color: var(--text-muted);
+            color: var(--streak-card-label, var(--text-muted));
             font-size: 10px;
             margin-top: 6px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
+            transition: color 0.25s ease;
         }
 
         .inmate-badge, .operator-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(var(--streak-rgb, 16, 185, 129), 0.12);
-            border: 1px solid rgba(var(--streak-rgb, 16, 185, 129), 0.3);
+            background: var(--streak-badge-bg, rgba(var(--streak-rgb, 16, 185, 129), 0.12));
+            border: 1px solid var(--streak-badge-border, rgba(var(--streak-rgb, 16, 185, 129), 0.3));
             border-radius: 20px;
             padding: 4px 12px;
             font-size: 11px;
-            color: var(--streak-accent, #10b981);
+            color: var(--streak-badge-text, var(--streak-accent, #10b981));
             margin-top: 10px;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
@@ -2692,29 +2710,50 @@
                 </div>
             </div>
 
-            <!-- Streak Card Accent Aura Picker -->
+            <!-- Streak Card Rectangle Color Customizer -->
             <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border);">
-                <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> Streak Card Accent Color</div>
-                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Select your streak card laser highlight and badge glow accent:</p>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                    <div class="label" style="margin-bottom: 0;"><span class="label-dot"></span> Streak Rectangle Color</div>
+                    <span style="font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">Card Body Fill</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Choose a color for your streak card rectangle:</p>
                 
-                <div class="streak-accent-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-bottom: 14px;">
-                    <button type="button" class="streak-accent-btn" data-color="#10b981" data-rgb="16, 185, 129" onclick="setStreakAccent('#10b981', '16, 185, 129', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
-                        <span style="width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block; flex-shrink:0;"></span> Emerald
+                <div class="streak-palette-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px;">
+                    <button type="button" class="streak-palette-btn" data-palette="emerald" onclick="setStreakCardColor('emerald', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(16, 185, 129, 0.4); background: linear-gradient(145deg, rgba(6, 78, 59, 0.8), rgba(4, 47, 36, 0.95)); color:#ffffff; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#10b981; box-shadow:0 0 8px #10b981; display:inline-block;"></span>
+                        <span>Emerald</span>
                     </button>
-                    <button type="button" class="streak-accent-btn" data-color="#3b82f6" data-rgb="59, 130, 246" onclick="setStreakAccent('#3b82f6', '59, 130, 246', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
-                        <span style="width:8px; height:8px; border-radius:50%; background:#3b82f6; display:inline-block; flex-shrink:0;"></span> Sapphire
+                    <button type="button" class="streak-palette-btn" data-palette="sapphire" onclick="setStreakCardColor('sapphire', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(59, 130, 246, 0.4); background: linear-gradient(145deg, rgba(30, 58, 138, 0.8), rgba(15, 23, 60, 0.95)); color:#ffffff; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#3b82f6; box-shadow:0 0 8px #3b82f6; display:inline-block;"></span>
+                        <span>Sapphire</span>
                     </button>
-                    <button type="button" class="streak-accent-btn" data-color="#a855f7" data-rgb="168, 85, 247" onclick="setStreakAccent('#a855f7', '168, 85, 247', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
-                        <span style="width:8px; height:8px; border-radius:50%; background:#a855f7; display:inline-block; flex-shrink:0;"></span> Violet
+                    <button type="button" class="streak-palette-btn" data-palette="violet" onclick="setStreakCardColor('violet', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(168, 85, 247, 0.4); background: linear-gradient(145deg, rgba(88, 28, 135, 0.8), rgba(30, 10, 52, 0.95)); color:#ffffff; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#a855f7; box-shadow:0 0 8px #a855f7; display:inline-block;"></span>
+                        <span>Violet</span>
                     </button>
-                    <button type="button" class="streak-accent-btn" data-color="#f59e0b" data-rgb="245, 158, 11" onclick="setStreakAccent('#f59e0b', '245, 158, 11', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
-                        <span style="width:8px; height:8px; border-radius:50%; background:#f59e0b; display:inline-block; flex-shrink:0;"></span> Amber
+                    <button type="button" class="streak-palette-btn" data-palette="amber" onclick="setStreakCardColor('amber', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(245, 158, 11, 0.4); background: linear-gradient(145deg, rgba(146, 64, 14, 0.8), rgba(45, 24, 7, 0.95)); color:#ffffff; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#f59e0b; box-shadow:0 0 8px #f59e0b; display:inline-block;"></span>
+                        <span>Amber</span>
                     </button>
-                    <button type="button" class="streak-accent-btn" data-color="#f43f5e" data-rgb="244, 63, 94" onclick="setStreakAccent('#f43f5e', '244, 63, 94', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
-                        <span style="width:8px; height:8px; border-radius:50%; background:#f43f5e; display:inline-block; flex-shrink:0;"></span> Crimson
+                    <button type="button" class="streak-palette-btn" data-palette="crimson" onclick="setStreakCardColor('crimson', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(244, 63, 94, 0.4); background: linear-gradient(145deg, rgba(136, 19, 55, 0.8), rgba(46, 8, 20, 0.95)); color:#ffffff; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#f43f5e; box-shadow:0 0 8px #f43f5e; display:inline-block;"></span>
+                        <span>Crimson</span>
                     </button>
-                    <button type="button" class="streak-accent-btn" data-color="#06b6d4" data-rgb="6, 182, 212" onclick="setStreakAccent('#06b6d4', '6, 182, 212', this)" style="display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; justify-content:center;">
-                        <span style="width:8px; height:8px; border-radius:50%; background:#06b6d4; display:inline-block; flex-shrink:0;"></span> Cyan
+                    <button type="button" class="streak-palette-btn" data-palette="cyan" onclick="setStreakCardColor('cyan', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(6, 182, 212, 0.4); background: linear-gradient(145deg, rgba(22, 78, 99, 0.8), rgba(8, 30, 40, 0.95)); color:#ffffff; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#06b6d4; box-shadow:0 0 8px #06b6d4; display:inline-block;"></span>
+                        <span>Cyan</span>
+                    </button>
+                    <button type="button" class="streak-palette-btn" data-palette="white" onclick="setStreakCardColor('white', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(203, 213, 225, 0.9); background: linear-gradient(145deg, #ffffff, #f1f5f9); color:#0f172a; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#ffffff; border:1px solid #cbd5e1; box-shadow:0 0 8px rgba(255,255,255,0.8); display:inline-block;"></span>
+                        <span>Pure White</span>
+                    </button>
+                    <button type="button" class="streak-palette-btn" data-palette="obsidian" onclick="setStreakCardColor('obsidian', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid rgba(255, 255, 255, 0.2); background: linear-gradient(145deg, #11141c, #06070a); color:#ffffff; font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:#000000; border:1px solid rgba(255,255,255,0.3); box-shadow:0 0 8px rgba(255,255,255,0.2); display:inline-block;"></span>
+                        <span>Obsidian</span>
+                    </button>
+                    <button type="button" class="streak-palette-btn" data-palette="auto" onclick="setStreakCardColor('auto', this)" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:11px; font-weight:700; cursor:pointer; text-align:center; transition: all 0.2s;">
+                        <span style="width:14px; height:14px; border-radius:4px; background:var(--border); display:inline-flex; align-items:center; justify-content:center; font-size:9px;">⚙️</span>
+                        <span>Auto Theme</span>
                     </button>
                 </div>
             </div>
@@ -3165,8 +3204,9 @@
 
             <!-- SECONDARY / SIDEBAR COLUMN: Streak, Bento Metrics, Quick Tools -->
             <div class="dashboard-side-col">
-                <!-- Main Streak Card -->
-                <div class="streak-card">
+                <!-- Main Streak Card (Clickable to customize rectangle color) -->
+                <div class="streak-card" id="streakCardElem" onclick="openThemeModal()" title="Customize Streak Rectangle Color [T]">
+                    <div style="position: absolute; top: 10px; right: 12px; font-size: 11px; opacity: 0.35; transition: all 0.2s;" class="streak-card-edit-hint" title="Customize Color">🎨</div>
                     <div class="streak-number" id="streakCount">0</div>
                     <div class="streak-label">Consecutive Days Streak</div>
                     <div class="inmate-badge" id="rankBadge">Active Streak</div>
@@ -3785,39 +3825,240 @@
             cyber: { name: 'Neon Synthwave', emoji: '⚡', color: '#080214', accent: '#f43f5e', rgb: '244, 63, 94' }
         };
 
-        function setStreakAccent(hex, rgb, btnElem) {
-            document.documentElement.style.setProperty('--streak-accent', hex);
-            document.documentElement.style.setProperty('--streak-rgb', rgb);
-            safeStorage.set('focus_streak_accent_hex', hex);
-            safeStorage.set('focus_streak_accent_rgb', rgb);
-            safeStorage.set('focus_streak_accent_override', 'true');
+        // Streak Card Rectangle Color Palettes
+        var streakColorPalettes = {
+            emerald: {
+                name: 'Emerald Glass',
+                bg: 'linear-gradient(145deg, rgba(6, 78, 59, 0.72) 0%, rgba(4, 47, 36, 0.92) 100%)',
+                border: 'rgba(16, 185, 129, 0.5)',
+                shadow: '0 16px 36px rgba(6, 78, 59, 0.45), 0 0 25px rgba(16, 185, 129, 0.25)',
+                hoverBorder: 'rgba(16, 185, 129, 0.8)',
+                hoverShadow: '0 20px 42px rgba(6, 78, 59, 0.55), 0 0 35px rgba(16, 185, 129, 0.35)',
+                text: '#ffffff',
+                label: 'rgba(209, 250, 229, 0.85)',
+                badgeBg: 'rgba(16, 185, 129, 0.25)',
+                badgeBorder: 'rgba(110, 231, 183, 0.5)',
+                badgeText: '#a7f3d0',
+                laserAccent: '#10b981',
+                rgb: '16, 185, 129'
+            },
+            sapphire: {
+                name: 'Sapphire Pulse',
+                bg: 'linear-gradient(145deg, rgba(30, 58, 138, 0.75) 0%, rgba(15, 23, 60, 0.92) 100%)',
+                border: 'rgba(59, 130, 246, 0.5)',
+                shadow: '0 16px 36px rgba(30, 58, 138, 0.45), 0 0 25px rgba(59, 130, 246, 0.25)',
+                hoverBorder: 'rgba(96, 165, 250, 0.8)',
+                hoverShadow: '0 20px 42px rgba(30, 58, 138, 0.55), 0 0 35px rgba(59, 130, 246, 0.35)',
+                text: '#ffffff',
+                label: 'rgba(219, 234, 254, 0.85)',
+                badgeBg: 'rgba(59, 130, 246, 0.25)',
+                badgeBorder: 'rgba(147, 197, 253, 0.5)',
+                badgeText: '#bfdbfe',
+                laserAccent: '#3b82f6',
+                rgb: '59, 130, 246'
+            },
+            violet: {
+                name: 'Hyper Violet',
+                bg: 'linear-gradient(145deg, rgba(88, 28, 135, 0.75) 0%, rgba(30, 10, 52, 0.92) 100%)',
+                border: 'rgba(168, 85, 247, 0.5)',
+                shadow: '0 16px 36px rgba(88, 28, 135, 0.45), 0 0 25px rgba(168, 85, 247, 0.25)',
+                hoverBorder: 'rgba(192, 132, 252, 0.8)',
+                hoverShadow: '0 20px 42px rgba(88, 28, 135, 0.55), 0 0 35px rgba(168, 85, 247, 0.35)',
+                text: '#ffffff',
+                label: 'rgba(243, 232, 255, 0.85)',
+                badgeBg: 'rgba(168, 85, 247, 0.25)',
+                badgeBorder: 'rgba(216, 180, 254, 0.5)',
+                badgeText: '#e9d5ff',
+                laserAccent: '#a855f7',
+                rgb: '168, 85, 247'
+            },
+            amber: {
+                name: 'Solar Amber',
+                bg: 'linear-gradient(145deg, rgba(146, 64, 14, 0.75) 0%, rgba(45, 24, 7, 0.92) 100%)',
+                border: 'rgba(245, 158, 11, 0.5)',
+                shadow: '0 16px 36px rgba(146, 64, 14, 0.45), 0 0 25px rgba(245, 158, 11, 0.25)',
+                hoverBorder: 'rgba(251, 191, 36, 0.8)',
+                hoverShadow: '0 20px 42px rgba(146, 64, 14, 0.55), 0 0 35px rgba(245, 158, 11, 0.35)',
+                text: '#ffffff',
+                label: 'rgba(254, 243, 199, 0.85)',
+                badgeBg: 'rgba(245, 158, 11, 0.25)',
+                badgeBorder: 'rgba(252, 211, 77, 0.5)',
+                badgeText: '#fde68a',
+                laserAccent: '#f59e0b',
+                rgb: '245, 158, 11'
+            },
+            crimson: {
+                name: 'Ruby Crimson',
+                bg: 'linear-gradient(145deg, rgba(136, 19, 55, 0.75) 0%, rgba(46, 8, 20, 0.92) 100%)',
+                border: 'rgba(244, 63, 94, 0.5)',
+                shadow: '0 16px 36px rgba(136, 19, 55, 0.45), 0 0 25px rgba(244, 63, 94, 0.25)',
+                hoverBorder: 'rgba(251, 113, 133, 0.8)',
+                hoverShadow: '0 20px 42px rgba(136, 19, 55, 0.55), 0 0 35px rgba(244, 63, 94, 0.35)',
+                text: '#ffffff',
+                label: 'rgba(255, 228, 230, 0.85)',
+                badgeBg: 'rgba(244, 63, 94, 0.25)',
+                badgeBorder: 'rgba(253, 164, 175, 0.5)',
+                badgeText: '#fecdd3',
+                laserAccent: '#f43f5e',
+                rgb: '244, 63, 94'
+            },
+            cyan: {
+                name: 'Cyan Aurora',
+                bg: 'linear-gradient(145deg, rgba(22, 78, 99, 0.75) 0%, rgba(8, 30, 40, 0.92) 100%)',
+                border: 'rgba(6, 182, 212, 0.5)',
+                shadow: '0 16px 36px rgba(22, 78, 99, 0.45), 0 0 25px rgba(6, 182, 212, 0.25)',
+                hoverBorder: 'rgba(34, 211, 238, 0.8)',
+                hoverShadow: '0 20px 42px rgba(22, 78, 99, 0.55), 0 0 35px rgba(6, 182, 212, 0.35)',
+                text: '#ffffff',
+                label: 'rgba(207, 250, 254, 0.85)',
+                badgeBg: 'rgba(6, 182, 212, 0.25)',
+                badgeBorder: 'rgba(103, 232, 249, 0.5)',
+                badgeText: '#a5f3fc',
+                laserAccent: '#06b6d4',
+                rgb: '6, 182, 212'
+            },
+            white: {
+                name: 'Pure White',
+                bg: 'linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%)',
+                border: 'rgba(203, 213, 225, 0.9)',
+                shadow: '0 16px 36px rgba(0, 0, 0, 0.12), 0 0 20px rgba(255, 255, 255, 0.6)',
+                hoverBorder: '#6366f1',
+                hoverShadow: '0 20px 42px rgba(0, 0, 0, 0.18), 0 0 28px rgba(99, 102, 241, 0.2)',
+                text: '#0f172a',
+                label: '#64748b',
+                badgeBg: 'rgba(99, 102, 241, 0.12)',
+                badgeBorder: 'rgba(99, 102, 241, 0.3)',
+                badgeText: '#4f46e5',
+                laserAccent: '#6366f1',
+                rgb: '99, 102, 241'
+            },
+            obsidian: {
+                name: 'Obsidian Dark',
+                bg: 'linear-gradient(145deg, #11141c 0%, #06070a 100%)',
+                border: 'rgba(255, 255, 255, 0.18)',
+                shadow: '0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.05)',
+                hoverBorder: 'rgba(255, 255, 255, 0.4)',
+                hoverShadow: '0 20px 42px rgba(0, 0, 0, 0.9), 0 0 28px rgba(255, 255, 255, 0.1)',
+                text: '#ffffff',
+                label: '#94a3b8',
+                badgeBg: 'rgba(255, 255, 255, 0.08)',
+                badgeBorder: 'rgba(255, 255, 255, 0.22)',
+                badgeText: '#ffffff',
+                laserAccent: '#ffffff',
+                rgb: '255, 255, 255'
+            },
+            auto: {
+                name: 'Match Theme',
+                bg: 'var(--surface)',
+                border: 'var(--border)',
+                shadow: 'var(--card-shadow), 0 0 30px rgba(var(--streak-rgb, 16, 185, 129), 0.08)',
+                hoverBorder: 'rgba(var(--streak-rgb, 16, 185, 129), 0.6)',
+                hoverShadow: 'var(--card-shadow), 0 0 36px rgba(var(--streak-rgb, 16, 185, 129), 0.16)',
+                text: 'var(--text-main)',
+                label: 'var(--text-muted)',
+                badgeBg: 'rgba(var(--streak-rgb, 16, 185, 129), 0.12)',
+                badgeBorder: 'rgba(var(--streak-rgb, 16, 185, 129), 0.3)',
+                badgeText: 'var(--streak-accent, #10b981)',
+                laserAccent: null,
+                rgb: null
+            }
+        };
 
-            updateStreakAccentButtons(hex);
+        function setStreakCardColor(colorKey, btnElem) {
+            safeStorage.set('focus_streak_card_color', colorKey);
+            applyStreakCardColor(colorKey);
+            updateStreakPaletteButtons(colorKey);
             playClick();
+            var p = streakColorPalettes[colorKey];
+            if (p) {
+                showToast('Streak Card: ' + p.name, 'success');
+            }
         }
 
-        function updateStreakAccentButtons(currentHex) {
-            var hex = currentHex || safeStorage.get('focus_streak_accent_hex');
-            document.querySelectorAll('.streak-accent-btn').forEach(function(btn) {
-                if (btn.getAttribute('data-color') === hex) {
-                    btn.style.borderColor = hex;
-                    btn.style.background = 'rgba(' + btn.getAttribute('data-rgb') + ', 0.15)';
-                    btn.style.boxShadow = '0 0 10px rgba(' + btn.getAttribute('data-rgb') + ', 0.3)';
+        function applyStreakCardColor(colorKey) {
+            var key = colorKey || safeStorage.get('focus_streak_card_color') || 'auto';
+            var p = streakColorPalettes[key];
+            if (!p) {
+                key = 'auto';
+                p = streakColorPalettes.auto;
+            }
+
+            var card = document.getElementById('streakCardElem') || document.querySelector('.streak-card');
+            var root = document.documentElement;
+
+            if (key === 'auto') {
+                if (card) {
+                    card.style.removeProperty('--streak-card-bg');
+                    card.style.removeProperty('--streak-card-border');
+                    card.style.removeProperty('--streak-card-shadow');
+                    card.style.removeProperty('--streak-card-hover-border');
+                    card.style.removeProperty('--streak-card-hover-shadow');
+                    card.style.removeProperty('--streak-card-text');
+                    card.style.removeProperty('--streak-card-label');
+                    card.style.removeProperty('--streak-badge-bg');
+                    card.style.removeProperty('--streak-badge-border');
+                    card.style.removeProperty('--streak-badge-text');
+                }
+                root.style.removeProperty('--streak-card-bg');
+                root.style.removeProperty('--streak-card-border');
+                root.style.removeProperty('--streak-card-shadow');
+                root.style.removeProperty('--streak-card-hover-border');
+                root.style.removeProperty('--streak-card-hover-shadow');
+                root.style.removeProperty('--streak-card-text');
+                root.style.removeProperty('--streak-card-label');
+                root.style.removeProperty('--streak-badge-bg');
+                root.style.removeProperty('--streak-badge-border');
+                root.style.removeProperty('--streak-badge-text');
+
+                // Re-sync with current theme's accent
+                var currentTheme = root.getAttribute('data-theme') || 'dark';
+                var themeInfo = themeDetails[currentTheme] || themeDetails.dark;
+                if (themeInfo && themeInfo.accent) {
+                    root.style.setProperty('--streak-accent', themeInfo.accent);
+                    root.style.setProperty('--streak-rgb', themeInfo.rgb);
+                }
+            } else {
+                var props = {
+                    '--streak-card-bg': p.bg,
+                    '--streak-card-border': p.border,
+                    '--streak-card-shadow': p.shadow,
+                    '--streak-card-hover-border': p.hoverBorder,
+                    '--streak-card-hover-shadow': p.hoverShadow,
+                    '--streak-card-text': p.text,
+                    '--streak-card-label': p.label,
+                    '--streak-badge-bg': p.badgeBg,
+                    '--streak-badge-border': p.badgeBorder,
+                    '--streak-badge-text': p.badgeText,
+                    '--streak-accent': p.laserAccent,
+                    '--streak-rgb': p.rgb
+                };
+                for (var prop in props) {
+                    if (props[prop] !== null && props[prop] !== undefined) {
+                        root.style.setProperty(prop, props[prop]);
+                        if (card) card.style.setProperty(prop, props[prop]);
+                    }
+                }
+            }
+        }
+
+        function updateStreakPaletteButtons(currentKey) {
+            var activeKey = currentKey || safeStorage.get('focus_streak_card_color') || 'auto';
+            document.querySelectorAll('.streak-palette-btn').forEach(function(btn) {
+                var pKey = btn.getAttribute('data-palette');
+                if (pKey === activeKey) {
+                    btn.style.outline = '2px solid var(--text-main)';
+                    btn.style.outlineOffset = '2px';
+                    btn.style.transform = 'scale(1.04)';
                 } else {
-                    btn.style.borderColor = 'var(--border)';
-                    btn.style.background = 'var(--surface)';
-                    btn.style.boxShadow = 'none';
+                    btn.style.outline = 'none';
+                    btn.style.transform = 'scale(1)';
                 }
             });
         }
 
-        function initStreakAccent() {
-            var savedHex = safeStorage.get('focus_streak_accent_hex');
-            var savedRgb = safeStorage.get('focus_streak_accent_rgb');
-            if (savedHex && savedRgb) {
-                document.documentElement.style.setProperty('--streak-accent', savedHex);
-                document.documentElement.style.setProperty('--streak-rgb', savedRgb);
-            }
+        function initStreakCardColor() {
+            var savedKey = safeStorage.get('focus_streak_card_color') || 'auto';
+            applyStreakCardColor(savedKey);
         }
 
         function initTheme() {
@@ -3826,8 +4067,8 @@
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 savedTheme = prefersDark ? 'dark' : 'light';
             }
-            initStreakAccent();
             applyTheme(savedTheme, false);
+            initStreakCardColor();
         }
 
         function applyTheme(theme, notify) {
@@ -3846,17 +4087,11 @@
                 themeColorMeta.setAttribute('content', info.color);
             }
 
-            // Sync streak accent with theme if no manual custom override
-            var userOverride = safeStorage.get('focus_streak_accent_override');
-            if (!userOverride && info.accent) {
-                document.documentElement.style.setProperty('--streak-accent', info.accent);
-                document.documentElement.style.setProperty('--streak-rgb', info.rgb);
-                safeStorage.set('focus_streak_accent_hex', info.accent);
-                safeStorage.set('focus_streak_accent_rgb', info.rgb);
-            }
+            // Sync streak card: if auto, adapt to theme, else keep custom selection
+            applyStreakCardColor();
 
             updateThemeCardsActiveState();
-            updateStreakAccentButtons();
+            updateStreakPaletteButtons();
             updateVolumeTrack();
 
             if (notify) {
@@ -3877,7 +4112,7 @@
             var modal = document.getElementById('themeModal');
             if (modal) {
                 updateThemeCardsActiveState();
-                updateStreakAccentButtons();
+                updateStreakPaletteButtons();
                 modal.classList.add('active');
                 if (window.history && window.history.pushState) {
                     history.pushState({ modal: 'themeModal' }, '', '#themeModal');
@@ -6719,7 +6954,7 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=39').then((reg) => {
+                navigator.serviceWorker.register('./sw.js?v=40').then((reg) => {
                     reg.update();
                 }).catch(() => {});
             }
