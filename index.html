@@ -3068,46 +3068,28 @@
         </div>
     </div>
 
-    <!-- MODAL: HIGH-STAKES DISCIPLINE ESCROW & PENALTY VAULT -->
+    <!-- MODAL: COMMITMENT STAKES (COMING SOON) -->
     <div class="modal-overlay" id="escrowModal" onclick="if(event.target === this) closeEscrowModal()">
         <div class="modal-card" style="max-width: 500px; text-align: left;">
             <button class="modal-close-btn" onclick="closeEscrowModal()" title="Close Escrow" aria-label="Close">✕</button>
 
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">[COMMITMENT STAKES VAULT]</span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">[STAKES // COMING SOON]</span>
             </div>
 
-            <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Daily Commitment Staking</h2>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Harness loss aversion. Put a financial stake on today's 3 key deliverables. Complete your commitments by midnight to reclaim your stake and build your streak.</p>
+            <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Financial Stakes (Coming Soon)</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+                FocusPact does not process financial transactions, payments, or escrow. Real financial staking will be introduced in a future release.
+            </p>
 
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; font-family: 'JetBrains Mono', monospace;">Select Daily Stake Tier</div>
-            <div class="escrow-tier-grid">
-                <div class="escrow-tier-btn" id="tierBtn-0" onclick="selectEscrowTier(0)">
-                    <div style="font-size: 18px; font-weight: 800; color: var(--text-main);">$0</div>
-                    <div style="font-size: 11px; color: var(--text-muted);">Discipline Only</div>
-                </div>
-                <div class="escrow-tier-btn active" id="tierBtn-10" onclick="selectEscrowTier(10)">
-                    <div style="font-size: 18px; font-weight: 800; color: #f59e0b;">$10</div>
-                    <div style="font-size: 11px; color: var(--text-muted);">Focused Pledge</div>
-                </div>
-                <div class="escrow-tier-btn" id="tierBtn-25" onclick="selectEscrowTier(25)">
-                    <div style="font-size: 18px; font-weight: 800; color: #10b981;">$25</div>
-                    <div style="font-size: 11px; color: var(--text-muted);">Executive Stake</div>
-                </div>
-            </div>
-
-            <div id="escrowVaultStatusBox" style="background: var(--btn-sec-bg); border: 1px solid var(--border); border-left: 4px solid #f59e0b; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">STAKE STATUS: ACTIVE</span>
-                    <span id="escrowAmountPill" style="font-size: 13px; font-weight: 800; color: #f59e0b; font-family: 'JetBrains Mono', monospace;">$10 LOCKED</span>
-                </div>
+            <div id="escrowVaultStatusBox" style="background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 18px; text-align: center; margin-bottom: 16px;">
+                <div style="font-size: 13px; font-weight: 700; color: #f59e0b; margin-bottom: 6px;">Status: In Development</div>
                 <div style="font-size: 12px; color: var(--text-sub); line-height: 1.5;">
-                    Complete your deliverables by midnight to keep your stake. Missed commitments trigger an accountability report to your partner.
+                    No money is deposited, locked, or forfeited. Your commitments are enforced through partner accountability and personal streak integrity.
                 </div>
             </div>
 
-            <button class="btn-primary" style="margin-top: 0;" onclick="saveEscrowPledge()">Confirm Stake Pledge</button>
-            <button class="btn-secondary" onclick="closeEscrowModal()">Close</button>
+            <button class="btn-primary" style="margin-top: 0;" onclick="closeEscrowModal()">Understood</button>
         </div>
     </div>
 
@@ -3296,10 +3278,10 @@
                         <div class="bento-title">Streak Shield</div>
                         <div class="bento-val" id="bentoShieldVal">1 Active</div>
                     </div>
-                    <div class="bento-box" onclick="goTo('screenSquad')" title="Squad Multiplier [S]">
+                    <div class="bento-box" style="opacity: 0.6; cursor: default;" title="Squad Multiplier (Coming Soon)">
                         <div class="bento-icon"><span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#f59e0b; padding:2px 5px; background:rgba(245,158,11,0.12); border-radius:4px;">NET</span></div>
                         <div class="bento-title">Squad Multiplier</div>
-                        <div class="bento-val" id="bentoSquadVal">2.5x</div>
+                        <div class="bento-val" id="bentoSquadVal" style="color: var(--text-muted); font-size: 13px;">Coming Soon</div>
                     </div>
                 </div>
 
@@ -3314,9 +3296,9 @@
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 5px; background:rgba(16,185,129,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25); flex-shrink:0;">FCS</span>
                             <span class="quick-tool-title">Focus Timer</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); goTo('screenSquad')" title="Squad Pacts [S]">
+                        <button class="quick-tool-btn" onclick="showToast('Squad pacts are coming soon!', 'info')" title="Squad Pacts (Coming Soon)" style="opacity: 0.6;">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#3b82f6; padding:2px 5px; background:rgba(59,130,246,0.12); border-radius:4px; border:1px solid rgba(59,130,246,0.25); flex-shrink:0;">NET</span>
-                            <span class="quick-tool-title">Squad Pacts</span>
+                            <span class="quick-tool-title">Squad (Soon)</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); goTo('screenAnalytics')" title="Analytics Dashboard [A]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#a855f7; padding:2px 5px; background:rgba(168,85,247,0.12); border-radius:4px; border:1px solid rgba(168,85,247,0.25); flex-shrink:0;">TEL</span>
@@ -3326,9 +3308,9 @@
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#ec4899; padding:2px 5px; background:rgba(236,72,153,0.12); border-radius:4px; border:1px solid rgba(236,72,153,0.25); flex-shrink:0;">EXP</span>
                             <span class="quick-tool-title">Share Card</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openEscrowModal()" title="Commitment Stakes [E]">
+                        <button class="quick-tool-btn" onclick="playClick(); openEscrowModal()" title="Commitment Stakes (Coming Soon) [E]" style="opacity: 0.6;">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#f59e0b; padding:2px 5px; background:rgba(245,158,11,0.12); border-radius:4px; border:1px solid rgba(245,158,11,0.25); flex-shrink:0;">ESC</span>
-                            <span class="quick-tool-title">Stakes</span>
+                            <span class="quick-tool-title">Stakes (Soon)</span>
                         </button>
                         <button class="quick-tool-btn" onclick="playClick(); openWhitepaperModal()" title="Technical Architecture & Threat Model [W]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 5px; background:rgba(168,85,247,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25); flex-shrink:0;">ARC</span>
@@ -3434,61 +3416,25 @@
         </div>
     </div>
 
-    <!-- SCREEN: MULTIPLAYER SQUAD PACTS & LEADERBOARD -->
+    <!-- SCREEN: MULTIPLAYER SQUAD PACTS (COMING SOON) -->
     <div id="screenSquad" class="screen">
         <div class="card">
-            <div class="label"><span class="label-dot"></span> SQUAD PACTS // TEAM ACCOUNTABILITY</div>
-            <h1>Team Accountability Pacts</h1>
-            <p>Coordinate consistency with your team. Mutual milestone completion unlocks squad multiplier bonuses.</p>
+            <div class="label"><span class="label-dot"></span> SQUAD PACTS // COMING SOON</div>
+            <h1>Multiplayer Squad Accountability</h1>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 20px;">
+                Multiplayer accountability pods and shared pacts are in development. Focus on your individual daily goals and partner accountability today.
+            </p>
 
-            <div class="laptop-grid-2">
-                <div>
-                    <div class="squad-card">
-                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; font-family:'JetBrains Mono',monospace;">Squad Multiplier</div>
-                        <div class="squad-multiplier">2.5x</div>
-                        <div style="font-size: 12px; opacity: 0.95; margin-top: 4px;">Sprint Cohort • 4 Active Members</div>
-                    </div>
-                    <button class="btn-primary" onclick="inviteSquadMember()">Invite Teammate to Squad</button>
-                </div>
-
-                <div>
-                    <div class="label"><span class="label-dot"></span> Live Squad Feed</div>
-                    <div id="squadMemberList">
-                        <div class="squad-member-item">
-                            <div style="display: flex; align-items: center;">
-                                <div class="squad-avatar">Y</div>
-                                <div>
-                                    <div style="font-weight: 700; font-size: 13px;" id="squadUserName">You</div>
-                                    <div style="font-size: 11px; color: var(--text-muted);">Current Streak: Active</div>
-                                </div>
-                            </div>
-                            <span class="squad-status-tag done">Executed ✓</span>
-                        </div>
-                        <div class="squad-member-item">
-                            <div style="display: flex; align-items: center;">
-                                <div class="squad-avatar" style="background: var(--grad-firm);">A</div>
-                                <div>
-                                    <div style="font-weight: 700; font-size: 13px;">Alex (Backend)</div>
-                                    <div style="font-size: 11px; color: var(--text-muted);">14-Day Streak</div>
-                                </div>
-                            </div>
-                            <span class="squad-status-tag done">Executed ✓</span>
-                        </div>
-                        <div class="squad-member-item">
-                            <div style="display: flex; align-items: center;">
-                                <div class="squad-avatar" style="background: var(--grad-gentle);">S</div>
-                                <div>
-                                    <div style="font-weight: 700; font-size: 13px;">Sarah (Growth)</div>
-                                    <div style="font-size: 11px; color: var(--text-muted);">21-Day Streak</div>
-                                </div>
-                            </div>
-                            <span class="squad-status-tag working">Focusing ⏳</span>
-                        </div>
-                    </div>
-                </div>
+            <div style="background: var(--surface); border: 1px dashed var(--border); border-radius: 14px; padding: 32px 20px; text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 32px; margin-bottom: 12px;">👥</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Squads Feature Coming Soon</div>
+                <p style="font-size: 12px; color: var(--text-muted); max-width: 380px; margin: 0 auto 16px;">
+                    Shared team pacts will be introduced in a future release. No other members or shared streaks are connected in this version.
+                </p>
+                <span class="zero-trust-mode-pill" style="background: rgba(255,255,255,0.06); color: var(--text-muted);">Status: In Development</span>
             </div>
 
-            <button class="btn-secondary" style="margin-top: 14px;" onclick="goTo('screen4')">Back to Dashboard</button>
+            <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
         </div>
     </div>
 
@@ -5521,11 +5467,6 @@
         }
 
         function saveEscrowPledge() {
-            localStorage.setItem('focus_escrow_stake', currentEscrowStake.toString());
-            playSuccess();
-            showToast(currentEscrowStake > 0 
-                ? `💰 High-Stakes Escrow Locked: $${currentEscrowStake} pledge active for today!`
-                : 'Discipline Escrow set to Mode: Free (Honour Pledge)', 'success');
             closeEscrowModal();
         }
 
@@ -7016,7 +6957,7 @@
                 goTo('screenAnalytics');
             } else if (key === 's') {
                 e.preventDefault();
-                goTo('screenSquad');
+                showToast('Squad pacts are coming soon.', 'info');
             } else if (key === 'e') {
                 e.preventDefault();
                 goTo('screen5');
