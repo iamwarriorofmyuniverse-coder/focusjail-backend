@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FocusPact - Daily Commitments & Intelligent Accountability</title>
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" type="image/png" href="icon-192.png" />
@@ -7132,7 +7132,7 @@
                 setSoundscapeVolume(soundscapeVolume * 100);
             } catch (e) {}
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js?v=41').then((reg) => {
+                navigator.serviceWorker.register('./sw.js?v=42').then((reg) => {
                     reg.update();
                 }).catch(() => {});
             }
