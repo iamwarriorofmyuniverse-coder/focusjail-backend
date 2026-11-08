@@ -3428,7 +3428,7 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <span class="chart-title">30-Day Discipline Matrix</span>
-                        <span class="chart-total" id="monthlyRate">100% Rate</span>
+                        <span class="chart-total" id="monthlyRate">0% Rate</span>
                     </div>
                     <div class="heatmap-grid" id="heatmapGrid"></div>
                     <div style="display: flex; gap: 12px; font-size: 11px; color: var(--text-muted); justify-content: flex-end;">
@@ -4655,7 +4655,7 @@
 
             var completedCount = history.filter(h => h.completed || h.shielded).length;
             var totalCount = history.length;
-            var score = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 100;
+            var score = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
             renderGoals(goals);
             renderWeekStrip();
@@ -5818,15 +5818,15 @@
             var today = new Date().getDay();
             var totalWeekMins = dailyFocus;
 
-            var sampleMins = [45, 60, 25, 50, 75, 30, dailyFocus];
-            var maxVal = Math.max(...sampleMins, 90);
+            var recordedWeeklyMins = safeStorage.getJSON('focus_weekly_history', [0, 0, 0, 0, 0, 0]);
+            var maxVal = Math.max(...recordedWeeklyMins, dailyFocus, 60);
 
             for (var i = 6; i >= 0; i--) {
                 var dIndex = (today - i + 7) % 7;
-                var mins = i === 0 ? dailyFocus : (sampleMins[6 - i] || 0);
+                var mins = i === 0 ? dailyFocus : (recordedWeeklyMins[6 - i] || 0);
                 if (i !== 0) totalWeekMins += mins;
 
-                var heightPct = Math.min(100, Math.max(8, (mins / maxVal) * 100));
+                var heightPct = mins > 0 ? Math.min(100, Math.max(8, (mins / maxVal) * 100)) : 4;
 
                 var col = document.createElement('div');
                 col.className = 'bar-col';
@@ -5867,9 +5867,9 @@
                 heatmap.appendChild(tile);
             }
 
-            var rate = history.length > 0 ? Math.round((totalMonthlyCompleted / Math.min(history.length, 30)) * 100) : 100;
+            var rate = history.length > 0 ? Math.round((totalMonthlyCompleted / Math.min(history.length, 30)) * 100) : 0;
             var rateElem = document.getElementById('monthlyRate');
-            if (rateElem) rateElem.textContent = `${rate}% Success Rate`;
+            if (rateElem) rateElem.textContent = history.length > 0 ? `${rate}% Success Rate` : '0% Rate';
         }
 
         function renderHistoryScreen() {
