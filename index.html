@@ -3645,7 +3645,7 @@
     <!-- App Engine -->
     <script>
     // Global API Configuration
-    const API_BASE = window.FOCUS_API_BASE || '';
+    const API_BASE = window.FOCUS_API_BASE || 'https://focusjail.netlify.app';
 
         // Defensive Security & Safe Storage Engine
         function escapeHTML(str) {
@@ -5189,17 +5189,23 @@
                     : 'Execution priority';
                 var userName = localStorage.getItem('name') || 'User';
 
+                if (runBtn) runBtn.textContent = 'Verifying with AI (max 20s)...';
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 20000);
+
                 const response = await fetch(`${API_BASE}/api/verify-proof`, {
                     method: 'POST',
+                    signal: controller.signal,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         goalText: goalText,
                         imageBase64: currentAuditImageBase64,
                         userName: userName,
-                        goalIndex: currentAuditingGoalIdx,
-                        simulateReject: simulateReject === true
+                        goalIndex: currentAuditingGoalIdx
                     })
                 });
+                clearTimeout(timeoutId);
 
                 if (!response.ok) throw new Error('API status ' + response.status);
 
@@ -5211,7 +5217,10 @@
                 approveAuditFallback(simulateReject === true, true);
             } finally {
                 if (radar) radar.classList.remove('scanning');
-                if (runBtn) runBtn.disabled = false;
+                if (runBtn) {
+                    runBtn.disabled = false;
+                    runBtn.textContent = 'Run Automated Audit';
+                }
             }
         }
 
@@ -5615,8 +5624,12 @@
             localStorage.setItem('streak', streak.toString());
 
             try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 20000);
+
                 const response = await fetch(`${API_BASE}/api/verdict`, {
                     method: 'POST',
+                    signal: controller.signal,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: name,
@@ -5629,6 +5642,7 @@
                         partner_name: partnerName
                     })
                 });
+                clearTimeout(timeoutId);
 
                 if (!response.ok) throw new Error('API status ' + response.status);
 
