@@ -3415,6 +3415,7 @@
 
             <div class="verdict-card">
                 <p id="aiResponse">Analyzing submitted proof and generating review...</p>
+                <p id="staticEncouragementNotice" style="display: none; margin-top: 8px; font-size: 12px; color: var(--text-muted); border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 6px;"></p>
             </div>
 
             <!-- 1-Tap Partner Confession / Victory Dispatcher -->
@@ -3697,6 +3698,9 @@
 
     <!-- App Engine -->
     <script>
+    // Global API Configuration
+    const API_BASE = window.FOCUS_API_BASE || '';
+
         // Defensive Security & Safe Storage Engine
         function escapeHTML(str) {
             if (!str) return '';
@@ -5235,7 +5239,7 @@
                     : 'Execution priority';
                 var userName = localStorage.getItem('name') || 'User';
 
-                const response = await fetch('/api/verify-proof', {
+                const response = await fetch(`${API_BASE}/api/verify-proof`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -5253,8 +5257,8 @@
                 latestAuditResult = data;
                 renderAuditOutcome(data);
             } catch (err) {
-                console.warn('Backend audit API fallback:', err);
-                approveAuditFallback(simulateReject === true);
+                console.warn('Backend audit API unavailable:', err);
+                approveAuditFallback(simulateReject === true, true);
             } finally {
                 if (radar) radar.classList.remove('scanning');
                 if (runBtn) runBtn.disabled = false;
@@ -5282,16 +5286,39 @@
                     statusBadge.style.border = '1px solid rgba(16, 185, 129, 0.4)';
                 }
                 if (scoreVal) {
-                    scoreVal.textContent = (data.score || 95) + '% MATCH';
+                    scoreVal.textContent = data.score ? (data.score + '% MATCH') : 'VERIFIED';
                     scoreVal.style.color = '#10b981';
                 }
                 if (findings) findings.textContent = data.findings || 'Work artifact authenticated successfully against stated commitment.';
-                if (seal) seal.textContent = 'SEAL: ' + (data.seal || 'ZT-AUDIT-VALID');
+                if (seal) seal.textContent = data.seal ? ('SEAL: ' + data.seal) : 'STATUS: VERIFIED';
                 if (time) time.textContent = 'TIMESTAMP: ' + new Date().toLocaleTimeString();
 
                 if (runBtn) runBtn.style.display = 'none';
                 if (confirmBtn) confirmBtn.style.display = 'block';
-                showToast('AI Vision Audit: Authentic Work Verified! 🛡️', 'success');
+                showToast('Work verified successfully! ✓', 'success');
+            } else if (data.isUnavailable) {
+                playAlert();
+                if (statusBadge) {
+                    statusBadge.textContent = 'NOT VERIFIED: AI UNAVAILABLE';
+                    statusBadge.style.background = 'rgba(245, 158, 11, 0.2)';
+                    statusBadge.style.color = '#f59e0b';
+                    statusBadge.style.border = '1px solid rgba(245, 158, 11, 0.4)';
+                }
+                if (scoreVal) {
+                    scoreVal.textContent = 'N/A';
+                    scoreVal.style.color = 'var(--text-muted)';
+                }
+                if (findings) findings.textContent = data.findings || 'Not verified: AI unavailable';
+                if (seal) seal.textContent = 'STATUS: UNVERIFIED';
+                if (time) time.textContent = 'TIMESTAMP: ' + new Date().toLocaleTimeString();
+
+                if (runBtn) {
+                    runBtn.style.display = 'block';
+                    runBtn.disabled = false;
+                    runBtn.innerHTML = 'Retry Verification 🔍';
+                }
+                if (confirmBtn) confirmBtn.style.display = 'none';
+                showToast('Not verified: AI unavailable', 'error');
             } else {
                 playAlert();
                 if (statusBadge) {
@@ -5301,36 +5328,50 @@
                     statusBadge.style.border = '1px solid rgba(239, 68, 68, 0.4)';
                 }
                 if (scoreVal) {
-                    scoreVal.textContent = (data.score || 18) + '% MATCH';
+                    scoreVal.textContent = data.score ? (data.score + '% MATCH') : 'REJECTED';
                     scoreVal.style.color = '#f87171';
                 }
-                if (findings) findings.textContent = data.findings || 'Artifact does not match the committed priority. Anti-cheat protocol triggered.';
+                if (findings) findings.textContent = data.findings || 'Artifact does not match the committed priority.';
                 if (seal) seal.textContent = 'STATUS: REJECTED';
                 if (time) time.textContent = 'TIMESTAMP: ' + new Date().toLocaleTimeString();
 
                 if (runBtn) {
                     runBtn.style.display = 'block';
                     runBtn.disabled = false;
-                    runBtn.innerHTML = 'Re-try with Genuine Proof 🔍';
+                    runBtn.innerHTML = 'Retry with Genuine Proof 🔍';
                 }
                 if (confirmBtn) confirmBtn.style.display = 'none';
-                showToast('Audit Rejected: Visual proof did not pass anti-cheat.', 'error');
+                showToast('Audit Rejected: Proof did not match goal.', 'error');
             }
         }
 
-        function approveAuditFallback(simulateReject) {
+        function approveAuditFallback(simulateReject, isUnavailable) {
             var rawGoals = localStorage.getItem('goals');
             var goals = rawGoals ? JSON.parse(rawGoals) : [];
             var goalText = (goals[currentAuditingGoalIdx] && goals[currentAuditingGoalIdx].text) 
                 ? goals[currentAuditingGoalIdx].text 
                 : 'Execution priority';
 
+            if (isUnavailable) {
+                var unavailData = {
+                    verified: false,
+                    isUnavailable: true,
+                    score: null,
+                    findings: 'Not verified: AI unavailable. Check-in cannot be verified automatically right now.',
+                    seal: null,
+                    timestamp: new Date().toISOString()
+                };
+                latestAuditResult = unavailData;
+                renderAuditOutcome(unavailData);
+                return;
+            }
+
             if (simulateReject) {
                 var rejectData = {
                     verified: false,
-                    score: 18,
-                    findings: `Audit Rejected: The provided artifact does not exhibit recognizable evidence of executing "${goalText}". Anti-cheat protocol triggered.`,
-                    seal: 'REJECTED-' + Math.floor(1000 + Math.random() * 9000),
+                    score: null,
+                    findings: `Audit Rejected: The provided artifact does not exhibit recognizable evidence of executing "${goalText}".`,
+                    seal: null,
                     timestamp: new Date().toISOString()
                 };
                 latestAuditResult = rejectData;
@@ -5338,15 +5379,16 @@
                 return;
             }
 
-            var fallbackData = {
-                verified: true,
-                score: Math.floor(93 + Math.random() * 5),
-                findings: `Zero-Trust Heuristic Engine: Visual work artifact authenticated against "${goalText}". Genuine execution pattern detected.`,
-                seal: 'ZT-AUDIT-' + Math.floor(1000 + Math.random() * 9000) + '-V' + (currentAuditingGoalIdx + 1),
+            var defaultFailData = {
+                verified: false,
+                isUnavailable: true,
+                score: null,
+                findings: 'Not verified: AI unavailable',
+                seal: null,
                 timestamp: new Date().toISOString()
             };
-            latestAuditResult = fallbackData;
-            renderAuditOutcome(fallbackData);
+            latestAuditResult = defaultFailData;
+            renderAuditOutcome(defaultFailData);
         }
 
         function approveAuditGoal() {
@@ -5434,7 +5476,7 @@
         }
 
         // High-Stakes Discipline Escrow Staking Engine
-        var currentEscrowStake = parseInt(localStorage.getItem('focus_escrow_stake') || '10');
+        var currentEscrowStake = parseInt(localStorage.getItem('focus_escrow_stake') || '0');
 
         function openEscrowModal() {
             var modal = document.getElementById('escrowModal');
@@ -5626,7 +5668,7 @@
             localStorage.setItem('streak', streak.toString());
 
             try {
-                const response = await fetch('/api/verdict', {
+                const response = await fetch(`${API_BASE}/api/verdict`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -5641,16 +5683,20 @@
                     })
                 });
 
+                if (!response.ok) throw new Error('API status ' + response.status);
+
                 const data = await response.json();
-                var verdict = data.verdict || "Consistency is your bridge to excellence. Stay focused.";
+                var verdict = data.verdict || "Your check-in was saved.";
                 document.getElementById('aiResponse').textContent = verdict;
+                var staticEncEl = document.getElementById('staticEncouragementNotice');
+                if (staticEncEl) staticEncEl.style.display = 'none';
                 localStorage.setItem('latestVerdict', verdict);
 
                 var pill = document.getElementById('verifyPill');
                 if (pill) {
                     pill.textContent = goalsCompleted 
-                        ? (proof ? '🛡️ AI Warden: Proof Verified High-Confidence ✓' : '🛡️ AI Warden: Self-Reported Logged ✓')
-                        : '⚠️ AI Warden: Accountability Shortfall ✗';
+                        ? (proof ? 'Proof Submitted ✓' : 'Self-Reported Logged ✓')
+                        : 'Accountability Shortfall ✗';
                 }
 
                 var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
@@ -5659,17 +5705,46 @@
                     completed: goalsCompleted,
                     shielded: wasShielded,
                     proof: proof,
-                    verdict: verdict
+                    verdict: verdict,
+                    ai_verdict: true
                 });
                 localStorage.setItem('focus_history', JSON.stringify(history));
 
-                if (window.posthog) {
-                    posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak, shielded: wasShielded, has_proof: !!proof });
+                if (window.posthog && typeof window.posthog.capture === 'function') {
+                    window.posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak, shielded: wasShielded, has_proof: !!proof });
                 }
             } catch (err) {
-                var fallback = goalsCompleted ? "Great work completing your daily commitments. Keep this momentum!" : (wasShielded ? "Your streak was protected by your shield. Rest and reset tomorrow." : "You fell short today. Regroup, refocus, and restart tomorrow.");
-                document.getElementById('aiResponse').textContent = fallback;
-                localStorage.setItem('latestVerdict', fallback);
+                console.warn('Verdict API unavailable:', err);
+                var verdictNotice = "AI verdict unavailable. Your check-in was saved.";
+                document.getElementById('aiResponse').textContent = verdictNotice;
+                localStorage.setItem('latestVerdict', verdictNotice);
+
+                var staticEncEl = document.getElementById('staticEncouragementNotice');
+                if (staticEncEl) {
+                    var staticMsg = goalsCompleted ? "Great work completing your daily commitments. Keep this momentum!" : (wasShielded ? "Your streak was protected by your shield. Rest and reset tomorrow." : "You fell short today. Regroup, refocus, and restart tomorrow.");
+                    staticEncEl.textContent = `Static Encouragement: ${staticMsg}`;
+                    staticEncEl.style.display = 'block';
+                }
+
+                var pill = document.getElementById('verifyPill');
+                if (pill) {
+                    pill.textContent = goalsCompleted ? 'Saved (AI Verdict Unavailable)' : 'Accountability Shortfall ✗';
+                }
+
+                var history = JSON.parse(localStorage.getItem('focus_history') || '[]');
+                history.push({
+                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    completed: goalsCompleted,
+                    shielded: wasShielded,
+                    proof: proof,
+                    verdict: verdictNotice,
+                    ai_verdict: false
+                });
+                localStorage.setItem('focus_history', JSON.stringify(history));
+
+                if (window.posthog && typeof window.posthog.capture === 'function') {
+                    window.posthog.capture('verdict_failed', { reason: 'api_unavailable' });
+                }
             }
         }
 
@@ -5843,8 +5918,11 @@
             history.slice().reverse().forEach(h => {
                 var div = document.createElement('div');
                 div.className = 'history-item';
-                var statusText = h.completed ? 'COMPLETED ALL GOALS ✓' : (h.shielded ? 'STREAK SHIELD USED 🛡️' : 'MISSED COMMITMENTS ✗');
-                var statusClass = h.completed ? 'completed' : (h.shielded ? 'shielded' : 'failed');
+                var isLegacy = h.isLegacyFallback || h.auditStatus === 'Unverified (legacy)';
+                var statusText = h.completed 
+                    ? (isLegacy ? 'COMPLETED (UNVERIFIED LEGACY)' : (h.ai_verdict ? 'VERIFIED COMPLETE ✓' : 'SELF-REPORTED COMPLETE ✓'))
+                    : (h.shielded ? 'STREAK SHIELD USED 🛡️' : 'MISSED COMMITMENTS ✗');
+                var statusClass = h.completed ? (isLegacy ? 'shielded' : 'completed') : (h.shielded ? 'shielded' : 'failed');
                 div.innerHTML = `
                     <div class="history-date">${escapeHTML(h.date)}</div>
                     <div class="history-status ${statusClass}">${escapeHTML(statusText)}</div>
@@ -7012,7 +7090,57 @@
             }
         }
 
+        
+        // Legacy Data Migration (Item B)
+        function migrateLegacyData() {
+            try {
+                localStorage.removeItem('focus_escrow_stake');
+            } catch (e) {}
+
+            try {
+                var rawGoals = localStorage.getItem('goals');
+                if (rawGoals) {
+                    var goals = JSON.parse(rawGoals);
+                    var modified = false;
+                    goals.forEach(g => {
+                        if (g.verified || (g.auditSeal && String(g.auditSeal).includes('ZT-AUDIT')) || (g.auditFindings && String(g.auditFindings).includes('Zero-Trust Heuristic Engine'))) {
+                            g.verified = false;
+                            g.legacyUnverified = true;
+                            g.auditScore = null;
+                            g.auditSeal = null;
+                            g.auditFindings = 'Unverified (legacy)';
+                            modified = true;
+                        }
+                    });
+                    if (modified) {
+                        localStorage.setItem('goals', JSON.stringify(goals));
+                    }
+                }
+            } catch (e) {}
+
+            try {
+                var rawHist = localStorage.getItem('focus_history');
+                if (rawHist) {
+                    var history = JSON.parse(rawHist);
+                    var histModified = false;
+                    history.forEach(h => {
+                        if (h.auditStatus !== 'Unverified (legacy)' && (h.verified || h.auditScore || (h.auditSeal && String(h.auditSeal).includes('ZT-AUDIT')) || (h.verdict && (String(h.verdict).includes('Warden') || String(h.verdict).includes('Great work completing') || String(h.verdict).includes('Zero-Trust'))))) {
+                            h.verified = false;
+                            h.auditStatus = 'Unverified (legacy)';
+                            h.auditScore = null;
+                            h.auditSeal = null;
+                            histModified = true;
+                        }
+                    });
+                    if (histModified) {
+                        localStorage.setItem('focus_history', JSON.stringify(history));
+                    }
+                }
+            } catch (e) {}
+        }
+
         function initApp() {
+            migrateLegacyData();
             initTheme();
             checkInstalledState();
             checkDailyAutoRoll();
