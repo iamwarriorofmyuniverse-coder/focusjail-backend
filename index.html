@@ -4798,12 +4798,16 @@
                     var pill = document.createElement('span');
                     if (g.verified) {
                         pill.className = 'goal-audit-pill verified';
-                        pill.innerHTML = `[VERIFIED // ${g.auditScore || 95}%]`;
-                        pill.title = g.auditFindings || 'Visual artifact verified by Zero-Trust AI.';
+                        pill.textContent = g.auditScore ? `[VERIFIED // ${g.auditScore}%]` : '[VERIFIED]';
+                        pill.title = g.auditFindings || 'Visual proof verified.';
+                    } else if (g.legacyUnverified) {
+                        pill.className = 'goal-audit-pill unverified';
+                        pill.textContent = '[UNVERIFIED (LEGACY)]';
+                        pill.title = 'Legacy audit record; excluded from verified stats.';
                     } else {
                         pill.className = 'goal-audit-pill unverified';
-                        pill.innerHTML = `[UNAUDITED // SELF-REPORT]`;
-                        pill.title = 'No visual proof provided (unverified).';
+                        pill.textContent = '[SELF-REPORTED]';
+                        pill.title = 'Marked complete via self-report without automated verification.';
                     }
                     textCol.appendChild(pill);
                 }
@@ -4818,7 +4822,7 @@
 
                 var verifyBtn = document.createElement('button');
                 verifyBtn.className = 'goal-verify-trigger-btn';
-                verifyBtn.innerHTML = g.verified ? 'SEALED ✓' : (g.done ? 'AUDIT PROOF' : 'VERIFY PROOF');
+                verifyBtn.innerHTML = g.verified ? 'VERIFIED ✓' : (g.done ? (g.selfReported ? 'SELF-REPORTED' : 'AUDIT PROOF') : 'VERIFY PROOF');
                 verifyBtn.title = 'Open Zero-Trust Visual Proof Inspector';
                 verifyBtn.onclick = function (e) {
                     e.stopPropagation();
@@ -4966,13 +4970,13 @@
             localStorage.setItem('zero_trust_strict', val ? 'true' : 'false');
             var ztBadge = document.getElementById('zeroTrustStatusBadge');
             if (ztBadge) {
-                ztBadge.textContent = val ? 'STRICT ON' : 'RELAXED';
+                ztBadge.textContent = val ? 'PROOF REQUIRED' : 'RELAXED';
                 ztBadge.className = 'zero-trust-mode-pill' + (val ? '' : ' relaxed');
             }
             playClick();
             showToast(val 
-                ? 'Zero-Trust AI: STRICT MODE ACTIVE 🛡️ (Self-reporting locked)' 
-                : 'Zero-Trust: RELAXED MODE (Self-reporting allowed ⚠️)', 
+                ? 'Proof Required Mode Active: Visual verification prompted for completion.' 
+                : 'Relaxed Mode: Quick toggle completion allowed.', 
                 val ? 'success' : 'info');
         }
 
@@ -5432,12 +5436,14 @@
 
             goals[currentAuditingGoalIdx].done = true;
             goals[currentAuditingGoalIdx].verified = false;
+            goals[currentAuditingGoalIdx].selfReported = true;
             goals[currentAuditingGoalIdx].auditScore = null;
-            goals[currentAuditingGoalIdx].auditFindings = 'Self-reported without visual proof';
+            goals[currentAuditingGoalIdx].auditSeal = null;
+            goals[currentAuditingGoalIdx].auditFindings = 'Self-reported without verification';
 
             localStorage.setItem('goals', JSON.stringify(goals));
             playClick();
-            showToast(`Marked as Self-Reported (Unverified ⚠️)`, 'info');
+            showToast('Marked as Self-Reported (Unverified)', 'info');
 
             closeVisionAuditModal();
             renderGoals(goals);
@@ -5758,12 +5764,18 @@
             var excuse = document.getElementById('excuseInput').value.trim();
             var proof = document.getElementById('proofInput').value.trim();
 
-            var goalsText = rawGoals.map((g, i) => `${i+1}. ${g.text}`).join('\n');
+            var goalsText = rawGoals.map((g, i) => {
+                var statusLabel = g.verified ? ' [Verified]' : (g.done ? ' [Self-reported]' : ' [Incomplete]');
+                return `${i+1}. ${g.text}${statusLabel}`;
+            }).join('\n');
+
+            var hasSelfReported = rawGoals.some(g => g.done && !g.verified);
+            var completionType = hasSelfReported ? 'completed daily commitments (includes self-reported)' : 'verified all daily commitments';
 
             if (goalsCompleted) {
-                return `🔥 FocusPact Victory Report!\nHey ${partnerName},\n${name} executed all 3 daily commitments today!\n\n${goalsText}\n\n${proof ? '🔗 Proof: ' + proof + '\n' : ''}🔥 Streak: ${streak} Days\nAI Coach: "${verdict}"\n\nTracked via https://focusjail.netlify.app`;
+                return `FocusPact Daily Report\nHey ${partnerName},\n${name} ${completionType} today:\n\n${goalsText}\n\n${proof ? 'Proof: ' + proof + '\n' : ''}Streak: ${streak} Days\nVerdict: "${verdict}"\n\nTracked via FocusPact`;
             } else {
-                return `⚠️ FocusPact Daily Confession\nHey ${partnerName},\n${name} failed to complete daily commitments today:\n\n${goalsText}\n\nReason/Confession: "${excuse || 'Lost focus'}"\nStreak: Reset to 0\nAI Coach: "${verdict}"\n\nHolding myself accountable to you tomorrow.`;
+                return `FocusPact Daily Report\nHey ${partnerName},\n${name} did not complete all daily commitments today:\n\n${goalsText}\n\nReason: "${excuse || 'Lost focus'}"\nStreak: Reset to 0\nVerdict: "${verdict}"\n\nHolding myself accountable tomorrow.`;
             }
         }
 
