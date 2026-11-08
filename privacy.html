@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy - FocusPact</title>
     <link rel="icon" type="image/png" href="icon-192.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -188,7 +188,16 @@
             <li>To generate milestone achievement cards and coaching feedback.</li>
             <li>To provide offline availability via Service Workers and local caching.</li>
         </ul>
-        <p>We do not store your private daily tasks on external centralized servers, and we do not profile users for third-party advertising.</p>
+        <p>We do not store your private daily tasks in permanent databases on external centralized servers, and we do not profile users for third-party advertising.</p>
+
+        <h2>2.1 AI Verdicts & Proof Verification</h2>
+        <p>If you request an AI check-in evaluation or submit visual work proof, that specific request is transmitted securely over HTTPS to our backend API (which interfaces with LLM providers such as Groq and Google Gemini):</p>
+        <ul>
+            <li><strong>AI Check-in Verdicts:</strong> Transmits your name/handle, the text of your 3 commitments, completion status, reflection/excuse (if entered), and chosen tone.</li>
+            <li><strong>Proof Verification:</strong> Transmits the commitment title and the uploaded image (as a base64 string) to evaluate whether work progress is visible.</li>
+            <li><strong>Basic Duplicate Detection:</strong> A 64-bit perceptual image hash is calculated entirely on your device to perform a basic duplicate-image check against previously uploaded images. This comparison occurs locally in your browser.</li>
+        </ul>
+        <p>Images and commitment texts are processed ephemerally and are not retained in a database on our servers.</p>
 
         <h2>3. Accountability Partner Feature ("Dead-Man's Switch")</h2>
         <p>FocusPact allows you to specify an accountability partner contact. When generating reports or alerts, communications are initiated from your device (e.g., via direct WhatsApp share, system share dialog, or SMS). We do not scrape, harvest, or market to your partner's contact details.</p>

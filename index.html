@@ -2662,15 +2662,15 @@
                 <div class="shortcut-keys"><span class="shortcut-key">M</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Protocol Arch Whitepaper</span>
+                <span>About & Architecture</span>
                 <div class="shortcut-keys"><span class="shortcut-key">W</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Zero-Trust Vision Audit</span>
+                <span>Visual Proof Inspector</span>
                 <div class="shortcut-keys"><span class="shortcut-key">V</span></div>
             </div>
             <div class="shortcut-row">
-                <span>Stakes Escrow Vault</span>
+                <span>Stakes (Coming Soon)</span>
                 <div class="shortcut-keys"><span class="shortcut-key">K</span></div>
             </div>
             <div class="shortcut-row">
@@ -2690,12 +2690,12 @@
     <!-- MODAL: REVIEW & FEEDBACK -->
     <div class="modal-overlay" id="reviewModal" onclick="if(event.target === this) closeReviewModal()">
         <div class="modal-card" style="text-align: center;">
-            <div class="label" style="justify-content: center;"><span class="label-dot"></span> Protocol Evaluation</div>
+            <div class="label" style="justify-content: center;"><span class="label-dot"></span> FocusPact Feedback</div>
             <h1>FocusPact Experience</h1>
-            <p style="margin-bottom: 18px;">Your assessment helps optimize autonomous execution telemetry and anti-cheat verification.</p>
+            <p style="margin-bottom: 18px;">Your feedback helps us improve daily accountability for students.</p>
 
             <button class="btn-primary" onclick="submitReviewAction()">Submit Rating</button>
-            <button class="btn-secondary" onclick="shareOrCopyCard(); closeReviewModal();">Export Verification Badge</button>
+            <button class="btn-secondary" onclick="shareOrCopyCard(); closeReviewModal();">Export Achievement Card</button>
             <button class="btn-secondary" style="font-size: 12px; color: var(--text-muted); border: none; margin-top: 8px;" onclick="closeReviewModal()">Maybe Later</button>
         </div>
     </div>
@@ -2887,11 +2887,11 @@
             <button class="modal-close-btn" onclick="closeVisionAuditModal()" title="Close Audit" aria-label="Close">✕</button>
 
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #10b981; font-family: 'JetBrains Mono', monospace;">[AUTOMATED PROOF AUDITOR]</span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: #10b981; font-family: 'JetBrains Mono', monospace;">[PROOF VERIFICATION]</span>
             </div>
             
             <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">Milestone Visual Verification</h2>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Client-side perceptual hashing and multimodal AI audit. Upload work artifacts to verify completion.</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Basic duplicate-image check on this device combined with automated AI analysis of your work proof.</p>
 
             <!-- Target Goal Card -->
             <div id="auditTargetGoalBox" style="background: var(--btn-sec-bg); border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;">
@@ -2902,7 +2902,7 @@
             <!-- Upload & Capture Dropzone -->
             <div id="auditDropzone" class="audit-dropzone" onclick="document.getElementById('auditFileInput').click()">
                 <div id="dropzoneEmptyView">
-                    <div style="font-size: 11px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #10b981; margin-bottom: 6px;">[UPLOAD ARTIFACT // 64-BIT dHASH]</div>
+                    <div style="font-size: 11px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #10b981; margin-bottom: 6px;">[UPLOAD PROOF // BASIC DUPLICATE CHECK]</div>
                     <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Drop Screenshot, Code Diff, or Rendered Artifact</div>
                     <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Click to browse, or press <kbd style="background: rgba(255,255,255,0.1); padding: 2px 5px; border-radius: 4px; font-family: monospace;">Ctrl+V</kbd> to paste</div>
                 </div>
@@ -2919,19 +2919,18 @@
             <!-- Quick Paste & Demo Anti-Cheat Controls -->
             <div style="display: flex; gap: 8px; margin-top: 10px; margin-bottom: 14px;">
                 <button class="btn-secondary" style="margin-top: 0; font-size: 11px; padding: 8px 12px; flex: 1;" onclick="pasteFromClipboard()">Paste Clipboard (Ctrl+V)</button>
-                <button class="btn-secondary" style="margin-top: 0; font-size: 11px; padding: 8px 12px; flex: 1.1; border-color: rgba(239, 68, 68, 0.4); color: #f87171;" onclick="simulateRejectAudit()" title="Simulate duplicate hash collision rejection for judge demonstration">Simulate Hash Collision</button>
             </div>
 
             <!-- Audit Status & Results Card (Appears after scanning) -->
             <div id="auditResultCard" style="display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 14px; animation: fadeIn 0.3s ease;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <div id="auditStatusBadge" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace;">VERIFIED ✓</div>
-                    <div id="auditScoreVal" style="font-size: 13px; font-weight: 800; color: #10b981; font-family: 'JetBrains Mono', monospace;">96% MATCH</div>
+                    <div id="auditStatusBadge" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace;">PENDING</div>
+                    <div id="auditScoreVal" style="font-size: 13px; font-weight: 800; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">--</div>
                 </div>
-                <div id="auditFindingsText" style="font-size: 12px; color: var(--text-sub); line-height: 1.5; margin-bottom: 8px;">AI diagnostic findings...</div>
+                <div id="auditFindingsText" style="font-size: 12px; color: var(--text-sub); line-height: 1.5; margin-bottom: 8px;">Inspection results will appear here after scanning.</div>
                 <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; border-top: 1px solid var(--border); padding-top: 6px;">
-                    <span id="auditSealText">SEAL: ZT-AUDIT-9921-V1</span>
-                    <span id="auditTimeText">TIMESTAMP: JUST NOW</span>
+                    <span id="auditSealText">STATUS: PENDING</span>
+                    <span id="auditTimeText">TIMESTAMP: --</span>
                 </div>
             </div>
 
@@ -2961,97 +2960,62 @@
             <!-- Navigation Tabs -->
             <div class="whitepaper-tabs">
                 <button class="whitepaper-tab-btn active" onclick="switchWhitepaperTab('archTab', this)">1. System Architecture</button>
-                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('threatTab', this)">2. Threat Model Matrix</button>
-                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('b2bTab', this)">3. Enterprise TAM ($42B)</button>
-                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('moatTab', this)">4. Technical Moat</button>
+                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('threatTab', this)">2. Integrity & Duplicate Checks</button>
+                <button class="whitepaper-tab-btn" onclick="switchWhitepaperTab('moatTab', this)">3. Design Philosophy</button>
             </div>
 
             <!-- TAB 1: SYSTEM ARCHITECTURE -->
             <div id="archTab" class="whitepaper-content-pane active">
-                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Zero-Knowledge Client-Side Verification Pipeline</div>
-                <p>FocusPact enforces a strict <strong>Zero-Trust Boundary</strong>. User visual artifacts and sensitive screen data are processed on-device; no raw proprietary code or sensitive company data is stored in remote databases.</p>
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Client-Side Architecture & Privacy Model</div>
+                <p>FocusPact is designed with a local-first architecture. Daily goals, streaks, and reflections remain stored on your device in browser localStorage.</p>
 
                 <div class="arch-diagram-box">
-[1. User Commitment (Client PWA)]
+[1. Daily Commitments (Browser localStorage)]
    │ 
-   ├── 2. Client-Side Perceptual Hasher (dHash 64-bit) ──> Checks Hamming Distance against Merkle set
-   │      (Detects duplicate/recycled screenshots in 4ms without network call)
+   ├── 2. Basic Duplicate-Image Check on Device (dHash 64-bit)
+   │      (Checks for recycled screenshots on this device locally)
    │
-   ├── 3. Ephemeral Multimodal Vision Gateway (Serverless)
-   │      (Zero-retention pipeline checks semantic alignment to commitment)
+   ├── 3. Ephemeral AI Evaluation Gateway (Serverless)
+   │      (Sends commitment text & image over HTTPS to evaluate work proof)
    │
-   └── 4. Cryptographic Proof-of-Execution Attestation
-          (Signs verified badge with timestamp nonce & serial code)
+   └── 4. Check-in Outcome & Partner Dispatch
+          (Records status as verified or self-reported; generates partner update)
                 </div>
 
                 <div style="font-size: 12px; color: var(--text-muted);">
-                    <strong>Key Engineering Primitives:</strong> Local-first IndexedDB safe storage, 64-bit perceptual difference hashing (dHash), audio frequency oscillator synthesis via Web Audio API, and progressive service worker caching.
+                    <strong>Core Primitives:</strong> Local-first storage, client-side 64-bit perceptual difference hashing (dHash), Web Audio API sound effects, and offline service worker caching.
                 </div>
             </div>
 
-            <!-- TAB 2: THREAT MODEL & ANTI-CHEAT MATRIX -->
+            <!-- TAB 2: INTEGRITY & DUPLICATE CHECKS -->
             <div id="threatTab" class="whitepaper-content-pane">
-                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Adversarial Attack Vectors & Countermeasures</div>
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Integrity Checks & Duplicate Detection</div>
                 <table class="whitepaper-table">
                     <thead>
                         <tr>
-                            <th>Attack Vector</th>
-                            <th>Threat Mechanism</th>
-                            <th>FocusPact Countermeasure</th>
+                            <th>Scenario</th>
+                            <th>Potential Issue</th>
+                            <th>What FocusPact Does</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Replay Attack</strong></td>
-                            <td>Re-uploading yesterday's genuine proof</td>
-                            <td>Client-side dHash perceptual fingerprinting blocks any artifact with Hamming distance &le; 6 bits.</td>
+                            <td><strong>Re-uploading Same Image</strong></td>
+                            <td>Submitting yesterday's proof again</td>
+                            <td>Basic duplicate-image check on this device compares 64-bit dHash fingerprints and alerts if reused.</td>
                         </tr>
                         <tr>
-                            <td><strong>Stock Photo Spoof</strong></td>
-                            <td>Downloading code/textbook from Google</td>
-                            <td>Session-bound ephemeral Nonce verification + multimodal semantic artifact audit.</td>
+                            <td><strong>Unrelated Proof</strong></td>
+                            <td>Uploading a blank or irrelevant screenshot</td>
+                            <td>AI vision model inspects the image against your stated goal to evaluate genuine progress.</td>
                         </tr>
                         <tr>
-                            <td><strong>EXIF / Clock Tampering</strong></td>
-                            <td>Faking capture timestamp</td>
-                            <td>Serverless timestamp attestation cross-referenced with client session telemetry.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Checkbox Gaming</strong></td>
-                            <td>Tapping done while distracted</td>
-                            <td>Zero-Trust Strict Mode completely locks out manual self-reporting. Visual evidence required.</td>
+                            <td><strong>Self-Reporting</strong></td>
+                            <td>Checking items off without proof</td>
+                            <td>Self-reported items are permanently marked as self-reported and noted in your accountability report.</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-
-            <!-- TAB 3: ENTERPRISE TAM & UNIT ECONOMICS -->
-            <div id="b2bTab" class="whitepaper-content-pane">
-                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 8px;">$42B Remote Workforce & Contractor Verification</div>
-                <p>The distributed knowledge economy has reached a breaking point: employers use invasive spyware (Hubstaff, TimeDoctor) that records keystrokes and webcam video, creating immense employee backlash and turnover.</p>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0;">
-                    <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; padding: 12px;">
-                        <div style="color: #f87171; font-weight: 700; margin-bottom: 4px;">Legacy Spyware (Hubstaff)</div>
-                        <ul style="padding-left: 16px; margin: 0; font-size: 11px; color: var(--text-sub);">
-                            <li>Creepy 24/7 screen recording</li>
-                            <li>Destroys developer trust</li>
-                            <li>Massive GDPR/privacy liability</li>
-                        </ul>
-                    </div>
-                    <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 12px;">
-                        <div style="color: #10b981; font-weight: 700; margin-bottom: 4px;">FocusPact Enterprise</div>
-                        <ul style="padding-left: 16px; margin: 0; font-size: 11px; color: var(--text-sub);">
-                            <li>Milestone-based proof-of-work</li>
-                            <li>Zero private data stored</li>
-                            <li>Cryptographic progress proof</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div style="font-size: 12px; line-height: 1.5; color: var(--text-sub);">
-                    <strong>SaaS Model:</strong> $0 Free Core (Individuals) &bull; $12/mo Pro (Discipline Escrow) &bull; $28/seat/mo Enterprise (Team Milestone Verification & JIRA/Linear sync).
-                </div>
             </div>
 
             <!-- TAB 4: DEFENSIBILITY & MOAT -->
@@ -3100,10 +3064,10 @@
                 <img src="icon-192.png" alt="FocusPact Hologram Icon" class="hero-app-icon" />
             </div>
 
-            <div class="label" style="justify-content: center;"><span class="label-dot"></span> FOCUSPACT // ZERO-TRUST EXECUTION ENGINE</div>
-            <h1 style="text-align: center; font-size: 24px; letter-spacing: -0.5px;">Proof-of-Execution for High-Performers.</h1>
+            <div class="label" style="justify-content: center;"><span class="label-dot"></span> FOCUSPACT // DAILY STUDENT ACCOUNTABILITY</div>
+            <h1 style="text-align: center; font-size: 24px; letter-spacing: -0.5px;">Stop Procrastinating in the Hostel. Build Daily Consistency.</h1>
             <p style="text-align: center; font-size: 13px; line-height: 1.6; color: var(--text-sub); margin-bottom: 22px;">
-                Verifiable daily milestone execution backed by client-side perceptual gradient hashing (<code style="font-family:'JetBrains Mono',monospace; font-size:11px; background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px;">dHash</code>) and multimodal visual audits. Zero surveillance. Objective accountability.
+                Commit to your 3 key priorities every morning. Complete them before midnight with optional proof, share your daily progress report with an accountability partner or friend, and stay on track.
             </p>
             <button class="btn-primary" onclick="playSuccess(); goTo('screen2')">Get Started</button>
             <button class="btn-secondary" onclick="openWhitepaperModal()" style="margin-top: 10px;">Technical Architecture Whitepaper</button>
@@ -3312,10 +3276,7 @@
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#f59e0b; padding:2px 5px; background:rgba(245,158,11,0.12); border-radius:4px; border:1px solid rgba(245,158,11,0.25); flex-shrink:0;">ESC</span>
                             <span class="quick-tool-title">Stakes (Soon)</span>
                         </button>
-                        <button class="quick-tool-btn" onclick="playClick(); openWhitepaperModal()" title="Technical Architecture & Threat Model [W]">
-                            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#10b981; padding:2px 5px; background:rgba(168,85,247,0.12); border-radius:4px; border:1px solid rgba(16,185,129,0.25); flex-shrink:0;">ARC</span>
-                            <span class="quick-tool-title">Whitepaper</span>
-                        </button>
+
                         <button class="quick-tool-btn" onclick="playClick(); openThemeModal()" title="Theme & Display Settings [T]">
                             <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:#06b6d4; padding:2px 5px; background:rgba(6,182,212,0.12); border-radius:4px; border:1px solid rgba(6,182,212,0.25); flex-shrink:0;">UI</span>
                             <span class="quick-tool-title">Themes</span>
@@ -5109,7 +5070,7 @@
                             verified: false,
                             score: 8,
                             findings: `ANTI-CHEAT REPLAY INTERCEPT: Visual artifact shares 98.4% perceptual difference hash (dHash) with an artifact logged on ${collisionDate} (Hamming Distance: ${minDistance}/64). Recycled proof is strictly prohibited under Zero-Trust rules.`,
-                            seal: 'REPLAY-COLLISION-DETECTED',
+                            seal: 'DUPLICATE-DETECTED',
                             timestamp: new Date().toISOString()
                         };
                         latestAuditResult = rejectData;
