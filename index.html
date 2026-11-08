@@ -27,6 +27,14 @@
             api_host: 'https://us.i.posthog.com',
             defaults: '2026-05-30',
             person_profiles: 'identified_only',
+            disable_session_recording: true,
+            session_recording: {
+                maskAllInputs: true,
+                maskTextSelector: '*',
+            },
+            autocapture: {
+                capture_copied_text: false
+            }
         })
     </script>
 
@@ -2896,7 +2904,7 @@
             <!-- Target Goal Card -->
             <div id="auditTargetGoalBox" style="background: var(--btn-sec-bg); border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;">
                 <div style="font-size: 10px; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace;">TARGET MILESTONE #<span id="auditGoalNum">1</span></div>
-                <div id="auditGoalText" style="font-size: 14px; font-weight: 600; color: var(--text-main);">Execution priority...</div>
+                <div id="auditGoalText" class="ph-no-capture" style="font-size: 14px; font-weight: 600; color: var(--text-main);">Execution priority...</div>
             </div>
 
             <!-- Upload & Capture Dropzone -->
@@ -3082,20 +3090,20 @@
             <p>Set 3 non-negotiable deliverables for today. Each milestone is verifiable with visual work artifacts or check-in.</p>
             
             <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace;">Your Name or Handle</div>
-            <input id="name" type="text" placeholder="e.g. Alex Rivera" />
+            <input id="name" class="ph-no-capture" type="text" placeholder="e.g. Alex Rivera" />
             
             <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 10px 0 6px; font-family: 'JetBrains Mono', monospace;">Today's 3 Key Deliverables</div>
-            <input id="goal1" type="text" placeholder="Deliverable 1: Core Target (e.g. Ship auth endpoint)" />
-            <input id="goal2" type="text" placeholder="Deliverable 2: Secondary Focus (e.g. 45m deep work)" />
-            <input id="goal3" type="text" placeholder="Deliverable 3: Habit Anchor (e.g. 5km run or reading)" />
+            <input id="goal1" class="ph-no-capture" type="text" placeholder="Deliverable 1: Core Target (e.g. Ship auth endpoint)" />
+            <input id="goal2" class="ph-no-capture" type="text" placeholder="Deliverable 2: Secondary Focus (e.g. 45m deep work)" />
+            <input id="goal3" class="ph-no-capture" type="text" placeholder="Deliverable 3: Habit Anchor (e.g. 5km run or reading)" />
             
             <div style="margin-top: 14px; margin-bottom: 8px;">
                 <div class="label" style="margin-bottom: 6px;"><span class="label-dot"></span> Accountability Partner (Optional)</div>
                 <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;">
                     A teammate, coach, or peer who receives your daily completion report if deliverables remain unverified by midnight.
                 </div>
-                <input id="partnerName" type="text" placeholder="Partner Name (e.g. Marcus)" />
-                <input id="partnerContact" type="text" placeholder="Partner Phone, WhatsApp, or Email" />
+                <input id="partnerName" class="ph-no-capture" type="text" placeholder="Partner Name (e.g. Marcus)" />
+                <input id="partnerContact" class="ph-no-capture" type="text" placeholder="Partner Phone, WhatsApp, or Email" />
             </div>
 
             <button class="btn-primary" onclick="saveGoals()">Save Commitments & Continue</button>
@@ -3142,7 +3150,7 @@
                     <div class="goals-header-row">
                         <div>
                             <div class="label"><span class="label-dot"></span> DAILY COMMITMENTS</div>
-                            <h1 id="welcomeName" style="margin-bottom: 2px;">Today's Milestones</h1>
+                            <h1 id="welcomeName" class="ph-no-capture" style="margin-bottom: 2px;">Today's Milestones</h1>
                         </div>
                         <button class="inline-edit-badge" id="goalsEditToggleBtn" onclick="toggleInlineGoalEdit()" title="Edit Today's Commitments">Edit Commitments</button>
                     </div>
@@ -3172,7 +3180,7 @@
                             </label>
                         </div>
 
-                        <div id="goalsList"></div>
+                        <div id="goalsList" class="ph-no-capture"></div>
 
                         <!-- Empty State Notice (If No Goals Set) -->
                         <div id="goalsEmptyState" style="display: none; text-align: center; padding: 22px 14px; background: var(--btn-sec-bg); border: 1px dashed var(--border); border-radius: 16px; margin-bottom: 14px;">
@@ -3196,15 +3204,15 @@
                         
                         <div class="inline-goal-input-box">
                             <span class="inline-goal-num">1.</span>
-                            <input id="inlineGoal1" class="inline-goal-input" type="text" placeholder="Deliverable 1 (Primary milestone)" />
+                            <input id="inlineGoal1" class="inline-goal-input ph-no-capture" type="text" placeholder="Deliverable 1 (Primary milestone)" />
                         </div>
                         <div class="inline-goal-input-box">
                             <span class="inline-goal-num">2.</span>
-                            <input id="inlineGoal2" class="inline-goal-input" type="text" placeholder="Deliverable 2 (Secondary focus)" />
+                            <input id="inlineGoal2" class="inline-goal-input ph-no-capture" type="text" placeholder="Deliverable 2 (Secondary focus)" />
                         </div>
                         <div class="inline-goal-input-box">
                             <span class="inline-goal-num">3.</span>
-                            <input id="inlineGoal3" class="inline-goal-input" type="text" placeholder="Deliverable 3 (Habit anchor)" />
+                            <input id="inlineGoal3" class="inline-goal-input ph-no-capture" type="text" placeholder="Deliverable 3 (Habit anchor)" />
                         </div>
 
                         <button class="btn-primary" style="margin-top: 8px;" onclick="saveInlineGoals()">Save Commitments</button>
@@ -3328,7 +3336,7 @@
             <!-- Proof of Work Input (When Completed) -->
             <div id="proofWrap">
                 <div class="label"><span class="label-dot"></span> WORK PROOF ARTIFACT (URL OR LINK)</div>
-                <input id="proofInput" type="text" placeholder="Paste GitHub PR, Figma link, doc URL, or commit hash..." />
+                <input id="proofInput" class="ph-no-capture" type="text" placeholder="Paste GitHub PR, Figma link, doc URL, or commit hash..." />
             </div>
 
             <!-- Shield Freeze Option Banner (When Missed) -->
@@ -3339,7 +3347,7 @@
 
             <!-- Confession Text Area -->
             <div class="label" id="reflectionLabel"><span class="label-dot"></span> Execution Log & Notes</div>
-            <textarea id="excuseInput" rows="3" placeholder="Provide session summary, execution metrics, or blockers..."></textarea>
+            <textarea id="excuseInput" class="ph-no-capture" rows="3" placeholder="Provide session summary, execution metrics, or blockers..."></textarea>
             
             <button class="btn-primary" onclick="submitReport()">Submit Check-in & Review</button>
             <button class="btn-secondary" onclick="goTo('screen4')">Return to Dashboard</button>
@@ -3357,7 +3365,7 @@
             </div>
 
             <div class="verdict-card">
-                <p id="aiResponse">Analyzing submitted proof and generating review...</p>
+                <p id="aiResponse" class="ph-no-capture">Analyzing submitted proof and generating review...</p>
                 <p id="staticEncouragementNotice" style="display: none; margin-top: 8px; font-size: 12px; color: var(--text-muted); border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 6px;"></p>
             </div>
 
@@ -3517,7 +3525,7 @@
         <div class="card">
             <div class="label"><span class="label-dot"></span> Performance History</div>
             <h1>Consistency Log</h1>
-            <div id="historyList"></div>
+            <div id="historyList" class="ph-no-capture"></div>
             <button class="btn-secondary" onclick="goTo('screen4')">Back to Dashboard</button>
         </div>
     </div>
@@ -3607,6 +3615,26 @@
     <script>
     // Global API Configuration
     const API_BASE = window.FOCUS_API_BASE || 'https://focusjail.netlify.app';
+    // Privacy-Preserving Analytics Engine (Zero PII)
+    function track(event, props = {}) {
+        try {
+            if (window.posthog && typeof window.posthog.capture === 'function') {
+                var cleanProps = {};
+                for (var k in props) {
+                    if (Object.prototype.hasOwnProperty.call(props, k)) {
+                        var val = props[k];
+                        if (typeof val === 'number' || typeof val === 'boolean') {
+                            cleanProps[k] = val;
+                        } else if (typeof val === 'string') {
+                            cleanProps[k] = val.slice(0, 32);
+                        }
+                    }
+                }
+                window.posthog.capture(event, cleanProps);
+            }
+        } catch (e) {}
+    }
+
 
         // Defensive Security & Safe Storage Engine
         function escapeHTML(str) {
@@ -4581,8 +4609,10 @@
             localStorage.setItem('streak_shields', localStorage.getItem('streak_shields') || '1');
             localStorage.setItem('daily_focus_mins', localStorage.getItem('daily_focus_mins') || '0');
 
-            if (window.posthog) {
-                posthog.capture('goals_committed', { name: name, count: 3, has_partner: !!partnerName });
+            track('commitments_saved', { count: 3, is_edit: false });
+            if (!localStorage.getItem('focus_first_committed_at')) {
+                localStorage.setItem('focus_first_committed_at', Date.now().toString());
+                track('first_commitment_saved', { count: 3 });
             }
 
             playSuccess();
@@ -4591,9 +4621,7 @@
 
         function setTone(tone) {
             localStorage.setItem('tone', tone);
-            if (window.posthog) {
-                posthog.capture('coaching_tone_selected', { tone: tone });
-            }
+            track('tone_selected', { tone: tone });
             playSuccess();
             loadHome();
             goTo('screen4');
@@ -4831,9 +4859,7 @@
             playSuccess();
             showToast('3 Commitments locked for today! 🎯', 'success');
 
-            if (window.posthog) {
-                posthog.capture('goals_saved_inline', { count: 3 });
-            }
+            track('commitments_saved', { count: 3, is_edit: true });
 
             cancelInlineEditGoals();
             loadHome();
@@ -5186,6 +5212,7 @@
         }
 
         function renderAuditOutcome(data) {
+            track('verdict_generated', { verified: Boolean(data.verified), is_unavailable: Boolean(data.isUnavailable) });
             var resCard = document.getElementById('auditResultCard');
             var statusBadge = document.getElementById('auditStatusBadge');
             var scoreVal = document.getElementById('auditScoreVal');
@@ -5632,8 +5659,15 @@
                 });
                 localStorage.setItem('focus_history', JSON.stringify(history));
 
-                if (window.posthog && typeof window.posthog.capture === 'function') {
-                    window.posthog.capture('checkin_submitted', { completed: goalsCompleted, streak: streak, shielded: wasShielded, has_proof: !!proof });
+                var doneCount = goalsList.filter(g => g && g.done).length;
+                track('checkin_submitted', {
+                    completed_count: doneCount,
+                    is_all_completed: goalsCompleted,
+                    has_proof: Boolean(proof),
+                    was_shielded: wasShielded
+                });
+                if (goalsCompleted && streak > 0) {
+                    track('streak_hit', { streak_length: streak });
                 }
             } catch (err) {
                 console.warn('Verdict API unavailable:', err);
@@ -5696,6 +5730,7 @@
         }
 
         function sendPartnerWhatsApp() {
+            track('partner_report_sent', { channel: 'whatsapp' });
             var text = encodeURIComponent(generatePartnerMessage());
             var contact = localStorage.getItem('partner_contact') || '';
             var phone = contact.replace(/[^0-9]/g, '');
@@ -5704,12 +5739,14 @@
         }
 
         function sendPartnerSMS() {
+            track('partner_report_sent', { channel: 'sms' });
             var text = encodeURIComponent(generatePartnerMessage());
             var contact = localStorage.getItem('partner_contact') || '';
             window.open(`sms:${contact}?body=${text}`, '_blank');
         }
 
         function sendPartnerEmail() {
+            track('partner_report_sent', { channel: 'email' });
             var text = encodeURIComponent(generatePartnerMessage());
             var contact = localStorage.getItem('partner_contact') || '';
             var subject = encodeURIComponent(goalsCompleted ? 'FocusPact Daily Victory Update' : 'FocusPact Daily Accountability Confession');
@@ -5717,6 +5754,7 @@
         }
 
         function copyPartnerReport() {
+            track('partner_report_sent', { channel: 'clipboard' });
             var text = generatePartnerMessage();
             navigator.clipboard.writeText(text).then(() => {
                 showToast('Accountability report copied to clipboard!', 'success');
@@ -6005,9 +6043,10 @@
                             showToast(`Deep Focus Complete! +${currentPreset}m logged today.`, 'success');
                         }
 
-                        if (window.posthog) {
-                            posthog.capture('focus_session_completed', { duration: currentPreset, strict: strictLockEnabled, breaches: sessionBreaches });
-                        }
+                        track('focus_session_completed', {
+                            duration_minutes: currentPreset,
+                            is_strict: strictLockEnabled
+                        });
                     }
                 }, 500);
             }
@@ -6756,6 +6795,8 @@
         }
 
         function downloadCard() {
+            var curStreak = parseInt(localStorage.getItem('streak') || '0');
+            track('card_shared', { streak_length: curStreak, method: 'download' });
             var canvas = document.getElementById('achievementCanvas');
             var link = document.createElement('a');
             link.download = `FocusPact_Milestone_${Date.now()}.png`;
@@ -6765,6 +6806,8 @@
         }
 
         function shareOrCopyCard() {
+            var curStreak = parseInt(localStorage.getItem('streak') || '0');
+            track('card_shared', { streak_length: curStreak, method: 'share_api' });
             var canvas = document.getElementById('achievementCanvas');
             canvas.toBlob(blob => {
                 if (!blob) return;
@@ -7069,6 +7112,18 @@
 
         function initApp() {
             migrateLegacyData();
+            // Check Day-2 Return Signal
+            try {
+                var firstCommitted = parseInt(localStorage.getItem('focus_first_committed_at') || '0');
+                if (firstCommitted > 0 && !localStorage.getItem('focus_day2_tracked')) {
+                    var elapsedHours = (Date.now() - firstCommitted) / (1000 * 3600);
+                    if (elapsedHours >= 24 && elapsedHours <= 72) {
+                        localStorage.setItem('focus_day2_tracked', 'true');
+                        track('returning_user_day2', { hours_since_signup: Math.round(elapsedHours) });
+                    }
+                }
+            } catch (e) {}
+
             initTheme();
             checkInstalledState();
             checkDailyAutoRoll();
